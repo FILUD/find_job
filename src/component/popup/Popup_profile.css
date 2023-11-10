@@ -1,0 +1,11 @@
+.popup-profile-option {
+    width: 50px;
+}
+
+ 
+.popup-profile-container{
+    position: absolute;
+    background: beige;
+    padding: 10px;
+    width: 200px;
+}

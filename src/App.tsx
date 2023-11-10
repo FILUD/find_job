@@ -2,24 +2,24 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './component/navbar/navbar_welcome';
 
-import Welcome_Page from './page/Welcome_Page';
-import About_Page from './page/About_Page';
-import Contact_page from './page/Contact_page';
-import Sign_in from './component/popup/Sign_in';
+import WelcomePage from './page/WelcomePage';
+import AboutPage from './page/AboutPage';
+import Contactpage from './page/ContactPage';
+import Authentication from './component/popup/Authentication';
+
 
 function App() {
   return (
     <div>
       <Router>
-      <Navbar />
       <div className="App">
         
         <Routes>
 
-          <Route index element={<Welcome_Page />} />
-          <Route  path="/About" element={<About_Page />} />
-          <Route  path="/Contact" element={<Contact_page />} />
-          <Route  path="/Popup_sign_in" element={<Sign_in />} />
+          <Route index element={<WelcomePage />} />
+          <Route  path="/About" element={<AboutPage />} />
+          <Route  path="/Contact" element={<Contactpage />} />
+          <Route  path="/Popup_sign_in" element={<Authentication />} />
 
 
         </Routes>
