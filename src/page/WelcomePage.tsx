@@ -1,9 +1,14 @@
 import React from 'react'
 import '../css/Welcome.css'
-// import Navbar from '../component/navbar/Navbar_welcome'
+import { Link, useNavigate } from 'react-router-dom';
+
 import NavbarWelcome from '../component/navbar/Navbar_welcome'
 import Footer from '../component/footer/Footer'
+
+
 function Welcome_Page() {
+    const navigate = useNavigate();
+
     return (
         <div>
             
@@ -12,7 +17,7 @@ function Welcome_Page() {
 
                 <div className='box-center-welcome'>
                     <p className='text-welcome'>Welcome</p>
-                    <button className='button-let-start'>Let's start</button>
+                    <button className='button-let-start' onClick={() => navigate('/Home')}>Let's start</button>
                 </div>
 
                 <div className='footer-container-welcome'>

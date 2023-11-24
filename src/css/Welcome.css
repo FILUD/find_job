@@ -1,7 +1,6 @@
 .text-welcome {
-    padding: 2%;
     color: #000;
-    font-size: 96px;
+    font-size: 70px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -36,8 +35,8 @@
     justify-content: center;
     justify-items: center;
 
-    width: 350px;
-    height: 250px;
+    width: 250px;
+    height: 200px;
     flex-shrink: 0;
     margin: 33px;
     border-radius: 45px;
@@ -72,16 +71,15 @@
 
 .text-inside-box-welcome {
     color: #FFF;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 500;
+    font-size: 30px;
     transition: 1.5s;
+    filter: drop-shadow(0 0 0.75rem #000000);
 }
 
 .icon-footer-welcome {
     padding-top: 30%;
-    width: 120px;
-    height: 120px;
+    width: 91px;
+    height: 91px;
     filter: drop-shadow(0 0.9mm 0.2rem rgba(255, 255, 255, 0.25));
     transition: 1.5s;
 }
