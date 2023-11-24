@@ -1,6 +1,6 @@
 import React from 'react'
 import '../css/Welcome.css'
-// import Navbar from '../component/navbar/navbar_welcome'
+// import Navbar from '../component/navbar/Navbar_welcome'
 import NavbarWelcome from '../component/navbar/Navbar_welcome'
 import Footer from '../component/footer/Footer'
 function Welcome_Page() {
