@@ -1,6 +1,7 @@
 body {
-  background-image: url('/public/Background/Backgound-welcome.png');
+  background-image: url('/public/Background/Background.png');
   background-size: cover;
+  width: 100%;
   background-repeat: no-repeat;
 }
 
@@ -11,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 100px;
-  color: #30443A;
+  color: #FFFFFF;
 }
 
 .container-left-nav {

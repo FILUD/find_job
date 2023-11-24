@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from '../component/navbar/navbar_welcome'
+import Navbar from '../component/navbar/Navbar_welcome'
 
 function Contact_page() {
   return (

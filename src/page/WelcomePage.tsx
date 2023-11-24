@@ -1,12 +1,13 @@
 import React from 'react'
 import '../css/Welcome.css'
 // import Navbar from '../component/navbar/navbar_welcome'
-import Navbar from '../component/navbar/Navbar'
+import NavbarWelcome from '../component/navbar/Navbar_welcome'
+import Footer from '../component/footer/Footer'
 function Welcome_Page() {
     return (
         <div>
             
-            <Navbar />
+            <NavbarWelcome />
             <center>
 
                 <div className='box-center-welcome'>
@@ -28,8 +29,8 @@ function Welcome_Page() {
                         <p className='text-inside-box-welcome'>New job</p></div>
                     
                 </div>
-
             </center>
+            <Footer/>
         </div>
     )
 }

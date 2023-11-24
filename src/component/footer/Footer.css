@@ -1,0 +1,28 @@
+.container-footer {
+    background: rgba(48, 68, 58, 0.50);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    color: white;
+    margin-top: 2%;
+}
+.footer-center-text {
+    justify-items: center;
+    justify-content: center;
+}
+
+.footer-navigate {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.footer-icon-contact {
+    padding-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+}
