@@ -1,5 +1,5 @@
 body {
-  background-image: url('/public/Background/Background.png');
+  background-image: url('/public/Background/Backgound-welcome.png');
   background-size: cover;
   width: 100%;
   background-repeat: no-repeat;
@@ -12,7 +12,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 100px;
-  color: #FFFFFF;
+  color: #30443A;
 }
 
 .container-left-nav {
@@ -32,8 +32,7 @@ body {
 }
 
 .menu-navbar {
-  font-size: large;
-  font-size: 25px;
+  font-size: 22px;
   margin: 0 40px;
   cursor: pointer;
   transition: color 0.5s ease;
@@ -41,7 +40,6 @@ body {
 
 .menu-navbar:hover {
   color: #A0E917;
-  /* filter: drop-shadow(0 0 0.75rem #30443A); */
 }
 
 .logo-welcome-page {
@@ -53,20 +51,17 @@ body {
 }
 
 .logo-welcome-page:hover { 
-  scale: 1.1;
+  scale: 1.05;
 }
 
 .button-sign-in {
-  width: 201px;
-  height: 63px;
+  width: 190px;
+  height: 60px;
   flex-shrink: 0;
   border-radius: 48.5px;
   background: #30443A;
   color: #FFF;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 100;
-  line-height: normal;
+  font-size: 28px;
   border: none;
   transition: 1.5s;
   margin-right: 30px;
