@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/find_job/static/css/main.7e03af2e.css",
+    "main.js": "/find_job/static/js/main.bd8af7e0.js",
+    "static/js/787.1657ac16.chunk.js": "/find_job/static/js/787.1657ac16.chunk.js",
+    "static/media/Backgound-welcome.png": "/find_job/static/media/Backgound-welcome.306c8e75e380443c16c7.png",
+    "index.html": "/find_job/index.html",
+    "main.7e03af2e.css.map": "/find_job/static/css/main.7e03af2e.css.map",
+    "main.bd8af7e0.js.map": "/find_job/static/js/main.bd8af7e0.js.map",
+    "787.1657ac16.chunk.js.map": "/find_job/static/js/787.1657ac16.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7e03af2e.css",
+    "static/js/main.bd8af7e0.js"
+  ]
+}
