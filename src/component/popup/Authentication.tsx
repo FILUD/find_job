@@ -33,20 +33,20 @@ const Authentication = () => {
                         <div className='box-form-sign-in'>
                             <p className='text-top-input-sign-in'>Email</p>
                             <center>
-                                <input className='input input-username-login input-login-and-register' type="email" />
+                                <input className='input input-username-login' type="text" />
                             </center>
                         </div>
 
                         <div className='box-form-sign-in'>
                             <p className='text-top-input-sign-in'>Password</p>
                             <center>
-                                <input className='input input-password-login input-login-and-register' type="password" />
+                                <input className='input input-password-login' type="text" />
                             </center>
                         </div>
 
                         <p className='text-forgot-password'>Forgot Password ?</p>
 
-                        <div className="other-login-with other-login-login">
+                        <div className="other-login-with">
                             <p className="text-sign-in-with">
                                 Sign In with :
                                 <img className="icon-login-sign-in google-icon" src="Icon/google.png" alt="google" />
