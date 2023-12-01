@@ -1,7 +1,6 @@
 import React from 'react'
 import '../css/Welcome.css'
 import { Link, useNavigate } from 'react-router-dom';
-
 import NavbarWelcome from '../component/navbar/Navbar_welcome'
 import Footer from '../component/footer/Footer'
 
