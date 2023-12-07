@@ -1,18 +1,18 @@
 body {
-  background-image: url('/public/Background/Background.png');
+  background-image: url('/public/Background/Backgound-welcome.png');
   background-size: cover;
   width: 100%;
   background-repeat: no-repeat;
 }
 
 .container-nav {
-  margin-top: 73px;
+  margin-top: 54px;
   height: 3.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 100px;
-  color: #FFFFFF;
+  color: #30443A;
 }
 /* fix */
 
@@ -33,8 +33,7 @@ body {
 }
 
 .menu-navbar {
-  font-size: large;
-  font-size: 25px;
+  font-size: 16.5px;
   margin: 0 40px;
   cursor: pointer;
   transition: color 0.5s ease;
@@ -42,32 +41,33 @@ body {
 
 .menu-navbar:hover {
   color: #A0E917;
-  /* filter: drop-shadow(0 0 0.75rem #30443A); */
 }
 
 .logo-welcome-page {
-  width: 160px;
-  height: 160px;
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
   cursor: pointer;
   transition: 1.5s;
 }
 
+.icon-chang-lang {
+  width: 40px;
+  height: 40px;
+}
+
 .logo-welcome-page:hover { 
-  scale: 1.1;
+  scale: 1.05;
 }
 
 .button-sign-in {
-  width: 201px;
-  height: 63px;
+  width: 142px;
+  height: 45px;
   flex-shrink: 0;
   border-radius: 48.5px;
   background: #30443A;
   color: #FFF;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 100;
-  line-height: normal;
+  font-size: 21px;
   border: none;
   transition: 1.5s;
   margin-right: 30px;
@@ -80,7 +80,28 @@ body {
   color: #30443A;
 }
 
+@media only screen and (max-width: 768px) {
+  .container-nav {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
 
+  .menu-navbar {
+    margin: 0 5px; /* Adjust margin for smaller screens */
+  }
+
+  .logo-welcome-page {
+    width: 60px; /* Adjust width for smaller screens */
+    height: 60px; /* Adjust height for smaller screens */
+  }
+
+  .button-sign-in {
+    width: 100px; /* Adjust width for smaller screens */
+    height: 30px; /* Adjust height for smaller screens */
+    font-size: 16px; /* Adjust font size for smaller screens */
+    margin-right: 5px; /* Adjust margin for smaller screens */
+    margin-left: 5px; /* Adjust margin for smaller screens */
+  }
+}
 
 /*---------------------  Keyframe  ---------------------*/
 
