@@ -26,13 +26,11 @@ const LanguagesOption = () => {
 
                         <div className='button-languages-option'>
                             <ul className='dropdown-menu-languages'>
-                              
-                                    <li>   <button className='button-languages-option-english'><img className='flag-icon' src='Logo/english_flag.jpg'/> English</button> </li>
-                                    <li>   <button className='button-languages-option-thai' ><img className='flag-icon' src='Logo/thai_flag.jpg'/>ไทย</button></li>
-                                    <li>   <button className='button-languages-option-lao' ><img className='flag-icon' src='Logo/laos_flag.jpg'/>ລາວ</button></li>
-                                    <li>   <button className='button-languages-option-english'><img className='flag-icon' src='Logo/english_flag.jpg'/> English</button> </li>
-                                    <li>   <button className='button-languages-option-thai' ><img className='flag-icon' src='Logo/thai_flag.jpg'/>ไทย</button></li>
-                                    <li>   <button className='button-languages-option-lao' ><img className='flag-icon' src='Logo/laos_flag.jpg'/>ລາວ</button></li>
+                                    <li className='languages-shadhow'>   <button className='button-languages-option-english'><img className='flag-icon' src='Logo/english_flag.jpg'/> English</button> </li>
+                                    <li className='languages-shadhow'>   <button className='button-languages-option-thai' ><img className='flag-icon' src='Logo/thai_flag.jpg'/>ไทย</button></li>
+                                    <li className='languages-shadhow'>   <button className='button-languages-option-english'><img className='flag-icon' src='Logo/english_flag.jpg'/> English</button> </li>
+                                    <li className='languages-shadhow'>   <button className='button-languages-option-thai' ><img className='flag-icon' src='Logo/thai_flag.jpg'/>ไทย</button></li>
+                                    <li className='languages-shadhow'>   <button className='button-languages-option-lao' ><img className='flag-icon' src='Logo/laos_flag.jpg'/>ລາວ</button></li>
                                 
                            
                             </ul>
