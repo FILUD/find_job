@@ -7,6 +7,7 @@ import AboutPage from './page/AboutPage';
 import Contactpage from './page/ContactPage';
 import Authentication from './component/popup/Authentication';
 import HomePage from './page/HomePage';
+import ErrorPage from './page/ErrorPage';
 
 
 function App() {
@@ -29,7 +30,8 @@ function App() {
           <Route  path="/Contact" element={<Contactpage />} />
           <Route  path="/Popup_sign_in" element={<Authentication />} />
 
-
+          <Route path="*" element={<ErrorPage />} />
+          
         </Routes>
 
       </div>
