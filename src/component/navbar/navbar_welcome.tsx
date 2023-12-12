@@ -2,7 +2,7 @@ import React from 'react';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import Login from '../popup/Authentication';
-import LanguagesOption from '../popup/languages/Popup_languages';
+import LanguagesOption from '../popup/Popup_languages';
 
 function NavbarWelcome() {
   const navigate = useNavigate();
