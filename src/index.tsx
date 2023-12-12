@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import global_en from '.languages/english/global_en.json'
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
