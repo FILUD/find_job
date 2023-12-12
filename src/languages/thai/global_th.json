@@ -1,0 +1,8 @@
+{
+    "header": {
+        "message": "Welcome"
+    },
+    "home" : {
+        "body" : "test how to change languages"
+    }
+}
