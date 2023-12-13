@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import './Popup_profile.css'
 import './Authentication.css'
 
-
 const ProfileOption = () => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -14,12 +13,12 @@ const ProfileOption = () => {
     // toggle pop-up login 
     return (
         <div>
-            
+
             <img className='popup-profile-option' src='Icon/user.png' onClick={togglePopupProfileOption}></img>
             {isOpen && (
                 <div className="popup-profile-container">
                     <div className="popup-profile-content">
-                        
+
                         <p className='text-popup-profile-options'>Select options</p>
 
 

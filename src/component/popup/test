@@ -1,0 +1,5 @@
+
+    const [t, i18n] = useTranslation("global");
+    const handleChangeLanguage = (lang: string) => {
+        i18n.changeLanguage(lang);
+    };

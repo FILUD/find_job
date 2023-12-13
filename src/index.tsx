@@ -4,14 +4,32 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import global_en from '.languages/english/global_en.json'
+//import languages json and pakage
+import global_en from './languages/english/global_en.json';
+import global_la from './languages/lao/global_la.json';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+//changing languages and set main languages
+i18next.init({
+  fallbackLng: 'en',
+  debug: true,
+  interpolation: {
+    escapeValue: false, // not needed for react as it escapes by default
+  }
+});
+
 root.render(
+
   <React.StrictMode>
-    <App />
+    <I18nextProvider i18n={i18next}>
+      <App />
+    </I18nextProvider>
   </React.StrictMode>
 );
 
