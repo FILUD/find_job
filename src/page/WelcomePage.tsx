@@ -3,9 +3,11 @@ import '../css/Welcome.css'
 import { Link, useNavigate } from 'react-router-dom';
 import NavbarWelcome from '../component/navbar/Navbar_welcome'
 import Footer from '../component/footer/Footer'
+import { useTranslation } from 'react-i18next';
 
 function Welcome_Page() {
     const navigate = useNavigate();
+    const [t, i18n] = useTranslation("global");
    
     return (
         <div>
@@ -14,7 +16,7 @@ function Welcome_Page() {
             <center>
 
                 <div className='box-center-welcome'>
-                    <p className='text-welcome'>Welcome</p>
+                    <p className='text-welcome'>{t("header.message")}</p>
                     <button className='button-let-start' onClick={() => navigate('/Home')}>Let's start</button>
                 </div>
 

@@ -1,13 +1,21 @@
 import React, { useState } from 'react'
 import './Popup_languages.css'
+import { useTranslation } from 'react-i18next';
 
+
+    // toggle pop-up login 
 const LanguagesOption = () => {
     const [isOpen, setIsOpen] = useState(false);
     const togglePopupLanguagesOption = () => {
         setIsOpen(!isOpen);
     };
+ 
+    // changing languages
+    const [t, i18n] = useTranslation("global");
+    const handleChangeLanguage = (lang: string) => {
+        i18n.changeLanguage(lang);
+    };
 
-    // toggle pop-up login 
     return (
         <div>
             <img className='popup-languages-option' src='Logo/language.png' onClick={togglePopupLanguagesOption}></img>
@@ -21,30 +29,37 @@ const LanguagesOption = () => {
                         <div className='button-languages-option'>
                             <ul className='dropdown-menu-languages'>
                                 <li className='languages-shadhow'>
-                                    <button className='button-languages-option-english' >
+                                    <button className='button-languages-option-english' onClick={()=> handleChangeLanguage("en")} >
                                         <img className='flag-icon' src='Logo/english_flag.jpg' />English
                                     </button>
                                 </li>
                                 <li className='languages-shadhow'>
-                                    <button className='button-languages-option-thai' >
-                                        <img className='flag-icon' src='Logo/thai_flag.jpg' />ไทย
-                                    </button>
-                                </li>
-                                <li className='languages-shadhow'>
-                                    <button className='button-languages-option-thai' >
-                                        <img className='flag-icon' src='Logo/thai_flag.jpg' />ไทย
-                                    </button>
-                                </li>
-                                <li className='languages-shadhow'>
-                                    <button className='button-languages-option-lao'  >
+                                    <button className='button-languages-option-lao' onClick={()=> handleChangeLanguage("la")} >
                                         <img className='flag-icon' src='Logo/laos_flag.jpg' />ລາວ
                                     </button>
                                 </li>
                                 <li className='languages-shadhow'>
-                                    <button className='button-languages-option-english'>
+                                    <button className='button-languages-option-thai' onClick={()=> handleChangeLanguage("th")} >
+                                        <img className='flag-icon' src='Logo/thai_flag.jpg' />ไทย
+                                    </button>
+                                </li>
+                                <li className='languages-shadhow'>
+                                    <button className='button-languages-option-english' onClick={()=> handleChangeLanguage("en")} >
                                         <img className='flag-icon' src='Logo/english_flag.jpg' />English
                                     </button>
                                 </li>
+                                <li className='languages-shadhow'>
+                                    <button className='button-languages-option-thai' onClick={()=> handleChangeLanguage("th")} >
+                                        <img className='flag-icon' src='Logo/thai_flag.jpg' />ไทย
+                                    </button>
+                                </li> 
+                                 <li className='languages-shadhow'>
+                                    <button className='button-languages-option-lao' onClick={()=> handleChangeLanguage("la")} >
+                                        <img className='flag-icon' src='Logo/laos_flag.jpg' />ລາວ
+                                    </button>
+                                </li>
+                                
+                              
                             </ul>
                         </div>
                     </div>

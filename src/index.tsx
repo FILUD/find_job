@@ -5,8 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 //import languages json and pakage
-import global_en from './languages/english/global_en.json';
-import global_la from './languages/lao/global_la.json';
+import global_en from './languages/en/global.json';
+import global_la from './languages/la/global.json';
+import global_th from './languages/th/global.json';
+
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 
