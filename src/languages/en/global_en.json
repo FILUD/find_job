@@ -1,0 +1,17 @@
+{
+    "welcomepage": {
+        "welcome": "Welcome",
+        "findjob": "Find job",
+        "findemployee": "Find Employee",
+        "letsstart": "Let's start",
+        "newjob": "New job",
+        "signin": "Sign in",
+        "about": "About",
+        "contact": "Contact"
+    
+    },
+    "homepage": {
+        "welcome": "Welcome to our website"
+       
+    }
+}

@@ -16,7 +16,7 @@ function Welcome_Page() {
             <center>
 
                 <div className='box-center-welcome'>
-                    <p className='text-welcome'>{t("header.message")}</p>
+                    <p className='text-welcome'>{t("welcomepage.welcome")}</p>
                     <button className='button-let-start' onClick={() => navigate('/Home')}>Let's start</button>
                 </div>
 

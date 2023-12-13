@@ -3,8 +3,11 @@ import '../css/HomePage.css'
 
 import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
+import { useTranslation } from 'react-i18next';
 
 function HomePage() {
+  const [t, i18n] = useTranslation("global");
+  
   return (
     <div>
       <Navbar />
@@ -12,7 +15,7 @@ function HomePage() {
       <center>
         <div className="contianer-home-page">
           <div className="box-haeder-home-page">
-            <p className='text-in-box-haeder-home-page'>Welcome to us website</p>
+            <p className='text-in-box-haeder-home-page'>{t("homepage.welcome")}</p>
           </div>
           <div className="box-for-text-recommend-job">
             recommend Job
