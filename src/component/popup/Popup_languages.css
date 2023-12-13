@@ -1,0 +1,73 @@
+/* icon popup languages */
+.popup-languages-option {
+    width: 40px;
+    cursor: pointer;
+}
+
+
+
+.popup-languages-container {
+    position: absolute;
+    max-height: 250px;
+    max-width: 230px;
+    background: white;
+    padding: 10px;
+    width: 230px;
+    height: 200px;
+    overflow: hidden auto;
+    overflow-y: hidden auto;
+    right: 0;
+    margin-top: 20px;
+    margin-right: 100px;
+    border-radius: 5px;
+
+
+}
+
+.button-languages-option {
+    font-size: 25pt;
+}
+
+.dropdown-menu-languages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.text-popup-languages-options{
+text-decoration-line: underline;
+}
+
+
+.button-languages-option-english,
+.button-languages-option-thai,
+.button-languages-option-lao {
+    max-height: 40px;
+    height: 40px;
+    width: 100%;
+    padding-left: 30px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border: none;
+    font-size: 13pt;
+    display: flex;
+    margin: 5px;
+    margin-bottom: 20px;
+    align-items: center; 
+}
+
+
+
+.flag-icon {
+    width: 50px;
+    height: 35px;
+    display: inline-block;
+    margin-right: 15px;
+    
+}
+
+.languages-shadhow:hover{
+background-color:#30443A;
+}
+

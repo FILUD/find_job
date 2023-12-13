@@ -12,7 +12,7 @@ import HomePage from './page/HomePage';
 function App() {
   
   useEffect(() => {
-    document.title = 'Fine Jop';
+    document.title = 'Find Jop';
   }, []);
 
   return (
