@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import './Authentication.css'
+import { useTranslation } from 'react-i18next';
 
 
 const Authentication = () => {
+
+    const [t, i18n] = useTranslation("global");
     const [isOpenLogIn, setIsOpenLogIn] = useState(false);
     const [isOpenSignUp, setIsOpenSignUp] = useState(false);
 
@@ -15,8 +18,8 @@ const Authentication = () => {
         setIsOpenSignUp(!isOpenSignUp);
         setIsOpenLogIn(false); // Close the Sign In form when opening Sign Up form
     };
-    
-    
+
+
 
     // toggle pop-up login 
     return (

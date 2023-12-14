@@ -108,6 +108,16 @@
     }
 }
 
-.box-center-welcome{
+.box-center-welcome {
+    font-family: 'phetsarath OT';
+}
+
+.footer-container-welcome{
+    font-family: 'phetsarath OT';
+}
+.container-right-nav{
+    font-family: 'phetsarath OT';
+}
+.button-let-start{
     font-family: 'phetsarath OT';
 }

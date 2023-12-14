@@ -14,8 +14,10 @@ const LanguagesOption = () => {
     const [t, i18n] = useTranslation("global");
     const handleChangeLanguage = (lang: string) => {
         i18n.changeLanguage(lang);
+        localStorage.setItem('selectedLanguage', lang); // Store selected language in localStorage
+        togglePopupLanguagesOption(); // Close popup after language selection
     };
-
+    
     return (
         <div>
             <img className='popup-languages-option' src='Logo/language.png' onClick={togglePopupLanguagesOption}></img>

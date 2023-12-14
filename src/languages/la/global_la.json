@@ -1,11 +1,16 @@
 {
     "welcomepage": {
         "welcome": "ຍິນດີຕ້ອນຮັບ",
-        "findjob": "Find job",
-        "findemployee": "Find Employee"
-    },
-    "homepage": {
-        "welcome": "laoooooo"
-       
-    }
+        "findjob": "ຊອກຫາວຽກ",
+        "findemployee": "ຊອກຫາພະນັກງານ",
+        "letsstart": "ເລີ່ມຕົ້ນ",
+        "newjob": "ວຽກໃໝ່",
+        "signin": "ເຂົ້າສູ່ລະບົບ",
+        "about": "ກ່ຽວກັບ",
+        "contact": "ຕິດຕໍ່"
+    
+},
+"homepage": {
+    "welcome": "ຍິນດີຕ້ອນຮັບເຂົ້າສູ່ເວັບໄຊຂອງພວກເຮົາ"
+}
 }

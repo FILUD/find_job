@@ -1,8 +1,16 @@
 {
     "welcomepage": {
-        "welcome": "ยินดีต้อนรับ",
-        "findjob": "Find job",
-        "findemployee": "Find Employee"
+      "welcome": "ยินดีต้อนรับ",
+      "findjob": "ค้นหางาน",
+      "findemployee": "ค้นหาพนักงาน",
+      "letsstart": "เริ่มต้น",
+      "newjob": "งานใหม่",
+      "signin": "เข้าสู่ระบบ",
+      "about": "เกี่ยวกับ",
+      "contact": "ติดต่อ"
     },
-    "home": {}
-}
+    "homepage": {
+      "welcome": "ยินดีต้อนรับสู่เว็บไซต์ของเรา"
+    }
+  }
+  
