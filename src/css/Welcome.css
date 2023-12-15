@@ -108,16 +108,30 @@
     }
 }
 
-.box-center-welcome {
+@font-face {
+    font-family: fontNotosan;
+    src: url(https://fonts.gstatic.com/s/notosanslao/v30/bx6lNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73CiQ_J1Djx9pidOt4Q8btcZkL7rg.woff2);
+}
+
+div, button {
+    font-family: fontNotosan;
+}
+
+
+
+/* .box-center-welcome {
+    font-family: fontNotosan;
+     font-family: 'phetsarath OT';
+}
+
+.footer-container-welcome {
     font-family: 'phetsarath OT';
 }
 
-.footer-container-welcome{
+.container-right-nav {
     font-family: 'phetsarath OT';
 }
-.container-right-nav{
+
+.button-let-start {
     font-family: 'phetsarath OT';
-}
-.button-let-start{
-    font-family: 'phetsarath OT';
-}
+} */ 
