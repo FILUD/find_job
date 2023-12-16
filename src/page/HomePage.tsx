@@ -18,7 +18,7 @@ function HomePage() {
             <p className='text-in-box-haeder-home-page'>{t("homepage.welcome")}</p>
           </div>
           <div className="box-for-text-recommend-job">
-            recommend Job
+          {t("homepage.recommend")}
           </div>
 
           <div className="box-item-for-recommend-job">
@@ -28,11 +28,11 @@ function HomePage() {
             <div className="item-for-recommend-job"></div>
           </div>
           <hr className='hr-bottom-recommend-job' />
-          <p>See ALL ▶</p>
+          <p>{t("homepage.seeall")}▶</p>
 
 
           <div className="box-for-text-recommend-job">
-            For Find Employee
+          {t("homepage.findemployee")}
           </div>
           <div className="box-item-for-recommend-job">
             <div className="item-for-recommend-job"></div>
@@ -41,7 +41,7 @@ function HomePage() {
             <div className="item-for-recommend-job"></div>
           </div>
           <hr className='hr-bottom-recommend-job' />
-          <p>See ALL ▶</p><br/>
+          <p>{t("homepage.seeall")} ▶</p><br/>
 
         </div>
       </center>

@@ -1,8 +1,10 @@
 import React from 'react'
 import './Footer.css'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Footer() {
+  const [t, i18n] = useTranslation("global");
 
   const navigate = useNavigate();
 
@@ -19,6 +21,7 @@ function Footer() {
   };
 
   return (
+
     <div className="container-footer">
 
       <div className="footer-logo-left">
@@ -27,7 +30,7 @@ function Footer() {
 
       <div className="footer-center-text">
         <center>
-          <p><b>Contact Us</b></p>
+          <p><b>{t("footer.contact")}</b></p>
           <p className='footer-contact-detail'>
             Georgebtv@icloud.com <br />
             ticmhk2002@gmail.com <br />
@@ -38,11 +41,11 @@ function Footer() {
 
           <div className="footer-navigate">
             <p className='text-footer-navigate'
-              onClick={() => navigate('/About')}>Website terms</p> <p>│</p>
+              onClick={() => navigate('/About')}>{t("footer.websiteterm")}</p> <p>│</p>
             <p className='text-footer-navigate'
-              onClick={() => navigate('/About')}>Privacy Policy</p> <p>│</p>
+              onClick={() => navigate('/About')}>{t("footer.privacy")}</p> <p>│</p>
             <p className='text-footer-navigate'
-              onClick={() => navigate('/About')}>Developer team</p>
+              onClick={() => navigate('/About')}>{t("footer.developerteam")}</p>
           </div>
 
           <div className="footer-icon-contact">

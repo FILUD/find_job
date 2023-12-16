@@ -33,7 +33,7 @@ body {
 }
 
 .menu-navbar {
-  font-size: 16.5px;
+  font-size: 20.5px;
   margin: 0 40px;
   cursor: pointer;
   transition: color 0.5s ease;
@@ -41,6 +41,7 @@ body {
 
 .menu-navbar:hover {
   color: #A0E917;
+  text-decoration: underline;
 }
 
 .logo-welcome-page {

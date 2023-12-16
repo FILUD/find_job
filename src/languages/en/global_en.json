@@ -10,7 +10,10 @@
         "contact": "Contact"
     },
     "homepage": {
-        "welcome": "Welcome to our website"
+        "welcome": "Welcome to our website",
+        "recommend": "Recommend job",
+        "findemployee": "For Find Employee",
+        "seeall": "See all"
     },
     "aboutpage": {
         "para1": "Welcome to Bridging Talent, your one-stop destination for finding employment opportunities and connecting with talented students eager to contribute their skills and knowledge to your company. Our platform was founded by a group of enthusiastic final-year students from various disciplines, who recognized the need for a more efficient and student-friendly way to connect with potential employers.",
@@ -19,5 +22,17 @@
         "seeker3": "At our core, we are dedicated to creating connections that lead to success. We are passionate about helping individuals achieve their career goals and supporting companies in building strong, dynamic teams. Our commitment to facilitating these connections is driven by a desire to contribute to individual growth, company prosperity, and overall economic development.",
         "developer": "Developer",
         "forseeker": "For Job Seekers:"
-    }
+    },
+    "footer": {
+        "contact": "Contact us",
+        "websiteterm": "Website terms",
+        "privacy": "Privacy policy",
+        "developerteam": "Developer team"
+    },
+   "navbar": {
+    "home": "ໜ້າຫຼັກ",
+    "findjob": "ຄົ້ນຫາລາຍການຊ່ວຍເຫຼືອ",
+    "findemployee": "ຄົ້ນຫາພະນັກງານ"
+}
+
 }
