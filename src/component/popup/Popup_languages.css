@@ -7,6 +7,11 @@
 
 
 .popup-languages-container {
+    border: 1px solid;
+    border-image: linear-gradient(to right, grey, white);
+    border-image-slice: 1;
+
+    
     position: absolute;
     max-height: 250px;
     max-width: 230px;
@@ -35,8 +40,8 @@
     margin-top: 10px;
 }
 
-.text-popup-languages-options{
-text-decoration-line: underline;
+.text-popup-languages-options {
+    text-decoration-line: underline;
 }
 
 
@@ -54,7 +59,7 @@ text-decoration-line: underline;
     display: flex;
     margin: 5px;
     margin-bottom: 20px;
-    align-items: center; 
+    align-items: center;
 }
 
 
@@ -64,10 +69,9 @@ text-decoration-line: underline;
     height: 35px;
     display: inline-block;
     margin-right: 15px;
-    
+
 }
 
-.languages-shadhow:hover{
-background-color:#30443A;
+.languages-shadhow:hover {
+    background-color: #30443A;
 }
-
