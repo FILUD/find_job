@@ -20,7 +20,6 @@ const Authentication = () => {
     };
 
 
-
     // toggle pop-up login 
     return (
         <div>
