@@ -30,7 +30,6 @@ const Authentication = () => {
                     <div className="popup-content-sign-up">
 
                         <img className='close-icon-sign-in' src='Icon/close.png' alt='Close' onClick={togglePopupLogIn}></img>
-                        <p className='text-popup-sign-in'></p>
                         <p className='text-popup-sign-in'>Login</p>
 
 
