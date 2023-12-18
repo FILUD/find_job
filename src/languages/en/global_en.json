@@ -30,9 +30,9 @@
         "developerteam": "Developer team"
     },
    "navbar": {
-    "home": "ໜ້າຫຼັກ",
-    "findjob": "ຄົ້ນຫາລາຍການຊ່ວຍເຫຼືອ",
-    "findemployee": "ຄົ້ນຫາພະນັກງານ"
+    "home": "Home",
+    "findjob": "Find job",
+    "findemployee": "Find employee"
 }
 
 }
