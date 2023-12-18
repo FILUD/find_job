@@ -1,0 +1,51 @@
+.wrapper-error-page {
+    display: grid;
+    justify-items: center;
+    place-content: center;
+    background-color: var(--background-color);
+    min-height: 100vh;
+    font-family: "Oswald", sans-serif;
+    font-size: clamp(1.5rem, 1rem + 10vw, 12rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-color);
+}
+
+  .wrapper-error-page > div {
+    grid-area: 1/1/-1/-1;
+  }
+  .top-error-page {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 48%, 0% 58%);
+  }
+  .bottom-error-page {
+    clip-path: polygon(0% 60%, 100% 50%, 100% 100%, 0% 100%);
+    color: black;
+    background: -webkit-linear-gradient(177deg, black 53%, var(--text-color) 65%);
+    background: linear-gradient(177deg, black 53%, var(--text-color) 65%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    transform: translateX(-0.02em);
+  }
+
+  .error-message-error-page {
+    font-size: clamp(1.5rem, 1rem + 2vw, 1.5rem);
+  }
+
+  .button-back-to-home-error-page {
+    width: 285px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 50px;
+    background: #30443A;
+    color: #A0E917;
+    font-size: 24px;
+    line-height: normal;
+    border: none;
+    transition: 1s;
+}
+
+.button-back-to-home-error-page:hover {
+    background: #A0E917;
+    color: #30443A;
+    filter: drop-shadow(0 0 0.75rem #30443A);
+}

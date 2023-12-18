@@ -1,0 +1,101 @@
+.createEmpProfile-head {
+    margin-top: 15%;
+    display: flex;
+    justify-content: center;
+}
+
+.createEmpProfile-container {
+    width: 80%;
+    background-color: rgba(48, 68, 58, 0.3);
+    border-radius: 30px;
+
+}
+
+.createEmpProfile-container-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-radius: 30px 30px 0px 0px;
+    background: #FFF;
+}
+
+.createEmpProfile-container-bottom {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.input-name-infomation-user {
+    border-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.80);
+    width: 80%;
+    font-size: 20px;
+    margin: 2.5px;
+}
+
+.user-profile-profile-page {
+    width: 170px;
+    margin-top: -90px;
+    height: auto;
+    border-radius: 100%;
+    border: white solid 7px;
+    filter: drop-shadow(0 0 0.75rem #0000004e);
+}
+
+.input-name-infomation-user-center {
+    justify-items: end;
+}
+
+.createEmpProfile-container-top-center-left {
+    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: grid;
+    justify-items: center;
+    align-items: start;
+    gap: 10px;
+
+    .input-name-infomation-user,
+    .input-name-infomation-user-center {
+        width: 80%;
+        text-align: center;
+    }
+
+    .input-name-infomation-user-center {
+        justify-self: end;
+        text-align: center;
+    }
+}
+
+.createEmpProfile-container-top-center-right {
+    display: grid;
+    justify-content: end;
+    align-items: center;
+
+    .createEmpProfile-button-save {
+        color: white;
+        border-radius: 30px;
+        border: 2px solid #FFF;
+        background: #30443A;
+        width: 150px;
+        height: 40px;
+        font-weight: bold;
+    }
+}
+
+
+.createEmpProfile-container-top-right {
+    display: grid;
+    justify-content: end;
+    .createEmpProfile-btn-close {
+        width: 40px;
+        margin: 7px 7px 0px 0px;
+    }
+}
+
+.createEmpProfile-container-bottom-left {
+    display: grid;
+justify-content: center;
+    .fix-size-phone-and-email {
+        width: 300px;
+    }
+}

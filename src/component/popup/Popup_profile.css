@@ -1,11 +1,61 @@
 .popup-profile-option {
     width: 50px;
 }
-
+.popup-profile-content {
+    width: 100%;
+    display: grid;  
+    grid-template-columns: 1fr;
+}
  
 .popup-profile-container{
     position: absolute;
     background: beige;
+    height: 120px;
     padding: 10px;
     width: 200px;
+    position: absolute;
+    top: 120px;
+    right: 120px; 
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    z-index: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    align-content: center;
+}
+
+.button-profile-option {
+    cursor: pointer;
+    width: 100%;
+    height: 35px;
+    border: white solid 2px;
+    border-radius: 15px;
+    transition: 1s;
+}
+
+
+/* btn */
+.create-employee-acccount {
+    background-color: #A0E917;
+    margin-bottom: 15px;
+}
+.create-employee-acccount:hover {
+    background-color: #ffffff;
+    border: #A0E917 solid 2px;
+}
+
+.create-company-account {
+    background-color: aquamarine;
+    
+}
+.create-company-account:hover {
+    background-color: #ffffff;
+    border: #A0E917 solid 2px;
+}
+
+.text-popup-profile-options {
+    margin: 0;
+    margin-bottom: 15px;
+    text-align: center;
 }
