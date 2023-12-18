@@ -31,6 +31,7 @@ const Authentication = () => {
 
                         <img className='close-icon-sign-in' src='Icon/close.png' alt='Close' onClick={togglePopupLogIn}></img>
                         <p className='text-popup-sign-in'></p>
+                        <p className='text-popup-sign-in'>Login</p>
 
 
                         <div className='box-form-sign-in'>
