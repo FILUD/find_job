@@ -57,7 +57,6 @@ function Footer() {
       <div className="footer-right">
 
       </div>
-
     </div>
   )
 }
