@@ -19,6 +19,50 @@ const Authentication = () => {
         setIsOpenLogIn(false); // Close the Sign In form when opening Sign Up form
     };
 
+    // set email and password
+    const [emailSignup, setEmailSignup] = useState('');
+    const [passwordSignup, setPasswordSignup] = useState('');
+    const [emailLogin, setEmailLogin] = useState('');
+    const [passwordLogin, setPasswordLogin] = useState('');
+
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ emailLogin, passwordLogin }),
+            });
+
+            // Handle response accordingly
+            const data = await response.json();
+            console.log(data); // Log or further handle the response
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleRegister = async () => {
+        try {
+            const response = await fetch('/register', {
+                method: 'POST',
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                // body: JSON.stringify({ emailSignup, passwordSignup });
+
+            });
+            console.log("Sign-up submitted:", emailSignup, passwordSignup);
+
+            // // Handle response accordingly
+            // const data = await response.json();
+            // console.log(data); // Log or further handle the response
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     // toggle pop-up login 
     return (
@@ -36,14 +80,14 @@ const Authentication = () => {
                         <div className='box-form-sign-in'>
                             <p className='text-top-input-sign-in'>Email</p>
                             <center>
-                                <input className='input input-username-login' type="text" />
+                                <input className='input input-username-login' type="text" value={emailLogin} onChange={(e) => setEmailLogin(e.target.value)} />
                             </center>
                         </div>
 
                         <div className='box-form-sign-in'>
                             <p className='text-top-input-sign-in'>Password</p>
                             <center>
-                                <input className='input input-password-login' type="text" />
+                                <input className='input input-password-login' type="password" value={passwordLogin} onChange={(e) => setPasswordLogin(e.target.value)} />
                             </center>
                         </div>
 
@@ -60,7 +104,7 @@ const Authentication = () => {
                         <div className='footer-button-sign-login'>
                             <center>
                                 <button className='button-sign-in-many sign-in' onClick={togglePopupSignUp}> Sign up</button>
-                                <button className='button-sign-in-many login'>Login</button>
+                                <button className='button-sign-in-many login' onClick={handleLogin}>Login</button>
                             </center>
                         </div>
                     </div>
@@ -77,14 +121,14 @@ const Authentication = () => {
                         <div className='box-form-sign-in'>
                             <p className='text-top-input-sign-in'>Email</p>
                             <center>
-                                <input className='input input-username-login' type="text" />
+                                <input className='input input-username-login' type="text" value={emailSignup} onChange={(e) => setEmailSignup(e.target.value)} />
                             </center>
                         </div>
 
                         <div className='box-form-sign-in'>
                             <p className='text-top-input-sign-in'>Password</p>
                             <center>
-                                <input className='input input-password-login' type="text" />
+                                <input className='input input-password-login' type="password" value={passwordSignup} onChange={(e) => setPasswordSignup(e.target.value)} />
                             </center>
                         </div>
                         <div className='box-form-sign-in'>
@@ -105,7 +149,7 @@ const Authentication = () => {
                         <div className='footer-button-sign-signup'>
                             <center>
                                 <button className='button-sign-in-many sign-in' onClick={togglePopupLogIn}> Back</button>
-                                <button className='button-sign-in-many login'>Login</button>
+                                <button className='button-sign-in-many login' onClick={handleRegister}>Sign up</button>
                             </center>
                         </div>
                     </div>
