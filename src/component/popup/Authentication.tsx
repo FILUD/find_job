@@ -54,20 +54,21 @@ const Authentication = () => {
 
 
     // backend server handle
+    const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
     // sign in
-    const handleLogin = async () => {
+    const handleLogin = async (email: string, password: string) => {
         try {
-            const reponse = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/login', {
+            const reponse = await fetch(`${api}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: emailLogin, password: passwordLogin }),
+                body: JSON.stringify({ email: email, password: password }),
             });
             if (reponse.ok) {
                 console.log("login successful");
 
-                const sendOTP = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP', {
+                const sendOTP = await fetch(`${api}/sendOTP`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -83,7 +84,7 @@ const Authentication = () => {
                 }
 
             } else {
-                console.log("Error Login");
+                console.log(" check your email or password again");
             }
         } catch (error) {
             console.log(error);
@@ -93,31 +94,44 @@ const Authentication = () => {
 
     const handleSignup = async () => {
         try {
-            const reponseSignup = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP', {
+            const checkExist = await fetch(`${api}/existUser`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email: emailSignup }),
             });
-            if (reponseSignup.ok) {
-                togglePopupOTP();
+            if (checkExist.ok) {
+                console.log("Check Exist account: email didn't exist");
+                const reponseSignup = await fetch(`${api}/sendOTP`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email: emailSignup }),
+                });
+                if (reponseSignup.ok) {
+                    togglePopupOTP();
+                } else {
+                    console.log("Error send OTP ")
+                }
+
             } else {
-                console.log("Error send OTP ")
+                console.log(`this email is already existed ${emailSignup}`);
             }
         } catch (error) {
             console.log("Network or other error occurred:", error);
         }
     }
 
-    const RegisterSQL = async () => {
+    const RegisterSQL = async (email: string) => {
         try {
-            const response = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/register', {
+            const response = await fetch(`${api}/register`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: emailSignup, password: passwordSignup }),
+                body: JSON.stringify({ email: email, password: passwordSignup }),
             });
 
             if (response.ok) {
@@ -133,7 +147,8 @@ const Authentication = () => {
 
     const handleVerify = async () => {
         try {
-            const verifyResponse = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/verifyOTP', {
+
+            const verifyResponse = await fetch(`${api}/verifyOTP`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -142,12 +157,16 @@ const Authentication = () => {
             });
             if (verifyResponse.ok) {
                 console.log('Verification successful!');
-                isOpenSignUp ? RegisterSQL : null
-
+                const regis = isOpenSignUp ? true : false;
+                if (regis == true) {
+                    await RegisterSQL(emailSignup);
+                }
+                // return isOpenLogIn? await RegisterSQL(emailSignup): null;
             } else {
                 console.log('Verification failed:', verifyResponse.status);
                 return false;
             }
+
         } catch (error) {
             console.log('Error occurred while verifying OTP:', error);
             return false;
@@ -197,7 +216,7 @@ const Authentication = () => {
                         <div className='footer-button-sign-login'>
                             <center>
                                 <button className='button-sign-in-many sign-in' onClick={togglePopupSignUp}> Sign up</button>
-                                <button className='button-sign-in-many login' onClick={handleLogin}>Login</button>
+                                <button className='button-sign-in-many login' onClick={() => handleLogin(emailLogin, passwordLogin)}>Login</button>
                             </center>
                         </div>
                     </div>
