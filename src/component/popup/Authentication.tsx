@@ -1,28 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Authentication.css';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Authentication = () => {
+    const navigate = useNavigate();
     const [t, i18n] = useTranslation('global');
     const [isOpenLogIn, setIsOpenLogIn] = useState(false);
     const [isOpenSignUp, setIsOpenSignUp] = useState(false);
+    const [isOpenOTP, setIsOpenOTP] = useState(false);
+    const popupRef = useRef<HTMLDivElement | null>(null);
 
+    // toggle pop up 
     const togglePopupLogIn = () => {
         setIsOpenLogIn(!isOpenLogIn);
-        setIsOpenSignUp(false); // Close the Sign Up form when opening Sign In form
+        setIsOpenSignUp(false); // Close the register form when opening Login form
     };
-
     const togglePopupSignUp = () => {
         setIsOpenSignUp(!isOpenSignUp);
-        setIsOpenLogIn(false); // Close the Sign In form when opening Sign Up form
+        setIsOpenLogIn(false); // Close the Login form when opening register form
+    };
+    const togglePopupOTP = () => {
+        setIsOpenOTP(!isOpenOTP);
     };
 
+    //set value default = null 
     const [emailSignup, setEmailSignup] = useState('');
     const [passwordSignup, setPasswordSignup] = useState('');
     const [emailLogin, setEmailLogin] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('');
+    const [otpverify, setOTPVerify] = useState('');
+    //frontend handle
 
-    // this one is log in and verify
+    const handleOutsideClick = (event: MouseEvent) => {
+        if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+            setIsOpenOTP(false);
+        }
+    };
+
+    const handleClick = (event: React.MouseEvent<HTMLImageElement>) => {
+        event.stopPropagation(); // Prevent the click from reaching the document click handler
+        //togglePopupOTP();
+    };
+
+
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
+
+    // backend server handle
+    // sign in
     const handleLogin = async () => {
         try {
             const reponse = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/login', {
@@ -30,23 +62,26 @@ const Authentication = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: emailLogin ,password: passwordLogin}),
+                body: JSON.stringify({ email: emailLogin, password: passwordLogin }),
             });
-            if(reponse.ok){
+            if (reponse.ok) {
                 console.log("login successful");
-                const sendOTP = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP',{
+
+                const sendOTP = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({email: emailLogin}),
+                    body: JSON.stringify({ email: emailLogin }),
                 });
-                if(sendOTP.ok){
+
+                if (sendOTP.ok) {
                     console.log(" check your email for OTP verification");
-                }else{
+                    togglePopupOTP();
+                } else {
                     console.log("Error sendOTP");
                 }
-               
+
             } else {
                 console.log("Error Login");
             }
@@ -54,70 +89,37 @@ const Authentication = () => {
             console.log(error);
         }
     }
+    // register
 
-    // const handleLogin2 = async () => {
-    //     try {
-    //         const response = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP', {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ email: emailLogin }),
-    //         });
-    
-    //         if (response.ok) {
-    //             console.log("Login successful!");
-    //         } else {
-    //             console.log("Login failed:", response.status);
-    //         }
-    //     } catch (error) {
-    //         console.log("Network or other error occurred:", error);
-    //     }
-    // };
-    
-        // const handleLogin1 = async () => {
-        //     try {
-        //         const response = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/login', {
-        //             method: "POST",
-        //             headers: {
-        //                 "Content-Type": "application/json",
-        //             },
-        //             body: JSON.stringify({ email: emailLogin, password: passwordLogin }),
-        //         });
-        
-        //         if (response.ok) {
-        //             const sendOTPResponse = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP', {
-        //                 method: "POST",
-        //                 credentials: "include",
-        //                 headers: {
-        //                     "Content-Type": "application/json",
-        //                 },
-        //                 body: JSON.stringify({ email: emailLogin }),
-        //             });
-        
-        //             if (sendOTPResponse.ok) {
-        //                 console.log("OTP sent successfully!"); // Handle successful OTP send
-        //             } else {
-        //                 console.log("Error in sending OTP:", sendOTPResponse.status); // Handle error in sending OTP
-        //             }
-        //         } else {
-        //             console.log("Login failed:", response.status); // Handle login failure
-        //         }
-        //     } catch (error) {
-        //         console.log("Network or other error occurred:", error); // Handle any network or other errors
-        //     }
-        // };
-        
-    const handleRegister = async () => {
+    const handleSignup = async () => {
         try {
-            const response = await fetch('https://findjob--georgebounthavo.repl.co/register', {
-                method: 'POST',
+            const reponseSignup = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/sendOTP', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: emailSignup }),
+            });
+            if (reponseSignup.ok) {
+                togglePopupOTP();
+            } else {
+                console.log("Error send OTP ")
+            }
+        } catch (error) {
+            console.log("Network or other error occurred:", error);
+        }
+    }
+
+    const RegisterSQL = async () => {
+        try {
+            const response = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/register', {
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email: emailSignup, password: passwordSignup }),
             });
-    
+
             if (response.ok) {
                 console.log("Registration successful!"); // Handle successful registration
             } else {
@@ -127,27 +129,34 @@ const Authentication = () => {
             console.log("Network or other error occurred:", error); // Handle any network or other errors
         }
     };
-    
+
+
     const handleVerify = async () => {
         try {
-            const response = await fetch('https://findjob--georgebounthavo.repl.co/verify', {
-                method: 'POST',
+            const verifyResponse = await fetch('https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev/verifyOTP', {
+                method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: emailSignup, password: passwordSignup }),
+                body: JSON.stringify({ email: isOpenLogIn ? emailLogin : emailSignup, enteredOTP: otpverify }),
             });
-    
-            if (response.ok) {
-                console.log("Verification successful!"); // Handle successful verification
+            if (verifyResponse.ok) {
+                console.log('Verification successful!');
+                isOpenSignUp ? RegisterSQL : null
+
             } else {
-                console.log("Verification failed:", response.status); // Handle verification failure
+                console.log('Verification failed:', verifyResponse.status);
+                return false;
             }
         } catch (error) {
-            console.log("Network or other error occurred:", error); // Handle any network or other errors
+            console.log('Error occurred while verifying OTP:', error);
+            return false;
         }
     };
-    
+
+
+
+
     // toggle pop-up login 
     return (
         <div>
@@ -233,14 +242,28 @@ const Authentication = () => {
                         <div className='footer-button-sign-signup'>
                             <center>
                                 <button className='button-sign-in-many sign-in' onClick={togglePopupLogIn}> Back</button>
-                                <button className='button-sign-in-many login' onClick={handleRegister}>Sign up</button>
+                                <button className='button-sign-in-many login' onClick={handleSignup}>Sign up</button>
                             </center>
                         </div>
+                    </div>
+                </div>
+            )},
+            {isOpenOTP && (
+                <div className="popup-sign-up">
+                    <div className='popup-content-sign-up'>
+                        {/* Your OTP verification UI */}
+                        {/* Input field for OTP code */}
+                        <input className="input input-otp" type="text" placeholder="Enter OTP" value={otpverify} onChange={(e) => setOTPVerify(e.target.value)} />
+                        {/* Button to verify OTP */}
+                        <button className="button-verify-otp" onClick={handleVerify}>
+                            Verify OTP
+                        </button>
                     </div>
                 </div>
             )}
         </div>
     );
+
 };
 
 export default Authentication
