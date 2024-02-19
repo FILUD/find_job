@@ -5,3 +5,6 @@
 //start develop web :
     npm start
 
+
+//install
+npm i @react-pdf-viewer/core

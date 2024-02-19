@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import '../component/global_css/global.css'
-import '../css/EmpProfile.css'
+import '../css/CreateEmpProfile.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 function CreateEmpProfile() {
+
+    const navigate = useNavigate();
 
     //hide placeholder 
     const [phoneContent, setPhoneContent] = useState<string>('');
@@ -35,7 +38,7 @@ function CreateEmpProfile() {
                         <input className='input-name-infomation-user input-name-infomation-user-center' type="text" placeholder='Position job' />
                         <input className='input-name-infomation-user' type="text" placeholder='Address' /></div>
                     <div className='createEmpProfile-container-top-center-right'>
-                        <button className='createEmpProfile-button-save'>Save My Profile</button>
+                        <button onClick={() => navigate('/EmpProfile')} className='createEmpProfile-button-save'>Save My Profile</button>
                     </div>
                     <div className='createEmpProfile-container-top-right'>
                         <img className='createEmpProfile-btn-close' src="Icon/close.png" alt="Close" />

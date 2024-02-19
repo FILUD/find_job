@@ -14,6 +14,9 @@ import CreateEmpProfile from './page/CreateEmpProfile';
 import EmpProfile from './page/EmpProfile';
 
 
+import TestPDF from './page/TestPDF';
+
+
 function App() {
   
   useEffect(() => {
@@ -37,6 +40,8 @@ function App() {
           <Route  path="/Findjob" element={<FindjobPage />} />
           <Route  path="/CreateEmpProfile" element={<CreateEmpProfile />} />
           <Route  path="/EmpProfile" element={<EmpProfile />} />
+
+          <Route  path="/testpdf" element={<TestPDF />} />
 
           <Route path="*" element={<ErrorPage />} />
           

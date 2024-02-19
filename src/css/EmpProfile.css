@@ -1,286 +1,98 @@
-.createEmpProfile-head {
-    margin-top: 12%;
-    display: flex;
-    justify-content: center;
+.EmpProfile-full-name {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0px 0px 0px 0px;
+    justify-self: start;
 }
 
-.createEmpProfile-container {
-    width: 80%;
-    background-color: rgba(48, 68, 58, 0.3);
-    border-radius: 30px;
-
+.EmpProfile-position-job {
+    margin: 0px 0px 0px 0px;
+    justify-self: start;
 }
 
-.createEmpProfile-container-top {
+.EmpProfile-address {
+    margin: 0px 0px 0px 0px;
+    justify-self: start;
+}
+
+.EmpProfile-icon-location {
+    margin-right: 10px;
+}
+
+
+.EmpProfile-grid-small-contact {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    border-radius: 30px 30px 0px 0px;
-    background: #FFF;
-}
-
-.createEmpProfile-container-bottom {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.input-name-infomation-user {
-    width: 80%;
-    height: 30px;
-    margin: 2.5px;
-    border-radius: 30px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.80);
-}
-
-.user-profile-profile-page {
-    width: 170px;
-    margin-top: -90px;
-    height: auto;
-    border-radius: 100%;
-    border: white solid 7px;
-    filter: drop-shadow(0 0 0.75rem #0000004e);
-}
-.user-profile-profile-page-edit-icon {
-    position: absolute;
-    margin-top: -80px;
-    margin-left: -50px;
-    transition: 0.5s;
-}
-.user-profile-profile-page-edit-icon:hover {
-    -webkit-animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-	        animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-}
-
-.input-name-infomation-user-center {
-    justify-items: end;
-}
-
-.createEmpProfile-container-top-center-left {
+    grid-template-columns: 1fr 2fr;
     margin-top: 10px;
     margin-bottom: 10px;
-    display: grid;
-    justify-items: center;
-    align-items: start;
-    gap: 10px;
-
-    .input-name-infomation-user,
-    .input-name-infomation-user-center {
-        width: 80%;
-        text-align: center;
-    }
-
-    .input-name-infomation-user-center {
-        justify-self: end;
-        text-align: center;
-    }
 }
 
-.createEmpProfile-container-top-center-right {
-    display: grid;
-    justify-content: end;
-    align-items: center;
-
-    .createEmpProfile-button-save {
-        color: white;
-        border-radius: 30px;
-        border: 2px solid #FFF;
-        background: #30443A;
-        width: 150px;
-        height: 40px;
-        font-weight: bold;
-        transition: 1.5s;
-    }
-    .createEmpProfile-button-save:hover {
-        color: #30443A;
-        background: #A8EB12;
-        border: 2px solid #30443A;
-        filter: drop-shadow(16px 10px 20px #30443A);
-    }
-}
-
-.createEmpProfile-container-top-right {
-    display: grid;
-    justify-content: end;
-
-    .createEmpProfile-btn-close {
-        width: 40px;
-        margin: 7px 7px 0px 0px;
-        transition: 1s;
-    }
-    .createEmpProfile-btn-close:hover {
-        filter: hue-rotate(90deg);
-    }
-}
-
-.createEmpProfile-container-bottom-left {
-    display: grid;
-    justify-content: center;
-    gap: 0;
-    justify-content: center;
-    align-content: center;
-
-    .fix-size-phone-and-email {
-        padding: 10px;
-        width: 300px;
-        height: 120px;
-        margin: 15px;
-        border-radius: 15px;
-        fill: rgba(255, 255, 255, 0.80);
-        stroke-width: 1px;
-        stroke: rgba(0, 0, 0, 0.25);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-    }
-
-    .createEmpProfile-img-placeholder {
-        pointer-events: none;
-        width: 30px;
-        height: 30px;
-        justify-items: end;
-        margin-top: -90px;
-        margin-left: 90px;
-    }
-
-    .createEmpProfile-text-placeholder {
-        pointer-events: none;
-        margin-top: -86px;
-        margin-left: 20px;
-        opacity: 0.5;
-    }
-}
-
-.createEmpProfile-box-input-contact {
+.EmpProfile-box-icon-font-contact {
     display: flex;
-    grid-template-columns: 1fr 2fr;
+    justify-content: center;
+    align-items: center;
+    margin-right: 35px;
 }
 
-.createEmpProfile-container-bottom-center {
-    .createEmpProfile-head-box {
-        height: 45px;
-        margin-top: 15px;
-        background-color: #30443A;
-        border-radius: 20px 20px 0px 0px;
-        width: 350px;
-        display: grid;
-        text-align: center;
-        align-items: center;
-
-        .createEmpProfile-container-bottom-center-text-header {
-            color: #FFF;
-        }
-
-        .createEmpProfile-container-bottom-center-text-header {
-            font-size: 23px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-    }
-
-    .createEmpProfile-box {
-        width: 350px;
-        height: 300px;
-        background: #FFF;
-        border-radius: 0px 0px 20px 20px;
-        margin-bottom: 15px;
-
-    }
-
-    .createEmpProfile-input-text-description {
-        padding: 10px;
-        width: 300px;
-        height: 260px;
-        margin-top: 15px;
-        border-radius: 15px;
-        fill: rgba(255, 255, 255, 0.80);
-        stroke-width: 1px;
-        stroke: rgba(0, 0, 0, 0.25);
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
-        font-size: 14px;
-        overflow-y: auto;
-        display: inline-block;
-    }
-
-    .placeholder-description {
-        pointer-events: none;
-        margin-top: -150px;
-        text-align: center;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.5);
-    }
-
-    .createEmpProfile-input-text-description:focus+.placeholder-description {
-        display: none;
-    }
+.EmpProfile-icon-font-contact {
+    display: block;
 }
 
-.createEmpProfile-box-cv {
+.EmpProfile-phone-number {
+    justify-self: start;
+}
+
+.EmpProfile-description {
+    margin: 0;
+}
+
+.EmpProfile-box-gmail {
     display: grid;
+    justify-content: start;
+    justify-items: start;
 
-    .createEmpProfile-cv-content {
-        display: grid;
-        grid-template-columns: 2fr 1fr 2fr;
-        align-items: center;
-        justify-items: center;
-
-        .vertical-line {
-            border-left: 1px solid black;
-            height: 100px;
-            margin: 0 10px;
-        }
-
-        .createEmpProfile-cv-post-pdf {
-            justify-self: end;
-            width: 60px;
-            transition: 1s;
-        }
-        .createEmpProfile-cv-post-pdf:hover {
-            filter: contrast(60%);
-        }
-
-        .createEmpProfile-btn-create-cv {
-            justify-self: start;
-            height: 35px;
-            width: 110px;
-            border-radius: 30px;
-            border: 2px solid #394D56;
-            background: #A8EB12;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            transition: 1.5s;
-        }
-        .createEmpProfile-btn-create-cv:hover {
-            filter: drop-shadow(16px 10px 20px #A8EB12);
-            color: white;
-            background: #394D56;
-            border: 2px solid #A8EB12;
-        }
+    .EmpProfile-gmail {
+        margin: 5px;
     }
 }
 
+.EmpProfile-box-phone-number {
+    display: grid;
+    justify-content: start;
+    justify-items: start;
 
-/* animation */
-
-.flip-horizontal-bottom {
-	-webkit-animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
-	        animation: flip-horizontal-bottom 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+    .EmpProfile-phone-number {
+        margin: 5px;
+    }
 }
 
- @-webkit-keyframes flip-horizontal-bottom {
-    0% {
-      -webkit-transform: rotateX(0);
-              transform: rotateX(0);
+.EmpProfile-box-description {
+    display: flex;
+
+    .EmpProfile-description {
+        margin-left: 10px;
+        margin-right: 10px;
+        max-width: 330px;
+        width: 330px;
     }
-    100% {
-      -webkit-transform: rotateX(-180deg);
-              transform: rotateX(-180deg);
-    }
-  }
-  @keyframes flip-horizontal-bottom {
-    0% {
-      -webkit-transform: rotateX(0);
-              transform: rotateX(0);
-    }
-    100% {
-      -webkit-transform: rotateX(-360deg);
-              transform: rotateX(-360deg);
-    }
-  }
-  
+}
+
+.EmpProfile-box-description {
+    display: grid;
+    width: 100%;
+}
+
+.EmpProfile-description {
+    /* auto new line */
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    word-wrap: break-word;
+    /* end */
+}
+
+.emp-profile-pdf {
+    width: 350px;
+    height: 300px;
+}
