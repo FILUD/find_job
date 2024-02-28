@@ -1,12 +1,38 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import HashLoader from 'react-spinners/HashLoader';
+import LoginPopup from './LoginPopup';
 
-interface LoginPopupProps {
+interface Props {
     isOpen: boolean;
     onClose: () => void;
-    togglePopupSignUp: () => void;
+    togglePopup: () => void;
 }
-export default function TestPopup({ isOpen, onClose, togglePopupSignUp }: LoginPopupProps) {
+
+export default function OtpPopup({ isOpen, onClose, togglePopup }: Props) {
+    const [isLoading, setLoading] = useState(false);
+
+    //css style
+    const cssInputOTP = 'block w-20 h-12 w-full rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 text-center';
+   
+    useEffect(() => {
+        if (isLoading) {
+            const timeoutId = setTimeout(() => {
+                setLoading(true);
+            }, 5000);
+
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [isLoading]);
+
+    const handleSendOTP = () => {
+        setLoading(true);
+
+        setTimeout(() => {
+        }, 3000);
+    };
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -41,33 +67,28 @@ export default function TestPopup({ isOpen, onClose, togglePopupSignUp }: LoginP
                                     as="h3"
                                     className="text-2xl font-bold leading-6 text-gray-900 text-center font-sans"
                                 >
-                                    Sign in
+                                    Enter OTP
                                 </Dialog.Title>
-                                <div className="mt-2 font-sans font-semibold">
-                                    <p className="text-base text-gray-500 font-sans font-semibold pt-5 pl-2"> </p>
-
-                                    <input placeholder='Email or username' id="email" name="email" type="email" autoComplete="Email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
-                                    <br></br>
-                                    <input placeholder='Password' id="password" name="password" type="password" autoComplete="current-password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
-
+                                <div className="mt-2  font-sans font-semibold grid grid-cols-4 space-x-2 text-center">
+                                    <input placeholder='' id="Otp_num1" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
+                                    <input placeholder='' id="Otp_num2" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
+                                    <input placeholder='' id="Otp_num3" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
+                                    <input placeholder='' id="Otp_num4" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
                                 </div>
 
                                 <div className="mt-4 grid justify-items-center space-y-4 ">
-                                    <button
-                                        type="button"
-                                        className="h-10 w-full max-w-80 inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                        onClick={onClose}
-                                    >
-                                        Sign in
-                                    </button>
-
+                                    {/* Button */}
                                     <div>
                                         <button
                                             type="button"
-                                            onClick={togglePopupSignUp}
+                                            onClick={handleSendOTP}
                                             className="rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                                         >
-                                            Sign Up
+                                            {isLoading ? (
+                                                <HashLoader color="#ffffff" loading={isLoading} size={30} />
+                                            ) : (
+                                                'Send'
+                                            )}
                                         </button>
                                     </div>
                                 </div>

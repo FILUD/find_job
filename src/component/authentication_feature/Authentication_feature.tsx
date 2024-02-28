@@ -4,40 +4,50 @@ import { Fragment, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginPopup from './LoginPopup';
 import SignupPopup from './RegisterPopup';
-
+import OtpPopup from './OtpPopup';
 
 export default function Auth_feat() {
-    //Open and Close Popup
+    // Open and Close Popup
     const [isOpenLogIn, setIsOpenLogIn] = useState(false);
     const [isOpenSignUp, setIsOpenSignUp] = useState(false);
-    //Loading spinner 
-    const [loading, setLoading] = useState(false);
+    const [isOpenOTP, setIsOpenOTP] = useState(false);
+    // Loading spinner
+    const [isLoading, setLoading] = useState(true);
     useEffect(() => {
-        setLoading(false)
-        setTimeout(() => {
-            setLoading(false)
-        }, 5000)
-    })
+        const timeoutId = setTimeout(() => {
+            setLoading(false);
+        }, 2500);
+        // return () => clearTimeout(timeoutId);
+    }, []);
+    
 
-    //Navigate
+    // Navigate
     const navigate = useNavigate();
-    //Languages
+    // Languages
     const [t, i18n] = useTranslation('global');
 
 
     const togglePopupLogIn = () => {
         setIsOpenLogIn(!isOpenLogIn);
-        setIsOpenSignUp(false); // Close the signup form when opening login form
+        setIsOpenSignUp(false);
+        setIsOpenOTP(false);
     };
 
     const togglePopupSignUp = () => {
         setIsOpenSignUp(!isOpenSignUp);
-        setIsOpenLogIn(false); // Close the login form when opening signup form
+        setIsOpenLogIn(false);
+        setIsOpenOTP(false);
+    };
+    const togglePopupOTP = () => {
+        setIsOpenOTP(!isOpenOTP);
+        setIsOpenLogIn(false);
+        setIsOpenSignUp(false); 
     };
 
     function closeModal() {
         setIsOpenLogIn(false);
         setIsOpenSignUp(false);
+        setIsOpenOTP(false);
     }
 
     return (
@@ -51,13 +61,17 @@ export default function Auth_feat() {
                     Sign In
                 </button>
             </div>
+            
+
             {isOpenLogIn && (
-                <LoginPopup isOpen={isOpenLogIn} onClose={closeModal} togglePopup={togglePopupSignUp} />
+                <LoginPopup isOpen={isOpenLogIn} onClose={closeModal} togglePopup={togglePopupSignUp} isLoading={isLoading}/>
             )}
             {isOpenSignUp && (
-                <SignupPopup isOpen={isOpenSignUp} onClose={closeModal} togglePopup={togglePopupLogIn} />
+                <SignupPopup isOpen={isOpenSignUp} onClose={closeModal} togglePopup={togglePopupOTP} isLoading = {isLoading}/>
             )}
-
+            {isOpenOTP && (
+                <OtpPopup isOpen={isOpenOTP} onClose={closeModal} togglePopup={togglePopupLogIn} />
+            )}
         </>
     );
 }
