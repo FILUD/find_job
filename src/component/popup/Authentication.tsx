@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Authentication.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import Example from './Signin_popup';
+
 
 const Authentication = () => {
     const navigate = useNavigate();
