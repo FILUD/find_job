@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Authentication.css';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import Example from './Signin_popup';
 
 const Authentication = () => {
     const navigate = useNavigate();
@@ -56,14 +57,14 @@ const Authentication = () => {
     // backend server handle
     const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
     // sign in
-    const handleLogin = async (email: string, password: string) => {
+    const handleLogin = async () => {
         try {
             const reponse = await fetch(`${api}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email: email, password: password }),
+                body: JSON.stringify({ email: emailLogin, password: passwordLogin }),
             });
             if (reponse.ok) {
                 console.log("login successful");
@@ -135,12 +136,13 @@ const Authentication = () => {
             });
 
             if (response.ok) {
-                console.log("Registration successful!"); // Handle successful registration
+                console.log("Registration successful!");
+                return true;
             } else {
-                console.log("Registration failed:", response.status); // Handle registration failure
+                console.log("Registration failed:", response.status);
             }
         } catch (error) {
-            console.log("Network or other error occurred:", error); // Handle any network or other errors
+            console.log("Network or other error occurred:", error);
         }
     };
 
@@ -179,12 +181,14 @@ const Authentication = () => {
     // toggle pop-up login 
     return (
         <div>
+          
             {/* <button className='button-sign-in'onClick={togglePopupSignUp}>Sign up</button> */}
             <button className='button-sign-in' onClick={togglePopupLogIn}>Sign in</button>
             {isOpenLogIn && (
                 <div className="popup-sign-up">
+                    
                     <div className="popup-content-sign-up">
-
+                        
                         <img className='close-icon-sign-in' src='Icon/close.png' alt='Close' onClick={togglePopupLogIn}></img>
                         <p className='text-popup-sign-in'>Login</p>
 
@@ -216,7 +220,7 @@ const Authentication = () => {
                         <div className='footer-button-sign-login'>
                             <center>
                                 <button className='button-sign-in-many sign-in' onClick={togglePopupSignUp}> Sign up</button>
-                                <button className='button-sign-in-many login' onClick={() => handleLogin(emailLogin, passwordLogin)}>Login</button>
+                                <button className='button-sign-in-many login' onClick={handleLogin}>Login</button>
                             </center>
                         </div>
                     </div>

@@ -1,17 +1,17 @@
-body {
+/* body {
   background-image: url('/public/Background/Backgound-welcome.png');
   background-size: cover;
   width: 100%;
   background-repeat: no-repeat;
-}
+} */
 
 .container-nav {
-  margin-top: 54px;
+  margin-top: 0px;
   height: 3.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 100px;
+  padding: 10px 50px;
   color: #30443A;
 }
 /* fix */
