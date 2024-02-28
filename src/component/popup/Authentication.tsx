@@ -270,7 +270,7 @@ const Authentication = () => {
                         </div>
                     </div>
                 </div>
-            )},
+            )}
             {isOpenOTP && (
                 <div className="popup-sign-up">
                     <div className='popup-content-sign-up'>

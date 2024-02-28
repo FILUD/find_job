@@ -6,7 +6,7 @@ interface Props {
     onClose: () => void;
     togglePopup: () => void;
 }
-export default function LoginPopup({ isOpen, onClose, togglePopup }: Props) {
+export default function SignupPopup({ isOpen, onClose, togglePopup }: Props) {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -41,7 +41,7 @@ export default function LoginPopup({ isOpen, onClose, togglePopup }: Props) {
                                     as="h3"
                                     className="text-2xl font-bold leading-6 text-gray-900 text-center font-sans"
                                 >
-                                    Sign in
+                                   Register
                                 </Dialog.Title>
                                 <div className="mt-2 font-sans font-semibold">
                                     <p className="text-base text-gray-500 font-sans font-semibold pt-5 pl-2"> </p>
@@ -58,7 +58,7 @@ export default function LoginPopup({ isOpen, onClose, togglePopup }: Props) {
                                         className="h-10 w-full max-w-80 inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         onClick={onClose}
                                     >
-                                        Sign in
+                                        Sign up
                                     </button>
 
                                     <div>

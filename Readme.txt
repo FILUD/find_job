@@ -6,11 +6,13 @@
     npx tailwindcss init
 
 
+
+
 npm install @headlessui/react @heroicons/react
-npm install tailwindcss@latest
 npm install framer-motion
 npm install react-i18next react-router-dom --save
 npm install tailwindcss --save-dev
+npm install --save react-spinners
 
 //start develop web :
     npm start

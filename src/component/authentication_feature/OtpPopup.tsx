@@ -1,12 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
-interface Props {
+interface LoginPopupProps {
     isOpen: boolean;
     onClose: () => void;
-    togglePopup: () => void;
+    togglePopupSignUp: () => void;
 }
-export default function LoginPopup({ isOpen, onClose, togglePopup }: Props) {
+export default function TestPopup({ isOpen, onClose, togglePopupSignUp }: LoginPopupProps) {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -64,7 +64,7 @@ export default function LoginPopup({ isOpen, onClose, togglePopup }: Props) {
                                     <div>
                                         <button
                                             type="button"
-                                            onClick={togglePopup}
+                                            onClick={togglePopupSignUp}
                                             className="rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                                         >
                                             Sign Up
