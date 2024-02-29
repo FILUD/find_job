@@ -6,11 +6,21 @@ interface Props {
     isOpen: boolean;
     onClose: () => void;
     togglePopup: () => void;
-    isLoading: boolean; 
+    isLoading: boolean;
+}
+interface LoginProps {
+    email: string;
+    password: string;
+    setLoginEmail: (value: React.SetStateAction<string>) => void;
+    setLoginPassword: (value: React.SetStateAction<string>) => void;
+    handle: (requireEmail: string, requirePass: string) => Promise<void>;
 }
 
+const formcss = "block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6";
 
-export default function LoginPopup({ isOpen, onClose, togglePopup, isLoading }: Props) {
+
+export default function LoginPopup(
+    { isOpen, onClose, togglePopup, isLoading, email, password, handle, setLoginPassword, setLoginEmail }: Props & LoginProps) {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -54,9 +64,9 @@ export default function LoginPopup({ isOpen, onClose, togglePopup, isLoading }: 
                                 ) : (
                                     <div className="mt-2 font-sans font-semibold">
                                         <p className="text-base text-gray-500 font-sans font-semibold pt-5 pl-2"> </p>
-                                        <input placeholder='Email or username' id="email" name="email" type="email" autoComplete="Email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+                                        <input placeholder='Email or username' value={email} type="email" autoComplete="Email" required className={formcss} onChange={(e) => setLoginEmail(e.target.value)} />
                                         <br></br>
-                                        <input placeholder='Password' id="password" name="password" type="password" autoComplete="current-password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+                                        <input placeholder='Password' value={password} type="password" autoComplete="current-password" required className={formcss} onChange={(e) => setLoginPassword(e.target.value)} />
 
                                     </div>
                                 )}
@@ -67,7 +77,8 @@ export default function LoginPopup({ isOpen, onClose, togglePopup, isLoading }: 
                                         <button
                                             type="button"
                                             className="h-10 w-full max-w-80 inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={onClose}
+                                            onClick={() => handle(email,password )}
+
                                         >
                                             Sign in
                                         </button>
@@ -83,11 +94,11 @@ export default function LoginPopup({ isOpen, onClose, togglePopup, isLoading }: 
                                         </div>
                                     </div>
                                 )}
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
+                        </Dialog.Panel>
+                    </Transition.Child>
                 </div>
-            </Dialog>
-        </Transition>
+            </div>
+        </Dialog>
+        </Transition >
     );
 }

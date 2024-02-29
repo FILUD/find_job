@@ -45,7 +45,7 @@ export default function SignupPopup({ isOpen, onClose, togglePopup, isLoading }:
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>
                                 <Dialog.Title as="h3" className="text-2xl font-bold leading-6 text-gray-900 text-center font-sans">
-                                    Sign Up
+                                    Register
                                 </Dialog.Title>
 
                                 {/* input form here */}
@@ -56,9 +56,15 @@ export default function SignupPopup({ isOpen, onClose, togglePopup, isLoading }:
                                 ) : (
                                     <div className="mt-2 font-sans font-semibold">
                                         <p className="text-base text-gray-500 font-sans font-semibold pt-5 pl-2"> </p>
-                                        <input placeholder='Email or username' id="email" name="email" type="email" autoComplete="Email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+                                        <div className="px-1 font-sans font-semibold grid grid-cols-2 space-x-2 mb-5">
+                                            <input placeholder='Firstname' id="name" name="name" type="email" autoComplete="username" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+                                            <input placeholder='Lastname' id="email" name="email" type="email" autoComplete="email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+                                        </div>
+                                        <input placeholder='Email' id="email" name="email" type="email" autoComplete="email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
                                         <br></br>
-                                        <input placeholder='Password' id="password" name="password" type="password" autoComplete="current-password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+                                        <input placeholder='Password' id="password" name="password" type="email" autoComplete="password" required className="mb-2 block h-12 w-full rounded-full border-0 p-4 py-1.5  text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
+
+                                        <input placeholder='Confirm-Password' id="password-confirm" name="password-confirm" type="password" autoComplete="current-password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" />
 
                                     </div>
                                 )}
@@ -66,14 +72,14 @@ export default function SignupPopup({ isOpen, onClose, togglePopup, isLoading }:
                                 {/* button */}
                                 {!isLoading && (
                                     <div className="mt-4 grid justify-items-center space-y-4">
-                                        
+
                                         <button
                                             type="button"
                                             onClick={togglePopup}
                                             className="rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                                         >
                                             Sign up
-                                            
+
                                         </button>
                                     </div>
                                 )}
@@ -82,6 +88,6 @@ export default function SignupPopup({ isOpen, onClose, togglePopup, isLoading }:
                     </div>
                 </div>
             </Dialog>
-        </Transition>
+        </Transition >
     );
 }

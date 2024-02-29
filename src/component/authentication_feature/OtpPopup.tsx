@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 import LoginPopup from './LoginPopup';
 
@@ -10,25 +10,36 @@ interface Props {
 }
 
 export default function OtpPopup({ isOpen, onClose, togglePopup }: Props) {
-    const [isLoading, setLoading] = useState(false);
+    // //move room when input OTP
+    // const inputRef1 = useRef(null);
+    // const inputRef2 = useRef(null);
+    // const inputR = useRef(null);
+    // const inputRef2 = useRef(null);
+    
+    // // Function to handle input change
+    // const handleInputChange = (e, nextInputRef) => {
+    //     const currentValue = e.target.value;
+    //     if (currentValue.length === 1 && nextInputRef.current) {
+    //         nextInputRef.current.focus();
+    //     }
+    // };
 
     //css style
-    const cssInputOTP = 'block w-20 h-12 w-full rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 text-center';
-   
+    const cssInputOTP = 'block w-20 h-12   rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 text-center';
+
+    //Loading 
+    const [isLoading, setLoading] = useState(false);
     useEffect(() => {
         if (isLoading) {
             const timeoutId = setTimeout(() => {
                 setLoading(true);
             }, 5000);
-
-
             return () => clearTimeout(timeoutId);
         }
     }, [isLoading]);
 
     const handleSendOTP = () => {
         setLoading(true);
-
         setTimeout(() => {
         }, 3000);
     };
@@ -69,11 +80,11 @@ export default function OtpPopup({ isOpen, onClose, togglePopup }: Props) {
                                 >
                                     Enter OTP
                                 </Dialog.Title>
-                                <div className="mt-2  font-sans font-semibold grid grid-cols-4 space-x-2 text-center">
-                                    <input placeholder='' id="Otp_num1" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
-                                    <input placeholder='' id="Otp_num2" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
-                                    <input placeholder='' id="Otp_num3" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
-                                    <input placeholder='' id="Otp_num4" name="email" type="text" maxLength={1}  autoComplete="off" required className={cssInputOTP} />
+                                <div className="flex justify-center mt-2 px-3 font-sans font-semibold grid grid-cols-4 text-center">
+                                    <input placeholder='' id="Otp_num1" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
+                                    <input placeholder='' id="Otp_num2" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
+                                    <input placeholder='' id="Otp_num3" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
+                                    <input placeholder='' id="Otp_num4" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
                                 </div>
 
                                 <div className="mt-4 grid justify-items-center space-y-4 ">

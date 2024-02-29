@@ -14,6 +14,8 @@ npm install react-i18next react-router-dom --save
 npm install tailwindcss --save-dev
 npm install --save react-spinners
 
+ "build-css": "tailwindcss build src/css/styles.css -o public/styles.css",
+
 //start develop web :
     npm start
     node start #in backend directory
