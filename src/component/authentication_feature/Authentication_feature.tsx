@@ -14,10 +14,10 @@ export default function Auth_feat() {
     const [passwordLogin, setPasswordLogin] = useState('');
     const [otpverify, setOTPVerify] = useState('');
     //api 
-    const api = '';
+    const api = 'http://localhost/4000';
 
 
-    const handleLogin = async (requireEmail:string , requirePass :string) => {
+    const handleLogin = async (requireEmail: string, requirePass: string) => {
         try {
             const reponse = await fetch(`${api}/login`, {
                 method: "POST",
@@ -53,14 +53,14 @@ export default function Auth_feat() {
     }
     // register
 
-    const handleSignup = async () => {
+    const handleSignup = async (reqEmail: string) => {
         try {
             const checkExist = await fetch(`${api}/existUser`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: emailSignup }),
+                body: JSON.stringify({ email: reqEmail }),
             });
             if (checkExist.ok) {
                 console.log("Check Exist account: email didn't exist");
@@ -69,7 +69,7 @@ export default function Auth_feat() {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ email: emailSignup }),
+                    body: JSON.stringify({ email: reqEmail }),
                 });
                 if (reponseSignup.ok) {
                     togglePopupOTP();
@@ -78,21 +78,21 @@ export default function Auth_feat() {
                 }
 
             } else {
-                console.log(`this email is already existed ${emailSignup}`);
+                console.log(`this email is already existed ${reqEmail}`);
             }
         } catch (error) {
             console.log("Network or other error occurred:", error);
         }
     }
 
-    const RegisterSQL = async (email: string) => {
+    const RegisterSQL = async (reqEmail: string) => {
         try {
             const response = await fetch(`${api}/register`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: email, password: passwordSignup }),
+                body: JSON.stringify({ email: reqEmail, password: passwordSignup }),
             });
 
             if (response.ok) {
@@ -107,7 +107,7 @@ export default function Auth_feat() {
     };
 
 
-    const handleVerify = async () => {
+    const handleVerify = async (reqOtp: string) => {
         try {
 
             const verifyResponse = await fetch(`${api}/verifyOTP`, {
@@ -189,13 +189,13 @@ export default function Auth_feat() {
 
 
             {isOpenLogIn && (
-                <LoginPopup isOpen={isOpenLogIn} onClose={closeModal} togglePopup={togglePopupSignUp} isLoading={isLoading} email={emailLogin} password={passwordLogin} handle={handleLogin} setLoginEmail={setEmailLogin} setLoginPassword={setPasswordLogin}  />
-                )}
+                <LoginPopup isOpen={isOpenLogIn} onClose={closeModal} togglePopup={togglePopupSignUp} isLoading={isLoading} email={emailLogin} password={passwordLogin} handle={handleLogin} setEmail={setEmailLogin} setPassword={setPasswordLogin} />
+            )}
             {isOpenSignUp && (
-                <SignupPopup isOpen={isOpenSignUp} onClose={closeModal} togglePopup={togglePopupOTP} isLoading={isLoading} />
+                <SignupPopup isOpen={isOpenSignUp} onClose={closeModal} togglePopup={togglePopupOTP} isLoading={isLoading} email={emailSignup} password={passwordSignup} handle={handleSignup} setEmail={setEmailSignup} setPassword={setPasswordSignup} />
             )}
             {isOpenOTP && (
-                <OtpPopup isOpen={isOpenOTP} onClose={closeModal} togglePopup={togglePopupLogIn} />
+                <OtpPopup isOpen={isOpenOTP} onClose={closeModal} otpVerify={otpverify} togglePopup={togglePopupLogIn}/>
             )}
         </>
     );

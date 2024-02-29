@@ -37,16 +37,16 @@ const transporter = nodemailer.createTransport(config.nodemailer);
 
 // Pool MySQL
 const pool = mysql.createPool(setConfig.pool);
-const connection = await pool.getConnection();
+// const cmd.connection = await pool.getconnection();
 
-//checkAccount
+// CheckAccount
 const checkAccount = async (email) => {
   try {
-    const [existingUsers] = await connection.execute(
+    const [existingUsers] = await cmd.connection.execute(
       cmd.emailSQL,
       [email],
     );
-    connection.release();
+    cmd.connection.release();
     return existingUsers.length > 0;
   } catch (error) {
     console.error(error);
@@ -59,11 +59,11 @@ passport.use(
     { usernameField: "email" },
     async (email, password, done) => {
       try {
-        const [rows] = await connection.execute(
+        const [rows] = await cmd.connection.execute(
           cmd.emailSQL,
           [email],
         );
-        connection.release();
+        cmd.connection.release();
         if (!rows.length) {
           return done(null, false, { message: "Incorrect email." });
         }
@@ -89,11 +89,11 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const [rows] = await connection.execute(
+    const [rows] = await cmd.connection.execute(
       cmd.idSQL,
       [id],
     );
-    connection.release();
+    cmd.connection.release();
 
     if (!rows.length) {
       return done(new Error("User not found."));
@@ -157,10 +157,10 @@ app.post("/register", async (req, res) => {
       return res.status(400).send("Email already exists.");
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    await connection.execute(
+    await cmd.connection.execute(
       cmd.emailpass,[email, hashedPassword],
     );
-    connection.release();
+    cmd.connection.release();
     res.status(201).send("User registered successfully.");
   } catch (error) {
     console.error(error);
@@ -180,8 +180,8 @@ app.post("/verifyOTP", async (req, res) => {
 
 app.get("/test", async (req, res) => {
   try {
-    const [results] = await connection.query("SELECT * FROM users");
-    connection.release();
+    const [results] = await cmd.connection.query("SELECT * FROM users");
+    cmd.connection.release();
 
     let message = "";
 
@@ -198,7 +198,7 @@ app.get("/test", async (req, res) => {
 });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

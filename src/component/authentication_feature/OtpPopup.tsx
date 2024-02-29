@@ -1,49 +1,41 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
-import LoginPopup from './LoginPopup';
 
 interface Props {
     isOpen: boolean;
     onClose: () => void;
     togglePopup: () => void;
 }
+interface OtpProps {
+    otpVerify: string;
+}
 
-export default function OtpPopup({ isOpen, onClose, togglePopup }: Props) {
-    // //move room when input OTP
-    // const inputRef1 = useRef(null);
-    // const inputRef2 = useRef(null);
-    // const inputR = useRef(null);
-    // const inputRef2 = useRef(null);
-    
-    // // Function to handle input change
-    // const handleInputChange = (e, nextInputRef) => {
-    //     const currentValue = e.target.value;
-    //     if (currentValue.length === 1 && nextInputRef.current) {
-    //         nextInputRef.current.focus();
-    //     }
-    // };
+export default function OtpPopup({ isOpen, onClose, otpVerify, togglePopup }: Props & OtpProps) {
+    // CSS style
+    const cssInputOTP = 'block w-20 h-12 rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 text-center';
 
-    //css style
-    const cssInputOTP = 'block w-20 h-12   rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 text-center';
-
-    //Loading 
+    // Loading state
     const [isLoading, setLoading] = useState(false);
-    useEffect(() => {
-        if (isLoading) {
-            const timeoutId = setTimeout(() => {
-                setLoading(true);
-            }, 5000);
-            return () => clearTimeout(timeoutId);
-        }
-    }, [isLoading]);
 
+    // Handle sending OTP
     const handleSendOTP = () => {
         setLoading(true);
         setTimeout(() => {
+            // Your logic for sending OTP
+            setLoading(false); // Example: set loading to false after some time
         }, 3000);
     };
 
+    // Splitting the single OTP string into individual digits
+    const [otp1, setOtp1] = useState('');
+    const [otp2, setOtp2] = useState('');
+    const [otp3, setOtp3] = useState('');
+    const [otp4, setOtp4] = useState('');
+
+    // Concatenate otp1, otp2, otp3, and otp4 into a single string
+    const otpValue = otp1 + otp2 + otp3 + otp4;
+    otpVerify = otpValue;
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -81,18 +73,55 @@ export default function OtpPopup({ isOpen, onClose, togglePopup }: Props) {
                                     Enter OTP
                                 </Dialog.Title>
                                 <div className="flex justify-center mt-2 px-3 font-sans font-semibold grid grid-cols-4 text-center">
-                                    <input placeholder='' id="Otp_num1" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
-                                    <input placeholder='' id="Otp_num2" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
-                                    <input placeholder='' id="Otp_num3" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
-                                    <input placeholder='' id="Otp_num4" name="email" type="text" maxLength={1} autoComplete="off" required className={cssInputOTP} />
+                                    <input
+                                        placeholder=""
+                                        value={otp1}
+                                        onChange={(e) => setOtp1(e.target.value)}
+                                        type="text"
+                                        maxLength={1}
+                                        autoComplete="off"
+                                        required
+                                        className={cssInputOTP}
+                                    />
+                                    <input
+                                        placeholder=""
+                                        value={otp2}
+                                        onChange={(e) => setOtp2(e.target.value)}
+                                        type="text"
+                                        maxLength={1}
+                                        autoComplete="off"
+                                        required
+                                        className={cssInputOTP}
+                                    />
+                                    <input
+                                        placeholder=""
+                                        value={otp3}
+                                        onChange={(e) => setOtp3(e.target.value)}
+                                        type="text"
+                                        maxLength={1}
+                                        autoComplete="off"
+                                        required
+                                        className={cssInputOTP}
+                                    />
+                                    <input
+                                        placeholder=""
+                                        value={otp4}
+                                        onChange={(e) => setOtp4(e.target.value)}
+                                        type="text"
+                                        maxLength={1}
+                                        autoComplete="off"
+                                        required
+                                        className={cssInputOTP}
+                                    />
                                 </div>
+
 
                                 <div className="mt-4 grid justify-items-center space-y-4 ">
                                     {/* Button */}
                                     <div>
                                         <button
                                             type="button"
-                                            onClick={handleSendOTP}
+                                            onClick={togglePopup} // Pass otpValue to handle function
                                             className="rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                                         >
                                             {isLoading ? (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './component/navbar/Navbar_welcome';
 import WelcomePage from './page/WelcomePage';
@@ -16,8 +16,11 @@ import EmpProfile from './page/EmpProfile';
 
 
 function App() {
-  
+  const [backend,setbackendData] = useState([{}])
   useEffect(() => {
+    fetch("/api").then(
+      response => response.json()
+    ).then(data =>{setbackendData(data)})
     document.title = 'Find Jop';
   }, []);
 

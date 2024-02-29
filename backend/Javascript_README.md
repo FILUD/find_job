@@ -6,7 +6,8 @@
 **Note: Install necessary packages including Express, CORS, and body-parser or Add `express, cors, body-parser` pakages**
 ## `npm i express cors body-parser` 
 
-
+## `npm install express express-session passport passport-local mysql2 nodemailer bcrypt crypto cors body-parser`
+ 
 -----------------------------------------------------------------------------------------------------------------------
 # Configuration and Setup:
 

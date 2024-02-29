@@ -54,7 +54,7 @@ const Authentication = () => {
 
 
     // backend server handle
-    const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
+    const api = 'http://localhost/4000';
     // sign in
     const handleLogin = async () => {
         try {

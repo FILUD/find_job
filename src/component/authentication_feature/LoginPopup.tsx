@@ -11,8 +11,8 @@ interface Props {
 interface LoginProps {
     email: string;
     password: string;
-    setLoginEmail: (value: React.SetStateAction<string>) => void;
-    setLoginPassword: (value: React.SetStateAction<string>) => void;
+    setEmail: (value: React.SetStateAction<string>) => void;
+    setPassword: (value: React.SetStateAction<string>) => void;
     handle: (requireEmail: string, requirePass: string) => Promise<void>;
 }
 
@@ -20,7 +20,7 @@ const formcss = "block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-90
 
 
 export default function LoginPopup(
-    { isOpen, onClose, togglePopup, isLoading, email, password, handle, setLoginPassword, setLoginEmail }: Props & LoginProps) {
+    { isOpen, onClose, togglePopup, isLoading, email, password, handle, setPassword, setEmail }: Props & LoginProps) {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -64,9 +64,9 @@ export default function LoginPopup(
                                 ) : (
                                     <div className="mt-2 font-sans font-semibold">
                                         <p className="text-base text-gray-500 font-sans font-semibold pt-5 pl-2"> </p>
-                                        <input placeholder='Email or username' value={email} type="email" autoComplete="Email" required className={formcss} onChange={(e) => setLoginEmail(e.target.value)} />
+                                        <input placeholder='Email or username' value={email} type="email" autoComplete="Email" required className={formcss} onChange={(e) => setEmail(e.target.value)} />
                                         <br></br>
-                                        <input placeholder='Password' value={password} type="password" autoComplete="current-password" required className={formcss} onChange={(e) => setLoginPassword(e.target.value)} />
+                                        <input placeholder='Password' value={password} type="password" autoComplete="current-password" required className={formcss} onChange={(e) => setPassword(e.target.value)} />
 
                                     </div>
                                 )}
@@ -77,7 +77,7 @@ export default function LoginPopup(
                                         <button
                                             type="button"
                                             className="h-10 w-full max-w-80 inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={() => handle(email,password )}
+                                            onClick={() => handle(email, password)}
 
                                         >
                                             Sign in
@@ -94,11 +94,11 @@ export default function LoginPopup(
                                         </div>
                                     </div>
                                 )}
-                        </Dialog.Panel>
-                    </Transition.Child>
+                            </Dialog.Panel>
+                        </Transition.Child>
+                    </div>
                 </div>
-            </div>
-        </Dialog>
+            </Dialog>
         </Transition >
     );
 }
