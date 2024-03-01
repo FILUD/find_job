@@ -139,37 +139,73 @@ export default function AuthFeat() {
     //         console.log("Error occurred:", error);
     //     }
     // };
+    
+    // const handleSignup = async (requireSignUpEmail: string) => {
+    //     try {
+    //         const checkExist = await fetch(`${api}/existUser`, {
+    //             method: "POST",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ email: requireSignUpEmail }),
+    //         });
+    //         if (checkExist.ok) {
+    //             console.log("Check Exist account: email didn't exist");
+    //             const reponseSignup = await fetch(`${api}/sendOTP`, {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify({ email: requireSignUpEmail }),
+    //             });
+    //             if (reponseSignup.ok) {
+    //                 togglePopupOTP(requireSignUpEmail);
+    //             } else {
+    //                 console.log("Error send OTP ")
+    //             }
+
+    //         } else {
+    //             console.log(`this email is already existed ${requireSignUpEmail}`);
+    //         }
+    //     } catch (error) {
+    //         console.log("Network or other error occurred:", error);
+    //     }
+    // }
     const handleSignup = async (requireSignUpEmail: string) => {
-        try {
-            const checkExist = await fetch(`${api}/existUser`, {
+    try {
+        setLoading(true); // Start loading spinner
+        const checkExist = await fetch(`${api}/existUser`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: requireSignUpEmail }),
+        });
+
+        if (checkExist.ok) {
+            console.log("Check Exist account: email didn't exist");
+            const reponseSignup = await fetch(`${api}/sendOTP`, {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email: requireSignUpEmail }),
             });
-            if (checkExist.ok) {
-                console.log("Check Exist account: email didn't exist");
-                const reponseSignup = await fetch(`${api}/sendOTP`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email: requireSignUpEmail }),
-                });
-                if (reponseSignup.ok) {
-                    togglePopupOTP(requireSignUpEmail);
-                } else {
-                    console.log("Error send OTP ")
-                }
-
+            if (reponseSignup.ok) {
+                togglePopupOTP(requireSignUpEmail);
             } else {
-                console.log(`this email is already existed ${requireSignUpEmail}`);
+                console.log("Error sending OTP");
             }
-        } catch (error) {
-            console.log("Network or other error occurred:", error);
+        } else {
+            console.log(`this email is already existed ${requireSignUpEmail}`);
         }
+    } catch (error) {
+        console.log("Network or other error occurred:", error);
+    } finally {
+        setLoading(false); // Stop loading spinner
     }
+};
+
     // const handleVerify = async (otpValue: string) => {
     //     try {
     //         const verifyResponse = await fetch(`${api}/verifyOTP`, {
@@ -209,19 +245,21 @@ export default function AuthFeat() {
 
             if (verifyResponse.ok) {
                 console.log("Verification successful!");
-                setIsOpenOTP(false);
-                setIsOpenSignUp(false);
-                setIsOpenLogIn(false);
                 if (isOpenLogIn) {
                     console.log('login with vertication successful')
+                    setIsOpenOTP(false);
+                    setIsOpenSignUp(false);
+                    setIsOpenLogIn(false);
                     navigate('/dashboard'); // Navigate to dashboard if on the login page
-                } else {
+                } else if (isOpenSignUp) {
+                    console.log('condition signup ')
+                    await saveRegister(emailSignup);
+                    setIsOpenOTP(false);
+                    setIsOpenSignUp(false);
+                    setIsOpenLogIn(false);
+                    navigate('/About');
+                    console.log('signup gonna save your data')
                     // Perform actions for signup page, such as saving registration data
-                    const saveData = true;
-                    if (saveData) {
-                        await saveRegister(emailSignup);
-                        console.log('signup gonna save your data')
-                    }
                 }
             } else {
                 console.log("Verification failed:", verifyResponse.status);
@@ -241,6 +279,22 @@ export default function AuthFeat() {
         clearInputs();
     };
 
+    const closeLogin = () => {
+        if (isOpenLogIn && isOpenOTP) {
+            setIsOpenLogIn(true);
+        } else {
+            setIsOpenLogIn(false);
+            setIsOpenOTP(false);
+        }
+    }
+    const closeSignup = () => {
+        if (isOpenSignUp && isOpenOTP) {
+            setIsOpenSignUp(true);
+        } else {
+            setIsOpenSignUp(false);
+            setIsOpenOTP(false);
+        }
+    }
     const backLogin = () => {
         setIsOpenLogIn(true);
         setIsOpenSignUp(false);
@@ -318,7 +372,7 @@ export default function AuthFeat() {
 
             {isOpenLogIn && (
                 <Transition appear show={isOpenLogIn} as={Fragment}>
-                    <Dialog as="div" className="relative z-10" onClose={() => setIsOpenLogIn(false)}>
+                    <Dialog as="div" className="relative z-10" onClose={(closeLogin)}>
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -395,7 +449,7 @@ export default function AuthFeat() {
 
             {isOpenSignUp && (
                 <Transition appear show={isOpenSignUp} as={Fragment}>
-                    <Dialog as="div" className="relative z-10" onClose={() => setIsOpenSignUp(false)}>
+                    <Dialog as="div" className="relative z-10" onClose={(closeSignup)}>
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
