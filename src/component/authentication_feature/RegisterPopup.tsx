@@ -7,6 +7,7 @@ interface Props {
     onClose: () => void;
     togglePopup: () => void;
     isLoading: boolean;
+    
 }
 interface SignUpProps {
     email: string;

@@ -75,6 +75,7 @@ export default function OtpPopup({ isOpen, onClose, togglePopup, handle, otp, se
                                 >
                                     Enter OTP
                                 </Dialog.Title>
+                                
                                 <div className="flex justify-center mt-2 px-3 font-sans font-semibold grid grid-cols-4 text-center">
                                     <input
                                         placeholder=""
