@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 
 interface Props {
@@ -8,10 +8,12 @@ interface Props {
     togglePopup: () => void;
 }
 interface OtpProps {
-    otpVerify: string;
+    otp: string;
+    setotp: (value: React.SetStateAction<string>) => void;
+    handle: (requireOtp: string) => Promise<void>; // Update return type
 }
 
-export default function OtpPopup({ isOpen, onClose, otpVerify, togglePopup }: Props & OtpProps) {
+export default function OtpPopup({ isOpen, onClose, togglePopup, handle, otp, setotp }: Props & OtpProps) {
     // CSS style
     const cssInputOTP = 'block w-20 h-12 rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6 text-center';
 
@@ -35,7 +37,8 @@ export default function OtpPopup({ isOpen, onClose, otpVerify, togglePopup }: Pr
 
     // Concatenate otp1, otp2, otp3, and otp4 into a single string
     const otpValue = otp1 + otp2 + otp3 + otp4;
-    otpVerify = otpValue;
+
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -73,6 +76,16 @@ export default function OtpPopup({ isOpen, onClose, otpVerify, togglePopup }: Pr
                                     Enter OTP
                                 </Dialog.Title>
                                 <div className="flex justify-center mt-2 px-3 font-sans font-semibold grid grid-cols-4 text-center">
+                                    <input
+                                        placeholder=""
+                                        value={otp}
+                                        onChange={(e) => setotp(e.target.value)}
+                                        type="text"
+                                        maxLength={4}
+                                        autoComplete="off"
+                                        required
+                                        className={cssInputOTP}
+                                    />
                                     <input
                                         placeholder=""
                                         value={otp1}
@@ -121,7 +134,7 @@ export default function OtpPopup({ isOpen, onClose, otpVerify, togglePopup }: Pr
                                     <div>
                                         <button
                                             type="button"
-                                            onClick={togglePopup} // Pass otpValue to handle function
+                                            onClick={() => handle(otp)}
                                             className="rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
                                         >
                                             {isLoading ? (

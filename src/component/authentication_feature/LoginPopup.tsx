@@ -76,13 +76,14 @@ export default function LoginPopup(
                                     <div className="mt-4 grid justify-items-center space-y-4">
                                         <button
                                             type="button"
-                                            className="h-10 w-full max-w-80 inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                            className="h-10 w-full max-w-80 inline-flex font-medium font-sans justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             onClick={() => handle(email, password)}
 
                                         >
                                             Sign in
                                         </button>
-
+                                        {/* line   */}
+                                        <div className='w-80 border-t-2 border-stone-400 '></div>
                                         <div>
                                             <button
                                                 type="button"
