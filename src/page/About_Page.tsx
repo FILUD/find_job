@@ -9,10 +9,10 @@ function About() {
     return (
     <div> 
         <div className="bg-white rounded-lg px-2 py-8 ring-2 ring-slate-900/5 shadow-xl ">
-        <Navbar />
+        <Navbar/>
         </div>
         
-        <div className=''>
+        <div className="">
 
         </div>
     </div>

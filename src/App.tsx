@@ -12,15 +12,16 @@ import FindEmployeePage from './page/FindEmployeePage';
 import FindjobPage from './page/FindjobPage';
 import CreateEmpProfile from './page/CreateEmpProfile';
 import EmpProfile from './page/EmpProfile';
+import ProfileEmployer from './component/profile_feature/Profile_Employer';
 
 
 
 function App() {
-  const [backend,setbackendData] = useState([{}])
+  const [backend, setbackendData] = useState([{}])
   useEffect(() => {
     fetch("/api").then(
       response => response.json()
-    ).then(data =>{setbackendData(data)})
+    ).then(data => { setbackendData(data) })
     document.title = 'Find Jop';
   }, []);
 
@@ -28,26 +29,26 @@ function App() {
 
     <div>
       <Router>
-      <div className="App">
-        
-        <Routes>
+        <div className="App">
 
-          <Route index element={<WelcomePage />} />
-          <Route  path="/Home" element={<HomePage />} />
-          <Route  path="/About" element={<AboutPage />} />
-          <Route  path="/About_test" element={<About />} /> 
-          <Route  path="/Contact" element={<Contactpage />} />
-          <Route  path="/Popup_sign_in" element={<Authentication />} />
-          <Route  path="/FindEmployee" element={<FindEmployeePage />} />
-          <Route  path="/Findjob" element={<FindjobPage />} />
-          <Route  path="/CreateEmpProfile" element={<CreateEmpProfile />} />
-          <Route  path="/EmpProfile" element={<EmpProfile />} />
-          <Route path="*" element={<ErrorPage />} />
-          
-        </Routes>
+          <Routes>
+            <Route index element={<WelcomePage />} />
+            <Route path="/Home" element={<HomePage />} />
+            <Route path="/About" element={<AboutPage />} />
+            <Route path="/About_test" element={<About />} />
+            <Route path="/Contact" element={<Contactpage />} />
+            <Route path="/Popup_sign_in" element={<Authentication />} />
+            <Route path="/FindEmployee" element={<FindEmployeePage />} />
+            <Route path="/Findjob" element={<FindjobPage />} />
+            <Route path="/CreateEmpProfile" element={<CreateEmpProfile />} />
+            <Route path="/EmpProfile" element={<EmpProfile />} />
+            <Route path="/Profile_Employer" element={<ProfileEmployer />} />
+            <Route path="*" element={<ErrorPage />} />
 
-      </div>
-    </Router>
+          </Routes>
+
+        </div>
+      </Router>
     </div>
   );
 }

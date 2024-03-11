@@ -22,47 +22,14 @@ export default function AuthFeat() {
 
     const cssInputOTP = 'block w-20 h-12 rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-xl sm:leading-6 text-center';
 
-    useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
+        useEffect(() => {
+            const timeoutId = setTimeout(() => {
+                setLoading(false);
+            }, 3000);
 
-        return () => clearTimeout(timeoutId);
-    }, []);
+            return () => clearTimeout(timeoutId);
+        }, []);
 
-    // const handleLogin = async (email: string, password: string) => {
-    //     try {
-    //         const response = await fetch(`${api}/login`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ email, password }),
-    //         });
-
-    //         if (response.ok) {
-    //             console.log("Login successful");
-    //             const sendOTP = await fetch(`${api}/sendOTP`, {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                 },
-    //                 body: JSON.stringify({ email }),
-    //             });
-
-    //             if (sendOTP.ok) {
-    //                 console.log("Check your email for OTP verification");
-    //                 togglePopupOTP(email);
-    //             } else {
-    //                 console.log("Error sending OTP");
-    //             }
-    //         } else {
-    //             console.log("Incorrect email or password");
-    //         }
-    //     } catch (error) {
-    //         console.log("Error occurred:", error);
-    //     }
-    // };
     const handleLogin = async (email: string, password: string) => {
         try {
             setLoading(true); // Start loading spinner
@@ -119,120 +86,40 @@ export default function AuthFeat() {
             console.log("Network or other error occurred:", error);
         }
     };
-    // const handleSignup = async (email: string) => {
-    //     try {
-    //         const response = await fetch(`${api}/register`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ email, password: requireSignUpPass }),
-    //         });
-
-    //         if (response.ok) {
-    //             console.log("Registration successful!");
-    //             togglePopupOTP(email);
-    //         } else {
-    //             console.log("Registration failed:", response.status);
-    //         }
-    //     } catch (error) {
-    //         console.log("Error occurred:", error);
-    //     }
-    // };
-    
-    // const handleSignup = async (requireSignUpEmail: string) => {
-    //     try {
-    //         const checkExist = await fetch(`${api}/existUser`, {
-    //             method: "POST",
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ email: requireSignUpEmail }),
-    //         });
-    //         if (checkExist.ok) {
-    //             console.log("Check Exist account: email didn't exist");
-    //             const reponseSignup = await fetch(`${api}/sendOTP`, {
-    //                 method: "POST",
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                 },
-    //                 body: JSON.stringify({ email: requireSignUpEmail }),
-    //             });
-    //             if (reponseSignup.ok) {
-    //                 togglePopupOTP(requireSignUpEmail);
-    //             } else {
-    //                 console.log("Error send OTP ")
-    //             }
-
-    //         } else {
-    //             console.log(`this email is already existed ${requireSignUpEmail}`);
-    //         }
-    //     } catch (error) {
-    //         console.log("Network or other error occurred:", error);
-    //     }
-    // }
     const handleSignup = async (requireSignUpEmail: string) => {
-    try {
-        setLoading(true); // Start loading spinner
-        const checkExist = await fetch(`${api}/existUser`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: requireSignUpEmail }),
-        });
-
-        if (checkExist.ok) {
-            console.log("Check Exist account: email didn't exist");
-            const reponseSignup = await fetch(`${api}/sendOTP`, {
+        try {
+            setLoading(true); // Start loading spinner
+            const checkExist = await fetch(`${api}/existUser`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email: requireSignUpEmail }),
             });
-            if (reponseSignup.ok) {
-                togglePopupOTP(requireSignUpEmail);
+
+            if (checkExist.ok) {
+                console.log("Check Exist account: email didn't exist");
+                const reponseSignup = await fetch(`${api}/sendOTP`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email: requireSignUpEmail }),
+                });
+                if (reponseSignup.ok) {
+                    togglePopupOTP(requireSignUpEmail);
+                } else {
+                    console.log("Error sending OTP");
+                }
             } else {
-                console.log("Error sending OTP");
+                console.log(`this email is already existed ${requireSignUpEmail}`);
             }
-        } else {
-            console.log(`this email is already existed ${requireSignUpEmail}`);
+        } catch (error) {
+            console.log("Network or other error occurred:", error);
+        } finally {
+            setLoading(false); // Stop loading spinner
         }
-    } catch (error) {
-        console.log("Network or other error occurred:", error);
-    } finally {
-        setLoading(false); // Stop loading spinner
-    }
-};
-
-    // const handleVerify = async (otpValue: string) => {
-    //     try {
-    //         const verifyResponse = await fetch(`${api}/verifyOTP`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({ email: isOpenLogIn ? emailLogin : emailSignup, enteredOTP: otpValue }),
-    //         });
-
-    //         if (verifyResponse.ok) {
-    //             console.log("Verification successful!");
-    //             setIsOpenOTP(false);
-    //             setIsOpenSignUp(false);
-    //             setIsOpenLogIn(false);
-    //             navigate('/dashboard');
-    //             const saveData = isOpenSignUp ? true : false;
-    //             if (saveData == true) {
-    //                 await saveRegister(emailSignup);
-    //             }
-    //         } else {
-    //             console.log("Verification failed:", verifyResponse.status);
-    //         }
-    //     } catch (error) {
-    //         console.log("Error occurred:", error);
-    //     }
-    // };
+    };
     const handleVerify = async (otpValue: string) => {
         try {
             const verifyResponse = await fetch(`${api}/verifyOTP`, {
@@ -268,17 +155,14 @@ export default function AuthFeat() {
             console.log("Error occurred:", error);
         }
     };
-
     const togglePopupOTP = (email: SetStateAction<string>) => {
         setEmailSignup(email);
         setIsOpenOTP(true);
     };
-
     const closeOtp = () => {
         setIsOpenOTP(false);
         clearInputs();
     };
-
     const closeLogin = () => {
         if (isOpenLogIn && isOpenOTP) {
             setIsOpenLogIn(true);
@@ -299,12 +183,10 @@ export default function AuthFeat() {
         setIsOpenLogIn(true);
         setIsOpenSignUp(false);
     }
-
     const goToSignUp = () => {
         setIsOpenLogIn(false);
         setIsOpenSignUp(true);
     }
-
     const clearInputs = () => {
         setOtp1('');
         setOtp2('');
@@ -314,7 +196,6 @@ export default function AuthFeat() {
         setRequireSignUpPass('');
         setPasswordLogin('');
     };
-
     const otpInputRefs: MutableRefObject<HTMLInputElement | null>[] = [
         useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null),
@@ -326,7 +207,6 @@ export default function AuthFeat() {
             otpInputRefs[0]?.current?.focus();
         }
     }, [isOpenOTP]);
-
     const handleOtpInputChange = (index: number, value: string) => {
         const otpValues = [otp1, otp2, otp3, otp4];
         otpValues[index] = value;
@@ -360,13 +240,12 @@ export default function AuthFeat() {
 
     return (
         <>
-            <div>
+            <div className='flex-none'>
                 <button
                     type="button"
                     onClick={() => setIsOpenLogIn(true)}
-                    className="rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-                >
-                    Sign In
+                    className=" rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+                >Sign In
                 </button>
             </div>
 

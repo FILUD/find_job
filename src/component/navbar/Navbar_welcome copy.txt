@@ -4,10 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Login from '../popup/Authentication';
 import LanguagesOption from '../popup/Popup_languages';
 import { useTranslation } from 'react-i18next';
-import Auth_feat from '../authentication_feature/Authentication_feature';
-import ProfileEmployer from '../profile_feature/Profile_Employer';
-import Profile_Jobseeker from '../profile_feature/Profile_Jobseeker';
-import Profile_feature from '../profile_feature/Profile_feature';
 
 function NavbarWelcome() {
   const navigate = useNavigate();
@@ -22,16 +18,12 @@ function NavbarWelcome() {
         </li>
       </ul>
       <ul className='container-right-nav'>
-        
         <li className='menu-navbar' onClick={() => navigate('/About')}>{t("welcomepage.about")}</li>
-        <li className='menu-navbar' onClick={() => navigate('/About_test')}>{("new_about")}</li>
+        <li className='menu-navbar' onClick={() => navigate('/Contact')}>{t("welcomepage.contact")}</li>
         <li className='menu-navbar' onClick={() => navigate('/Contact')}>{t("welcomepage.contact")}</li>
         <Login />
-        <Auth_feat />
+
         <LanguagesOption />
-        <Profile_feature/>
-     
-        {/* <li className='menu-navbar' onClick={() => navigate('/Profile_Employer')}>{"Profile"}</li> */}
         {/* <li className='menu-navbar' onClick={() => navigate('/Change_language')}> <img className='icon-chang-lang' src="Logo/language.png" alt="" /> </li> */}
       </ul>
     </div>

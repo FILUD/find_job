@@ -10,6 +10,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     return (
+
         <div className='container-nav'>
             <ul className='container-left-nav'>
                 <li className='Logo-navbar'>

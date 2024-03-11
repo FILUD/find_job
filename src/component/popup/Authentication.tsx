@@ -146,7 +146,6 @@ const Authentication = () => {
         }
     };
 
-
     const handleVerify = async () => {
         try {
 
@@ -174,9 +173,6 @@ const Authentication = () => {
             return false;
         }
     };
-
-
-
 
     // toggle pop-up login 
     return (

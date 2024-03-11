@@ -91,7 +91,6 @@ const Authentication = () => {
         }
     }
     // register
-
     const handleSignup = async () => {
         try {
             const checkExist = await fetch(`${api}/existUser`, {
