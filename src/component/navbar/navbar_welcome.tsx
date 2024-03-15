@@ -8,6 +8,7 @@ import Auth_feat from '../authentication_feature/Authentication_feature';
 import ProfileEmployer from '../profile_feature/Profile_Employer';
 import Profile_Jobseeker from '../profile_feature/Profile_Jobseeker';
 import Profile_feature from '../profile_feature/Profile_feature';
+import Auth from '../authentication_feature/Auth';
 
 function NavbarWelcome() {
   const navigate = useNavigate();

@@ -22,13 +22,13 @@ export default function AuthFeat() {
 
     const cssInputOTP = 'block w-20 h-12 rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-xl sm:leading-6 text-center';
 
-        useEffect(() => {
-            const timeoutId = setTimeout(() => {
-                setLoading(false);
-            }, 3000);
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setLoading(false);
+        }, 3000);
 
-            return () => clearTimeout(timeoutId);
-        }, []);
+        return () => clearTimeout(timeoutId);
+    }, []);
 
     const handleLogin = async (email: string, password: string) => {
         try {
@@ -137,6 +137,7 @@ export default function AuthFeat() {
                     setIsOpenOTP(false);
                     setIsOpenSignUp(false);
                     setIsOpenLogIn(false);
+                    clearInputs();
                     navigate('/dashboard'); // Navigate to dashboard if on the login page
                 } else if (isOpenSignUp) {
                     console.log('condition signup ')
@@ -144,6 +145,7 @@ export default function AuthFeat() {
                     setIsOpenOTP(false);
                     setIsOpenSignUp(false);
                     setIsOpenLogIn(false);
+                    clearInputs();
                     navigate('/About');
                     console.log('signup gonna save your data')
                     // Perform actions for signup page, such as saving registration data
@@ -155,6 +157,8 @@ export default function AuthFeat() {
             console.log("Error occurred:", error);
         }
     };
+    const handleTest = async(email:string) => 
+
     const togglePopupOTP = (email: SetStateAction<string>) => {
         setEmailSignup(email);
         setIsOpenOTP(true);
@@ -301,7 +305,7 @@ export default function AuthFeat() {
                                             <div className="mt-4 grid justify-items-center space-y-4">
                                                 <button
                                                     type="button"
-                                                    className="h-10 w-full max-w-80 inline-flex font-medium font-sans justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                    className="h-10 w-full max-w-80 inline-flex font-sans justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={() => handleLogin(emailLogin, passwordLogin)}
                                                 >
                                                     Sign in

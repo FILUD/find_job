@@ -104,7 +104,7 @@ export default function Profile_feature() {
                                             {/* bottom part */}
                                             <div className='row-span-3 bg-gray-300 rounded-b-3xl grid grid-cols-3 p-4 px-7 gap-4 2xl:grid-rows-1 2xl:grid-cols-3 xl:grid-rows-1 xl:grid-cols-3 '>
                                                 <div id='sidebar' className='grid grid-rows-5 mr-5 '>
-                                                    <div id='whatsapp' className='w-1/3 mt-5 grid grid-cols-2 flex justify-content-center '>
+                                                    <div id='whatsapp' className='w-1/3 mt-5 grid grid-cols-2  justify-content-center '>
                                                         <div className=''>
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none" viewBox="0 0 24 24"
@@ -151,16 +151,15 @@ q                                                                <path stroke-li
                                                 {/* popup show job that need employees */}
                                                 <div className=' col-span-2 grid grid-rows-7 my-5'>
                                                     {/* popup bottom bar */}
-                                                    <div className='bg-black rounded-t-3xl flex items-stretch grid justify-items-stretch '>
+                                                    <div className='bg-black rounded-t-3xl items-stretch grid justify-items-stretch '>
                                                         <p className='text-white justify-self-center self-center font-sans text-base font-semibold 2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>Jobs that need employees</p>
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="2xl:w-8 2xl:h-8 2xl:mt-2 xl:w-8 xl:h-8 xl:mt-2 lg:w-8 lg:h-8 lg:mt-2 md:w-7 md:h-7 md:mt-2 sm:w-7 sm:h-7 sm:mt-3 w-6 h-6 mt-4 absolute py-0.5 mr-10 right-0 cursor-pointer"
                                                             onClick={closeProfile}>
                                                             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
                                                             <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                                                         </svg>
-
-
                                                     </div>
+                                                    
                                                     <div className='row-span-6 bg-white rounded-b-3xl'></div>
                                                 </div>
                                             </div>
