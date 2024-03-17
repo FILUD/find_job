@@ -5,7 +5,7 @@ const cssProfile = {
      profileImg: '2xl:ml-28 xl:ml-28 lg:ml-24 md:ml-24 sm:ml-16 ml-12  top-0 left-0 2xl:scale-125 xl:scale-125 lg:scale-125 md:scale-150 sm:scale-150 scale-150 2xl:mt-0 xl:mt-0 lg:mt-0 md:mt-3 sm:mt-4 mt-4',
      telephone: 'font-sans 2xl:text-base xl:text-base lg:text-sm md:text-sm sm:text-xs text-xs',
      textPopupDes: 'text-white justify-self-center self-center font-sans text-base font-semibold 2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-base xl:self-center xl:justify-self-center',
-     buttonPostCv: 'rounded-lg bg-black border-2 px-2 sm:justify-self-center sm:self-center sm:text-white font-sans ',
+     buttonPostCv: 'rounded-2xl bg-black border-2 px-2 sm:justify-self-center sm:self-center sm:text-white font-sans self-end xl:row-span-8 h-8 w-28',
      container_bottom: '',
      grid_container:'',
      

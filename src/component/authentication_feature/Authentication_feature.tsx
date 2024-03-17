@@ -157,7 +157,7 @@ export default function AuthFeat() {
             console.log("Error occurred:", error);
         }
     };
-    const handleTest = async(email:string) => 
+
 
     const togglePopupOTP = (email: SetStateAction<string>) => {
         setEmailSignup(email);
@@ -242,6 +242,7 @@ export default function AuthFeat() {
     };
     const otpValue = otp1 + otp2 + otp3 + otp4;
 
+
     return (
         <>
             <div className='flex-none'>
@@ -297,6 +298,7 @@ export default function AuthFeat() {
                                                 <input placeholder='Email or username' value={emailLogin} type="email" autoComplete="Email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" onChange={(e) => setEmailLogin(e.target.value)} />
                                                 <br />
                                                 <input placeholder='Password' value={passwordLogin} type="password" autoComplete="current-password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" onChange={(e) => setPasswordLogin(e.target.value)} />
+
                                             </div>
                                         )}
 
@@ -307,6 +309,7 @@ export default function AuthFeat() {
                                                     type="button"
                                                     className="h-10 w-full max-w-80 inline-flex font-sans justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                                     onClick={() => handleLogin(emailLogin, passwordLogin)}
+                                                // onClick={() => handleLogin(emailLogin)}
                                                 >
                                                     Sign in
                                                 </button>
