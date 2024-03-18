@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import global_en from './languages/en/global_en.json';
 import global_la from './languages/la/global_la.json';
 import global_th from './languages/th/global_th.json';
-
+import { ThemeProvider } from "@material-tailwind/react";
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 
@@ -37,7 +37,9 @@ i18next.init({
 root.render(
   <React.StrictMode>
     <I18nextProvider i18n={i18next}>
+      <ThemeProvider>
       <App />
+      </ThemeProvider>
     </I18nextProvider>
   </React.StrictMode>
 );

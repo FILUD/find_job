@@ -1,9 +1,9 @@
-/* body {
-  background-image: url('/public/Background/Backgound-welcome.png');
-  background-size: cover;
-  width: 100%;
-  background-repeat: no-repeat;
-} */
+  /* body {
+    background-image: url('/public/Background/Backgound-welcome.png');
+    background-size: cover;
+    width: 100%;
+    background-repeat: no-repeat;
+  } */
 
 .container-nav {
   margin-top: 0px;
@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 50px;
+  padding: 10px 20px;
   color: #30443A;
 }
 /* fix */

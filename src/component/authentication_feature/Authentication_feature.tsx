@@ -18,7 +18,8 @@ export default function AuthFeat() {
     const [otp4, setOtp4] = useState('');
     const navigate = useNavigate();
 
-    const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
+    // const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
+    const api = 'http://localhost:3001'
 
     const cssInputOTP = 'block w-20 h-12 rounded-md border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-xl sm:leading-6 text-center';
 
@@ -86,9 +87,10 @@ export default function AuthFeat() {
             console.log("Network or other error occurred:", error);
         }
     };
-    const handleSignup = async (requireSignUpEmail: string) => {
+    const handleSignup = async (requireSignUpEmail: string ) => {
         try {
             setLoading(true); // Start loading spinner
+            console.log("show email exist:", requireSignUpEmail)
             const checkExist = await fetch(`${api}/existUser`, {
                 method: "POST",
                 headers: {
@@ -297,7 +299,7 @@ export default function AuthFeat() {
                                             <div className="mt-2 font-sans font-semibold">
                                                 <input placeholder='Email or username' value={emailLogin} type="email" autoComplete="Email" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" onChange={(e) => setEmailLogin(e.target.value)} />
                                                 <br />
-                                                <input placeholder='Password' value={passwordLogin} type="password" autoComplete="current-password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" onChange={(e) => setPasswordLogin(e.target.value)} />
+                                                <input placeholder='Password' value={passwordLogin} type="password" required className="block h-12 w-full rounded-full border-0 p-4 py-1.5 text-gray-900 shadow-lg ring-2 ring-inset ring-gray-300 placeholder:text-gray-600 focus:ring-2 focus:ring-inset focus:ring-gray-400 sm:text-sm sm:leading-6" onChange={(e) => setPasswordLogin(e.target.value)} />
 
                                             </div>
                                         )}

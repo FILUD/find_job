@@ -6,6 +6,7 @@ const cssProfile = {
      telephone: 'font-sans 2xl:text-base xl:text-base lg:text-sm md:text-sm sm:text-xs text-xs',
      textPopupDes: 'text-white justify-self-center self-center font-sans text-base font-semibold 2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-base xl:self-center xl:justify-self-center',
      buttonPostCv: 'rounded-2xl bg-black border-2 px-2 sm:justify-self-center sm:self-center sm:text-white font-sans self-end xl:row-span-8 h-8 w-28',
+     buttonPostWork: '2xl:text-sm xl:text-sm lg:text-sm md:text-sm sm:text-xs text-xs mb-5 flex justify-self-center w-fit rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 ',
      container_bottom: '',
      grid_container:'',
      
