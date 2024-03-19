@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import cssProfile from './profile_css';
 import { BarLoader } from 'react-spinners';
 import axios from 'axios';
-import { profile } from 'console';
-import { SpinnerColors } from './spinner';
 
 export default function Profile_feature() {
 
@@ -68,7 +66,7 @@ export default function Profile_feature() {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-12 h-12 transition hover:scale-125 absolute top-0 right-0  "
+                    className="w-12 h-12 transition hover:scale-125 "
                     onClick={() => setIsOpenProfile(true)}
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -125,7 +123,7 @@ export default function Profile_feature() {
                                                             {isLoading ? <BarLoader color={"#5a5e5d"} loading={isLoading} width={600} height={6} className='mt-4' speedMultiplier={0.5} /> : Employer[0]?.CompanyName}
                                                         </p>
                                                         <p className={cssProfile.titleWork}>
-                                                            {isLoading ? <SpinnerColors /> : Employer[0]?.ProfessionalTitle}
+                                                            {isLoading ? <BarLoader color={"#5a5e5d"} loading={isLoading} width={350} height={6} className='mt-4' speedMultiplier={0.5} ></BarLoader> : Employer[0]?.ProfessionalTitle}
                                                         </p>
                                                         <div className='flex '>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red-500" className="w-4 h-4 self-center">

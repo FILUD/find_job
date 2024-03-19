@@ -2,6 +2,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect, useRef, SetStateAction, MutableRefObject } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function AuthFeat() {
     const [isOpenLogIn, setIsOpenLogIn] = useState(false);
@@ -27,7 +28,6 @@ export default function AuthFeat() {
         const timeoutId = setTimeout(() => {
             setLoading(false);
         }, 3000);
-
         return () => clearTimeout(timeoutId);
     }, []);
 
@@ -87,7 +87,7 @@ export default function AuthFeat() {
             console.log("Network or other error occurred:", error);
         }
     };
-    const handleSignup = async (requireSignUpEmail: string ) => {
+    const handleSignup = async (requireSignUpEmail: string) => {
         try {
             setLoading(true); // Start loading spinner
             console.log("show email exist:", requireSignUpEmail)
