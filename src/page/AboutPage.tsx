@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css/AboutPage.css'
+// import '../css/AboutPage.css'
 import Navbar from '../component/navbar/Navbar_welcome'
 
 function About_Page() {

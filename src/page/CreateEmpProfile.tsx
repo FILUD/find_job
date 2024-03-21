@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import '../component/global_css/global.css'
-import '../css/CreateEmpProfile.css'
+// import '../component/global_css/global.css'
+// import '../css/CreateEmpProfile.css'
 import { Link, useNavigate } from 'react-router-dom';
 
 function CreateEmpProfile() {
@@ -37,6 +37,7 @@ function CreateEmpProfile() {
                         <input className='input-name-infomation-user' type="text" placeholder='Full Name' />
                         <input className='input-name-infomation-user input-name-infomation-user-center' type="text" placeholder='Position job' />
                         <input className='input-name-infomation-user' type="text" placeholder='Address' /></div>
+
                     <div className='createEmpProfile-container-top-center-right'>
                         <button onClick={() => navigate('/EmpProfile')} className='createEmpProfile-button-save'>Save My Profile</button>
                     </div>

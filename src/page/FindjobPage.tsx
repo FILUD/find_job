@@ -1,5 +1,5 @@
 import React from 'react'
-import '../css/FindjobPage.css'
+// import '../css/FindjobPage.css'
 import Navbar from '../component/navbar/Navbar'
 
 function FindjobPage() {

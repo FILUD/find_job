@@ -1,18 +1,20 @@
 body {
-    background-image: url('/public/Background/Backgound-welcome.png');
+    background-image: url('/public/Background/Wave.svg');
     background-size: cover;
     width: 100%;
     background-repeat: no-repeat;
   }
   
   .container-nav {
-    margin-top: 54px;
     height: 3.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 100px;
-    color: #30443A;
+    color: #FFFFF;
+    padding-top: 40px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 40px;
   }
   
   .container-left-nav {

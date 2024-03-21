@@ -14,12 +14,10 @@ function Navbar() {
                 </li>
             </ul>
             <ul className='container-right-nav'>
-                {/* seaerch button  */}
                 <li className='menu-navbar' onClick={() => navigate('/Home')}>Home</li>
                 <li className='menu-navbar' onClick={() => navigate('/Findjob')}>Find job</li>
                 <li className='menu-navbar' onClick={() => navigate('/Findemployee')}>Find employee</li>
                 <ProfileOption />
-                {/* <li className='menu-navbar' onClick={() => navigate('/Change_language')}> <img src="Logo/language.png" alt="" /> </li> */}
             </ul>
         </div>
     )

@@ -1,175 +1,242 @@
-import React from 'react'
-import '../css/HomePage.css'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+// import '../css/HomePage.css'
 import { useNavigate } from 'react-router-dom';
-
+import '../css/style.css'
 import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
+import { SpinnerColors } from './spinner';
+
+
+interface JobPosting {
+  JobID: number;
+  EmployerID: number;
+  Post_IMG: {
+    type: string;
+    data: number[];
+  };
+  Title: string;
+  Description: string;
+  Category: string | null;
+  Location: string;
+  Salary: number;
+  PostDate: string;
+}
 
 function HomePage() {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
+
+  //call data from API
+  useEffect(() => {
+    // Simulating data fetching with setTimeout
+    setTimeout(async () => {
+      try {
+        // Replace this with your actual data fetching logic
+        const response = await axios.get('http://localhost:3007/getjobpostings');
+        setJobPostings(response.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching job postings:', error);
+        setIsLoading(false); // Ensure loading state is set to false even in case of error
+      }
+    }, 2000); // Simulating 2 seconds delay
+  }, []);
+
   return (
     <div>
       <Navbar />
-
       <center>
-        <div className="contianer-home-page">
-          <div className="box-haeder-home-page">
-            <p className='text-in-box-haeder-home-page'>Welcome to us website</p>
-          </div>
-          <div className="box-for-text-recommend-job">
-            recommend Job
-          </div>
+        <main className='container mx-auto'>
 
-          <div className="box-item-for-recommend-job">
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-work-item-home-page' src="Image/developer-work-01.png" alt="" />
-                <img className='image-logo-item-home-page' src="Logo/job-logo-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>Front-End developer</p>
-                <p className='text-work-recommend-job-detail'><b>Salary</b> : 3.000.000 - 5.000.000 LAK<br />
-                  <b>Work category</b> : it/web developer/front-end<br />
-                  <b>Work Type</b> : Full time<br /></p>
-                <p className='text-work-recommend-job-date-posted'><b>Posted : 13/10/2023</b></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
+          <div className='mx-auto mt-10 grid grid-cols-4 justify-items-center gap-1'>
 
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-work-item-home-page' src="Image/developer-work-01.png" alt="" />
-                <img className='image-logo-item-home-page' src="Logo/job-logo-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>Front-End developer</p>
-                <p className='text-work-recommend-job-detail'><b>Salary</b> : 3.000.000 - 5.000.000 LAK<br />
-                  <b>Work category</b> : it/web developer/front-end<br />
-                  <b>Work Type</b> : Full time<br /></p>
-                <p className='text-work-recommend-job-date-posted'><b>Posted : 13/10/2023</b></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
+            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+              <option disabled selected className='bg-slate-400 text-slate-950'>Sort by :</option>
+              <option>New</option>
+              <option>Popula</option>
+              <option>Lastest</option>
+            </select>
 
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-work-item-home-page' src="Image/developer-work-01.png" alt="" />
-                <img className='image-logo-item-home-page' src="Logo/job-logo-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>Front-End developer</p>
-                <p className='text-work-recommend-job-detail'><b>Salary</b> : 3.000.000 - 5.000.000 LAK<br />
-                  <b>Work category</b> : it/web developer/front-end<br />
-                  <b>Work Type</b> : Full time<br /></p>
-                <p className='text-work-recommend-job-date-posted'><b>Posted : 13/10/2023</b></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
+            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+              <option disabled selected className='bg-slate-400 text-slate-950'>Position</option>
+              <option>Han Solo</option>
+              <option>Greedo</option>
+            </select>
 
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-work-item-home-page' src="Image/developer-work-01.png" alt="" />
-                <img className='image-logo-item-home-page' src="Logo/job-logo-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>Front-End developer</p>
-                <p className='text-work-recommend-job-detail'><b>Salary</b> : 3.000.000 - 5.000.000 LAK<br />
-                  <b>Work category</b> : it/web developer/front-end<br />
-                  <b>Work Type</b> : Full time<br /></p>
-                <p className='text-work-recommend-job-date-posted'><b>Posted : 13/10/2023</b></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
+            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+              <option disabled selected className='bg-slate-400 text-slate-950'>Work Category</option>
+              <option>Han Solo</option>
+              <option>Greedo</option>
+            </select>
+
+            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+              <option disabled selected className='bg-slate-400 text-slate-950'>Work Type</option>
+              <option>Han Solo</option>
+              <option>Greedo</option>
+            </select>
 
           </div>
-          <hr className='hr-bottom-recommend-job' />
-          <p className='see-all-item-home-page' onClick={() => navigate('/Findjob')}>See ALL <img className='icon-see-all-to-next-page-home-page' 
-          src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
+          <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
 
-          {/* find employee */}
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
 
-          <div className="box-for-text-recommend-job">
-            For Find Employee
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="card w-75 bg-base-100 shadow-xl">
+              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
+              <div className="card-body">
+                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                <div className=''>
+                  <h2 className="card-title">Font-end Developer</h2>
+                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
+                  <p className='text-left'>Work category : it/developer</p>
+                  <p className='text-left'>Work Type : Full time</p>
+                  <p className='text-left'>Posted : 10/02/2013</p>
+                </div>
+                <div className="w-full card-actions justify-end">
+                  <button className="w-full btn btn-primary">Apply</button>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div className="box-item-for-recommend-job">
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-employee-item-home-page' src="Image/cv-example.jpg" alt="" />
-                <img className='image-logo-item-home-page' src="Icon/profile-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>MR George</p>
-                <p className='text-work-recommend-job-detail'><b>Position :</b> Project Manager <br />
-                  <b>Education</b> : Hogwarts / Magic<br /></p>
-                <p className='text-of-location-home-page'><img className='icon-location-home-page' src="Icon/location.png" alt="" /> Ban Donnoun, Vientiane, Laos<br /></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
 
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-employee-item-home-page' src="Image/cv-example.jpg" alt="" />
-                <img className='image-logo-item-home-page' src="Icon/profile-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>MR George</p>
-                <p className='text-work-recommend-job-detail'><b>Position :</b> Project Manager <br />
-                  <b>Education</b> : Hogwarts / Magic<br /></p>
-                <p className='text-of-location-home-page'><img className='icon-location-home-page' src="Icon/location.png" alt="" /> Ban Donnoun, Vientiane, Laos<br /></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
 
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-employee-item-home-page' src="Image/cv-example.jpg" alt="" />
-                <img className='image-logo-item-home-page' src="Icon/profile-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>MR George</p>
-                <p className='text-work-recommend-job-detail'><b>Position :</b> Project Manager <br />
-                  <b>Education</b> : Hogwarts / Magic<br /></p>
-                <p className='text-of-location-home-page'><img className='icon-location-home-page' src="Icon/location.png" alt="" /> Ban Donnoun, Vientiane, Laos<br /></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
-
-            <div className="item-for-recommend-job">
-              <div className='image-box-work-recommend-home-page'>
-                <img className='image-employee-item-home-page' src="Image/cv-example.jpg" alt="" />
-                <img className='image-logo-item-home-page' src="Icon/profile-101.png" alt="" />
-              </div>
-              <div className='item-box-text-home-page'>
-                <p className='text-work-recommend-job-haeder'>MR George</p>
-                <p className='text-work-recommend-job-detail'><b>Position :</b> Project Manager <br />
-                  <b>Education</b> : Hogwarts / Magic<br /></p>
-                <p className='text-of-location-home-page'><img className='icon-location-home-page' src="Icon/location.png" alt="" /> Ban Donnoun, Vientiane, Laos<br /></p>
-                <hr className='hr-in-recommend-job-detail' />
-                <p className='btn-see-more-for-work-detail'>See more 
-                <img className='icon-item-see-to-next-page-home-page' src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p>
-              </div>
-            </div>
-
-          </div>
-          <hr className='hr-bottom-recommend-job' />
-          <p className='see-all-item-home-page' onClick={() => navigate('/Findemployee')}>See ALL <img className='icon-see-all-to-next-page-home-page' 
-          src="Icon/chevron-pointing-to-the-right.png" alt="Next" /></p><br />
-
-        </div>
+        </main>
       </center>
       <Footer />
     </div>

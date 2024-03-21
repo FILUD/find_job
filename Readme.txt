@@ -1,5 +1,6 @@
 //install package
     npm i react-rounter-dom
+    npm i axios
 
 
 //start develop web :
@@ -7,4 +8,8 @@
 
 
 //install
-npm i @react-pdf-viewer/core
+npm i @react-pdf-viewer/core\\
+npm install -D tailwindcss
+
+npx tailwindcss init
+

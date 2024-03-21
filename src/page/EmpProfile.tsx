@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import '../css/EmpProfile.css'
-
-import { Viewer, Worker } from '@react-pdf-viewer/core';
-import '@react-pdf-viewer/core/lib/styles/index.css';
+// import '../css/EmpProfile.css'
 
 function EmpProfile() {
-  const pdfUrl = '/TestPDF/Clover.pdf';
+
 
   const navigate = useNavigate();
 
@@ -74,9 +71,7 @@ function EmpProfile() {
 
                   <center>
                     <div className='emp-profile-pdf'>
-                      <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${'^3.11.174/build/pdf.worker.min.js'}`}>
-                        <Viewer fileUrl={pdfUrl} />
-                      </Worker>
+                     
                     </div>
                   </center>
 
