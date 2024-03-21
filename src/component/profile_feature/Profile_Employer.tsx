@@ -2,22 +2,57 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 import { useNavigate } from 'react-router-dom';
+import cssProfile from './profile_css';
+import { BarLoader } from 'react-spinners';
+import axios from 'axios';
 
 export default function Profile_feature() {
 
     const navigate = useNavigate();
     const [isLoading, setLoading] = useState(true);
     const [isOpenProfile, setIsOpenProfile] = useState(false);
+    const [Employer, setEmployer] = useState<Employer[]>([]);
 
+    interface Employer {
+        EmployerID: number;
+        CompanyName: string;
+        UserID: number;
+        ProfessionalTitle: string;
+        Profile_IMG: {
+            type: string;
+            data: number[];
+        };
+        AddressID: number;
+        Tel: string;
+        Email: string;
+        VillageName: string;
+        DistrictName: string;
+        ProvinceName: string;
 
-    const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
+    }
+
+    // const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
+        const fetchData = async () => {
+            try {
 
-        return () => clearTimeout(timeoutId);
+                setTimeout(async () => {
+                    const response = await axios.get('http://localhost:3001/userInfo', {
+                        params: {
+                            role: 'Employer',
+                            userID: '1'
+                        }
+                    });
+                    setEmployer(response.data.Employer);
+                
+                    setLoading(false);
+                }, 2000); // 2-second delay
+            } catch (error) {
+                console.error('Error fetching jobseeker:', error);
+            }
+        };
+        fetchData();
     }, []);
 
     const toggleProfile = () => {
@@ -36,7 +71,7 @@ export default function Profile_feature() {
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
-                    className="w-12 h-12 transition hover:scale-125 absolute top-0 right-0  "
+                    className="w-12 h-12 transition hover:scale-125 "
                     onClick={() => setIsOpenProfile(true)}
                 >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -89,13 +124,19 @@ export default function Profile_feature() {
                                                 </div>
                                                 <div className=' ml-8 pt-2.5 col-span-3 justify-items-start' >
                                                     <div className=''>
-                                                        <p className='font-sans 2xl:text-3xl xl:text-3xl lg:text-3xl md:text-2xl sm:text-2xl text-xl font-bold mt-2.5'>Job Co., Ltd.</p>
-                                                        <p className='font-sans 2xl:text-lg xl:text-lg lg:text-lg md:text-lg sm:text-base text-sm font-normal mb-2'> Software Development Company </p>
+                                                        <p className={cssProfile.titleName}>
+                                                            {isLoading ? <BarLoader color={"#5a5e5d"} loading={isLoading} width={600} height={6} className='mt-4' speedMultiplier={0.5} /> : Employer[0]?.CompanyName}
+                                                        </p>
+                                                        <p className={cssProfile.titleWork}>
+                                                            {isLoading ? <BarLoader color={"#5a5e5d"} loading={isLoading} width={350} height={6} className='mt-4' speedMultiplier={0.5} ></BarLoader> : Employer[0]?.ProfessionalTitle}
+                                                        </p>
                                                         <div className='flex '>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="red-500" className="w-4 h-4 self-center">
                                                                 <path fill-rule="evenodd" d=" m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
                                                             </svg>
-                                                            <p className=' ml-2 font-sans 2xl:text-sm xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs  '>Sykhai Sykhottabong, Vientiane, Laos</p>
+                                                            <p className={cssProfile.titleAddress}>
+                                                                {isLoading ? <BarLoader color={"#5a5e5d"} loading={isLoading} width={350} height={6} className='mt-4' speedMultiplier={0.5} /> : Employer[0]?.VillageName + ', ' + Employer[0]?.DistrictName + ', ' + Employer[0]?.ProvinceName}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -115,8 +156,13 @@ export default function Profile_feature() {
                                                             </svg>
                                                         </div>
                                                         <div className='font-sans 2xl:text-base xl:text-base lg:text-sm md:text-sm sm:text-xs text-xs'>
-                                                            <p>56591696</p>
-                                                            <p >56591696</p>
+                                                            {isLoading ? (
+                                                                <BarLoader color={"#5a5e5d"} loading={isLoading} width={140} height={5} className='mt-2' />
+                                                            ) : (
+                                                                Employer.map((e) => (
+                                                                    <p>{e.Tel}</p>
+                                                                ))
+                                                            )}
                                                         </div>
                                                     </div>
 
@@ -128,12 +174,17 @@ export default function Profile_feature() {
                                                                 stroke-width="1.5"
                                                                 stroke="currentColor"
                                                                 className="w-4 h-4 md:w-6 md:h-6 lg:w-6 lg:h-6 xl:w-6 xl:h-6 2xl:w-6 2xl:h-6">
-q                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                                                             </svg>
                                                         </div>
                                                         <div className='font-sans 2xl:text-base xl:text-base lg:text-sm md:text-sm sm:text-xs text-xs'>
-                                                            <p className='first-letter:uppercase'>georgebounthavong@icloud.com</p>
-                                                            <p className='first-letter:uppercase'>georgewassup@icloud.com</p>
+                                                            {isLoading ? (
+                                                                <BarLoader color={"#5a5e5d"} loading={isLoading} width={140} height={5} className='mt-2' />
+                                                            ) : (
+                                                                Employer.map((e) => (
+                                                                    <p>{e.Email}</p>
+                                                                ))
+                                                            )}
                                                         </div>
                                                     </div>
                                                     <div id='location' className=' row-span-3 mb-10 cursor-pointer'>
@@ -141,7 +192,7 @@ q                                                                <path stroke-li
                                                     </div>
                                                     <button
                                                         type="button"
-                                                        className="2xl:text-sm xl:text-sm lg:text-sm md:text-sm sm:text-xs text-xs mb-5 flex justify-self-center w-fit rounded-full bg-red-600 px-10 py-3 text-md font-semibold font-sans text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 "
+                                                        className={cssProfile.buttonPostWork}
                                                     >post work
                                                     </button>
 
@@ -151,15 +202,16 @@ q                                                                <path stroke-li
                                                 {/* popup show job that need employees */}
                                                 <div className=' col-span-2 grid grid-rows-7 my-5'>
                                                     {/* popup bottom bar */}
-                                                    <div className='bg-black rounded-t-3xl items-stretch grid justify-items-stretch '>
+                                                    <div className='bg-black rounded-t-3xl  items-stretch grid justify-items-stretch '>
                                                         <p className='text-white justify-self-center self-center font-sans text-base font-semibold 2xl:text-2xl xl:text-2xl lg:text-2xl md:text-xl sm:text-xl'>Jobs that need employees</p>
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="2xl:w-8 2xl:h-8 2xl:mt-2 xl:w-8 xl:h-8 xl:mt-2 lg:w-8 lg:h-8 lg:mt-2 md:w-7 md:h-7 md:mt-2 sm:w-7 sm:h-7 sm:mt-3 w-6 h-6 mt-4 absolute py-0.5 mr-10 right-0 cursor-pointer"
                                                             onClick={closeProfile}>
                                                             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
                                                             <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
                                                         </svg>
+
+
                                                     </div>
-                                                    
                                                     <div className='row-span-6 bg-white rounded-b-3xl'></div>
                                                 </div>
                                             </div>

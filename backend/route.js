@@ -1,10 +1,12 @@
 const express = require("express");
-const { registerRouter, passport, initializePassport } = require("./authentication/auth");
 const mysql = require("mysql2/promise");
 const { setConfig } = require("./config");
-const userInfoRouter = require("./profile/userInfo");
+const { passport, initializePassport } = require("./authentication/auth");
 const signUpRouter = require("./authentication/register");
 const sendOtpRouter = require("./authentication/sendOtp");
+const userInfoRouter = require("./profile/userInfo");
+const editInfoRouter = require("./profile/editUserInfo");
+
 
 // Initialize Passport
 initializePassport();
@@ -36,8 +38,10 @@ router.use("/", signUpRouter);
 //Authentication: sendOTP
 router.use("/", sendOtpRouter);
 
-//Profile: User information
+
+//Profile: User information (select , update )
 router.use("/", userInfoRouter);
+router.use("/", editInfoRouter);
 
 
 

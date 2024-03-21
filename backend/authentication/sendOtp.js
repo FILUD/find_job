@@ -6,16 +6,17 @@ const router = express.Router();
 
 //send OTP
 const storedOTPs = [];
+
 const transporter = nodemailer.createTransport(setConfig.nodemailer);
 
 router.post("/sendOTP", async (req, res) => {
     try {
         const { email } = req.body;
-        // const email = req.user ? req.user.email : null;
 
         if (!email) {
             return res.status(400).send("User not authenticated or email not found.");
         }
+
         const generatedOTP = Math.floor(1000 + Math.random() * 9000);
         storedOTPs[email] = generatedOTP;
         console.log(`Generated OTP for ${email}: ${generatedOTP}`);
@@ -42,7 +43,6 @@ router.post("/sendOTP", async (req, res) => {
     }
 });
 
-
 router.post("/verifyOTP", async (req, res) => {
     const { email, enteredOTP } = req.body;
 
@@ -61,7 +61,5 @@ router.post("/verifyOTP", async (req, res) => {
         res.status(400).send("Invalid OTP. Please retry");
     }
 });
-
-
 
 module.exports = router;

@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "install-packages": "npm install express cors body-parser express-session passport passport-local mysql2 nodemailer bcrypt crypto cors body-parser"
+    "start": "nodemon server.js",
+    "run-test" : "node server.js",
+    "install-packages": "npm install nodemon express cors body-parser express-session passport passport-local mysql2 nodemailer bcrypt crypto cors body-parser"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "express-session": "^1.18.0",
     "mysql2": "^3.9.2",
     "nodemailer": "^6.9.12",
+    "nodemon": "^3.1.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
   }

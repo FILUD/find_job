@@ -23,11 +23,11 @@ router.get("/userInfo", async (req, res) => {
         switch (role) {
             case "Jobseeker":
                 tableName = "Jobseeker";
-                viewName = "Jobseeker_view";
+                viewName = "Jobseeker_View";
                 break;
             case "Employer":
                 tableName = "Employer";
-                viewName = "Employer_view";
+                viewName = "Employer_View";
                 break;
             default:
                 return res.status(400).send("Invalid role specified.");

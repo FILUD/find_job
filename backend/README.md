@@ -6,9 +6,9 @@
 **Note: After run that termanal above than add `Packages`**
 ## `npm run install-packages` or you can put the terminal below to add `Packages`
 
-**Note: Install necessary packages including Express, CORS, and body-parser or Add `express, cors, body-parser` pakages**
+**Note: Install necessary packages including Express, CORS, and body-parser or Add `express, cors, body-parser , nodemon` pakages**
 ## `npm i express cors body-parser` 
-## `npm install express express-session passport passport-local mysql2 nodemailer bcrypt crypto cors body-parser`
+## `npm install nodemon express express-session passport passport-local mysql2 nodemailer bcrypt crypto cors body-parser`
 -----------------------------------------------------------------------------------------------------------------------
 # Configuration and Setup:
 
