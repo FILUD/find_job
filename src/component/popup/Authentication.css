@@ -1,4 +1,4 @@
-.popup-sign-up {
+/* .popup-sign-up {
     width: 800px;
     height: 850px;
     position: fixed;
@@ -36,7 +36,7 @@
 }
 
 
-/* register text */
+
 .text-popup-sign-in {
     font-size: 40px;
     color: white;
@@ -135,7 +135,7 @@
 }
 
 
-/* button login */
+
 .login {
     margin-left: 60px;
     background-color: #A8EB12;
@@ -148,7 +148,7 @@
     filter: drop-shadow(0 0 0.75rem #A0E917);
 }
 
-/* button sign in */
+
 .sign-in {
     background-color: #D9D9D9;
 }
@@ -160,7 +160,6 @@
 }
 
 
-/* container buuton sign in */
 .footer-button-sign-signup {
     display: flex;
     justify-content: center;
@@ -176,7 +175,7 @@
     display: flex;
 }
 
-/* container buuton login */
+
 .footer-button-sign-login {
     display: flex;
     justify-content: center;
@@ -197,4 +196,4 @@
 
 .other-login-login {
     margin-top: 10%;
-}
+} */

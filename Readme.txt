@@ -1,5 +1,5 @@
 //install package
-    npm i react-rounter-dom
+    npm i react-rounter-dom 
     npm i axios
 
 
@@ -13,3 +13,8 @@ npm install -D tailwindcss
 
 npx tailwindcss init
 
+
+
+npm i react-rounter-dom axios daisyui@latest  
+npm install @headlessui/react
+npm install --save react-spinners
