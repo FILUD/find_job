@@ -1,8 +1,8 @@
 import React from 'react';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
-import Login from '../popup/Authentication';
-import AuthFeat from '../authentication/Authentication';
+import AuthFeat from '../authentication/AuthFeature';
+
 
 function NavbarWelcome() {
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ function NavbarWelcome() {
         <ul className='container-right-nav'>
             <li className='menu-navbar' onClick={() => navigate('/About')}>About</li>
             <li className='menu-navbar' onClick={() => navigate('/Contact')}>contact</li>
-            <Login/>
             <li className='menu-navbar' onClick={() => navigate('/Change_language')}> <img className='icon-chang-lang' src="Logo/language.png" alt="" /> </li>
             <AuthFeat/>
         </ul>
