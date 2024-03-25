@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-// import '../css/HomePage.css'
+// import '../css/animation_HomePage.css'
 import { useNavigate } from 'react-router-dom';
 import '../css/style.css'
 import Navbar from '../component/navbar/Navbar';
@@ -8,41 +8,53 @@ import Footer from '../component/footer/Footer';
 import { SpinnerColors } from './spinner';
 
 
+// Define the JobPosting interface
 interface JobPosting {
   JobID: number;
   EmployerID: number;
+  CompanyName: string;
   Post_IMG: {
     type: string;
     data: number[];
   };
   Title: string;
   Description: string;
-  Category: string | null;
   Location: string;
-  Salary: number;
+  SalaryStart: number;
+  SalaryMax: number;
+  Category: string;
   PostDate: string;
+  WorkType: string | null; // Assuming WorkType can be null
 }
+
+
 
 function HomePage() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+
   const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
 
-  //call data from API
+
   useEffect(() => {
-    // Simulating data fetching with setTimeout
-    setTimeout(async () => {
-      try {
-        // Replace this with your actual data fetching logic
-        const response = await axios.get('http://localhost:3007/getjobpostings');
-        setJobPostings(response.data.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching job postings:', error);
-        setIsLoading(false); // Ensure loading state is set to false even in case of error
-      }
-    }, 2000); // Simulating 2 seconds delay
+    // Fetch job postings data from the API
+    fetch('http://localhost:3007/viewjobpostings')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.error) {
+          setJobPostings(data.data);
+        } else {
+          console.error('Failed to fetch job postings:', data.message);
+        }
+      })
+      .catch(error => console.error('Error fetching job postings:', error));
   }, []);
+
+  // Function to convert byte array to base64 string
+  const arrayBufferToBase64 = (buffer: number[]) => {
+    const binary = buffer.reduce((data, byte) => data + String.fromCharCode(byte), '');
+    return window.btoa(binary);
+  };
 
   return (
     <div>
@@ -80,22 +92,27 @@ function HomePage() {
           </div>
           <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
 
-            <div className="card w-75 bg-base-100 shadow-xl">
-              <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
-              <div className="card-body">
-                <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
-                <div className=''>
-                  <h2 className="card-title">Font-end Developer</h2>
-                  <p className='text-left'>Salary : 2.000.0000 - 5.000.000</p>
-                  <p className='text-left'>Work category : it/developer</p>
-                  <p className='text-left'>Work Type : Full time</p>
-                  <p className='text-left'>Posted : 10/02/2013</p>
-                </div>
-                <div className="w-full card-actions justify-end">
-                  <button className="w-full btn btn-primary">Apply</button>
+
+            {jobPostings.map(job => (
+              <div key={job.JobID} className="card w-75 bg-base-100 shadow-xl">
+                <figure><img src={`data:${job.Post_IMG.type};base64,${job.Post_IMG.data}`} alt="Job" /></figure>
+                <div className="card-body">
+                  <div><img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" /></div>
+                  <p className='-mt-4'>{job.CompanyName}</p>
+                  <div className=''>
+                    <h2 className="card-title">{job.Title}</h2>
+                    <p className='text-left'>Salary : {job.SalaryStart} - {job.SalaryMax}</p>
+                    <p className='text-left'>Work category : {job.Category || 'Not specified'}</p>
+                    <p className='text-left'>Work Type : {job.WorkType || 'Not specified'}</p>
+                    <p className='text-left'>Posted : {new Date(job.PostDate).toLocaleDateString()}</p>
+                  </div>
+                  <div className="w-full card-actions justify-end">
+                    <button className="w-full btn btn-primary">Apply</button>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
+
 
             <div className="card w-75 bg-base-100 shadow-xl">
               <figure><img src="Image/developer-work-01.png" alt="Shoes" /></figure>
