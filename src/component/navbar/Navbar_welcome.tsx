@@ -2,6 +2,7 @@ import React from 'react';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
+import Profile_feature from '../profile/ProfileFeature';
 
 
 function NavbarWelcome() {
@@ -19,6 +20,7 @@ function NavbarWelcome() {
             <li className='menu-navbar' onClick={() => navigate('/Contact')}>contact</li>
             <li className='menu-navbar' onClick={() => navigate('/Change_language')}> <img className='icon-chang-lang' src="Logo/language.png" alt="" /> </li>
             <AuthFeat/>
+            <Profile_feature/>
         </ul>
     </div>
   )
