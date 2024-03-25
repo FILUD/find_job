@@ -1,7 +1,7 @@
 import React from 'react';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
-import ProfileOption from '../popup/Popup_profile';
+import AuthFeat from '../authentication/AuthFeature';
 
 function Navbar() {
     const navigate = useNavigate();
