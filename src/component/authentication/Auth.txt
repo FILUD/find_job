@@ -68,6 +68,8 @@ export default function AuthFeat() {
             setLoading(false); // Stop loading spinner
         }
     };
+
+
     const saveRegister = async (email: string, password: string, firstName: string, lastName: string, role: string) => {
         try {
             const response = await fetch(`${api}/register`, {
@@ -123,7 +125,6 @@ export default function AuthFeat() {
             setLoading(false); // Stop loading spinner
         }
     };
-
     const handleVerify = async (otpValue: string) => {
         try {
             const verifyResponse = await fetch(`${api}/verifyOTP`, {
@@ -138,7 +139,6 @@ export default function AuthFeat() {
                 console.log("Verification successful!");
                 if (isOpenLogIn) {
                     console.log('login with vertication successful')
-                    await getCrediatial(emailLogin);
                     setIsOpenOTP(false);
                     setIsOpenSignUp(false);
                     setIsOpenLogIn(false);
@@ -162,19 +162,9 @@ export default function AuthFeat() {
             console.log("Error occurred:", error);
         }
     };
-    const getCrediatial = async (email: string) => {
-        try {
-            const userList = await axios.post(`${api}/getCreditial`, { email });
-            if (userList.status === 200) {
-                console.log(userList);
-                await localStorage.setItem('userList', JSON.stringify(userList.data));
-            } else {
-                console.log("Error erorr");
-            }
-        } catch (error) {
-            console.log("Error occurred:", error);
-        }
-    };
+
+
+
 
     const togglePopupOTP = (email: SetStateAction<string>) => {
         setEmailSignup(email);
@@ -216,6 +206,10 @@ export default function AuthFeat() {
         setEmailSignup('');
         setPasswordSignup('');
         setPasswordLogin('');
+        setConfirmPassword('');
+        setFirstName('');
+        setLastName('');
+        setRole('');
     };
     const otpInputRefs: MutableRefObject<HTMLInputElement | null>[] = [
         useRef<HTMLInputElement>(null),
@@ -431,11 +425,11 @@ export default function AuthFeat() {
                                                 <div className="px-1 font-sans font-semibold grid grid-cols-2 space-x-2  mx-5 ">
                                                     <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
-                                                        <input type="text" className="grow" placeholder="Firstname" />
+                                                        <input type="text" className="grow" placeholder="Firstname" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                                                     </label>
 
                                                     <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
-                                                        <input type="text" className="grow" placeholder="Lastname" />
+                                                        <input type="text" className="grow" placeholder="Lastname" value={lastName} onChange={(e) => setLastName(e.target.value)} />
                                                     </label>
                                                 </div>
 
