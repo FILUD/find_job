@@ -25,7 +25,7 @@ function NavbarWelcome() {
 
       <div className="navbar bg-base-500">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl ">FiveJOB</a>
+          <a onClick={() => navigate('/')} className="btn btn-ghost text-xl ">FiveJOB</a>
         </div>
         <div className="flex-none">
 
@@ -51,7 +51,7 @@ function NavbarWelcome() {
 
           {/* Change Language */}
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-5">
               <div className="w-10 rounded-full">
                 <img alt="Lang" src="Logo/language.png" />
               </div>
@@ -62,7 +62,6 @@ function NavbarWelcome() {
             </ul>
           </div>
           <AuthFeat />
-          <Profile_feature />
 
         </div>
       </div>

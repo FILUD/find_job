@@ -10,13 +10,9 @@
 //install
 npm i @react-pdf-viewer/core\\
 npm install -D tailwindcss
-
 npx tailwindcss init
 npm install firebase
 npm install -g firebase-tools
-
-
-
 npm i react-rounter-dom axios daisyui@latest  
 npm install @headlessui/react
 npm install --save react-spinners
