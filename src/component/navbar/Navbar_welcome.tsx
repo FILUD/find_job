@@ -15,7 +15,7 @@ function NavbarWelcome() {
              <img className='logo-welcome-page' src="Logo/job-logo.png" onClick={() => navigate('/')} alt="Logo" />
             </li>
         </ul>
-        <ul className='container-right-nav'>
+        <ul   className='container-right-nav'>
             <li className='menu-navbar' onClick={() => navigate('/About')}>About</li>
             <li className='menu-navbar' onClick={() => navigate('/Contact')}>contact</li>
             <li className='menu-navbar' onClick={() => navigate('/Change_language')}> <img className='icon-chang-lang' src="Logo/language.png" alt="" /> </li>
