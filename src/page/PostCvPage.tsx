@@ -12,6 +12,8 @@ function PostCvPage() {
     const [jobseekerID, setJobseekerID] = useState<number | null>(null);
     const [formData, setFormData] = useState(new FormData());
     const [img, setIMG] = useState<{ type: string; data: number[] } | null>(null);
+    const [imageUrl, setImageUrl] = useState<string>('');
+
 
 
     useEffect(() => {
@@ -94,6 +96,10 @@ function PostCvPage() {
                     };
                     // Set the file data in the desired format
                     setIMG({ type: selectedFile.type, data: fileData.data });
+                    const imgUrl = URL.createObjectURL(selectedFile);
+
+                    // Set the object URL to state
+                    setImageUrl(imgUrl);
                 } else {
                     console.error('Failed to read file as string');
                 }
@@ -101,6 +107,7 @@ function PostCvPage() {
             reader.readAsDataURL(selectedFile);
         } else {
             setIMG(null);
+            URL.revokeObjectURL(imageUrl);
         }
     };
 
@@ -167,7 +174,7 @@ function PostCvPage() {
                             <div className='bg-cyan-950 p-12 justify-self-end rounded-2xl'>
                                 <div className='box-content h-60 w-60 border-4 bg-sky-50 rounded-2xl mb-10 overflow-hidden'>
                                     {img ? (
-                                        <img src={`data:${img.type};base64,${String.fromCharCode.apply(null, img.data)}`} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <img src={imageUrl} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (
                                         <img src="Image/cv-example.jpg" alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     )}
