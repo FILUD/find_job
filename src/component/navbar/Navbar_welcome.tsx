@@ -62,6 +62,7 @@ function NavbarWelcome() {
             </ul>
           </div>
           <AuthFeat />
+          <Profile_feature/>
 
         </div>
       </div>

@@ -9,6 +9,7 @@ import FindEmployeePage from './page/FindEmployeePage';
 import FindjobPage from './page/FindjobPage';
 import CreateEmpProfile from './page/CreateEmpProfile';
 import EmpProfile from './page/EmpProfile';
+import PostCvPage from './page/PostCvPage';
 
 
 
@@ -35,6 +36,7 @@ function App() {
           <Route  path="/Findjob" element={<FindjobPage />} />
           <Route  path="/CreateEmpProfile" element={<CreateEmpProfile />} />
           <Route  path="/EmpProfile" element={<EmpProfile />} />
+          <Route  path="/PostCv" element={<PostCvPage />} />
 
           <Route path="*" element={<ErrorPage />} />
           

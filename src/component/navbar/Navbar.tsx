@@ -8,7 +8,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className='ml-20 mr-20'>
             {/* <ul className='container-left-nav'>
                 <li className='Logo-navbar'>
                     <img className='logo-welcome-page' src="Logo/job-logo.png" onClick={() => navigate('/')} alt="Logo" />
@@ -22,10 +22,9 @@ function Navbar() {
             </ul> */}
 
             <div className='container-nav'>
-
                 <div className="navbar bg-base-500">
                     <div className="flex-1">
-                        <a className="btn btn-ghost text-xl">FiveJOB</a>
+                        <a onClick={() => navigate('/Home')} className="btn btn-ghost text-xl">FiveJOB</a>
                     </div>
                     <div className="flex-none">
 
@@ -50,7 +49,6 @@ function Navbar() {
                                 </label>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
-
                         </div>
 
                         {/* bell icon */}
