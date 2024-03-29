@@ -167,7 +167,10 @@ export default function AuthFeat() {
             const userList = await axios.post(`${api}/getCreditial`, { email });
             if (userList.status === 200) {
                 console.log(userList);
-                await localStorage.setItem('userList', JSON.stringify(userList.data));
+                localStorage.setItem('UserID', JSON.stringify(userList.data.user.UserID));
+                localStorage.setItem('Email', JSON.stringify(userList.data.user.Email));
+                localStorage.setItem('Role', JSON.stringify(userList.data.user.Role));
+
             } else {
                 console.log("Error erorr");
             }

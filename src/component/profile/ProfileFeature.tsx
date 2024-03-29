@@ -16,6 +16,8 @@ export default function Profile_feature() {
     const [Employer, setEmployer] = useState<Employer[]>([]);
     const [Jobseeker, setJobseeker] = useState<Jobseeker[]>([]);
     const [roles, setRoles] = useState('Jobseeker');
+    const [UserID, setUserID] = useState('');
+    const [Email, setEmail] = useState('');
 
     interface Employer {
         EmployerID: number;
@@ -53,15 +55,31 @@ export default function Profile_feature() {
 
     // const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
 
+    // console.log('role:', roles);
+    // console.log('email:', Email);
+    // console.log('userID:', UserID);
     useEffect(() => {
+        const getEmail = localStorage.getItem('Email');
+        const getRole = localStorage.getItem('Role');
+        const getUserID = localStorage.getItem('UserID');
+
+        if (getEmail && getRole && getUserID) {
+            const resEmail = JSON.parse(getEmail);
+            const resRole = JSON.parse(getRole);
+            const resUserID = JSON.parse(getUserID);
+            setEmail(resEmail);
+            setRoles(resRole);
+            setUserID(resUserID);
+        }
+    
         const fetchData = async () => {
             try {
 
                 setTimeout(async () => {
                     const response = await axios.get('http://localhost:3001/userInfo', {
                         params: {
-                            role: 'Jobseeker',
-                            userID: '2'
+                            role: roles,
+                            userID: UserID
                         }
                     });
                     if (roles == "Employer") {
@@ -247,7 +265,7 @@ export default function Profile_feature() {
                                                                 </div>
                                                                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                                                     <li>
-                                                                        <a  className="justify-between">
+                                                                        <a className="justify-between">
                                                                             Add post
                                                                             <span className="badge">New</span>
                                                                         </a>
