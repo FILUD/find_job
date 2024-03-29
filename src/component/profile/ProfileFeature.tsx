@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import cssProfile from './ProfileCSS';
 import { BarLoader } from 'react-spinners';
 import axios from 'axios';
-import { is } from '@babel/types';
 
 export default function Profile_feature() {
 
@@ -64,14 +63,15 @@ export default function Profile_feature() {
         const getUserID = localStorage.getItem('UserID');
 
         if (getEmail && getRole && getUserID) {
-            const resEmail = JSON.parse(getEmail);
-            const resRole = JSON.parse(getRole);
-            const resUserID = JSON.parse(getUserID);
+            const [resEmail, resRole, resUserID] = [getEmail, getRole, getUserID].map(value => JSON.parse(value) as string);
             setEmail(resEmail);
             setRoles(resRole);
-            setUserID(resUserID);
+            setUserID(String(parseInt(resUserID)));
         }
-    
+    }, []);
+
+    useEffect(() => {
+
         const fetchData = async () => {
             try {
 
@@ -79,7 +79,7 @@ export default function Profile_feature() {
                     const response = await axios.get('http://localhost:3001/userInfo', {
                         params: {
                             role: roles,
-                            userID: UserID
+                            userID: '18'
                         }
                     });
                     if (roles == "Employer") {

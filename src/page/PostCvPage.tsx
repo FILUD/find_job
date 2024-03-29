@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../component/navbar/Navbar'
 import Footer from '../component/footer/Footer'
+import { format } from 'path';
 function PostCvPage() {
 
     const [title, setTitle] = useState('');
     const [occupation, setOccupation] = useState('');
-    const [file, setFile] = useState<File | null>(null);
     const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
     const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [jobseekerID, setJobseekerID] = useState<number | null>(null);
+    const [formData, setFormData] = useState(new FormData());
+    const [img, setIMG] = useState<{ type: string; data: number[] } | null>(null);
+
 
     useEffect(() => {
         fetch('http://localhost:3001/getallcategory')
@@ -51,6 +54,7 @@ function PostCvPage() {
     }, []);
 
 
+
     const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedCategoryId = parseInt(event.target.value);
         setSelectedCategory(selectedCategoryId);
@@ -75,36 +79,68 @@ function PostCvPage() {
         }
     };
 
+    // new one import file to filedata for send to back end
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files ? e.target.files[0] : null;
+
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                if (typeof reader.result === 'string') {
+                    const base64String = reader.result.split(',')[1];
+                    const fileData = {
+                        type: selectedFile.type,
+                        data: base64String ? base64String.split('').map(char => char.charCodeAt(0)) : []
+                    };
+                    // Set the file data in the desired format
+                    setIMG({ type: selectedFile.type, data: fileData.data });
+                } else {
+                    console.error('Failed to read file as string');
+                }
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            setIMG(null);
+        }
+    };
+
+
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!file || !title || !occupation || jobseekerID === null) {
+        if (!img || !title || !occupation || jobseekerID === null) {
             console.error('Missing required data for CV submission');
             return;
         }
+        formData.delete('JobseekerID');
+        formData.delete('IMG_CV');
+        formData.delete('Title');
+        formData.delete('OccupationID');
 
-        const formData = new FormData();
+        // Append form data
         formData.append('JobseekerID', jobseekerID.toString());
-        formData.append('IMG_CV', file);
+        formData.append('IMG_CV', JSON.stringify(img));
         formData.append('Title', title);
         formData.append('OccupationID', occupation);
-        
 
-        // Log JobseekerID
-        console.log('JobseekerID:', jobseekerID);
-        // Log form data
-        console.log('Form Data:', {
-            JobseekerID: jobseekerID,
-            IMG_CV: file,
-            Title: title,
-            OccupationID: occupation
-        });
+        // console.log('Form Data:', formData.get('IMG_CV')); 
+
 
         try {
             const response = await fetch('http://localhost:3001/postcv', {
                 method: 'POST',
-                body: formData
+                body: JSON.stringify({
+                    JobseekerID: formData.get('JobseekerID'),
+                    IMG_CV: formData.get('IMG_CV'),
+                    Title: formData.get('Title'),
+                    OccupationID: formData.get('OccupationID')
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
             });
 
             if (response.ok) {
@@ -120,6 +156,7 @@ function PostCvPage() {
         }
     };
 
+
     return (
         <div>
             <Navbar />
@@ -129,14 +166,21 @@ function PostCvPage() {
                         <main className='grid grid-cols-2 gap-4 justify-items-center pt-20 mt-5 pb-20'>
                             <div className='bg-cyan-950 p-12 justify-self-end rounded-2xl'>
                                 <div className='box-content h-60 w-60 border-4 bg-sky-50 rounded-2xl mb-10 overflow-hidden'>
-                                    <img src="Image/cv-example.jpg" alt="CV" />
+                                    {img ? (
+                                        <img src={`data:${img.type};base64,${String.fromCharCode.apply(null, img.data)}`} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    ) : (
+                                        <img src="Image/cv-example.jpg" alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    )}
                                 </div>
                                 <input
                                     type="file"
                                     accept="image/jpeg, image/png"
                                     className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
-                                    onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+                                    // onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+                                    onChange={handleFileChange}
                                 />
+
+
                             </div>
 
                             <div className='justify-self-start grid grid-cols-1 bg-cyan-950 p-12 rounded-2xl'>
