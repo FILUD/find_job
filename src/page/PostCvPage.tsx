@@ -26,6 +26,31 @@ function PostCvPage() {
             });
     }, []);
 
+    useEffect(() => {
+        const userID = localStorage.getItem('UserID');
+        if (userID) {
+            fetch('http://localhost:3001/getjobseekerid', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ UserID: parseInt(userID) })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error === false && data.data.length > 0) {
+                        setJobseekerID(data.data[0].JobseekerID);
+                    } else {
+                        console.error('Failed to retrieve JobseekerID:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error retrieving JobseekerID:', error);
+                });
+        }
+    }, []);
+
+
     const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedCategoryId = parseInt(event.target.value);
         setSelectedCategory(selectedCategoryId);
@@ -50,38 +75,12 @@ function PostCvPage() {
         }
     };
 
-    const fetchJobseekerID = async () => {
-        try {
-            const userID = localStorage.getItem('userID');
-            if (!userID) {
-                console.error('User ID not found in local storage');
-                return;
-            }
-
-            const response = await fetch('http://localhost:3001/getjobseekerid', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ UserID: userID })
-            });
-            const data = await response.json();
-            if (data.error === false && data.data.length > 0) {
-                setJobseekerID(data.data[0].JobseekerID);
-            } else {
-                console.error('Failed to fetch JobseekerID:', data.message);
-            }
-        } catch (error) {
-            console.error('Error fetching JobseekerID:', error);
-        }
-    };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        if (!file || !title || !occupation || !jobseekerID) {
-            // Handle validation error
-            console.error('File, title, occupation, or jobseekerID is missing.');
+        if (!file || !title || !occupation || jobseekerID === null) {
+            console.error('Missing required data for CV submission');
             return;
         }
 
@@ -89,8 +88,18 @@ function PostCvPage() {
         formData.append('JobseekerID', jobseekerID.toString());
         formData.append('IMG_CV', file);
         formData.append('Title', title);
-        formData.append('UploadDate', new Date().toISOString());
         formData.append('OccupationID', occupation);
+        
+
+        // Log JobseekerID
+        console.log('JobseekerID:', jobseekerID);
+        // Log form data
+        console.log('Form Data:', {
+            JobseekerID: jobseekerID,
+            IMG_CV: file,
+            Title: title,
+            OccupationID: occupation
+        });
 
         try {
             const response = await fetch('http://localhost:3001/postcv', {
