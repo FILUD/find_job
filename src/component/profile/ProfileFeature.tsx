@@ -14,7 +14,7 @@ export default function Profile_feature() {
     const [isOpenJobseeker, setIsOpenJobseeker] = useState(false);
     const [Employer, setEmployer] = useState<Employer[]>([]);
     const [Jobseeker, setJobseeker] = useState<Jobseeker[]>([]);
-    const [roles, setRoles] = useState('Jobseeker');
+    const [Role, setRole] = useState('');
     const [UserID, setUserID] = useState('');
     const [Email, setEmail] = useState('');
 
@@ -54,7 +54,7 @@ export default function Profile_feature() {
 
     // const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
 
-    // console.log('role:', roles);
+    // console.log('role:', Role);
     // console.log('email:', Email);
     // console.log('userID:', UserID);
     useEffect(() => {
@@ -65,55 +65,57 @@ export default function Profile_feature() {
         if (getEmail && getRole && getUserID) {
             const [resEmail, resRole, resUserID] = [getEmail, getRole, getUserID].map(value => JSON.parse(value) as string);
             setEmail(resEmail);
-            setRoles(resRole);
+            setRole(resRole);
             setUserID(String(parseInt(resUserID)));
-        }
-    }, []);
 
-    useEffect(() => {
-
-        const fetchData = async () => {
-            try {
-
-                setTimeout(async () => {
-                    const response = await axios.get('http://localhost:3001/userInfo', {
-                        params: {
-                            role: roles,
-                            userID: '18'
+            if (resEmail && resRole && resUserID) {
+                console.log('Fetching user information...');
+                const fetchData = async () => {
+                    try {
+                        const response = await axios.get('http://localhost:3001/userInfo', {
+                            params: {
+                                role: resRole,
+                                userID: resUserID
+                            }
+                        });
+                        console.log('Response:', response.data);
+                        if (resRole === "Employer") {
+                            setEmployer(response.data.Employer);
+                        } else if (resRole === "Jobseeker") {
+                            setJobseeker(response.data.Jobseeker);
                         }
-                    });
-                    if (roles == "Employer") {
-                        setEmployer(response.data.Employer);
+                        setLoading(false);
+                    } catch (error) {
+                        console.error('Error fetching user information:', error);
                     }
-                    if (roles == "Jobseeker") {
-                        setJobseeker(response.data.Jobseeker);
-                    }
-                    setLoading(false);
-                }, 3000); // 2-second delay
-            } catch (error) {
-                console.error('Error fetching jobseeker:', error);
+                };
+                fetchData();
             }
-        };
-        fetchData();
+        }
     }, []);
 
     const toggleProfile = () => {
-        if (roles == "Jobseeker") {
+        if (Role == "Jobseeker") {
             setIsOpenJobseeker(true);
         }
-        if (roles == "Employer") {
+        if (Role == "Employer") {
             setIsOpenEmployer(true);
         }
 
     }
-
     const closeProfile = () => {
-        if (roles == "Jobseeker") {
+        if (Role == "Jobseeker") {
             setIsOpenJobseeker(false);
         }
-        if (roles == "Employer") {
+        if (Role == "Employer") {
             setIsOpenEmployer(false);
         }
+    }
+    const logoutAuth = async () => {
+        localStorage.removeItem('UserID');
+        localStorage.removeItem('Role');
+        localStorage.removeItem('Email');
+        navigate('/');
     }
 
     return (
@@ -133,7 +135,9 @@ export default function Profile_feature() {
                         </a>
                     </li>
                     <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
+                    <li>
+                        <a onClick={() => logoutAuth()}>Logout</a>
+                    </li>
                 </ul>
             </div>
 
@@ -243,7 +247,7 @@ export default function Profile_feature() {
                                                             )}
                                                         </div>
                                                     </div>
-
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-12 mt-8' onClick={() => navigate("/PostJob")}> Post Job</button >
                                                 </div>
                                             </div>
 
@@ -450,12 +454,14 @@ export default function Profile_feature() {
                                                         </div>
 
                                                     </div>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-12 mt-8' onClick={() => navigate("/PostCV")}> Post CV</button>
                                                 </div>
+
                                             </div>
 
                                             {/* right side of Jobseeker */}
-                                            <div className='card-body md:col-span-2 md:mt-5 sm:mt-0'>
-                                                <div className='card w-full h-fit'>
+                                            <div className='card-body md:col-span-2 md:mt-2 sm:mt-0'>
+                                                <div className='card w-full h-full'>
                                                     {/* navbar */}
                                                     <div className='navbar bg-neutral-900 text-neutral-content rounded-t-2xl'>
                                                         <div className="flex-1">
@@ -483,7 +489,7 @@ export default function Profile_feature() {
                                                         </div>
                                                     </div>
                                                     {/* content or bottom part */}
-                                                    <div className='w-full h-72 bg-gray-400 rounded-b-2xl p-3 space-y-2 snap-y overflow-y-auto'>
+                                                    <div className='w-full h-96 bg-gray-400 rounded-b-2xl p-3 space-y-2 snap-y overflow-y-auto'>
 
                                                         <div className="card card-side bg-base-100 shadow-xl flex w-full h-48">
                                                             <figure className="flex-none w-1/3 mr-0"> {/* Image container occupies 25% width */}

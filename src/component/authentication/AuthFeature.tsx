@@ -143,7 +143,7 @@ export default function AuthFeat() {
                     setIsOpenSignUp(false);
                     setIsOpenLogIn(false);
                     clearInputs();
-                    navigate('/dashboard'); // Navigate to dashboard if on the login page
+                    navigate('/Home'); // Navigate to dashboard if on the login page
                 } else if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
                     await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
@@ -151,7 +151,7 @@ export default function AuthFeat() {
                     setIsOpenSignUp(false);
                     setIsOpenLogIn(false);
                     clearInputs();
-                    navigate('/About');
+                    navigate('/');
                     console.log('signup gonna save your data')
                     // Perform actions for signup page, such as saving registration data
                 }
