@@ -8,7 +8,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     return (
-        <div className='ml-20 mr-20'>
+        <div className='ml-20 mr-20 '>
             {/* <ul className='container-left-nav'>
                 <li className='Logo-navbar'>
                     <img className='logo-welcome-page' src="Logo/job-logo.png" onClick={() => navigate('/')} alt="Logo" />

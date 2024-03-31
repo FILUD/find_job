@@ -120,7 +120,6 @@ export default function Profile_feature() {
 
     return (
         <>
-
             <div className="dropdown dropdown-end ml-4">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                     <div className=" w-24 rounded-full">
