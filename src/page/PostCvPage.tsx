@@ -14,8 +14,6 @@ function PostCvPage() {
     const [img, setIMG] = useState<{ type: string; data: number[] } | null>(null);
     const [imageUrl, setImageUrl] = useState<string>('');
 
-
-
     useEffect(() => {
         fetch('http://localhost:3001/getallcategory')
             .then(response => response.json())
@@ -81,10 +79,9 @@ function PostCvPage() {
         }
     };
 
-    // new one import file to filedata for send to back end
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files ? e.target.files[0] : null;
-
+    
         if (selectedFile) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -94,12 +91,12 @@ function PostCvPage() {
                         type: selectedFile.type,
                         data: base64String ? base64String.split('').map(char => char.charCodeAt(0)) : []
                     };
+    
                     // Set the file data in the desired format
                     setIMG({ type: selectedFile.type, data: fileData.data });
-                    const imgUrl = URL.createObjectURL(selectedFile);
-
-                    // Set the object URL to state
-                    setImageUrl(imgUrl);
+    
+                    // Set the image URL directly from the reader result
+                    setImageUrl(reader.result as string);
                 } else {
                     console.error('Failed to read file as string');
                 }
@@ -107,9 +104,10 @@ function PostCvPage() {
             reader.readAsDataURL(selectedFile);
         } else {
             setIMG(null);
-            URL.revokeObjectURL(imageUrl);
+            setImageUrl(''); // Clear the image URL when no file is selected
         }
     };
+    
 
 
 
@@ -172,11 +170,11 @@ function PostCvPage() {
                     <form onSubmit={handleSubmit}>
                         <main className='grid grid-cols-2 gap-4 justify-items-center pt-20 mt-5 pb-20'>
                             <div className='bg-cyan-950 p-12 justify-self-end rounded-2xl'>
-                                <div className='box-content h-60 w-60 border-4 bg-sky-50 rounded-2xl mb-10 overflow-hidden'>
+                                <div className='box-content h-60 w-60 border-4 bg-sky-50 rounded-2xl mb-10 overflow-hidden items-center grid justify-items-center'>
                                     {img ? (
                                         <img src={imageUrl} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     ) : (
-                                        <img src="Image/cv-example.jpg" alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <img className='w-20' src="Icon/gallery.png" alt="CV" />
                                     )}
                                 </div>
                                 <input
