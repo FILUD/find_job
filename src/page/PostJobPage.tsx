@@ -166,7 +166,140 @@ function PostJobPage() {
 
     return (
         <div>
+            {/* <div className='bg-base-200 w-full h-20 sticky top-0'> */}
             <Navbar />
+            {/* </div> */}
+
+            <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-5 '>
+                <div className='py-7 self-center font-bold text-3xl'>Post Job</div>
+            </div>
+            <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-5 '>
+                <div className='p-12 mt-5 px-24 '>
+                    <div className='space-y-4'>
+                        {/* row1 */}
+                        <div className='grid grid-cols-3'>
+                            <div id="col1">
+                                <p className='ml-2 horizontal'>Title</p>
+                                <input
+                                    type="text"
+                                    placeholder="Title"
+                                    className="input input-bordered w-80"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </div>
+
+                            <div id="col1">
+                                <p className='ml-2 horizontal'>Salary minimum</p>
+                                <input
+                                    type="text"
+                                    placeholder="1,000 ກີບ"
+                                    className="input input-bordered w-80 text-end"
+                                    // value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </div>
+                            <div id="col1">
+                                <p className='ml-2 horizontal'>Salary maximum</p>
+                                <input
+                                    type="text"
+                                    placeholder="3,000,000 ກີບ"
+                                    className="input input-bordered w-80 text-end"
+                                    // value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+
+
+                        {/* row2 */}
+                        <div className='grid grid-cols-3'>
+                            <div id="col1">
+                                <p className='ml-2 mb-2 horizontal'>Occupation</p>
+                                <select
+                                    className="select select-primary w-full max-w-xs"
+                                    value={occupation}
+                                    onChange={(e) => setOccupation(e.target.value)}
+                                >
+                                    <option disabled value="">Occupation</option>
+                                    {occupations.map(occupation => (
+                                        <option key={occupation.OccupationID} value={occupation.OccupationID}>
+                                            {occupation.OccupationName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div id="col2">
+                                <p className='ml-2 mb-2 horizontal'>Work Category</p>
+                                <select
+                                    className="select select-primary w-full max-w-xs"
+                                    value={selectedCategory || ''}
+                                    onChange={handleCategoryChange}
+                                >
+                                    <option disabled value="">Work Category</option>
+                                    {categories.map(category => (
+                                        <option key={category.CategoryID} value={category.CategoryID}>
+                                            {category.CategoryName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div id="col3">
+                                <p className='ml-2 mb-2 horizontal'>Work type</p>
+                                <select className="select select-bordered w-full max-w-xs">
+                                    <option disabled selected>Work type</option>
+                                    <option>Full-time</option>
+                                    <option>Part-time</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        {/* row3 */}
+                        <div className='grid grid-cols-3 space-x-12'>
+                            <div className=''>
+                                <div className='card w-full h-full max-h-60 bg-base-100 shadow-xl mt-8 p-4 self-center'>
+                                    <textarea className="textarea textarea-bordered h-full" placeholder="Work description"></textarea>
+                                </div>
+                            </div>
+                            <div className='col-span-2 '>
+                                <div className='card w-full h-full max-h-72 pl-4 bg-base-100 shadow-xl mt-8 grid grid-cols-2 '>
+                                    {/* image input */}
+                                    <div className='card h-60 w-96 border-4 bg-sky-50 rounded-2xl overflow-hidden self-center'>
+                                        {img ? (
+                                            <img src={imageUrl} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
+                                        ) : (
+                                            <img src="Image/cv-example.jpg" alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
+                                        )}
+                                    </div>
+                                    <div className='space-y-8 p-8'>
+                                        <p className='text-3xl'>Input Your Image</p>
+                                        <input
+                                            type="file"
+                                            accept="image/jpeg, image/png"
+                                            className="file-input file-input-bordered file w-full max-w-xs"
+                                            // onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+                                            onChange={handleFileChange}
+                                        />
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
             <center>
                 <div className="container mx-auto bg-purple-300 bg-opacity-20 rounded-2xl">
                     <form onSubmit={handleSubmit}>
@@ -182,7 +315,7 @@ function PostJobPage() {
                                 <input
                                     type="file"
                                     accept="image/jpeg, image/png"
-                                    className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+                                    className="file-input file-input-bordered file w-full max-w-xs"
                                     // onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
                                     onChange={handleFileChange}
                                 />
