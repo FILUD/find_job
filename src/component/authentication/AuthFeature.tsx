@@ -17,6 +17,7 @@ export default function AuthFeat() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [companyName, setCompanyName] = useState('');
     const [otp1, setOtp1] = useState('');
     const [otp2, setOtp2] = useState('');
     const [otp3, setOtp3] = useState('');
@@ -68,21 +69,38 @@ export default function AuthFeat() {
             setLoading(false); // Stop loading spinner
         }
     };
-    const saveRegister = async (email: string, password: string, firstName: string, lastName: string, role: string) => {
+    const saveRegister = async (email: string, password: string, firstName: string, lastName: string, role: string, companyName: string) => {
         try {
-            const response = await fetch(`${api}/register`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email, password: password, name: firstName + ' ' + lastName, role: role }),
-            });
-
-            if (response.ok) {
-                console.log("Registration successful!");
-                return true;
-            } else {
-                console.log("Registration failed:", response.status);
+            if (role == "Jobseeker") {
+                const response = await fetch(`${api}/register`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email, password: password, name: firstName + ' ' + lastName, role: role }),
+                });
+                if (response.ok) {
+                    console.log("Registration successful!");
+                    return true;
+                } else {
+                    console.log("Registration failed:", response.status);
+                }
+            }
+            if (role == "Employer") {
+                setCompanyName(firstName);
+                const response = await fetch(`${api}/register`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email, password: password, name: companyName, role: role }),
+                });
+                if (response.ok) {
+                    console.log("Registration successful!");
+                    return true;
+                } else {
+                    console.log("Registration failed:", response.status);
+                }
             }
         } catch (error) {
             console.log("Network or other error occurred:", error);
@@ -146,12 +164,13 @@ export default function AuthFeat() {
                     navigate('/Home'); // Navigate to dashboard if on the login page
                 } else if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
-                    await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
+                    await saveRegister(emailSignup, passwordSignup, firstName, lastName, role, companyName);
+                    await getCrediatial(emailSignup);
                     setIsOpenOTP(false);
                     setIsOpenSignUp(false);
                     setIsOpenLogIn(false);
                     clearInputs();
-                    navigate('/');
+                    navigate('/Home');
                     console.log('signup gonna save your data')
                     // Perform actions for signup page, such as saving registration data
                 }
@@ -218,7 +237,11 @@ export default function AuthFeat() {
         setOtp4('');
         setEmailSignup('');
         setPasswordSignup('');
+        setConfirmPassword('');
         setPasswordLogin('');
+        setFirstName('');
+        setLastName('');
+        setCompanyName('');
     };
     const otpInputRefs: MutableRefObject<HTMLInputElement | null>[] = [
         useRef<HTMLInputElement>(null),
@@ -431,16 +454,42 @@ export default function AuthFeat() {
                                         ) : (
                                             <div className="card-body">
 
-                                                <div className="px-1 font-sans font-semibold grid grid-cols-2 space-x-2  mx-5 ">
-                                                    <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
-                                                        <input type="text" className="grow" placeholder="Firstname" />
-                                                    </label>
+                                                <ul className="menu menu-horizontal bg-base-300 w-fit rounded-box self-center">
+                                                    <li className={role === 'Jobseeker' ? 'active' : ''}>
+                                                        <button onClick={() => handleItemClick('Jobseeker')} className="toggle-button ">
+                                                            <span>Jobseeker</span>
+                                                            {role === 'Jobseeker' && <span className="toggle-indicator">&#x2714;</span>}
+                                                        </button>
+                                                    </li>
+                                                    <li className={role === 'Employer' ? 'active' : ''}>
+                                                        <button onClick={() => handleItemClick('Employer')} className="toggle-button">
+                                                            <span>Employer</span>
+                                                            {role === 'Employer' && <span className="toggle-indicator">&#x2714;</span>}
+                                                        </button>
+                                                    </li>
+                                                </ul>
 
-                                                    <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
-                                                        <input type="text" className="grow" placeholder="Lastname" />
-                                                    </label>
-                                                </div>
+                                                <p className='self-start mx-5'>Name</p>
+                                                {role !== 'Employer' ? (    
+                                                    <div className="px-1 font-sans font-semibold grid grid-cols-2 space-x-2 mx-5">
+                                                        <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                                            <input type="text" className="grow" placeholder="Firstname" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                                        </label>
+
+                                                        <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
+                                                            <input type="text" className="grow" placeholder="Lastname" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                                                        </label>
+                                                    </div>
+                                                ) : (
+                                                    <div className="px-1 font-sans font-semibold mx-5 ">
+                                                        <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
+                                                            <input type="text" className="grow" placeholder="Company Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                                        </label>
+
+                                                    </div>
+                                                )}
 
                                                 <p className='self-start mx-5'>Email</p>
                                                 <label className="input input-bordered  rounded-2xl flex items-center gap-2 mx-5 mr-5  input-info">
@@ -506,23 +555,9 @@ export default function AuthFeat() {
                                                 {/* Display password match status */}
                                                 {!passwordsMatch && <p className='text-red-500'>Passwords do not match!</p>}
 
-                                                <ul className="menu menu-horizontal bg-base-300 w-fit rounded-box self-center mt-2">
-                                                    <li className={role === 'Jobseeker' ? 'active' : ''}>
-                                                        <button onClick={() => handleItemClick('Jobseeker')} className="toggle-button">
-                                                            <span>Jobseeker</span>
-                                                            {role === 'Jobseeker' && <span className="toggle-indicator">&#x2714;</span>}
-                                                        </button>
-                                                    </li>
-                                                    <li className={role === 'Employer' ? 'active' : ''}>
-                                                        <button onClick={() => handleItemClick('Employer')} className="toggle-button">
-                                                            <span>Employer</span>
-                                                            {role === 'Employer' && <span className="toggle-indicator">&#x2714;</span>}
-                                                        </button>
-                                                    </li>
-                                                </ul>
 
                                                 {!isLoading && (
-                                                    <div className=" grid justify-items-center space-y-4">
+                                                    <div className=" grid justify-items-center space-y-4 mt-2">
                                                         {/* <div className='w-80 border-t-2 border-stone-400'></div> */}
                                                         <div className='card-actions justify-center mt-2 w-full '>
                                                             <button className="btn btn-primary rounded-2xl btn-wide btn-error hover:text-white  text-base "
