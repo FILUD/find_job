@@ -5,23 +5,20 @@ import axios from 'axios';
 
 interface CVData {
   CvID: number;
-  DistrictName: string;
-  IMG_CV: {
-    type: string;
-    data: string;
-  };
+  IMG_CV: string;
   JobseekerName: string;
-  Jobseeker_Profile_IMG: {
-    type: string;
-    data: string; // Assume it's already Base64 encoded
-  };
+  Jobseeker_Profile_IMG: string;
+  CategoryName: string;
   OccupationName: string;
-  ProvinceName: string;
   Title: string;
   UploadDate: string;
   VillageName: string;
-  CategoryName: string;
+  DistrictName: string;
+  ProvinceName: string;
+
 }
+
+
 
 // Type guard function to check if data is ArrayBuffer
 const isArrayBuffer = (data: any): data is ArrayBuffer => {
@@ -31,31 +28,21 @@ const isArrayBuffer = (data: any): data is ArrayBuffer => {
 function FindEmployeePage() {
 
   const navigate = useNavigate();
+
+
   const [cvData, setCvData] = useState<CVData[]>([]);
-
-
   useEffect(() => {
-    axios.get('http://localhost:3001/viewcv')
-      .then(response => {
-        const dataWithBase64Images = response.data.data.map((cv: CVData) => ({
-          ...cv,
-          // No need to convert Jobseeker_Profile_IMG.data to ArrayBuffer if it's already Base64 encoded
-          Jobseeker_Profile_IMG: cv.Jobseeker_Profile_IMG ? {
-            ...cv.Jobseeker_Profile_IMG,
-            data: isArrayBuffer(cv.Jobseeker_Profile_IMG.data) ? `data:image/jpeg;base64,${arrayBufferToBase64(cv.Jobseeker_Profile_IMG.data)}` : cv.Jobseeker_Profile_IMG.data
-          } : null,
-          IMG_CV: cv.IMG_CV ? {
-            ...cv.IMG_CV,
-            data: isArrayBuffer(cv.IMG_CV.data) ? `data:image/jpeg;base64,${arrayBufferToBase64(cv.IMG_CV.data)}` : cv.IMG_CV.data
-          } : null
-        }));
-        setCvData(dataWithBase64Images);
-
-        console.log("CV data:", dataWithBase64Images);
-      })
-      .catch(error => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<CVData[]>('http://localhost:3001/viewcv');
+        setCvData(response.data);
+        console.log(cvData);
+      } catch (error) {
         console.error('Error fetching CV data:', error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const formatDate = (dateString: string) => {
@@ -126,21 +113,20 @@ function FindEmployeePage() {
           </div>
 
           <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
-
-
             {cvData.map((cv: any) => (
               <div className="card w-75 bg-base-100 shadow-xl" key={cv.CvID} onClick={() => handleCardClick(cv)}>
                 <figure className='h-52'>
-                  {cv.IMG_CV && <img className='bg-cover' src={`data:image/jpeg;base64,${arrayBufferToBase64(cv.IMG_CV.data)}`} alt="IMG_CV" />}
+                  {cv.IMG_CV && <img className='bg-cover' src={cv.IMG_CV} alt="IMG_CV" />}
                 </figure>
                 <div className="card-body w-full">
                   <div>
-                    {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={`data:image/jpeg;base64,${arrayBufferToBase64(cv.Jobseeker_Profile_IMG.data)}`} alt="Profile_IMG" />}
+                    {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
                   </div>
                   <div className=''>
                     <h2 className="card-title">{cv.JobseekerName}</h2>
                     <p className='text-left'>{cv.Title}</p>
                     <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
+                    {/* Add additional fields as needed */}
                     <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
                     <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                   </div>
@@ -151,13 +137,14 @@ function FindEmployeePage() {
               </div>
             ))}
 
+
             {showPopup && selectedCV && (
               <div className="container bg-opacity-50 rounded-2xl grid grid-cols-2 gap-3 w-full card-side bg-stone-50 shadow-xl absolute top-20 p-20">
                 <div className='bg-stone-800 rounded-2xl py-10'>
                   <figure className='w-96'>
                     {selectedCV.IMG_CV && <img className='bg-cover rounded-2xl' src={`data:image/jpeg;base64,${arrayBufferToBase64(selectedCV.IMG_CV.data)}`} alt="IMG_CV" />}
                   </figure>
-            
+
 
                 </div>
                 <div className="card-body bg-stone-800  rounded-2xl">
@@ -170,7 +157,7 @@ function FindEmployeePage() {
                   <div>
                     {selectedCV.Jobseeker_Profile_IMG && <img className='w-14 border-2 rounded-full' src={`data:image/jpeg;base64,${arrayBufferToBase64(selectedCV.Jobseeker_Profile_IMG.data)}`} alt="Profile_IMG" />}
                   </div>
-                  <h2  className="card-title text-justify">{selectedCV.JobseekerName}</h2>
+                  <h2 className="card-title text-justify">{selectedCV.JobseekerName}</h2>
                   <p className='text-left'>{selectedCV.Title}</p>
                   <p className='text-left'>Work category: {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
                   <p className='text-left'>Location: {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
