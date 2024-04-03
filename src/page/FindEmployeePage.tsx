@@ -31,7 +31,8 @@ const isArrayBuffer = (data: any): data is ArrayBuffer => {
 function FindEmployeePage() {
 
   const navigate = useNavigate();
-  const [cvData, setCvData] = useState<any[]>([]);
+  const [cvData, setCvData] = useState<CVData[]>([]);
+
 
   useEffect(() => {
     axios.get('http://localhost:3001/viewcv')
@@ -41,7 +42,7 @@ function FindEmployeePage() {
           // No need to convert Jobseeker_Profile_IMG.data to ArrayBuffer if it's already Base64 encoded
           Jobseeker_Profile_IMG: cv.Jobseeker_Profile_IMG ? {
             ...cv.Jobseeker_Profile_IMG,
-            data: `data:image/jpeg;base64,${cv.Jobseeker_Profile_IMG.data}`
+            data: isArrayBuffer(cv.Jobseeker_Profile_IMG.data) ? `data:image/jpeg;base64,${arrayBufferToBase64(cv.Jobseeker_Profile_IMG.data)}` : cv.Jobseeker_Profile_IMG.data
           } : null,
           IMG_CV: cv.IMG_CV ? {
             ...cv.IMG_CV,
@@ -74,17 +75,17 @@ function FindEmployeePage() {
     return btoa(binary);
   };
 
-  //popup
-  const [selectedCard, setSelectedCard] = useState<any>(null);
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedCV, setSelectedCV] = useState<any>(null);
 
   const handleCardClick = (cv: any) => {
-    setSelectedCard(cv);
-    setIsPopupOpen(true);
+    setSelectedCV(cv);
+    setShowPopup(true);
   };
 
   const closePopup = () => {
-    setIsPopupOpen(false);
+    setShowPopup(false);
+    setSelectedCV(null);
   };
 
 
@@ -127,42 +128,62 @@ function FindEmployeePage() {
           <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
 
 
-          {cvData.map((cv: any) => (
-        <div className="card w-75 bg-base-100 shadow-xl" key={cv.CvID} onClick={() => handleCardClick(cv)}>
-          <figure className='h-52'>
-            {cv.IMG_CV && <img className='bg-cover' src={`data:image/jpeg;base64,${arrayBufferToBase64(cv.IMG_CV.data)}`} alt="IMG_CV" />}
-          </figure>
-          <div className="card-body w-full">
-            <div>
-              {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={` data:image/jpeg;base64,${arrayBufferToBase64(cv.Jobseeker_Profile_IMG.data)}`} alt="Profile_IMG" />}
-            </div>
-            <div className=''>
-              <h2 className="card-title">{cv.JobseekerName}</h2>
-              <p className='text-left'>{cv.Title}</p>
-              <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
-              <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
-              <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
-            </div>
-            <div className="w-full card-actions justify-end">
-              <button className="w-full btn btn-primary bg-purple-600">Apply</button>
-            </div>
-          </div>
-        </div>
-      ))}
-      {isPopupOpen && (
-        <div className="popup">
-          <div className="popup-content">
-            <span className="close" onClick={closePopup}>&times;</span>
-            {/* Render detailed information about the selected card */}
-            {selectedCard && (
-              <div>
-                <h2>{selectedCard.JobseekerName}</h2>
-                {/* Add more details as needed */}
+            {cvData.map((cv: any) => (
+              <div className="card w-75 bg-base-100 shadow-xl" key={cv.CvID} onClick={() => handleCardClick(cv)}>
+                <figure className='h-52'>
+                  {cv.IMG_CV && <img className='bg-cover' src={`data:image/jpeg;base64,${arrayBufferToBase64(cv.IMG_CV.data)}`} alt="IMG_CV" />}
+                </figure>
+                <div className="card-body w-full">
+                  <div>
+                    {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={`data:image/jpeg;base64,${arrayBufferToBase64(cv.Jobseeker_Profile_IMG.data)}`} alt="Profile_IMG" />}
+                  </div>
+                  <div className=''>
+                    <h2 className="card-title">{cv.JobseekerName}</h2>
+                    <p className='text-left'>{cv.Title}</p>
+                    <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
+                    <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
+                    <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                  </div>
+                  <div className="w-full card-actions justify-end">
+                    <button className="w-full btn btn-primary bg-purple-600">Apply</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {showPopup && selectedCV && (
+              <div className="container bg-opacity-50 rounded-2xl grid grid-cols-2 gap-3 w-full card-side bg-stone-50 shadow-xl absolute top-20 p-20">
+                <div className='bg-stone-800 rounded-2xl py-10'>
+                  <figure className='w-96'>
+                    {selectedCV.IMG_CV && <img className='bg-cover rounded-2xl' src={`data:image/jpeg;base64,${arrayBufferToBase64(selectedCV.IMG_CV.data)}`} alt="IMG_CV" />}
+                  </figure>
+            
+
+                </div>
+                <div className="card-body bg-stone-800  rounded-2xl">
+                  <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
+                    <button onClick={closePopup} className="btn btn-circle btn-outline ">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                  </div>
+
+                  <div>
+                    {selectedCV.Jobseeker_Profile_IMG && <img className='w-14 border-2 rounded-full' src={`data:image/jpeg;base64,${arrayBufferToBase64(selectedCV.Jobseeker_Profile_IMG.data)}`} alt="Profile_IMG" />}
+                  </div>
+                  <h2  className="card-title text-justify">{selectedCV.JobseekerName}</h2>
+                  <p className='text-left'>{selectedCV.Title}</p>
+                  <p className='text-left'>Work category: {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
+                  <p className='text-left'>Location: {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
+                  <p className='text-left'>Posted: {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
+
+                  <div className="card-actions justify-end">
+                    <button className="btn btn-primary">Apply</button>
+                    <button className="btn btn-primary">View Profile</button>
+                  </div>
+                </div>
               </div>
             )}
-          </div>
-        </div>
-      )}
+
 
           </div>
         </main>

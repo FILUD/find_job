@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../component/navbar/Navbar'
 import Footer from '../component/footer/Footer'
 import { format } from 'path';
+import axios from 'axios';
 function PostCvPage() {
 
     const [title, setTitle] = useState('');
@@ -10,9 +11,15 @@ function PostCvPage() {
     const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [jobseekerID, setJobseekerID] = useState<number | null>(null);
-    const [formData, setFormData] = useState(new FormData());
     const [img, setIMG] = useState<{ type: string; data: number[] } | null>(null);
     const [imageUrl, setImageUrl] = useState<string>('');
+
+    const [file, setFile] = useState<File | null>(null);
+    const [formData, setFormData] = useState({
+      JobseekerID: '',
+      Title: '',
+      OccupationID: ''
+    });
 
     useEffect(() => {
         fetch('http://localhost:3001/getallcategory')
@@ -112,54 +119,26 @@ function PostCvPage() {
 
 
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        if (!img || !title || !occupation || jobseekerID === null) {
-            console.error('Missing required data for CV submission');
-            return;
-        }
-        formData.delete('JobseekerID');
-        formData.delete('IMG_CV');
-        formData.delete('Title');
-        formData.delete('OccupationID');
-
-        // Append form data
-        formData.append('JobseekerID', jobseekerID.toString());
-        formData.append('IMG_CV', JSON.stringify(img));
-        formData.append('Title', title);
-        formData.append('OccupationID', occupation);
-
-        // console.log('Form Data:', formData.get('IMG_CV')); 
-
-
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+    
+        const formDataToSend = new FormData();
+        formDataToSend.append('image', file as File);
+        formDataToSend.append('JobseekerID', formData.JobseekerID);
+        formDataToSend.append('Title', formData.Title);
+        formDataToSend.append('OccupationID', formData.OccupationID);
+    
         try {
-            const response = await fetch('http://localhost:3001/postcv', {
-                method: 'POST',
-                body: JSON.stringify({
-                    JobseekerID: formData.get('JobseekerID'),
-                    IMG_CV: formData.get('IMG_CV'),
-                    Title: formData.get('Title'),
-                    OccupationID: formData.get('OccupationID')
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-
-            });
-
-            if (response.ok) {
-                // Handle success
-                console.log('CV uploaded successfully');
-            } else {
-                // Handle server error
-                console.error('Failed to upload CV');
+          await axios.post('http://localhost:3001/uploadsss', formDataToSend, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
             }
+          });
+          alert('Image uploaded successfully');
         } catch (error) {
-            // Handle network error
-            console.error('Network error:', error);
+          console.error('Error uploading image:', error);
         }
-    };
+      };
 
 
     return (
@@ -179,7 +158,7 @@ function PostCvPage() {
                                 </div>
                                 <input
                                     type="file"
-                                    accept="image/jpeg, image/png"
+                                    // accept="image/jpeg, image/png"
                                     className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
                                     // onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
                                     onChange={handleFileChange}
