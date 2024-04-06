@@ -10,10 +10,8 @@ interface CvData {
   }
 
 function TestPage() {
-
-
+  
     //post
-
     const [file, setFile] = useState<File | null>(null);
     const [formData, setFormData] = useState({
       JobseekerID: '',

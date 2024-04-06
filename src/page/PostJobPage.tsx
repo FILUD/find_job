@@ -95,6 +95,7 @@ function PostJobPage() {
         }
     };
 
+
     // new one import file to filedata for send to back end
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files ? e.target.files[0] : null;
@@ -311,9 +312,6 @@ function PostJobPage() {
                     <Footer />
                 </>
             )}
-
-
-
 
         </div>
     )

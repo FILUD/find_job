@@ -13,6 +13,7 @@ import PostCvPage from './page/PostCvPage';
 import PostJobPage from './page/PostJobPage';
 
 import TestPage from './page/TestPage';
+import ViewProfilePage from './page/ViewProfilePage';
 
 
 
@@ -40,8 +41,8 @@ function App() {
             <Route path="/EmpProfile" element={<EmpProfile />} />
             <Route path="/PostCv" element={<PostCvPage />} />
             <Route path="/PostJob" element={<PostJobPage />} />
+            <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
 
-            <Route path="/TestPage" element={<TestPage />} />
             <Route path="*" element={<ErrorPage />} />
 
 
