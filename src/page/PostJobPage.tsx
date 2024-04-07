@@ -317,9 +317,6 @@ function PostJobPage() {
                 </>
             )}
 
-
-
-
         </div>
     )
 }

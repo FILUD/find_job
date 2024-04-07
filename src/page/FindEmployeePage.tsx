@@ -5,6 +5,7 @@ import axios from 'axios';
 
 interface CVData {
   CvID: number;
+  JobseekerID: number;
   IMG_CV: string;
   JobseekerName: string;
   Jobseeker_Profile_IMG: string;
@@ -15,15 +16,8 @@ interface CVData {
   VillageName: string;
   DistrictName: string;
   ProvinceName: string;
-
 }
 
-
-
-// Type guard function to check if data is ArrayBuffer
-const isArrayBuffer = (data: any): data is ArrayBuffer => {
-  return data instanceof ArrayBuffer;
-};
 
 function FindEmployeePage() {
 
@@ -45,6 +39,17 @@ function FindEmployeePage() {
     fetchData();
   }, []);
 
+  const openProfile = async (jobseekerID: number) => {
+    try {
+      const response = await axios.post('http://localhost:3001/viewjobseeker_byid', { jobseekerID });
+      const jobseekerData = response.data.data[0];
+      navigate(`/profile/${jobseekerData.JobseekerID}`);
+    } catch (error) {
+      console.error('Error fetching jobseeker data:', error);
+    }
+  };
+
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
@@ -53,14 +58,6 @@ function FindEmployeePage() {
     return `${day}/${month}/${year}`;
   };
 
-  const arrayBufferToBase64 = (buffer: ArrayBuffer) => {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    for (let i = 0; i < bytes.length; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  };
 
   const [showPopup, setShowPopup] = useState(false);
   const [selectedCV, setSelectedCV] = useState<any>(null);
@@ -75,6 +72,23 @@ function FindEmployeePage() {
     setSelectedCV(null);
   };
 
+  const openFullScreen = (imageUrl: string) => {
+    const fullScreenImage = document.getElementById('fullScreenImage');
+    if (fullScreenImage) {
+      fullScreenImage.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          fullScreenImage.requestFullscreen().catch((err) => {
+            console.error('Error attempting to enable full screen:', err);
+          });
+        } else {
+          document.exitFullscreen().catch((err) => {
+            console.error('Error attempting to exit full screen:', err);
+          });
+        }
+      });
+    }
+  };
+  
 
   return (
     <div>
@@ -123,10 +137,9 @@ function FindEmployeePage() {
                     {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
                   </div>
                   <div className=''>
-                    <h2 className="card-title">{cv.JobseekerName}</h2>
-                    <p className='text-left'>{cv.Title}</p>
+                    <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
+                    <p className='text-left'><b>{cv.Title}</b></p>
                     <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
-                    {/* Add additional fields as needed */}
                     <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
                     <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                   </div>
@@ -137,40 +150,36 @@ function FindEmployeePage() {
               </div>
             ))}
 
-
-            {showPopup && selectedCV && (
-              <div className="container bg-opacity-50 rounded-2xl grid grid-cols-2 gap-3 w-full card-side bg-stone-50 shadow-xl absolute top-20 p-20">
-                <div className='bg-stone-800 rounded-2xl py-10'>
-                  <figure className='w-96'>
-                    {selectedCV.IMG_CV && <img className='bg-cover rounded-2xl' src={`data:image/jpeg;base64,${arrayBufferToBase64(selectedCV.IMG_CV.data)}`} alt="IMG_CV" />}
-                  </figure>
-
-
-                </div>
-                <div className="card-body bg-stone-800  rounded-2xl">
-                  <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
-                    <button onClick={closePopup} className="btn btn-circle btn-outline ">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
+            {selectedCV && (
+              <dialog id="my_modal_3" className="modal" open>
+                <div className="modal-box">
+                  <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopup}>✕</button>
+                  <div className='bg-stone-800 rounded-2xl py-10'>
+                    <figure className='w-40'>
+                      <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClick(selectedCV)}>
+                        <img id="fullScreenImage" className='bg-cover rounded-2xl' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                      </div>
+                    </figure>
                   </div>
-
-                  <div>
-                    {selectedCV.Jobseeker_Profile_IMG && <img className='w-14 border-2 rounded-full' src={`data:image/jpeg;base64,${arrayBufferToBase64(selectedCV.Jobseeker_Profile_IMG.data)}`} alt="Profile_IMG" />}
-                  </div>
-                  <h2 className="card-title text-justify">{selectedCV.JobseekerName}</h2>
-                  <p className='text-left'>{selectedCV.Title}</p>
-                  <p className='text-left'>Work category: {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
-                  <p className='text-left'>Location: {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
-                  <p className='text-left'>Posted: {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
-
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Apply</button>
-                    <button className="btn btn-primary">View Profile</button>
+                  <div className="card-body bg-stone-800  rounded-2xl">
+                    <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
+                    </div>
+                    <div>
+                      {selectedCV.Jobseeker_Profile_IMG && <img className='w-14 border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
+                    </div>
+                    <h2 className="card-title text-justify"><b>{selectedCV.JobseekerName}</b></h2>
+                    <p className='text-left'><b>{selectedCV.Title}</b></p>
+                    <p className='text-left'><u>Work category:</u> {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
+                    <p className='text-left'><u>Location:</u> {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
+                    <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
+                    <div className="card-actions justify-end">
+                      <button className="btn btn-primary">Apply</button>
+                      <button className="btn btn-primary" onClick={() => openProfile(selectedCV.JobseekerID)}>View Profile</button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </dialog>
             )}
-
 
           </div>
         </main>
