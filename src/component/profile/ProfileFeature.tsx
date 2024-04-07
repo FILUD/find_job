@@ -453,7 +453,8 @@ export default function Profile_feature() {
                                                         </div>
 
                                                     </div>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-12 mt-8' onClick={() => navigate("/PostCV")}> Post CV</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => navigate("/PostCV")}> Edit Profile</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline mt-2' onClick={() => navigate("/PostCV")}> Post CV</button>
                                                 </div>
 
                                             </div>

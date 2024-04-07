@@ -17,7 +17,7 @@ export default function AuthFeat() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [companyName, setCompanyName] = useState('');
+    // const [companyName, setCompanyName] = useState(firstName);
     const [otp1, setOtp1] = useState('');
     const [otp2, setOtp2] = useState('');
     const [otp3, setOtp3] = useState('');
@@ -69,8 +69,8 @@ export default function AuthFeat() {
             setLoading(false); // Stop loading spinner
         }
     };
-    const saveRegister = async (email: string, password: string, firstName: string, lastName: string, role: string, companyName: string) => {
-        try {
+    const saveRegister = async (email: string, password: string, firstName: string, lastName: string, role: string) => {
+        try {        
             if (role == "Jobseeker") {
                 const response = await fetch(`${api}/register`, {
                     method: "POST",
@@ -87,13 +87,13 @@ export default function AuthFeat() {
                 }
             }
             if (role == "Employer") {
-                setCompanyName(firstName);
+               
                 const response = await fetch(`${api}/register`, {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email: email, password: password, name: companyName, role: role }),
+                    body: JSON.stringify({ email: email, password: password, name: firstName, role: role }),
                 });
                 if (response.ok) {
                     console.log("Registration successful!");
@@ -164,7 +164,7 @@ export default function AuthFeat() {
                     navigate('/Home'); // Navigate to dashboard if on the login page
                 } else if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
-                    await saveRegister(emailSignup, passwordSignup, firstName, lastName, role, companyName);
+                    await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
                     await getCrediatial(emailSignup);
                     setIsOpenOTP(false);
                     setIsOpenSignUp(false);
@@ -241,7 +241,6 @@ export default function AuthFeat() {
         setPasswordLogin('');
         setFirstName('');
         setLastName('');
-        setCompanyName('');
     };
     const otpInputRefs: MutableRefObject<HTMLInputElement | null>[] = [
         useRef<HTMLInputElement>(null),

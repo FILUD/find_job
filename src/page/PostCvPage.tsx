@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../component/navbar/Navbar'
 import Footer from '../component/footer/Footer'
-import { format } from 'path';
 import axios from 'axios';
+
+
 function PostCvPage() {
 
     const [title, setTitle] = useState('');
@@ -11,15 +12,14 @@ function PostCvPage() {
     const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [jobseekerID, setJobseekerID] = useState<number | null>(null);
-    const [img, setIMG] = useState<{ type: string; data: number[] } | null>(null);
     const [imageUrl, setImageUrl] = useState<string>('');
 
     const [file, setFile] = useState<File | null>(null);
-    const [formData, setFormData] = useState({
-      JobseekerID: '',
-      Title: '',
-      OccupationID: ''
-    });
+    // const [formData, setFormData] = useState({
+    //     JobseekerID: '',
+    //     Title: '',
+    //     OccupationID: ''
+    // });
 
     useEffect(() => {
         fetch('http://localhost:3001/getallcategory')
@@ -86,22 +86,14 @@ function PostCvPage() {
         }
     };
 
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files ? e.target.files[0] : null;
-    
         if (selectedFile) {
+            setFile(selectedFile);
             const reader = new FileReader();
             reader.onloadend = () => {
                 if (typeof reader.result === 'string') {
-                    const base64String = reader.result.split(',')[1];
-                    const fileData = {
-                        type: selectedFile.type,
-                        data: base64String ? base64String.split('').map(char => char.charCodeAt(0)) : []
-                    };
-    
-                    // Set the file data in the desired format
-                    setIMG({ type: selectedFile.type, data: fileData.data });
-    
                     // Set the image URL directly from the reader result
                     setImageUrl(reader.result as string);
                 } else {
@@ -109,49 +101,66 @@ function PostCvPage() {
                 }
             };
             reader.readAsDataURL(selectedFile);
+
         } else {
-            setIMG(null);
-            setImageUrl(''); // Clear the image URL when no file is selected
+            setImageUrl('');
         }
     };
-    
 
 
 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
-        const formDataToSend = new FormData();
-        formDataToSend.append('image', file as File);
-        formDataToSend.append('JobseekerID', formData.JobseekerID);
-        formDataToSend.append('Title', formData.Title);
-        formDataToSend.append('OccupationID', formData.OccupationID);
-    
-        try {
-          await axios.post('http://localhost:3001/uploadsss', formDataToSend, {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          });
-          alert('Image uploaded successfully');
-        } catch (error) {
-          console.error('Error uploading image:', error);
+
+        if (!file || !title || !occupation || jobseekerID === null) {
+            console.error('Missing required data for CV submission');
+            return;
         }
-      };
+        const formDataToSend = new FormData();
+        formDataToSend.delete('image');
+        formDataToSend.delete('JobseekerID');
+        formDataToSend.delete('Title');
+        formDataToSend.delete('OccupationID');
+
+        formDataToSend.append('image', file as File);
+        formDataToSend.append('JobseekerID', jobseekerID.toString());
+        formDataToSend.append('Title', title);
+        formDataToSend.append('OccupationID', occupation);
+
+        console.log(formDataToSend.get('JobseekerID'));
+        console.log(formDataToSend.get('OccupationID'));
+        console.log(formDataToSend.get('Title'));
+        console.log(formDataToSend.get("image"))
+
+
+        try {
+            await axios.post('http://localhost:3001/uploadsss', formDataToSend, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            alert('Image uploaded successfully');
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    };
 
 
     return (
         <div>
             <Navbar />
             <center>
-                <div className="container mx-auto bg-purple-300 bg-opacity-20 rounded-2xl">
+                <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-3 '>
+                    <div className='py-5 self-center font-bold text-3xl'>Post CV</div>
+                </div>
+                <div className="card bg-purple-300 bg-opacity-20 rounded-2xl mx-20  mt-4">
                     <form onSubmit={handleSubmit}>
                         <main className='grid grid-cols-2 gap-4 justify-items-center pt-20 mt-5 pb-20'>
-                            <div className='bg-cyan-950 p-12 justify-self-end rounded-2xl'>
+                            <div className='bg-base-100 p-12 justify-self-end rounded-2xl'>
                                 <div className='box-content h-60 w-60 border-4 bg-sky-50 rounded-2xl mb-10 overflow-hidden items-center grid justify-items-center'>
-                                    {img ? (
-                                        <img src={imageUrl} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    {imageUrl ? (
+                                        <img src={imageUrl} alt="CV" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.8' }} />
                                     ) : (
                                         <img className='w-20' src="Icon/gallery.png" alt="CV" />
                                     )}
@@ -167,7 +176,7 @@ function PostCvPage() {
 
                             </div>
 
-                            <div className='justify-self-start grid grid-cols-1 bg-cyan-950 p-12 rounded-2xl'>
+                            <div className='justify-self-start grid grid-cols-1 bg-base-100 p-12 rounded-2xl'>
                                 <input
                                     type="text"
                                     placeholder="Title"
