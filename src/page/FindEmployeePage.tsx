@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../component/navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Footer from '../component/footer/Footer';
 
 interface CVData {
   CvID: number;
@@ -184,6 +185,7 @@ function FindEmployeePage() {
           </div>
         </main>
       </center>
+     <Footer/>
     </div>
   )
 }
