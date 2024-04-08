@@ -3,10 +3,12 @@
 
 
 module.exports = {
-
-  theme: {
+  daisyui: {
+    themes: ["light", "dark", "cupcake"],
+  },
+  theme: {  
     extend: {
-      
+
     },
   },
   plugins: [require("daisyui")],
