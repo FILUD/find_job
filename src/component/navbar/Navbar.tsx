@@ -40,6 +40,10 @@ function Navbar() {
                             <p onClick={() => navigate('/FindEmployee')}>Find Employee</p>
                         </div>
 
+                        <div className="dropdown dropdown-end px-5 hover:text-orange-300 duration-1000 cursor-pointer">
+                            <p onClick={() => navigate('/FindEmployee')}>Post JOB</p>
+                        </div>
+
                         {/* Search icon */}
                         <div className="dropdown dropdown-end">
                             <button className="btn btn-ghost btn-circle w-80">
