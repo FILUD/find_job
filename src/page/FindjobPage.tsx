@@ -134,15 +134,15 @@ function FindjobPage() {
           <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
 
 
-            {jobData.map((job: any) => (
-              <div className="card w-75 bg-base-100 shadow-xl" key={job.JobID} onClick={() => handleCardClick(job)}>
+            {jobData.map((job: any) => ( 
+              <div className="card w-75 bg-base-100 shadow-xl hover:shadow-amber-400 duration-1000 cursor-pointer" key={job.JobID} onClick={() => handleCardClick(job)}>
                 <figure className='h-52'>
                   {job.Post_IMG && <img className='bg-cover' src={job.Post_IMG} alt="IMG_JOB" />}
                 </figure>
                 <div className="card-body w-full">
                   <div>
-                    {job.Jobseeker_Profile_IMG
-                      ? <img className='w-14 -mt-16 border-2 rounded-full' src={job.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                    {job.Employer_Profile_IMG
+                      ? <img className='w-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
                       : <img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                     }
                   </div>
@@ -178,7 +178,7 @@ function FindjobPage() {
                   <div className='bg-stone-800 rounded-2xl py-10'>
                     <figure className='w-40'>
                       <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.JobID} onClick={() => handleCardClick(selectedCV)}>
-                        <img id="fullScreenImage" className='bg-cover rounded-2xl' src={selectedCV.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.Post_IMG)} />
+                        <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedCV.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.Post_IMG)} />
                       </div>
                     </figure>
                   </div>
@@ -187,8 +187,8 @@ function FindjobPage() {
                     </div>
                     <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
                       <div className='grid col-span-1 justify-start justify-items-start items-start '>
-                    {selectedCV.Jobseeker_Profile_IMG
-                      ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                    {selectedCV.Employer_Profile_IMG
+                      ? <img className='w-14  border-2 rounded-full' src={selectedCV.Employer_Profile_IMG} alt="Profile_IMG" />
                       : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                     }
                     </div>

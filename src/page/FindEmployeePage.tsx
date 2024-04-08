@@ -129,7 +129,7 @@ function FindEmployeePage() {
 
           <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
             {cvData.map((cv: any) => (
-              <div className="card w-75 bg-base-100 shadow-xl" key={cv.CvID} onClick={() => handleCardClick(cv)}>
+              <div className="card w-75 bg-base-100 shadow-xl hover:shadow-amber-400 duration-1000 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
                 <figure className='h-52'>
                   {cv.IMG_CV && <img className='bg-cover' src={cv.IMG_CV} alt="IMG_CV" />}
                 </figure>
@@ -158,17 +158,20 @@ function FindEmployeePage() {
                   <div className='bg-stone-800 rounded-2xl py-10'>
                     <figure className='w-40'>
                       <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClick(selectedCV)}>
-                        <img id="fullScreenImage" className='bg-cover rounded-2xl' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                        <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
                       </div>
                     </figure>
                   </div>
                   <div className="card-body bg-stone-800  rounded-2xl">
-                    <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
+                  <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
+                      <div className='grid col-span-1 justify-start justify-items-start items-start '>
+                    {selectedCV.Jobseeker_Profile_IMG
+                      ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                      : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                    }
                     </div>
-                    <div>
-                      {selectedCV.Jobseeker_Profile_IMG && <img className='w-14 border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
+                    <h2 className="card-title text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
                     </div>
-                    <h2 className="card-title text-justify"><b>{selectedCV.JobseekerName}</b></h2>
                     <p className='text-left'><b>{selectedCV.Title}</b></p>
                     <p className='text-left'><u>Work category:</u> {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
                     <p className='text-left'><u>Location:</u> {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
