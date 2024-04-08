@@ -32,7 +32,7 @@ function FindjobPage() {
 
   const [jobData, setJobData] = useState<jobData[]>([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedCV, setSelectedCV] = useState<any>(null);
+  const [selectedJOB, setselectedJOB] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +48,8 @@ function FindjobPage() {
     fetchData();
   }, []);
 
+
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
@@ -59,13 +61,13 @@ function FindjobPage() {
 
 
   const handleCardClick = (cv: any) => {
-    setSelectedCV(cv);
+    setselectedJOB(cv);
     setShowPopup(true);
   };
 
   const closePopup = () => {
     setShowPopup(false);
-    setSelectedCV(null);
+    setselectedJOB(null);
   };
 
   const openFullScreen = (imageUrl: string) => {
@@ -171,14 +173,14 @@ function FindjobPage() {
               </div>
             ))}
 
-            {selectedCV && (
+            {selectedJOB && (
               <dialog id="my_modal_3" className="modal" open>
                 <div className="modal-box">
                   <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopup}>✕</button>
                   <div className='bg-stone-800 rounded-2xl py-10'>
                     <figure className='w-40'>
-                      <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.JobID} onClick={() => handleCardClick(selectedCV)}>
-                        <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedCV.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.Post_IMG)} />
+                      <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClick(selectedJOB)}>
+                        <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
                       </div>
                     </figure>
                   </div>
@@ -187,36 +189,37 @@ function FindjobPage() {
                     </div>
                     <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
                       <div className='grid col-span-1 justify-start justify-items-start items-start '>
-                    {selectedCV.Employer_Profile_IMG
-                      ? <img className='w-14  border-2 rounded-full' src={selectedCV.Employer_Profile_IMG} alt="Profile_IMG" />
+                    {selectedJOB.Employer_Profile_IMG
+                      ? <img className='w-14  border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
                       : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                     }
                     </div>
-                    <h2 className="card-title text-justify col-span-4"><b>{selectedCV.CompanyName}</b></h2>
+                    <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>
                     </div>
-                    <p className='text-left'><b>{selectedCV.Title}</b></p>
-                    <p className='text-left'>{selectedCV.Description}</p>
+                    <p className='text-left'><b>{selectedJOB.Title}</b></p>
+                    <p className='text-left'>{selectedJOB.Description}</p>
                     <p className='text-left'>
-                      <u>Salary</u> : {selectedCV.SalaryStart.toLocaleString()} - {selectedCV.SalaryMax.toLocaleString()} LAK
+                      <u>Salary</u> : {selectedJOB.SalaryStart.toLocaleString()} - {selectedJOB.SalaryMax.toLocaleString()} LAK
                     </p>
-                    <p className='text-left'><u>Work category</u>  : {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
+                    <p className='text-left'><u>Work category</u>  : {selectedJOB.CategoryName}/{selectedJOB.OccupationName}</p>
                     <p className='text-left'>
                     <u>Location</u> :
-                      {selectedCV.VillageName
-                        ? `${selectedCV.VillageName}/${selectedCV.DistrictName}/${selectedCV.ProvinceName}`
+                      {selectedJOB.VillageName
+                        ? `${selectedJOB.VillageName}/${selectedJOB.DistrictName}/${selectedJOB.ProvinceName}`
                         : ' ບໍ່ລະບຸ'
                       }
                     </p>
-                    <p className='text-left'><u>Work type:</u> {selectedCV.WorkType}</p> 
-                    <p className='text-left'><u>Posted</u> : {selectedCV.PostDate ? formatDate(selectedCV.PostDate) : 'N/A'}</p>
+                    <p className='text-left'><u>Work type:</u> {selectedJOB.WorkType}</p> 
+                    <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                     <div className="card-actions justify-end">
                       <button className="btn btn-primary">Apply</button>
-                      <button className="btn btn-primary" onClick={() => openProfile(selectedCV.JobseekerID)}>View Profile</button>
+                      <button className="btn btn-primary" onClick={() => openProfile(selectedJOB.JobseekerID)}>View Profile</button>
                     </div>
                   </div>
                 </div>
               </dialog>
             )}
+
 
           </div>
         </main>

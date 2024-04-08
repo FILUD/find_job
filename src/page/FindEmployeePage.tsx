@@ -40,6 +40,8 @@ function FindEmployeePage() {
     fetchData();
   }, []);
 
+
+
   const openProfile = async (jobseekerID: number) => {
     try {
       const response = await axios.post('http://localhost:3001/viewjobseeker_byid', { jobseekerID });
