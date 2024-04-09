@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import React, { useState } from "react";
 
 
 interface SubMenuStates {
@@ -7,7 +8,13 @@ interface SubMenuStates {
     addressSubMenuOpen: boolean;
 }
 
-function Sidebar() {
+interface SidebarProps {
+    onChangeDashboard: (dashboardName: string) => void;
+}
+
+
+const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
+
     const [subMenuStates, setSubMenuStates] = useState<SubMenuStates>({
         managerSubMenuOpen: true,
         communicationSubMenuOpen: false,
@@ -20,6 +27,10 @@ function Sidebar() {
             [subMenuKey]: !prevState[subMenuKey]
         }));
     }
+
+    const handleDashboardClick = (dashboardName: string) => {
+        onChangeDashboard(dashboardName);
+    };
 
 
     return (
@@ -48,8 +59,12 @@ function Sidebar() {
                                 <kbd className="w-4 h-4 self-end m-2">{subMenuStates.managerSubMenuOpen ? '▲' : '▼'}</kbd>
                             </a>
                             <ul className={`submenu ${subMenuStates.managerSubMenuOpen ? "" : "hidden"}`}>
-                                <li><a href="#">Manager1</a></li>
-                                <li><a href="#">Manager2</a></li>
+                                <li onClick={() => handleDashboardClick("dashboard_manager")}>
+                                    <a href="#">Manager1</a>
+                                </li>
+                                <li onClick={() => handleDashboardClick("dashboard_people")}>
+                                    <a href="#">Manager2</a>
+                                </li>
                             </ul>
                         </li>
                         <li className="menu dropdown outline outline-1  rounded-2xl">

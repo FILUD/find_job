@@ -14,7 +14,7 @@ import PostJobPage from './page/PostJobPage';
 
 import TestPage from './page/TestPage';
 import ViewProfilePage from './page/ViewProfilePage';
-import Admin_dashboard from './component/admin/page/Admin_dashboard';
+import Admin_Dashboard from './component/admin/page/Admin_Page';
 
 
 
@@ -43,7 +43,7 @@ function App() {
             <Route path="/PostCv" element={<PostCvPage />} />
             <Route path="/PostJob" element={<PostJobPage />} />
             <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
-            <Route path="/admin_dashboard" element={<Admin_dashboard />} />
+            <Route path="/admin_dashboard" element={<Admin_Dashboard />} />
             <Route path="*" element={<ErrorPage />} />
 
 

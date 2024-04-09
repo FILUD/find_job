@@ -1,47 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../component/header/header';
-import { ThemeToggle, useTheme } from '../../../theme/theme'; // Assuming Theme.tsx is where your ThemeProvider and ThemeToggle components are defined
+import { ThemeToggle, useTheme } from '../../../theme/theme';
+import SetDashboard from '../component/dashboards/set_dashboard';
 import Sidebar from '../component/sidebar/sidebar';
 
-// import { ThemeProvider } from './ThemeContext';
-
-
-// import Sidebar from '../partials/Sidebar';
-// import Header from '../partials/Header';
-// import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
-// import DashboardAvatars from '../partials/dashboard/DashboardAvatars';
-// import FilterButton from '../components/DropdownFilter';
-// import Datepicker from '../components/Datepicker';
-// import DashboardCard01 from '../partials/dashboard/DashboardCard01';
-// import DashboardCard02 from '../partials/dashboard/DashboardCard02';
-// import DashboardCard03 from '../partials/dashboard/DashboardCard03';
-// import DashboardCard04 from '../partials/dashboard/DashboardCard04';
-// import DashboardCard05 from '../partials/dashboard/DashboardCard05';
-// import DashboardCard06 from '../partials/dashboard/DashboardCard06';
-// import DashboardCard07 from '../partials/dashboard/DashboardCard07';
-// import DashboardCard08 from '../partials/dashboard/DashboardCard08';
-// import DashboardCard09 from '../partials/dashboard/DashboardCard09';
-// import DashboardCard10 from '../partials/dashboard/DashboardCard10';
-// import DashboardCard11 from '../partials/dashboard/DashboardCard11';
-// import DashboardCard12 from '../partials/dashboard/DashboardCard12';
-// import DashboardCard13 from '../partials/dashboard/DashboardCard13';
-// import Banner from '../partials/Banner';
-
-function Dashboard() {
-
+const Dashboard: React.FC = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { theme } = useTheme();
 
+    const [dashboardName, setDashboardName] = useState<string>("dashboard_manager1");
+
+    const changeDashboard = (newDashboardName: string) => {
+        setDashboardName(newDashboardName);
+    };
 
     return (
         <html data-theme={theme}>
             <div className=''>
-                <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-                    <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                <div className="relative flex flex-col flex-1 ">
+                    {/* <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
                     <div className="flex h-screen overflow-hidden">
-                        {/* <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> */}
-                        
+                        <Sidebar onChangeDashboard={changeDashboard} />
                         <main>
+                            <SetDashboard dashboardName={dashboardName} />
+                            {/* <Dashboard_manager /> */}
+
                             <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
                                 {/* Welcome banner */}
@@ -49,13 +32,16 @@ function Dashboard() {
 
                                 {/* Dashboard actions */}
                                 <div className="sm:flex sm:justify-between sm:items-center mb-8">
-
+                                   
                                     {/* Left: Avatars */}
                                     {/* <DashboardAvatars /> */}
+                                    {/* <Dashboard_manager /> */}
 
                                     {/* Right: Actions */}
                                     <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                                        {/* <Dashboard_manager /> */}
                                         {/* Filter button */}
+                                        <SetDashboard dashboardName={dashboardName} />
                                         {/* <FilterButton /> */}
                                         {/* Datepicker built with flatpickr */}
                                         {/* <Datepicker /> */}
@@ -66,6 +52,7 @@ function Dashboard() {
                                     </svg>
                                     <span className="hidden xs:block ml-2">Add view</span>
                                 </button> */}
+
                                     </div>
 
                                 </div>
@@ -73,6 +60,7 @@ function Dashboard() {
                                 {/* Cards */}
                                 <div className="grid grid-cols-12 gap-6">
 
+                                    {/* <Dashboard_manager /> */}
                                     {/* Line chart (Acme Plus) */}
                                     {/* <DashboardCard01 /> */}
                                     {/* Line chart (Acme Advanced) */}
