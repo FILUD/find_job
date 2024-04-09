@@ -238,7 +238,7 @@ function HomePage() {
         {selectedJOB && (
           <dialog id="my_modal_3" className="modal" open>
             <div className="modal-box">
-              <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopupCV}>✕</button>
+              <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopupJOB}>✕</button>
               <div className='bg-stone-800 rounded-2xl py-10'>
                 <figure className='w-40'>
                   <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>

@@ -87,13 +87,13 @@ function FindjobPage() {
     }
   };
 
-  const openProfile = async (jobseekerID: number) => {
+  const openProfile = async (employerID: number) => {
     try {
-      const response = await axios.post('http://localhost:3001/viewjobseeker_byid', { jobseekerID });
-      const jobseekerData = response.data.data[0];
-      navigate(`/profile/${jobseekerData.JobseekerID}`);
+      const response = await axios.post('http://localhost:3001/viewjobseeker_byid', { employerID });
+      const employerData = response.data.data[0];
+      navigate(`/profile/${employerData.employerID}`);
     } catch (error) {
-      console.error('Error fetching jobseeker data:', error);
+      console.error('Error fetching employer data:', error);
     }
   };
 

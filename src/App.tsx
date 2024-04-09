@@ -8,7 +8,7 @@ import ErrorPage from './page/ErrorPage';
 import FindEmployeePage from './page/FindEmployeePage';
 import FindjobPage from './page/FindjobPage';
 import CreateEmpProfile from './page/CreateEmpProfile';
-import EmpProfile from './page/EmpProfile';
+import EmployerProfile from './page/EmployerProfile';
 import PostCvPage from './page/PostCvPage';
 import PostJobPage from './page/PostJobPage';
 
@@ -38,10 +38,11 @@ function App() {
             <Route path="/FindEmployee" element={<FindEmployeePage />} />
             <Route path="/Findjob" element={<FindjobPage />} />
             <Route path="/CreateEmpProfile" element={<CreateEmpProfile />} />
-            <Route path="/EmpProfile" element={<EmpProfile />} />
+            <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/PostCv" element={<PostCvPage />} />
             <Route path="/PostJob" element={<PostJobPage />} />
             <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
+
 
             <Route path="*" element={<ErrorPage />} />
 
