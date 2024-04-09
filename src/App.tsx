@@ -14,7 +14,7 @@ import PostJobPage from './page/PostJobPage';
 
 import TestPage from './page/TestPage';
 import ViewProfilePage from './page/ViewProfilePage';
-import Admin_dashboard from './component/admin/page/Admin_dashobard';
+import Admin_dashboard from './component/admin/page/Admin_dashboard';
 
 
 

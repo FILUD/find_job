@@ -21,21 +21,21 @@ export const useTheme = () => {
 // Define the ThemeProvider component
 export const ThemeProviders: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [currentTheme, setCurrentTheme] = useState(() => {
-        // Retrieve the theme from local storage or default to 'light' if not found
+        // Retrieve the theme from local storage or default to 'cupcake' if not found
         const storedTheme = localStorage.getItem('theme');
-        return storedTheme || 'light';
+        return storedTheme || 'cupcake';
     });
 
     // Function to toggle the theme
     const toggleTheme = () => {
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = currentTheme === 'cupcake' ? 'dark' : 'cupcake';
         setCurrentTheme(newTheme);
         localStorage.setItem('theme', newTheme); // Save the new theme preference to local storage
     };
 
     useEffect(() => {
         // Apply the theme preference when the component mounts
-        document.body.classList.remove('light', 'dark');
+        document.body.classList.remove('cupcake', 'dark');
         document.body.classList.add(currentTheme);
     }, [currentTheme]);
 
@@ -58,12 +58,12 @@ export const ThemeToggle: React.FC = () => {
                     type="checkbox"
                     className="theme-controller"
                     value="synthwave"
-                    checked={theme === 'light'}
+                    checked={theme === 'cupcake'}
                     onChange={toggleTheme}
                 />
                 {/* SVG icons based on the current theme */}
                 <svg
-                    className={`fill-current w-8 h-8 ${theme === 'light' ? 'swap-off' : 'swap-off'}`}
+                    className={`fill-current w-8 h-8 ${theme === 'cupcake' ? 'swap-off' : 'swap-off'}`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                 >

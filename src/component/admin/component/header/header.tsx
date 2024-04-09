@@ -3,7 +3,8 @@ import SearchModal from './search';
 // import ThemeToggle from './modeTheme';
 import DropdownNotifications from './notification';
 import Profile_admin from './profile';
-import { ThemeToggle } from '../../../../theme/theme'; 
+import { ThemeToggle } from '../../../../theme/theme';
+import Sidebar from '../sidebar/sidebar';
 
 // import SearchModal from '../components/ModalSearch';
 // import Notifications from '../components/DropdownNotifications';
@@ -18,12 +19,14 @@ interface HeaderProps {
 
 function Header({ sidebarOpen, setSidebarOpen }: HeaderProps) {
     const [searchModalOpen, setSearchModalOpen] = useState(false);
- 
+
     return (
         <header className="sticky top-0 bg-white dark:bg-base-100 border-b border-slate-200 dark:border-slate-700 z-30">
             <div className="px-4 sm:px-6 lg:px-8">
+            
                 <div className="flex items-center justify-between h-16 -mb-px">
                     {/* Header: Left side */}
+                    <Sidebar />
                     <div className="flex">
                
                         {/* Hamburger button */}
