@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Header from '../component/header/header';
 import { ThemeToggle, useTheme } from '../../../theme/theme';
 import SetDashboard from '../component/dashboards/set_dashboard';
-import Sidebar from '../component/sidebar/sidebar';
 
 const Admin_Dashboard: React.FC = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { theme } = useTheme();
-
     const [dashboardName, setDashboardName] = useState<string>("dashboard_manager");
 
     const changeDashboard = (newDashboardName: string) => {
@@ -19,7 +17,6 @@ const Admin_Dashboard: React.FC = () => {
         <html data-theme={theme}>
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} changeDashBoard={changeDashboard} />
             <SetDashboard dashboardName={dashboardName} />
-
         </html>
     )
 }
