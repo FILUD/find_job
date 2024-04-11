@@ -7,7 +7,7 @@ import axios from 'axios';
 
 interface jobData {
   JobID: number;
-  JobseekerID: number;
+  EmployerID: number;
   Post_IMG: string;
   Title: string;
   CompanyName: string;
@@ -87,15 +87,17 @@ function FindjobPage() {
     }
   };
 
-  const openProfile = async (employerID: number) => {
+  const openProfile = async (EmployerID: number) => {
     try {
-      const response = await axios.post('http://localhost:3001/viewjobseeker_byid', { employerID });
+      const response = await axios.post('http://localhost:3001/viewemployer_byid', { employerID: EmployerID }); // Change EmployerID to employerID
       const employerData = response.data.data[0];
-      navigate(`/profile/${employerData.employerID}`);
+      navigate(`/EmpProfile/${employerData.EmployerID}`); // Change employerData.employerID to employerData.EmployerID
+      console.log('employerID: ', employerData.EmployerID); // Change EmployerID to employerData.EmployerID
     } catch (error) {
       console.error('Error fetching employer data:', error);
     }
   };
+  
 
   return (
     <div>
@@ -213,7 +215,7 @@ function FindjobPage() {
                     <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                     <div className="card-actions justify-end">
                       <button className="btn btn-primary">Apply</button>
-                      <button className="btn btn-primary" onClick={() => openProfile(selectedJOB.JobseekerID)}>View Profile</button>
+                      <button className="btn btn-primary" onClick={() => openProfile(selectedJOB.EmployerID)}>View Profile</button>
                     </div>
                   </div>
                 </div>

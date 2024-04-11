@@ -39,10 +39,10 @@ function App() {
             <Route path="/FindEmployee" element={<FindEmployeePage />} />
             <Route path="/Findjob" element={<FindjobPage />} />
             <Route path="/CreateEmpProfile" element={<CreateEmpProfile />} />
-            <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/PostCv" element={<PostCvPage />} />
             <Route path="/PostJob" element={<PostJobPage />} />
             <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
+            <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="*" element={<ErrorPage />} />
 
