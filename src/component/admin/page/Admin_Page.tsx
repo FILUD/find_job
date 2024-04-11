@@ -17,6 +17,7 @@ const Admin_Dashboard: React.FC = () => {
         <html data-theme={theme}>
             <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} changeDashBoard={changeDashboard} />
             <SetDashboard dashboardName={dashboardName} />
+          
         </html>
     )
 }
