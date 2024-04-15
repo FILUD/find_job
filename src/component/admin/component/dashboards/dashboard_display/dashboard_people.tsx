@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteCard from "./card/delete_card";
+import DeleteAccountCard from "./card/delete_account_card";
 
 function DashboardPeople() {
     interface UserData {
@@ -15,12 +15,14 @@ function DashboardPeople() {
     const [error, setError] = useState("");
     const [userID, setUserID] = useState<number | undefined>(undefined);
     const [userName, setUserName] = useState<string>("")
+    const [userRole, setUserRole] = useState<string>("")
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // Add state for delete dialog
 
+    const api = 'http://localhost:3001';
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get<{ data: UserData[] }>('http://localhost:3001/ShowClient');
+                const response = await axios.get<{ data: UserData[] }>(`${api}/ShowClient`);
                 setUserData(response.data.data || []);
             } catch (error) {
                 setError("An error occurred while fetching data.");
@@ -31,14 +33,15 @@ function DashboardPeople() {
         fetchData();
     }, []);
 
-    const toggleDeleteDialog = (userID: number, name: string) => {
+    const toggleDeleteDialog = (userID: number, name: string, role: string) => {
         setUserID(userID);
-        setUserName(name)
+        setUserName(name);
+        setUserRole(role);
         setIsDeleteDialogOpen(true); // Open delete dialog when clicked
     }
 
     const handleCloseDeleteDialog = () => {
-        setIsDeleteDialogOpen(false); // Close delete dialog
+        setIsDeleteDialogOpen(false);
     }
 
     return (
@@ -54,7 +57,7 @@ function DashboardPeople() {
                             <div> </div>
                             <div className="space-x-5 flex justify-end m-2">
                                 <button className="btn btn-primary">Edit</button>
-                                <button className="btn btn-error">Delete</button>
+                                <button className="btn btn-error">Delete all selected</button>
                             </div>
                         </div>
 
@@ -106,13 +109,13 @@ function DashboardPeople() {
                                         <th className="space-x-2 w-72">
                                             <button className="btn btn-accent  btn-md">View</button>
                                             <button className="btn btn-primary btn-outline btn-md">Edit</button>
-                                            <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(user.UserID, user.Name)}>Delete</button>
+                                            <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(user.UserID, user.Name, user.Role)}>Delete</button>
                                         </th>
                                     </tr>
                                 ))
                                 }
-
-                                <DeleteCard name={userName} userID={userID || 0} isOpen={isDeleteDialogOpen} onClose={handleCloseDeleteDialog} />
+                                
+                                <DeleteAccountCard name={userName} userID={userID || 0} isOpen={isDeleteDialogOpen} onClose={handleCloseDeleteDialog} role={userRole} />
 
 
                             </tbody>

@@ -1,7 +1,7 @@
 import React from "react";
 import Dashboard_manager from "./dashboard_display/dashboard_manager";
 import Dashboard_people from "./dashboard_display/dashboard_people";
-import Dashboard_district from "./dashboard_display/dashboard_district_custom";
+import Dashboard_district from "./dashboard_display/dashboard_district";
 import Dashboard_province from "./dashboard_display/dashboard_province_custom";
 
 interface SetDashboardProps {
