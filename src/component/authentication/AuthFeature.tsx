@@ -70,7 +70,7 @@ export default function AuthFeat() {
         }
     };
     const saveRegister = async (email: string, password: string, firstName: string, lastName: string, role: string) => {
-        try {        
+        try {
             if (role == "Jobseeker") {
                 const response = await fetch(`${api}/register`, {
                     method: "POST",
@@ -87,7 +87,7 @@ export default function AuthFeat() {
                 }
             }
             if (role == "Employer") {
-               
+
                 const response = await fetch(`${api}/register`, {
                     method: "POST",
                     headers: {
@@ -162,7 +162,8 @@ export default function AuthFeat() {
                     setIsOpenLogIn(false);
                     clearInputs();
                     navigate('/Home'); // Navigate to dashboard if on the login page
-                } else if (isOpenSignUp) {
+                }
+                 if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
                     await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
                     await getCrediatial(emailSignup);
@@ -469,7 +470,7 @@ export default function AuthFeat() {
                                                 </ul>
 
                                                 <p className='self-start mx-5'>Name</p>
-                                                {role !== 'Employer' ? (    
+                                                {role !== 'Employer' ? (
                                                     <div className="px-1 font-sans font-semibold grid grid-cols-2 space-x-2 mx-5">
                                                         <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
@@ -559,9 +560,9 @@ export default function AuthFeat() {
                                                     <div className=" grid justify-items-center space-y-4 mt-2">
                                                         {/* <div className='w-80 border-t-2 border-stone-400'></div> */}
                                                         <div className='card-actions justify-center mt-2 w-full '>
-                                                            <button className="btn btn-primary rounded-2xl btn-wide btn-error hover:text-white  text-base "
+                                                            <button className="btn btn-primary rounded-2xl btn-wide btn-error hover:text-white text-base disabled:btn-outline"
                                                                 onClick={() => handleSignup(emailSignup)}
-                                                                disabled={!passwordsMatch}>Register</button>
+                                                                disabled={!passwordsMatch || !emailSignup || !passwordSignup || !firstName }>Register</button>
                                                         </div>
                                                     </div>
                                                 )}
