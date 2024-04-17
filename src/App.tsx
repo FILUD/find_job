@@ -14,7 +14,7 @@ import PostJobPage from './page/PostJobPage';
 
 import TestPage from './page/TestPage';
 import ViewProfilePage from './page/ViewProfilePage';
-import Admin_dashboard from './component/admin/page/Admin_dashboard';
+import Admin_dashboard from './component/admin/page/Admin_Page';
 
 
 
@@ -31,7 +31,6 @@ function App() {
         <div className="App">
 
           <Routes>
-
             <Route index element={<WelcomePage />} />
             <Route path="/Home" element={<HomePage />} />
             <Route path="/About" element={<AboutPage />} />

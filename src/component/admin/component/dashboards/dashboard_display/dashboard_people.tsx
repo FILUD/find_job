@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteAccountCard from "./card/delete_account_card";
+import DeleteAccountCard from "./card/account_delete_card";
 
 function DashboardPeople() {
     interface UserData {

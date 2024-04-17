@@ -1,45 +1,94 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteDistrictCard from "./card/delete_district_card";
+import DeleteDistrictCard from "./card/district_delete_card";
+import EditDistrictCard from "./card/district_edit_card";
+import InsertDistrictCard from "./card/district_insert_card";
 
 function Dashboard_district() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const api = 'http://localhost:3001';
+
     interface AddressProps {
-        DistrictID: number,
+        DistrictID: string,
         DistrictName: string,
         ProvinceID: number,
         ProvinceName: string,
     }
-    const [districtID, setDistrictID] = useState<number | undefined>(undefined);
-    const [districtName, setDistrictName] = useState<string>("")
-    const [provinceName, setProvinceName] = useState<string>("")
+
+    const [districtID, setDistrictID] = useState<string>("");
+    const [districtName, setDistrictName] = useState<string>("");
+    const [provinceName, setProvinceName] = useState<string>("");
     const [address, setAddress] = useState<AddressProps[]>([]);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [isInsertDialogOpen, setIsInsertDialogOpen] = useState(false);
+    const [selectedDistrictIDs, setSelectedDistrictIDs] = useState<string[]>([]);
+    const [districtIDs, setDistrictIDs] = useState<string>("");
 
-    const toggleDeleteDialog = (districtID: number, districtName: string) => {
+    //selected part
+    const toggleDistrictSelection = (districtID: string) => {
+        const isSelected = selectedDistrictIDs.includes(districtID);
+        setSelectedDistrictIDs(prevSelected =>
+            isSelected ?
+                prevSelected.filter(id => id !== districtID) :
+                [...prevSelected, districtID]
+        );
+    };
+    const getSelectedDistrictIDsString = () => {
+        return selectedDistrictIDs.join(',');
+    };
+
+    //delete part
+    const toggleDeleteDialog = (districtID: string, districtName: string) => {
         setDistrictID(districtID);
         setDistrictName(districtName);
         setIsDeleteDialogOpen(true);
     }
-
-    const handleCloseDeleteDialog = () => {
-        setIsDeleteDialogOpen(false);
+    const toggleSelectedDeleteDialog = () => {
+        setDistrictIDs(getSelectedDistrictIDsString())
+        setIsDeleteDialogOpen(true);
     }
+    const handleCloseDialog = () => {
+        setDistrictID('');
+        setDistrictIDs('');
+        setDistrictName('');
+        setIsDeleteDialogOpen(false);
+        setIsEditDialogOpen(false);
+        setIsInsertDialogOpen(false);
+    }
+
+    //edit part
+    const toggleEditDialog = (districtID: string, districtName: string) => {
+        setDistrictID(districtID);
+        setDistrictName(districtName);
+        setIsEditDialogOpen(true);
+    }
+
+    //insert part
+    const toggleInsertDialog = () => {
+        setIsInsertDialogOpen(true);
+    }
+
+
+    // fetch part
+    const fetchData = async () => {
+        try {
+            const response = await axios.get<{ data: AddressProps[] }>(`${api}/showDistrict`);
+            setAddress(response.data.data || []);
+        } catch (error) {
+            setError("An error occurred while fetching data.");
+        } finally {
+            setLoading(false);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get<{ data: AddressProps[] }>(`${api}/showDistrict`);
-                setAddress(response.data.data || []);
-            } catch (error) {
-                setError("An error occurred while fetching data.");
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
     }, []);
+    const handleRefresh = () => {
+        setLoading(true);
+        fetchData();
+    };
 
     return (
         <div>
@@ -48,15 +97,16 @@ function Dashboard_district() {
             ) : error ? (
                 <p>{error}</p>
             ) : (
-                <div>
+                // <div className="font-notoLao">
+                <div className="">
                     <div className="overflow-x-auto ">
                         <div className="flex justify-between">
                             <div className="flex place-items-center ml-16">
-                                <p className="font-bold text-2xl">District Manage</p>
+                                <p className="font-bold text-2xl ">District Manage</p>
                             </div>
                             <div className=" space-x-2 flex justify-end m-2 mr-16">
-                                <button className="btn btn-primary">Add a district</button>
-                                <button className="btn btn-error">delete all select</button>
+                                <button className="btn btn-primary" onClick={() => toggleInsertDialog()}>Add a district</button>
+                                <button className="btn btn-error" onClick={() => toggleSelectedDeleteDialog()}>delete all select</button>
                             </div>
                         </div>
 
@@ -75,18 +125,23 @@ function Dashboard_district() {
                                     <th className="outline outline-1 w-72">Setting</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody >
                                 {Array.isArray(address) && address.map((address) => (
                                     <tr className="outline outline-1 hover" key={address.DistrictID}  >
                                         <th>
                                             <label className="flex justify-center">
-                                                <input type="checkbox" className="checkbox checkbox-info" />
+                                                <input
+                                                    type="checkbox"
+                                                    className="checkbox checkbox-info"
+                                                    onClick={() => toggleDistrictSelection(address.DistrictID)}
+                                                    checked={selectedDistrictIDs.includes(address.DistrictID)}
+                                                />
                                             </label>
                                         </th>
                                         <td>
-                                            <div className="flex items-center">
+                                            <div className="flex items-center ">
                                                 <div>
-                                                    <div className="text-lg">{address.DistrictID}</div>
+                                                    <div className="text-lg ">{address.DistrictID}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -94,25 +149,40 @@ function Dashboard_district() {
                                             <div className="flex items-center gap-3">
 
                                                 <div>
-                                                    <div className="text-lg">{address.DistrictName}</div>
+                                                    <div className="text-lg font-notoLao">{address.DistrictName}</div>
                                                     <div className="text-sm opacity-50"></div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <span className="text-lg">{address.ProvinceName}</span>
+                                            <span className="text-lg font-notoLao">{address.ProvinceName}</span>
                                         </td>
 
-                                        <th className="space-x-2 ">
-                                            <button className="btn btn-accent  btn-md">View</button>
-                                            <button className="btn btn-primary btn-outline btn-md">Edit</button>
+                                        <th className="space-x-2 flex justify-center ">
+                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(address.DistrictID, address.DistrictName)} >Edit</button>
                                             <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(address.DistrictID, address.DistrictName)}>Delete</button>
                                         </th>
                                     </tr>
                                 ))
                                 }
-                                <DeleteDistrictCard name={districtName} districtIDs={districtID || 0} isOpen={isDeleteDialogOpen} onClose={handleCloseDeleteDialog} />
-
+                                <DeleteDistrictCard
+                                    name={districtName}
+                                    districtID={districtID}
+                                    isOpen={isDeleteDialogOpen}
+                                    onClose={handleCloseDialog}
+                                    selectDistrictID={districtIDs}
+                                    refreshFetchdata={handleRefresh} />
+                                <EditDistrictCard
+                                    name={districtName}
+                                    districtID={districtID}
+                                    isOpen={isEditDialogOpen}
+                                    onClose={handleCloseDialog}
+                                    refreshFetchdata={handleRefresh} />
+                                <InsertDistrictCard
+                                    isOpen={isInsertDialogOpen}
+                                    onClose={handleCloseDialog}
+                                    refreshFetchdata={handleRefresh}
+                                />
                             </tbody>
                         </table>
                     </div>

@@ -8,7 +8,9 @@ module.exports = {
   },
   theme: {  
     extend: {
-
+      fontFamily: {
+        notoLao: ['NotoSanLao', 'sans-serif'],
+      },
     },
   },
   plugins: [require("daisyui")],
