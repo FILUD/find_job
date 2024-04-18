@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteDistrictCard from "./card/district_delete_card";
-import EditDistrictCard from "./card/district_edit_card";
-import InsertDistrictCard from "./card/district_insert_card";
+import DeleteDistrictCard from "./card/district_card/district_delete_card";
+import EditDistrictCard from "./card/district_card/district_edit_card";
+import InsertDistrictCard from "./card/district_card/district_insert_card";
 
 function Dashboard_district() {
     const [isLoading, setLoading] = useState(true);

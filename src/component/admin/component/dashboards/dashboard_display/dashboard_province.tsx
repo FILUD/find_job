@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteProvinceCard from "./card/province_delete_card";
-import EditProvinceCard from "./card/province_edit_card";
-import InsertProvinceCard from "./card/province_insert_card";
+import DeleteProvinceCard from "./card/province_card/province_delete_card";
+import EditProvinceCard from "./card/province_card/province_edit_card";
+import InsertProvinceCard from "./card/province_card/province_insert_card";
 
 function Dashboard_province() {
     const [isLoading, setLoading] = useState(true);
