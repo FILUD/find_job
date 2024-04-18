@@ -27,6 +27,11 @@ function InsertDistrictCard({ isOpen, onClose, refreshFetchdata }: InsertProps) 
         setDistrictName("");
     }, []);
 
+    const close = async () => {
+        setDistrictName("");
+        onClose();
+    }
+
     const handleInsertDistrict = async (districtName: string, provinceID: string) => {
         try {
             const response = await fetch(`${api}/insertDistrict`, {
@@ -71,7 +76,7 @@ function InsertDistrictCard({ isOpen, onClose, refreshFetchdata }: InsertProps) 
     }, []);
 
     return (
-        <Dialog open={isOpen} onClose={onClose}>
+        <Dialog open={isOpen} onClose={close}>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
 
             <div className="flex  items-center justify-center fixed inset-0 z-10">
@@ -107,7 +112,7 @@ function InsertDistrictCard({ isOpen, onClose, refreshFetchdata }: InsertProps) 
                         <button className="btn btn-primary mr-2" onClick={() => handleInsertDistrict(districtName, provinceID)} disabled={loading}>
                             {loading ? 'Inserting...' : 'Accept'}
                         </button>
-                        <button className="btn btn-ghost" onClick={onClose} disabled={loading}>Deny</button>
+                        <button className="btn btn-ghost" onClick={close} disabled={loading}>Deny</button>
                     </div>
                 </div>
             </div>

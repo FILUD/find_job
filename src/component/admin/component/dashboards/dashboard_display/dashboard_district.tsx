@@ -53,6 +53,7 @@ function Dashboard_district() {
         setDistrictID('');
         setDistrictIDs('');
         setDistrictName('');
+        setSelectedDistrictIDs([]);
         setIsDeleteDialogOpen(false);
         setIsEditDialogOpen(false);
         setIsInsertDialogOpen(false);
