@@ -34,6 +34,7 @@ function InsertDistrictCard({ isOpen, onClose, refreshFetchdata }: InsertProps) 
 
     const handleInsertDistrict = async (districtName: string, provinceID: string) => {
         try {
+            setLoading(true);
             const response = await fetch(`${api}/insertDistrict`, {
                 method: "POST",
                 headers: {
@@ -43,15 +44,17 @@ function InsertDistrictCard({ isOpen, onClose, refreshFetchdata }: InsertProps) 
             });
 
             if (response.ok) {
-                console.log("District Inserted successfully" );
+                console.log("District Inserted successfully");
                 onClose();
                 alert(`Inserted the data : ${districtName} and ${provinceID} `);
                 refreshFetchdata();
             } else {
-                console.error("Failed to Insert District" );
+                console.error("Failed to Insert District");
             }
         } catch (error) {
             console.error("Error occurred:", error);
+        } finally {
+            setLoading(false);
         }
     };
 

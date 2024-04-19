@@ -48,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                                 <img src="https://via.placeholder.com/200x80.png" alt="Placeholder" />
                             </div> */}
                             <p className="text-xl font-semibold"> Admin dashboard</p>
-                        </a>    
+                        </a>
                     </div>
 
                     <div className=" text-base-content">
@@ -112,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                             </div>
                         </div>
 
-                        <div className="collapse collapse-arrow bg-base-200 ">
+                        {/* <div className="collapse collapse-arrow bg-base-200 ">
                             <input type="radio" name="my-accordion-2" />
                             <div className="collapse-title text-lg font-medium ">
                                 <kbd className="kbd w-2 h-2 mx-2 text-md">C</kbd>
@@ -126,6 +126,24 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
 
                                     <li onClick={() => handleDashboardClick("dashboard_province")}>
                                         <a href="#">Communication1</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> */}
+                        <div className="collapse collapse-arrow bg-base-200 ">
+                            <input type="radio" name="my-accordion-2" />
+                            <div className="collapse-title text-lg font-medium ">
+                                <kbd className="kbd w-2 h-2 mx-2 text-md">C</kbd>
+                                Career
+                            </div>
+                            <div className="collapse-content space-y-1">
+                                <ul className="font-semibold">
+                                    <li onClick={() => handleDashboardClick("dashboard_occupation")}>
+                                        <a href="#">Occupation</a>
+                                    </li>
+
+                                    <li onClick={() => handleDashboardClick("dashboard_workcategory")}>
+                                        <a href="#">Work Category</a>
                                     </li>
                                 </ul>
                             </div>

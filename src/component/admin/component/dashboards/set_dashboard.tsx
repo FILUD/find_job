@@ -3,6 +3,8 @@ import Dashboard_manager from "./dashboard_display/dashboard_manager";
 import Dashboard_people from "./dashboard_display/dashboard_people";
 import Dashboard_district from "./dashboard_display/dashboard_district";
 import Dashboard_province from "./dashboard_display/dashboard_province";
+import Dashboard_workcategory from "./dashboard_display/dashboard_workcategory";
+import Dashboard_occupation from "./dashboard_display/dashboard_occupation";
 
 interface SetDashboardProps {
     dashboardName: string;
@@ -17,7 +19,9 @@ const SetDashboard: React.FC<SetDashboardProps> = ({ dashboardName }) => {
             {/* Address */}
             {dashboardName === "dashboard_district" && <Dashboard_district />}
             {dashboardName === "dashboard_province" && <Dashboard_province />}
-
+            {/* career */}
+            {dashboardName === "dashboard_workcategory" && <Dashboard_workcategory />}
+            {dashboardName === "dashboard_occupation" && <Dashboard_occupation />}
         </div>
     );
 };

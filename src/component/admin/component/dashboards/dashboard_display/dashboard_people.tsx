@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DeleteAccountCard from "./card/account_delete_card";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 function DashboardPeople() {
     interface UserData {
@@ -47,7 +48,9 @@ function DashboardPeople() {
     return (
         <div className="">
             {isLoading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center max-h-screen h-screen bg-white">
+                    <PacmanLoader color="#36d7b7" />
+                </div>
             ) : error ? (
                 <p>{error}</p>
             ) : (
@@ -114,7 +117,7 @@ function DashboardPeople() {
                                     </tr>
                                 ))
                                 }
-                                
+
                                 <DeleteAccountCard name={userName} userID={userID || 0} isOpen={isDeleteDialogOpen} onClose={handleCloseDeleteDialog} role={userRole} />
 
 

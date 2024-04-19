@@ -1,70 +1,70 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import DeleteDistrictCard from "./card/district_card/district_delete_card";
-import EditDistrictCard from "./card/district_card/district_edit_card";
-import InsertDistrictCard from "./card/district_card/district_insert_card";
+import InsertOccupationCard from "./card/occupation_card/occupation_insert_card";
+import DeleteOccupationCard from "./card/occupation_card/occupation_delete_card";
+import EditOccupationCard from "./card/occupation_card/occupation_edit_card";
 import PacmanLoader from "react-spinners/PacmanLoader";
 
-function Dashboard_district() {
+function DashboardOccupation() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const api = 'http://localhost:3001';
-    const [isDistrictDashboardOpen, setIsDistrictDashboardOpen] = useState(false);
+    const [isOccupationDashboardOpen, setIsOccupationDashboardOpen] = useState(false);
 
-    interface AddressProps {
-        DistrictID: string,
-        DistrictName: string,
-        ProvinceID: number,
-        ProvinceName: string,
+    interface OccupationProps {
+        OccupationID: string,
+        OccupationName: string,
+        CategoryID: number,
+        CategoryName: string,
     }
 
-    const [districtID, setDistrictID] = useState<string>("");
-    const [districtName, setDistrictName] = useState<string>("");
-    const [provinceName, setProvinceName] = useState<string>("");
-    const [address, setAddress] = useState<AddressProps[]>([]);
+    const [occupationID, setOccupationID] = useState<string>("");
+    const [occupationName, setOccupationName] = useState<string>("");
+    const [workCategoryName, setWorkCategoryName] = useState<string>("");
+    const [occupations, setOccupations] = useState<OccupationProps[]>([]);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [isInsertDialogOpen, setIsInsertDialogOpen] = useState(false);
-    const [selectedDistrictIDs, setSelectedDistrictIDs] = useState<string[]>([]);
-    const [districtIDs, setDistrictIDs] = useState<string>("");
+    const [selectedOccupationIDs, setSelectedOccupationIDs] = useState<string[]>([]);
+    const [occupationIDs, setOccupationIDs] = useState<string>("");
 
 
     //selected part
-    const toggleDistrictSelection = (districtID: string) => {
-        const isSelected = selectedDistrictIDs.includes(districtID);
-        setSelectedDistrictIDs(prevSelected =>
+    const toggleOccupationSelection = (occupationID: string) => {
+        const isSelected = selectedOccupationIDs.includes(occupationID);
+        setSelectedOccupationIDs(prevSelected =>
             isSelected ?
-                prevSelected.filter(id => id !== districtID) :
-                [...prevSelected, districtID]
+                prevSelected.filter(id => id !== occupationID) :
+                [...prevSelected, occupationID]
         );
     };
-    const getSelectedDistrictIDsString = () => {
-        return selectedDistrictIDs.join(',');
+    const getSelectedOccupationIDsString = () => {
+        return selectedOccupationIDs.join(',');
     };
 
     //delete part
-    const toggleDeleteDialog = (districtID: string, districtName: string) => {
-        setDistrictID(districtID);
-        setDistrictName(districtName);
+    const toggleDeleteDialog = (occupationID: string, occupationName: string) => {
+        setOccupationID(occupationID);
+        setOccupationName(occupationName);
         setIsDeleteDialogOpen(true);
     }
     const toggleSelectedDeleteDialog = () => {
-        setDistrictIDs(getSelectedDistrictIDsString())
+        setOccupationIDs(getSelectedOccupationIDsString())
         setIsDeleteDialogOpen(true);
     }
     const handleCloseDialog = () => {
-        setDistrictID('');
-        setDistrictIDs('');
-        setDistrictName('');
+        setOccupationID('');
+        setOccupationIDs('');
+        setOccupationName('');
         setIsDeleteDialogOpen(false);
         setIsEditDialogOpen(false);
         setIsInsertDialogOpen(false);
     }
 
     //edit part
-    const toggleEditDialog = (districtID: string, districtName: string) => {
-        setDistrictID(districtID);
-        setDistrictName(districtName);
+    const toggleEditDialog = (occupationID: string, occupationName: string) => {
+        setOccupationID(occupationID);
+        setOccupationName(occupationName);
         setIsEditDialogOpen(true);
     }
 
@@ -77,8 +77,8 @@ function Dashboard_district() {
     // fetch part
     const fetchData = async () => {
         try {
-            const response = await axios.get<{ data: AddressProps[] }>(`${api}/showDistrict`);
-            setAddress(response.data.data || []);
+            const response = await axios.get<{ data: OccupationProps[] }>(`${api}/showOccupation`);
+            setOccupations(response.data.data || []);
         } catch (error) {
             setError("An error occurred while fetching data.");
         } finally {
@@ -86,22 +86,22 @@ function Dashboard_district() {
         }
     };
     useEffect(() => {
-        if (isDistrictDashboardOpen) {
+        if (isOccupationDashboardOpen) {
             fetchData();
         }
-    }, [isDistrictDashboardOpen]);
+    }, [isOccupationDashboardOpen]);
 
     useEffect(() => {
-        setIsDistrictDashboardOpen(true);
+        setIsOccupationDashboardOpen(true);
 
         return () => {
-            setIsDistrictDashboardOpen(false);
+            setIsOccupationDashboardOpen(false);
         };
     }, []);
 
     const handleRefresh = () => {
         setLoading(true);
-        setSelectedDistrictIDs([]);
+        setSelectedOccupationIDs([]);
         fetchData();
     };
 
@@ -111,6 +111,7 @@ function Dashboard_district() {
                 <div className="flex justify-center items-center max-h-screen h-screen bg-white">
                     <PacmanLoader color="#36d7b7" />
                 </div>
+
             ) : error ? (
                 <div className="flex justify-center items-center max-h-screen h-screen bg-white">
                     <div className="text-center">
@@ -120,16 +121,15 @@ function Dashboard_district() {
                 </div>
 
             ) : (
-                // <div className="font-notoLao">
                 <div className="">
                     <div className="overflow-x-auto ">
                         <div className="flex justify-between">
                             <div className="flex place-items-center ml-16">
-                                <p className="font-bold text-2xl ">District Manage</p>
+                                <p className="font-bold text-2xl ">Occupation Manage</p>
                             </div>
                             <div className=" space-x-2 flex justify-end m-2 mr-16">
-                                <button className="btn btn-primary" onClick={() => toggleInsertDialog()}>Add a district</button>
-                                <button className="btn btn-error" onClick={() => toggleSelectedDeleteDialog()}>delete all select</button>
+                                <button className="btn btn-primary" onClick={() => toggleInsertDialog()}>Add an occupation</button>
+                                <button className="btn btn-error" onClick={() => toggleSelectedDeleteDialog()}>Delete all selected</button>
                             </div>
                         </div>
 
@@ -137,71 +137,66 @@ function Dashboard_district() {
                             {/* head */}
                             <thead className="bg-slate-800 text-gray-400 outline outline-1 outline-white">
                                 <tr className="text-sm font-sans">
-                                    <th className="outline outline-1 outline-base-100 w-20 ">
-                                        {/* <label className="flex justify-center">
-                                        <input type="checkbox" className="checkbox checkbox-info " />
-                                    </label> */}
-                                    </th>
-                                    <th className="outline outline-1 w-52">District_ID</th>
-                                    <th className="outline outline-1  ">District</th>
-                                    <th className="outline outline-1 ">Province</th>
-                                    <th className="outline outline-1 w-72">Setting</th>
+                                    <th className="outline outline-1 outline-base-100 w-20 "></th>
+                                    <th className="outline outline-1 w-52">Occupation ID</th>
+                                    <th className="outline outline-1  ">Occupation</th>
+                                    <th className="outline outline-1 ">Work Category</th>
+                                    <th className="outline outline-1 w-72">Settings</th>
                                 </tr>
                             </thead>
                             <tbody >
-                                {Array.isArray(address) && address.map((address) => (
-                                    <tr className="outline outline-1 hover" key={address.DistrictID}  >
+                                {Array.isArray(occupations) && occupations.map((occupation) => (
+                                    <tr className="outline outline-1 hover" key={occupation.OccupationID}  >
                                         <th>
                                             <label className="flex justify-center">
                                                 <input
                                                     type="checkbox"
                                                     className="checkbox checkbox-info"
-                                                    onClick={() => toggleDistrictSelection(address.DistrictID)}
-                                                    checked={selectedDistrictIDs.includes(address.DistrictID)}
+                                                    onClick={() => toggleOccupationSelection(occupation.OccupationID)}
+                                                    checked={selectedOccupationIDs.includes(occupation.OccupationID)}
                                                 />
                                             </label>
                                         </th>
                                         <td>
                                             <div className="flex items-center ">
                                                 <div>
-                                                    <div className="text-lg ">{address.DistrictID}</div>
+                                                    <div className="text-lg ">{occupation.OccupationID}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="flex items-center gap-3">
-
                                                 <div>
-                                                    <div className="text-lg font-notoLao">{address.DistrictName}</div>
+                                                    <div className="text-lg font-notoLao">{occupation.OccupationName}</div>
                                                     <div className="text-sm opacity-50"></div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <span className="text-lg font-notoLao">{address.ProvinceName}</span>
+                                            <span className="text-lg font-notoLao">{occupation.CategoryName}</span>
                                         </td>
 
                                         <th className="space-x-2 flex justify-center ">
-                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(address.DistrictID, address.DistrictName)} >Edit</button>
-                                            <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(address.DistrictID, address.DistrictName)}>Delete</button>
+                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(occupation.OccupationID, occupation.OccupationName)} >Edit</button>
+                                            <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(occupation.OccupationID, occupation.OccupationName)}>Delete</button>
                                         </th>
                                     </tr>
                                 ))
                                 }
-                                <DeleteDistrictCard
-                                    name={districtName}
-                                    districtID={districtID}
+                                <DeleteOccupationCard
+                                    name={occupationName}
+                                    occupationID={occupationID}
                                     isOpen={isDeleteDialogOpen}
                                     onClose={handleCloseDialog}
-                                    selectDistrictID={districtIDs}
+                                    selectOccupationID={occupationIDs}
                                     refreshFetchdata={handleRefresh} />
-                                <EditDistrictCard
-                                    name={districtName}
-                                    districtID={districtID}
+                                <EditOccupationCard
+                                    name={occupationName}
+                                    occupationID={occupationID}
                                     isOpen={isEditDialogOpen}
                                     onClose={handleCloseDialog}
                                     refreshFetchdata={handleRefresh} />
-                                <InsertDistrictCard
+                                <InsertOccupationCard
                                     isOpen={isInsertDialogOpen}
                                     onClose={handleCloseDialog}
                                     refreshFetchdata={handleRefresh}
@@ -215,4 +210,4 @@ function Dashboard_district() {
     )
 }
 
-export default Dashboard_district
+export default DashboardOccupation;
