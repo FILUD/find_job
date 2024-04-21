@@ -97,7 +97,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                             <input type="radio" name="my-accordion-2" />
                             <div className="collapse-title text-lg font-medium  ">
                                 <kbd className="kbd w-2 h-2 text-md mx-2">⌘</kbd>
-                                Mangement
+                                Useraccount
                             </div>
                             <div className="collapse-content space-y-1">
                                 <ul className="font-semibold">
@@ -133,7 +133,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                         <div className="collapse collapse-arrow bg-base-200 ">
                             <input type="radio" name="my-accordion-2" />
                             <div className="collapse-title text-lg font-medium ">
-                                <kbd className="kbd w-2 h-2 mx-2 text-md">C</kbd>
+                                <kbd className="kbd w-2 h-2 mx-2 text-md">💼</kbd>
                                 Career
                             </div>
                             <div className="collapse-content space-y-1">
@@ -152,7 +152,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                         <div className="collapse collapse-arrow bg-base-200 ">
                             <input type="radio" name="my-accordion-2" />
                             <div className="collapse-title text-lg font-medium  ">
-                                <kbd className="kbd w-2 h-2 text-md mx-2">A</kbd>
+                                <kbd className="kbd w-2 h-2 text-md mx-2">🗺️</kbd>
                                 Address
                             </div>
                             <div className="collapse-content space-y-1">

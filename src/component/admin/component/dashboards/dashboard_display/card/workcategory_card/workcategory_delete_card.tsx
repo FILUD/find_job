@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
+import { ThemeToggle, useTheme } from '../../../../../../../theme/theme';
+
 
 interface DeleteProps {
     name: string;
@@ -13,7 +15,7 @@ interface DeleteProps {
 const api = 'http://localhost:3001';
 
 function DeleteWorkCategoryCard({ name, workCategoryID, selectWorkCategoryID, isOpen, onClose, refreshFetchdata }: DeleteProps) {
-
+    const { theme } = useTheme();
     const [loading, setLoading] = useState(false);
 
     const handleDeleteWorkCategory = async () => {
@@ -47,7 +49,7 @@ function DeleteWorkCategoryCard({ name, workCategoryID, selectWorkCategoryID, is
         <Dialog open={isOpen} onClose={onClose}>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
             <div className="flex items-center justify-center fixed inset-0 z-10">
-                <div className="bg-base-200 p-6 rounded shadow-lg">
+                <div className="bg-base-200 p-6 rounded shadow-lg" data-theme={theme}>
                     <h2 className="text-2xl font-bold mb-4">Delete Work Category</h2>
                     <p>This will permanently deactivate work category: <span className="text-red-500 font-bold">{name}</span> ( <span className="text-red-500 font-bold">WorkCategoryID: {workCategoryID || selectWorkCategoryID}</span>).</p>
                     <p>Are you sure you want to delete?</p>

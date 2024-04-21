@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
+import { ThemeToggle, useTheme } from '../../../../../../../theme/theme';
+
 
 interface DeleteProps {
     name: string;
@@ -17,7 +19,7 @@ const api = 'http://localhost:3001';
 function DeleteDistrictCard({ name, districtID, selectDistrictID, isOpen, onClose, refreshFetchdata }: DeleteProps) {
 
     const [loading, setLoading] = useState(false);
-
+    const { theme } = useTheme();
 
     const handleDeleteDistrict = async () => {
         try {
@@ -52,7 +54,7 @@ function DeleteDistrictCard({ name, districtID, selectDistrictID, isOpen, onClos
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
 
             <div className="flex  items-center justify-center fixed inset-0 z-10">
-                <div className="bg-base-200 p-6 rounded shadow-lg">
+                <div className="bg-base-200 p-6 rounded shadow-lg" data-theme={theme}>
                     <h2 className="text-2xl font-bold mb-4">Delete District </h2>
                     <p>This will permanently deactivate district: <span className="text-red-500 font-bold">{name}</span> ( <span className="text-red-500 font-bold">DistrictID: {districtID || selectDistrictID}</span>).</p>
                     <p>Are you sure you want to delete ?</p>

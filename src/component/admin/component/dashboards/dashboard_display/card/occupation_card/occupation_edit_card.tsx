@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import axios from 'axios';
+import { ThemeToggle, useTheme } from '../../../../../../../theme/theme';
+
 
 interface EditProps {
     name: string;
@@ -18,6 +20,7 @@ function EditOccupationCard({ name, occupationID, isOpen, onClose, refreshFetchd
     const [workCategories, setWorkCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
     const [selectedWorkCategory, setSelectedWorkCategory] = useState<number | null>(null);
     const [loading, setLoading] = useState(false);
+    const { theme } = useTheme();
 
     interface WorkCategoryProps {
         CategoryID: number,
@@ -78,7 +81,7 @@ function EditOccupationCard({ name, occupationID, isOpen, onClose, refreshFetchd
         <Dialog open={isOpen} onClose={onClose}>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
             <div className="flex items-center justify-center fixed inset-0 z-10">
-                <div className="bg-base-200 p-6 rounded shadow-lg w-full max-w-md">
+                <div className="bg-base-200 p-6 rounded shadow-lg w-full max-w-md" data-theme={theme}>
                     <h2 className="text-2xl font-bold mb-4 text-center">Edit Occupation </h2>
                     <div className='space-y-4 px-4'>
                         <label className="form-control w-full max-w-md">

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
+import { ThemeToggle, useTheme } from '../../../../../../../theme/theme';
 
 interface DeleteProps {
     name: string;
@@ -13,7 +14,7 @@ interface DeleteProps {
 const api = 'http://localhost:3001';
 
 function DeleteProvinceCard({ name, provinceID, selectProvinceID, isOpen, onClose, refreshFetchdata }: DeleteProps) {
-
+    const { theme } = useTheme();
     const [loading, setLoading] = useState(false);
 
     const handleDeleteProvince = async () => {
@@ -47,7 +48,7 @@ function DeleteProvinceCard({ name, provinceID, selectProvinceID, isOpen, onClos
         <Dialog open={isOpen} onClose={onClose}>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
             <div className="flex items-center justify-center fixed inset-0 z-10">
-                <div className="bg-base-200 p-6 rounded shadow-lg">
+                <div className="bg-base-200 p-6 rounded shadow-lg"  data-theme={theme}>
                     <h2 className="text-2xl font-bold mb-4">Delete Province</h2>
                     <p>This will permanently deactivate province: <span className="text-red-500 font-bold">{name}</span> ( <span className="text-red-500 font-bold">ProvinceID: {provinceID || selectProvinceID}</span>).</p>
                     <p>Are you sure you want to delete?</p>
