@@ -16,3 +16,10 @@ npm install -g firebase-tools
 npm i react-rounter-dom axios daisyui@latest  
 npm install @headlessui/react
 npm install --save react-spinners
+
+
+
+//add this
+npm install @react-pdf/renderer --save
+npm install tailwindcss postcss autoprefixer
+npx tailwindcss init -p

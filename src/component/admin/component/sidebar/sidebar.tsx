@@ -108,6 +108,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                                     <li onClick={() => handleDashboardClick("dashboard_people")}>
                                         <a href="#">Mangement2</a>
                                     </li>
+                                    <li onClick={() => handleDashboardClick("dashboard_report")}>
+                                        <a href="#">report test</a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
