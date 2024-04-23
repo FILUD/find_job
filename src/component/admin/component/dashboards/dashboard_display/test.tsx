@@ -10,7 +10,7 @@ function Test_report() {
     return (
         <div className=" grid grid-cols-2">
             <div className=''>
-                <PDFViewer className='w-full h-screen' >
+                <PDFViewer className='w-full h-screen ' >
                     <QuixotePDF title={title} />
                 </PDFViewer>
             </div>
@@ -20,12 +20,11 @@ function Test_report() {
                     <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
                         <input type="text" className="grow" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
                     </label>
-                    <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
-                        <input type="text" className="grow" placeholder="Sub-title" />
-                    </label>
-                    <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
+                    <textarea className="textarea textarea-bordered h-36 w-full outline outline-1 outline-primary" placeholder="Body" >
+                    </textarea>
+                    {/* <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
                         <input type="text" className="grow" placeholder="Body" />
-                    </label>
+                    </label> */}
                     <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
                         <input type="text" className="grow" placeholder="Conclusion" />
                         <span className="badge badge-info">end</span>
@@ -34,11 +33,7 @@ function Test_report() {
                         <input type="file" className="grow" placeholder="Chart Image " />
                         <kbd className="kbd kbd-sm">⌘</kbd>
                     </label>
-                    <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary ">
 
-                        <input type="file" className="grow" placeholder="Chart Image outline outline-1" />
-                        <span className="badge badge-info">company logo</span>
-                    </label>
                     <div className='flex justify-center pt-12'>
                         <button className="btn btn-primary btn-wide ">Primary</button>
                     </div>

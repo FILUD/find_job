@@ -115,6 +115,7 @@ export default function Profile_feature() {
         localStorage.removeItem('UserID');
         localStorage.removeItem('Role');
         localStorage.removeItem('Email');
+        localStorage.removeItem('ID');
         navigate('/');
     }
 

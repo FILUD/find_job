@@ -163,7 +163,7 @@ export default function AuthFeat() {
                     clearInputs();
                     navigate('/Home'); // Navigate to dashboard if on the login page
                 }
-                 if (isOpenSignUp) {
+                if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
                     await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
                     await getCrediatial(emailSignup);
@@ -187,10 +187,29 @@ export default function AuthFeat() {
             const userList = await axios.post(`${api}/getCreditial`, { email });
             if (userList.status === 200) {
                 console.log(userList);
-                localStorage.setItem('UserID', JSON.stringify(userList.data.user.UserID));
-                localStorage.setItem('Email', JSON.stringify(userList.data.user.Email));
-                localStorage.setItem('Role', JSON.stringify(userList.data.user.Role));
+                const userIDLocal = userList.data.user.UserID;
+                const EmailLocal = userList.data.user.Email;
+                const RoleLocal = userList.data.user.Role;
 
+                localStorage.setItem('UserID', JSON.stringify(userIDLocal));
+                localStorage.setItem('Email', JSON.stringify(EmailLocal));
+                localStorage.setItem('Role', JSON.stringify(RoleLocal));
+
+                const response = await axios.get(`${api}/getID`, {
+                    params: {
+                        userID: userIDLocal,
+                        role: RoleLocal
+                    }
+                });
+                console.log(response.data)
+                const getID = response.data.data;
+                if (RoleLocal === "Employer") {
+                    localStorage.setItem('ID', JSON.stringify(getID));
+                } else if (RoleLocal === "Jobseeker") {
+                    localStorage.setItem('ID', JSON.stringify(getID));
+                } else {
+                    console.log("error set ID")
+                }
             } else {
                 console.log("Error erorr");
             }
@@ -562,7 +581,7 @@ export default function AuthFeat() {
                                                         <div className='card-actions justify-center mt-2 w-full '>
                                                             <button className="btn btn-primary rounded-2xl btn-wide btn-error hover:text-white text-base disabled:btn-outline"
                                                                 onClick={() => handleSignup(emailSignup)}
-                                                                disabled={!passwordsMatch || !emailSignup || !passwordSignup || !firstName }>Register</button>
+                                                                disabled={!passwordsMatch || !emailSignup || !passwordSignup || !firstName}>Register</button>
                                                         </div>
                                                     </div>
                                                 )}
