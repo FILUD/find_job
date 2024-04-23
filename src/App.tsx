@@ -43,6 +43,10 @@ function App() {
             <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="*" element={<ErrorPage />} />
+
+
+            <Route path="/test" element={<TestPage />} />
+            
           </Routes>
 
         </div>

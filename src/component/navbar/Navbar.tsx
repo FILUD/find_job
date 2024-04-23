@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
@@ -7,19 +7,31 @@ import Profile_feature from '../profile/ProfileFeature';
 function Navbar() {
     const navigate = useNavigate();
 
+    const [userData, setUserData] = useState<any>(null);
+
+    useEffect(() => {
+      const datalocalID = localStorage.getItem('ID');
+      const datalocalRole = localStorage.getItem('Role');
+      const datalocalUserID = localStorage.getItem('UserID');
+      const datalocalEmail = localStorage.getItem('Email');
+  
+      if (datalocalID && datalocalRole && datalocalUserID && datalocalEmail) {
+        // Parse the retrieved data into an object
+        const parsedData = {
+          ID: JSON.parse(datalocalID),
+          Role: JSON.parse(datalocalRole),
+          UserID: JSON.parse(datalocalUserID),
+          Email: JSON.parse(datalocalEmail)
+        };
+  
+        setUserData(parsedData);
+        
+      }
+    }, []);
+
+
     return (
         <div className='ml-20 mr-20 '>
-            {/* <ul className='container-left-nav'>
-                <li className='Logo-navbar'>
-                    <img className='logo-welcome-page' src="Logo/job-logo.png" onClick={() => navigate('/')} alt="Logo" />
-                </li>
-            </ul>
-            <ul className='container-right-nav'>
-                <li className='menu-navbar' onClick={() => navigate('/Home')}>Home</li>
-                <li className='menu-navbar' onClick={() => navigate('/Findjob')}>Find job</li>
-                <li className='menu-navbar' onClick={() => navigate('/Findemployee')}>Find employee</li>
-                <ProfileOption />
-            </ul> */}
 
             <div className='container-nav'>
                 <div className="navbar bg-base-500">
@@ -61,8 +73,11 @@ function Navbar() {
                             </button>
                         </div>
 
-                        {/* profile icon */}
-                        <Profile_feature />
+                        {userData ? (
+                            <Profile_feature />
+                        ) : (
+                            <AuthFeat />
+                        )}
 
                         {/* Change Language */}
                         <div className="dropdown dropdown-end ml-7">
