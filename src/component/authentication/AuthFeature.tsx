@@ -203,13 +203,18 @@ export default function AuthFeat() {
                 });
                 console.log(response.data)
                 const getID = response.data.data;
-                if (RoleLocal === "Employer") {
-                    localStorage.setItem('ID', JSON.stringify(getID));
-                } else if (RoleLocal === "Jobseeker") {
+                if (getID) {
                     localStorage.setItem('ID', JSON.stringify(getID));
                 } else {
                     console.log("error set ID")
                 }
+                // if (RoleLocal === "Employer") {
+                //     localStorage.setItem('ID', JSON.stringify(getID));
+                // } else if (RoleLocal === "Jobseeker") {
+                //     localStorage.setItem('ID', JSON.stringify(getID));
+                // } else {
+                //     console.log("error set ID")
+                // }
             } else {
                 console.log("Error erorr");
             }
