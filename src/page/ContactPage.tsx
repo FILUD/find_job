@@ -1,13 +1,14 @@
 import React from 'react'
 import Navbar from '../component/navbar/Navbar_welcome'
+import SetNavbar from '../component/navbar/SetNavbar'
 
 function Contact_page() {
   return (
     <div>
-      <Navbar />
+      <SetNavbar />
       <div>Contact_page</div>
-      
-      </div>
+
+    </div>
   )
 }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../component/navbar/Navbar'
 import Footer from '../component/footer/Footer'
 import axios from 'axios';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 
 function PostCvPage() {
@@ -149,7 +150,7 @@ function PostCvPage() {
 
     return (
         <div>
-            <Navbar />
+            <SetNavbar />
             <center>
                 <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-3 '>
                     <div className='py-5 self-center font-bold text-3xl'>Post CV</div>

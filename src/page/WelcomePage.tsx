@@ -1,8 +1,9 @@
 import React from 'react'
 import '../css/animation_WelcomePage.css'
 import { Link, useNavigate } from 'react-router-dom';
-import NavbarWelcome from '../component/navbar/Navbar_welcome'
+// import NavbarWelcome from '../component/navbar/Navbar_welcome'
 import Footer from '../component/footer/Footer'
+import SetNavbar from '../component/navbar/SetNavbar';
 
 
 function Welcome_Page() {
@@ -10,8 +11,9 @@ function Welcome_Page() {
 
     return (
         <div>
-            
-            <NavbarWelcome />
+
+            {/* <NavbarWelcome /> */}
+            <SetNavbar />
             <center>
 
                 <div className='align-middle pt-40'>
@@ -26,16 +28,16 @@ function Welcome_Page() {
                         <p className='text-white'>Find job</p></div>
 
                     <div className='slide-in-elliptic-top-fwd w-40 h-30 p-5 rounded-2xl bg-sky-600 bg-opacity-40 hover:bg-opacity-100 transition duration-700 justify-self-center'>
-                    <img className='w-20' src="Icon/users-alt.png" alt="" />
+                        <img className='w-20' src="Icon/users-alt.png" alt="" />
                         <p className='text-white'>Find Employee</p></div>
-                    
+
                     <div className='slide-in-elliptic-top-fwd w-40 h-30 p-5 rounded-2xl bg-sky-600 bg-opacity-40 hover:bg-opacity-100 transition duration-700 justify-self-start'>
-                    <img className='w-20' src="Icon/megaphone.png" alt="" />
+                        <img className='w-20' src="Icon/megaphone.png" alt="" />
                         <p className='text-white'>New job</p></div>
                     <div></div>
                 </div>
             </center>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

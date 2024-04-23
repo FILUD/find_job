@@ -4,6 +4,7 @@ import Navbar from '../component/navbar/Navbar'
 import Footer from '../component/footer/Footer'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 interface jobData {
   JobID: number;
@@ -97,11 +98,11 @@ function FindjobPage() {
       console.error('Error fetching employer data:', error);
     }
   };
-  
+
 
   return (
     <div>
-      <Navbar />
+      <SetNavbar />
       <center>
         <main className='container mx-auto'>
           <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
@@ -138,7 +139,7 @@ function FindjobPage() {
           <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
 
 
-            {jobData.map((job: any) => ( 
+            {jobData.map((job: any) => (
               <div className="card w-75 bg-base-100 shadow-xl hover:shadow-amber-400 duration-1000 cursor-pointer" key={job.JobID} onClick={() => handleCardClick(job)}>
                 <figure className='h-52'>
                   {job.Post_IMG && <img className='bg-cover' src={job.Post_IMG} alt="IMG_JOB" />}
@@ -165,8 +166,8 @@ function FindjobPage() {
                       }
                     </p>
                     <div className='grid grid-cols-2 pt-1'>
-                    <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
-                    <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
+                      <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
+                      <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
                   </div>
                   <div className="w-full card-actions justify-end">
                     <button className="w-full btn btn-primary bg-purple-600">View</button>
@@ -191,12 +192,12 @@ function FindjobPage() {
                     </div>
                     <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
                       <div className='grid col-span-1 justify-start justify-items-start items-start '>
-                    {selectedJOB.Employer_Profile_IMG
-                      ? <img className='w-14  border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
-                      : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
-                    }
-                    </div>
-                    <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>
+                        {selectedJOB.Employer_Profile_IMG
+                          ? <img className='w-14  border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
+                          : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                        }
+                      </div>
+                      <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>
                     </div>
                     <p className='text-left'><b>{selectedJOB.Title}</b></p>
                     <p className='text-left'>{selectedJOB.Description}</p>
@@ -205,13 +206,13 @@ function FindjobPage() {
                     </p>
                     <p className='text-left'><u>Work category</u>  : {selectedJOB.CategoryName}/{selectedJOB.OccupationName}</p>
                     <p className='text-left'>
-                    <u>Location</u> :
+                      <u>Location</u> :
                       {selectedJOB.VillageName
                         ? `${selectedJOB.VillageName}/${selectedJOB.DistrictName}/${selectedJOB.ProvinceName}`
                         : ' ບໍ່ລະບຸ'
                       }
                     </p>
-                    <p className='text-left'><u>Work type:</u> {selectedJOB.WorkType}</p> 
+                    <p className='text-left'><u>Work type:</u> {selectedJOB.WorkType}</p>
                     <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                     <div className="card-actions justify-end">
                       <button className="btn btn-primary">Apply</button>
