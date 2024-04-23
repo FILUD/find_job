@@ -16,6 +16,8 @@ npm install -g firebase-tools
 npm i react-rounter-dom axios daisyui@latest  
 npm install @headlessui/react
 npm install --save react-spinners
+npm i pdfviewer
+npm i quixote-ui
 
 
 

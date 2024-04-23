@@ -1,10 +1,39 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import cssProfile from './ProfileCSS';
 import { BarLoader } from 'react-spinners';
 import axios from 'axios';
+
+interface jobData {
+    JobID: number;
+    EmployerID: number;
+    Post_IMG: string;
+    Title: string;
+    CompanyName: string;
+    Employer_Profile_IMG: string;
+    Description: string;
+    SalaryStart: number;
+    SalaryMax: number;
+    CategoryName: string;
+    OccupationName: string;
+    PostDate: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string;
+    WorkType: string
+  }
+
+  interface CVDetail {
+    CvID: number;
+    JobseekerID: number;
+    IMG_CV: string;
+    Title: string;
+    UploadDate: string;
+    OccupationName: string;
+    CategoryName: string;
+  }
 
 export default function Profile_feature() {
 
@@ -17,6 +46,30 @@ export default function Profile_feature() {
     const [Role, setRole] = useState('');
     const [UserID, setUserID] = useState('');
     const [Email, setEmail] = useState('');
+
+    const [cvDetail, setCvDetail] = useState<CVDetail[]>([]);
+    const { jobseekerID } = useParams();
+
+    //detail CV or JOBpsot
+    useEffect(() => {
+        const fetchCVDetail = async () => {
+          try {
+            const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
+            if (response.data && response.data.length > 0) {
+              setCvDetail(response.data);
+              console.log(setCvDetail);
+            } else {
+              console.error('No CV details found for this jobseeker.');
+            }
+          } catch (error) {
+            console.error('Error fetching CV detail:', error);
+          }
+        };
+    
+        fetchCVDetail();
+      }, [jobseekerID]);
+
+      
 
     interface Employer {
         EmployerID: number;

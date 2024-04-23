@@ -132,7 +132,7 @@ function HomePage() {
   };
 
 
-  const openProfile = async (jobseekerID: number) => {
+  const openProfileCV = async (jobseekerID: number) => {
     try {
       const response = await axios.post('http://localhost:3001/viewjobseeker_byid', { jobseekerID });
       const jobseekerData = response.data.data[0];
@@ -142,11 +142,22 @@ function HomePage() {
     }
   };
 
+  const openProfileJOB = async (EmployerID: number) => {
+    try {
+      const response = await axios.post('http://localhost:3001/viewemployer_byid', { employerID: EmployerID }); // Change EmployerID to employerID
+      const employerData = response.data.data[0];
+      navigate(`/EmpProfile/${employerData.EmployerID}`); // Change employerData.employerID to employerData.EmployerID
+      console.log('employerID: ', employerData.EmployerID); // Change EmployerID to employerData.EmployerID
+    } catch (error) {
+      console.error('Error fetching employer data:', error);
+    }
+  };
+
 
 
   return (
     <div>
-      <Navbar />
+      <Navbar /> 
       <center>
         <main className='container mx-auto'>
           <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
@@ -236,51 +247,51 @@ function HomePage() {
 
 
         {selectedJOB && (
-          <dialog id="my_modal_3" className="modal" open>
-            <div className="modal-box">
-              <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopupJOB}>✕</button>
-              <div className='bg-stone-800 rounded-2xl py-10'>
-                <figure className='w-40'>
-                  <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>
-                    <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
+              <dialog id="my_modal_3" className="modal" open>
+                <div className="modal-box">
+                  <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopupJOB}>✕</button>
+                  <div className='bg-stone-800 rounded-2xl py-10'>
+                    <figure className='w-40'>
+                      <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>
+                        <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
+                      </div>
+                    </figure>
                   </div>
-                </figure>
-              </div>
-              <div className="card-body bg-stone-800  rounded-2xl">
-                <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
-                </div>
-                <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
-                  <div className='grid col-span-1 justify-start justify-items-start items-start '>
+                  <div className="card-body bg-stone-800  rounded-2xl">
+                    <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
+                    </div>
+                    <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
+                      <div className='grid col-span-1 justify-start justify-items-start items-start '>
                     {selectedJOB.Employer_Profile_IMG
                       ? <img className='w-14  border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
                       : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                     }
+                    </div>
+                    <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>
+                    </div>
+                    <p className='text-left'><b>{selectedJOB.Title}</b></p>
+                    <p className='text-left'>{selectedJOB.Description}</p>
+                    <p className='text-left'>
+                      <u>Salary</u> : {selectedJOB.SalaryStart.toLocaleString()} - {selectedJOB.SalaryMax.toLocaleString()} LAK
+                    </p>
+                    <p className='text-left'><u>Work category</u>  : {selectedJOB.CategoryName}/{selectedJOB.OccupationName}</p>
+                    <p className='text-left'>
+                    <u>Location</u> :
+                      {selectedJOB.VillageName
+                        ? `${selectedJOB.VillageName}/${selectedJOB.DistrictName}/${selectedJOB.ProvinceName}`
+                        : ' ບໍ່ລະບຸ'
+                      }
+                    </p>
+                    <p className='text-left'><u>Work type:</u> {selectedJOB.WorkType}</p> 
+                    <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
+                    <div className="card-actions justify-end">
+                      <button className="btn btn-primary">Apply</button>
+                      <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+                    </div>
                   </div>
-                  <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>
                 </div>
-                <p className='text-left'><b>{selectedJOB.Title}</b></p>
-                <p className='text-left'>{selectedJOB.Description}</p>
-                <p className='text-left'>
-                  <u>Salary</u> : {selectedJOB.SalaryStart.toLocaleString()} - {selectedJOB.SalaryMax.toLocaleString()} LAK
-                </p>
-                <p className='text-left'><u>Work category</u>  : {selectedJOB.CategoryName}/{selectedJOB.OccupationName}</p>
-                <p className='text-left'>
-                  <u>Location</u> :
-                  {selectedJOB.VillageName
-                    ? `${selectedJOB.VillageName}/${selectedJOB.DistrictName}/${selectedJOB.ProvinceName}`
-                    : ' ບໍ່ລະບຸ'
-                  }
-                </p>
-                <p className='text-left'><u>Work type:</u> {selectedJOB.WorkType}</p>
-                <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
-                <div className="card-actions justify-end">
-                  <button className="btn btn-primary">Apply</button>
-                  <button className="btn btn-primary" onClick={() => openProfile(selectedJOB.JobseekerID)}>View Profile</button>
-                </div>
-              </div>
-            </div>
-          </dialog>
-        )}
+              </dialog>
+            )}
 
 
         {selectedCV && (
@@ -310,7 +321,7 @@ function HomePage() {
                 <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
                 <div className="card-actions justify-end">
                   <button className="btn btn-primary">Apply</button>
-                  <button className="btn btn-primary" onClick={() => openProfile(selectedCV.JobseekerID)}>View Profile</button>
+                  <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
                 </div>
               </div>
             </div>
