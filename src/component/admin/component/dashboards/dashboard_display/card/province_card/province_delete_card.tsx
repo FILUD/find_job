@@ -20,6 +20,8 @@ function DeleteProvinceCard({ name, provinceID, selectProvinceID, isOpen, onClos
     const handleDeleteProvince = async () => {
         try {
             setLoading(true);
+            const provinceIDs = provinceID || selectProvinceID
+            console.log({provinceIDs});
             const response = await fetch(`${api}/deleteProvince`, {
                 method: "POST",
                 headers: {
@@ -48,7 +50,7 @@ function DeleteProvinceCard({ name, provinceID, selectProvinceID, isOpen, onClos
         <Dialog open={isOpen} onClose={onClose}>
             <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
             <div className="flex items-center justify-center fixed inset-0 z-10">
-                <div className="bg-base-200 p-6 rounded shadow-lg"  data-theme={theme}>
+                <div className="bg-base-200 p-6 rounded shadow-lg" data-theme={theme}>
                     <h2 className="text-2xl font-bold mb-4">Delete Province</h2>
                     <p>This will permanently deactivate province: <span className="text-red-500 font-bold">{name}</span> ( <span className="text-red-500 font-bold">ProvinceID: {provinceID || selectProvinceID}</span>).</p>
                     <p>Are you sure you want to delete?</p>

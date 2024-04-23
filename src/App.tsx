@@ -29,7 +29,6 @@ function App() {
     <div>
       <Router>
         <div className="App">
-
           <Routes>
             <Route index element={<WelcomePage />} />
             <Route path="/Home" element={<HomePage />} />
@@ -44,9 +43,6 @@ function App() {
             <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="*" element={<ErrorPage />} />
-
-
-
           </Routes>
 
         </div>

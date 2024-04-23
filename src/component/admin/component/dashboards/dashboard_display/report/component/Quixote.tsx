@@ -1,27 +1,41 @@
 import React from 'react';
 import { Document, Page, Text, Image, StyleSheet, Font } from '@react-pdf/renderer';
 
-// Register fonts
-Font.register({
-    family: 'Oswald',
-    src: 'https://fonts.gstatic.com/s/oswald/v38/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvsUtiZTaRZ2Y.woff2',
-});
+// import '../fonts/laofont.css'; // Import the CSS file
+
+
 interface ReportProps {
     title: string
 }
 
+
+
+Font.register({
+    family: "Notosan",
+    // src: "https://fonts.gstatic.com/s/notosanslao/v30/bx6QNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73Cg46D6ELWw.woff2"
+    src: "https://fonts.gstatic.com/s/notosanslao/v30/bx6QNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73Cg46D6ELWw.woff2"
+})
+
+// Font.register({
+//     family: "Notosan",
+//     // src: "https://fonts.gstatic.com/s/notosanslao/v30/bx6QNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73Cg46D6ELWw.woff2"
+//     src: '../fonts/laofont.css'
+// })
+
+
 const Quixote: React.FC<ReportProps> = ({ title }) => (
     <Document>
-        <Page style={styles.body}>
+        <Page style={styles.body} size={'A4'}>
             <Text style={styles.header} fixed>
-                ~ Created with react-pdf ~
+                Lao People's Democratic Republic{'\n'}
+                Peace Independence Democracy Unity Prosperity{'\n'}
+                ດຫັດາ່ຫັກຫັກືັຫກືຫັາກັຫືກສຫັາກືັສຫາກືສຫັາກືສຫັາກືາຫສກາືຫັກາສາສ
             </Text>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.author}>asabdh de Cervantes</Text>
-            {/* <Image style={styles.image} src="https://placehold.jp/150x150.png" /> */}
+            <Text style={styles.title}>Report</Text>
+            <Text style={styles.author}>The user utilizes the website's functionalities through their account</Text>
+            {/* <Image style={styles.image} src={"./Images/job-searching.png"} /> */}
             <Text style={styles.subtitle}>
-                Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo D.
-                Quijote de la Mancha
+                Title: {title}
             </Text>
             <Text style={styles.text}>
                 En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha
@@ -48,23 +62,27 @@ const Quixote: React.FC<ReportProps> = ({ title }) => (
     </Document>
 );
 
+
+
 const styles = StyleSheet.create({
     body: {
+
         paddingTop: 35,
         paddingBottom: 65,
         paddingHorizontal: 35,
     },
     title: {
-        fontSize: 24,
+        fontSize: 18,
         textAlign: 'center',
+        color: 'black'
     },
     author: {
         fontSize: 12,
         textAlign: 'center',
-        marginBottom: 40,
+        marginBottom: 20,
     },
     subtitle: {
-        fontSize: 18,
+        fontSize: 14,
         margin: 12,
     },
     text: {
@@ -77,10 +95,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 100,
     },
     header: {
+        fontFamily: "Noto Sans Lao",
         fontSize: 12,
         marginBottom: 20,
         textAlign: 'center',
-        color: 'grey',
+        color: 'red',
     },
     pageNumber: {
         position: 'absolute',
