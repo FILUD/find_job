@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
@@ -7,6 +7,28 @@ import Profile_feature from '../profile/ProfileFeature';
 
 function NavbarWelcome() {
   const navigate = useNavigate();
+
+  const [userData, setUserData] = useState<any>(null);
+
+  useEffect(() => {
+    const datalocalID = localStorage.getItem('ID');
+    const datalocalRole = localStorage.getItem('Role');
+    const datalocalUserID = localStorage.getItem('UserID');
+    const datalocalEmail = localStorage.getItem('Email');
+
+    if (datalocalID && datalocalRole && datalocalUserID && datalocalEmail) {
+      // Parse the retrieved data into an object
+      const parsedData = {
+        ID: JSON.parse(datalocalID),
+        Role: JSON.parse(datalocalRole),
+        UserID: JSON.parse(datalocalUserID),
+        Email: JSON.parse(datalocalEmail)
+      };
+
+      setUserData(parsedData);
+
+    }
+  }, []);
 
   return (
     <div className='container-nav'>
@@ -48,6 +70,11 @@ function NavbarWelcome() {
             </button>
           </div>
 
+          {userData ? (
+            <Profile_feature />
+          ) : (
+            <AuthFeat />
+          )}
 
           {/* Change Language */}
           <div className="dropdown dropdown-end">
@@ -61,7 +88,7 @@ function NavbarWelcome() {
               <li className=''><a>English</a></li>
             </ul>
           </div>
-          <AuthFeat />
+
 
         </div>
       </div>

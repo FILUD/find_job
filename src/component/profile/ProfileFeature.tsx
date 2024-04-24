@@ -359,8 +359,8 @@ export default function Profile_feature() {
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
                                                                 </div>
                                                                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                                                    <li>
-                                                                        <a className="justify-between">
+                                                                    <li >
+                                                                        <a className="justify-between" onClick={() => navigate('/PostJob')} >
                                                                             Add post
                                                                             <span className="badge">New</span>
                                                                         </a>
@@ -511,7 +511,7 @@ export default function Profile_feature() {
                                                                 className="w-5 h-5">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                                                             </svg></div>
-                                                            <div className='font-sans'>
+                                                        <div className='font-sans'>
                                                             {isLoading ? (
                                                                 <BarLoader color={"#5a5e5d"} loading={isLoading} width={140} height={5} className='mt-2' />
                                                             ) : (
@@ -540,25 +540,32 @@ export default function Profile_feature() {
                                                         <div className="flex-1">
                                                             <a className="btn btn-ghost text-xl">Cv Posting</a>
                                                         </div>
-                                                        <div className="flex-none space-x-2">
+                                                        <div className="flex-none space-x-4 pr-2 ">
                                                             <div className="form-control">
                                                                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
                                                             </div>
-                                                            <div className="dropdown dropdown-end">
+                                                            <button className="btn btn-ghost btn-circle">
+                                                                <label className="flex items-center gap-2 ">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 ">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                                                    </svg>
+                                                                </label>
+                                                            </button>
+
+                                                            {/* <div className="dropdown dropdown-end">
                                                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-square avatar">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
                                                                 </div>
                                                                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                                                     <li>
-                                                                        <a className="justify-between">
-                                                                            Add post
-                                                                            <span className="badge">New</span>
+                                                                        <a  className="justify-between" onClick={() => navigate('/PostJob')}>
+                                                                            Add Cv
                                                                         </a>
                                                                     </li>
                                                                     <li><a>Edit</a></li>
                                                                     <li><a>Delete</a></li>
                                                                 </ul>
-                                                            </div>
+                                                            </div> */}
                                                         </div>
                                                     </div>
                                                     {/* content or bottom part */}
@@ -572,12 +579,12 @@ export default function Profile_feature() {
                                                                 <div className="card-body flex-grow">
                                                                     <h2 className="card-title">{cv.Title}</h2>
                                                                     <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
-                                                                        
+
                                                                         <p className="line-clamp-4">Work Category : {cv.CategoryName} / {cv.OccupationName}</p>
                                                                         <p className="self-start">Upload Date : {cv.PostDate ? formatDate(cv.PostDate) : 'N/A'}</p>
                                                                     </article>
                                                                     <div className="card-actions text-xs bottom-0 absolute">
-                                                                        
+
                                                                     </div>
                                                                 </div>
                                                             </div>

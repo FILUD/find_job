@@ -191,7 +191,6 @@ function EmpProfile() {
               </div>
             )}
 
-
             {selectedJOB && (
               <dialog id="my_modal_3" className="modal" open>
                 <div className="modal-box">
