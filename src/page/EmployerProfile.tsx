@@ -65,10 +65,10 @@ function EmpProfile() {
           setJobDetail(response.data);
           console.log(setJobDetail);
         } else {
-          console.error('No CV details found for this jobseeker.');
+          console.error('No JOB details found for this jobseeker.');
         }
       } catch (error) {
-        console.error('Error fetching CV detail:', error);
+        console.error('Error fetching JOB detail:', error);
       }
     };
 
