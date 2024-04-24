@@ -156,24 +156,30 @@ export default function AuthFeat() {
                 console.log("Verification successful!");
                 if (isOpenLogIn) {
                     console.log('login with vertication successful')
-                    await getCrediatial(emailLogin);
-                    setIsOpenOTP(false);
-                    setIsOpenSignUp(false);
-                    setIsOpenLogIn(false);
-                    clearInputs();
-                    navigate('/Home'); // Navigate to dashboard if on the login page
+                    const res = await getCrediatial(emailLogin);
+                    if (res !== null) {
+                        setIsOpenOTP(false);
+                        setIsOpenSignUp(false);
+                        setIsOpenLogIn(false);
+                        clearInputs();
+                        navigate('/Home');
+                      
+                    }
+
                 }
                 if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
                     await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
-                    await getCrediatial(emailSignup);
-                    setIsOpenOTP(false);
-                    setIsOpenSignUp(false);
-                    setIsOpenLogIn(false);
-                    clearInputs();
-                    navigate('/Home');
-                    console.log('signup gonna save your data')
-                    // Perform actions for signup page, such as saving registration data
+                    const res = await getCrediatial(emailSignup);
+                    if (res !== null) {
+                        setIsOpenOTP(false);
+                        setIsOpenSignUp(false);
+                        setIsOpenLogIn(false);
+                        clearInputs();
+                        navigate('/Home');
+                      
+                        console.log('signup gonna save your data')
+                    }
                 }
             } else {
                 console.log("Verification failed:", verifyResponse.status);

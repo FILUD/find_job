@@ -12,8 +12,8 @@ interface ReportProps {
 
 Font.register({
     family: "Notosan",
-    // src: "https://fonts.gstatic.com/s/notosanslao/v30/bx6QNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73Cg46D6ELWw.woff2"
     src: "https://fonts.gstatic.com/s/notosanslao/v30/bx6QNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73Cg46D6ELWw.woff2"
+    // src: "https://fonts.gstatic.com/s/notosanslao/v30/bx6QNx2Ol_ixgdYWLm9BwxM3NW6BOkuf763Clj73Cg46D6ELWw.woff2"
 })
 
 // Font.register({
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 100,
     },
     header: {
-        fontFamily: "Noto Sans Lao",
+        fontFamily: "Notosan",
         fontSize: 12,
         marginBottom: 20,
         textAlign: 'center',

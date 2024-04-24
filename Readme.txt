@@ -23,3 +23,4 @@ npm install --save react-spinners
 npm install @react-pdf/renderer --save
 npm install tailwindcss postcss autoprefixer
 npx tailwindcss init -p
+styled-components

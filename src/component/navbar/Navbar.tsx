@@ -3,6 +3,7 @@ import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
 import Profile_feature from '../profile/ProfileFeature';
+import ListChat from '../chat/ListChat';
 
 function Navbar() {
     const navigate = useNavigate();
@@ -54,6 +55,8 @@ function Navbar() {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
                         </div>
+                        {/* chat icon */}
+                        <ListChat />
 
                         {/* bell icon */}
                         <div className="dropdown dropdown-end">
@@ -67,6 +70,8 @@ function Navbar() {
 
                         {/* profile icon */}
                         <Profile_feature />
+
+
 
                         {/* Change Language */}
                         <div className="dropdown dropdown-end ml-7">
