@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 interface ProfileData {
   JobseekerName: string;
@@ -107,7 +108,7 @@ function ViewProfilePage() {
 
   return (
     <div>
-      <Navbar />
+      <SetNavbar />
       <div className='container mt-5 mx-auto'>
         <div className='grid grid-cols-3 gap-2'>
           {/* Profile Information */}
@@ -179,7 +180,7 @@ function ViewProfilePage() {
                     </div>
                     <p className='text-left'><b>{selectedCV.Title}</b></p>
                     <p className='text-left'><u>Occupation :</u>{selectedCV.OccupationName}</p>
-                    <p className='text-left'><u>Work category :</u> {selectedCV.CategoryName}</p>                    
+                    <p className='text-left'><u>Work category :</u> {selectedCV.CategoryName}</p>
                     <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
                     <div className="card-actions justify-end">
                       <button className="btn btn-primary">Apply</button>

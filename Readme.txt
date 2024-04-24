@@ -25,3 +25,4 @@ npm i quixote-ui
 npm install @react-pdf/renderer --save
 npm install tailwindcss postcss autoprefixer
 npx tailwindcss init -p
+styled-components

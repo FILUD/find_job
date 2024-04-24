@@ -156,26 +156,30 @@ export default function AuthFeat() {
                 console.log("Verification successful!");
                 if (isOpenLogIn) {
                     console.log('login with vertication successful')
-                    await getCrediatial(emailLogin);
-                    setIsOpenOTP(false);
-                    setIsOpenSignUp(false);
-                    setIsOpenLogIn(false);
-                    clearInputs();
-                    navigate('/Home'); // Navigate to dashboard if on the login page
-                    window.location.reload();
+                    const res = await getCrediatial(emailLogin);
+                    if (res !== null) {
+                        setIsOpenOTP(false);
+                        setIsOpenSignUp(false);
+                        setIsOpenLogIn(false);
+                        clearInputs();
+                        navigate('/Home');
+                      
+                    }
+
                 }
                 if (isOpenSignUp) {
                     console.log('OTP condition signup is successful')
                     await saveRegister(emailSignup, passwordSignup, firstName, lastName, role);
-                    await getCrediatial(emailSignup);
-                    setIsOpenOTP(false);
-                    setIsOpenSignUp(false);
-                    setIsOpenLogIn(false);
-                    clearInputs();
-                    navigate('/Home');
-                    window.location.reload();
-                    console.log('signup gonna save your data')
-                    // Perform actions for signup page, such as saving registration data
+                    const res = await getCrediatial(emailSignup);
+                    if (res !== null) {
+                        setIsOpenOTP(false);
+                        setIsOpenSignUp(false);
+                        setIsOpenLogIn(false);
+                        clearInputs();
+                        navigate('/Home');
+                      
+                        console.log('signup gonna save your data')
+                    }
                 }
             } else {
                 console.log("Verification failed:", verifyResponse.status);
@@ -210,13 +214,6 @@ export default function AuthFeat() {
                 } else {
                     console.log("error set ID")
                 }
-                // if (RoleLocal === "Employer") {
-                //     localStorage.setItem('ID', JSON.stringify(getID));
-                // } else if (RoleLocal === "Jobseeker") {
-                //     localStorage.setItem('ID', JSON.stringify(getID));
-                // } else {
-                //     console.log("error set ID")
-                // }
             } else {
                 console.log("Error erorr");
             }

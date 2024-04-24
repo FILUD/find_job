@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
 import axios from 'axios';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 function PostJobPage() {
     // State variables
@@ -174,7 +175,7 @@ function PostJobPage() {
     return (
         <div>
             {/* <div className='bg-base-200 w-full h-20 sticky top-0'> */}
-            <Navbar />
+            <SetNavbar />
             {/* </div> */}
 
             {isLoading ? (<div className='w-full h-96 max-h-screen text-center place-content-center bg-black bg-opacity-75'> Loading....</div>) : (

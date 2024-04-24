@@ -3,9 +3,10 @@ import axios from 'axios';
 // import '../css/animation_HomePage.css'
 import { useNavigate } from 'react-router-dom';
 import '../css/style.css'
-import Navbar from '../component/navbar/Navbar';
+// import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
 import { SpinnerColors } from './spinner';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 
 interface jobData {
@@ -157,7 +158,7 @@ function HomePage() {
 
   return (
     <div>
-      <Navbar /> 
+      <SetNavbar />
       <center>
         <main className='container mx-auto'>
           <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>

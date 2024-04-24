@@ -3,6 +3,7 @@ import Navbar from '../component/navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../component/footer/Footer';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 interface CVData {
   CvID: number;
@@ -91,11 +92,11 @@ function FindEmployeePage() {
       });
     }
   };
-  
+
 
   return (
     <div>
-      <Navbar />
+      <SetNavbar />
       <center>
         <main className='container mx-auto'>
 
@@ -165,14 +166,14 @@ function FindEmployeePage() {
                     </figure>
                   </div>
                   <div className="card-body bg-stone-800  rounded-2xl">
-                  <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
+                    <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
                       <div className='grid col-span-1 justify-start justify-items-start items-start '>
-                    {selectedCV.Jobseeker_Profile_IMG
-                      ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
-                      : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
-                    }
-                    </div>
-                    <h2 className="card-title text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
+                        {selectedCV.Jobseeker_Profile_IMG
+                          ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                          : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                        }
+                      </div>
+                      <h2 className="card-title text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
                     </div>
                     <p className='text-left'><b>{selectedCV.Title}</b></p>
                     <p className='text-left'><u>Work category:</u> {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
@@ -190,7 +191,7 @@ function FindEmployeePage() {
           </div>
         </main>
       </center>
-     <Footer/>
+      <Footer />
     </div>
   )
 }

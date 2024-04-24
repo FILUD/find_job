@@ -1,11 +1,12 @@
 import React from 'react'
 // import '../css/AboutPage.css'
 import Navbar from '../component/navbar/Navbar_welcome'
+import SetNavbar from '../component/navbar/SetNavbar'
 
 function About_Page() {
   return (
     <div>
-      <Navbar />
+     <SetNavbar />
       <div>
         <center>
           <p className='text-title-about'>

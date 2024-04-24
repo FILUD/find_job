@@ -55,7 +55,7 @@ function DashboardPeople() {
                 <p>{error}</p>
             ) : (
                 <div >
-                    <div className="overflow-x-auto ">
+                    <div className="overflow-x-auto bg-base-200 h-screen">
                         <div>
                             <div> </div>
                             <div className="space-x-5 flex justify-end m-2">

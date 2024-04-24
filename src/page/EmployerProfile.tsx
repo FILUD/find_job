@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
+import SetNavbar from '../component/navbar/SetNavbar';
 // import '../css/EmpProfile.css'
 
 interface jobDetail {
@@ -116,7 +117,7 @@ function EmpProfile() {
 
   return (
     <div>
-      <Navbar />
+      <SetNavbar />
       <div className='container mt-5 mx-auto'>
         <div className='grid grid-cols-3 gap-2'>
           {/* Profile Information */}
