@@ -1,0 +1,98 @@
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+
+interface Message {
+    messageId: number;
+    senderId: string;
+    receiverId: string;
+    message: string;
+    isRead: boolean;
+}
+
+const TestFetch: React.FC = () => {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [messageInput, setMessageInput] = useState<string>('');
+    const [receiverID, setReceiverID] = useState<string>('80');
+    const [senderID, setSenderID] = useState<string>('');
+
+    useEffect(() => {
+        const getSenderID = localStorage.getItem('UserID');
+        if (getSenderID) {
+            setSenderID(getSenderID);
+        }
+
+    }, []);
+
+    useEffect(() => {
+        const socket = io('http://localhost:3001');
+
+        if (senderID !== '' && receiverID !== '') {
+            fetchMessage(senderID, receiverID);
+        }
+
+        socket.on('new message', (newMessage: Message) => {
+            setMessages(prevMessages => [...prevMessages, newMessage]);
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, [senderID, receiverID]);
+
+    const fetchMessage = async (senderID: string, receiverID: string) => {
+        const socket = io('http://localhost:3001');
+        socket.emit('fetch message', { senderId: senderID, receiverId: receiverID });
+        socket.on('message fetch', (oldMessages: Message[]) => {
+            setMessages(oldMessages);
+        });
+    };
+
+    const sendMessage = () => {
+        if (senderID && receiverID && messageInput) {
+            const socket = io('http://localhost:3001');
+            socket.emit('send message', { senderId: senderID, receiverId: receiverID, message: messageInput });
+            setMessageInput('');
+        }
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (messageInput.trim() !== '') {
+            sendMessage();
+        }
+    };
+
+    return (
+        <div className="container mx-auto my-4">
+            {/* Display chat messages */}
+            {/* Display chat messages where senderId matches senderID and receiverId matches receiverID */}
+
+            {messages.map((msg) =>
+                (msg.senderId === senderID ) ? (
+                    <div key={msg.messageId} className="bg-white rounded-md shadow-md p-4 m-2">
+                        <p className="text-gray-800">{msg.senderId === senderID ? 'You' : 'Friend'}: {msg.message}</p>
+                    </div>
+                ) : null
+            )}
+
+            {/* Form for sending new messages */}
+            <form onSubmit={handleSubmit} className="mt-4 flex space-x-4">
+                <input
+                    type="text"
+                    value={messageInput}
+                    onChange={(e) => setMessageInput(e.target.value)}
+                    placeholder="Type your message..."
+                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
+                />
+                <button
+                    type="submit"
+                    className="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                >
+                    Send
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default TestFetch;

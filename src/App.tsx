@@ -15,6 +15,9 @@ import PostJobPage from './page/PostJobPage';
 import TestPage from './page/TestPage';
 import ViewProfilePage from './page/ViewProfilePage';
 import Admin_dashboard from './component/admin/page/Admin_Page';
+import ChatMessage from './component/chat/ChatMessage';
+import Chat_Page from './component/chat/Chat_Page';
+
 
 
 
@@ -42,10 +45,14 @@ function App() {
             <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
             <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
+            <Route path="/chat" element={<ChatMessage />} />
             <Route path="*" element={<ErrorPage />} />
 
-
             <Route path="/test" element={<TestPage />} />
+
+            {/* chat */}
+            <Route path="/Chat_page" element={<Chat_Page />} />
+            <Route path="/Chat_page/:employerID" element={<ChatMessage />} />
             
           </Routes>
 

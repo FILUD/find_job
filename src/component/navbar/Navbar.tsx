@@ -3,7 +3,7 @@ import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
 import Profile_feature from '../profile/ProfileFeature';
-import ListChat from '../chat/ListChat';
+// import ListChat from '../chat/ListChat';
 
 function Navbar() {
     const navigate = useNavigate();
@@ -64,7 +64,7 @@ function Navbar() {
                             </button>
                         </div>
                         {/* chat icon */}
-                        <ListChat />
+                        {/* <ListChat /> */}
 
                         {/* bell icon */}
                         <div className="dropdown dropdown-end">
