@@ -25,7 +25,7 @@ const ChatMessage: React.FC = () => {
       setMessages(oldMessages);
     });
   };
-  
+
   useEffect(() => {
     const getSenderID = localStorage.getItem('UserID');
     if (getSenderID) {
@@ -69,11 +69,16 @@ const ChatMessage: React.FC = () => {
   return (
     <div className="container mx-auto my-4">
       {/* Display chat messages */}
-      {messages.map((msg) => (
+      {messages.map((msg, index) => (
         <div key={msg.messageId} className="bg-white rounded-md shadow-md p-4 m-2">
-          <p className="text-gray-800">{msg.senderId === senderID ? 'You' : 'Friend'}: {msg.message}</p>
+          {index === 0 || messages[index - 1].senderId !== msg.senderId ? (
+            <p className="text-gray-800">{msg.senderId === senderID ? 'You' : 'Friend'}</p>
+          ) : null}
+          <p className="text-gray-800">{msg.message} {msg.receiverId}</p>
         </div>
       ))}
+
+
 
       {/* Form for sending new messages */}
       <form onSubmit={handleSubmit} className="mt-4 flex space-x-4">
@@ -91,7 +96,7 @@ const ChatMessage: React.FC = () => {
           Send
         </button>
       </form>
-    </div>
+    </div >
   );
 };
 
