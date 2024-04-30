@@ -18,6 +18,7 @@ npm install @headlessui/react
 npm install --save react-spinners
 npm i pdfviewer
 npm i quixote-ui
+npm install sweetalert2
 
 
 
