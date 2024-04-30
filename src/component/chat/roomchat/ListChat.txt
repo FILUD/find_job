@@ -1,0 +1,71 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
+
+interface ChatList {
+    messageId: number;
+    senderId: string;
+    receiverId: string;
+    isRead: boolean;
+    message: string;
+}
+
+function ListChat() {
+    const [chatList, setChatList] = useState<ChatList[]>([]);
+    const navigate = useNavigate();
+    const userId = localStorage.getItem('UserID');
+
+    useEffect(() => {
+        // Connect to the server using Socket.IO
+        const socket = io('http://localhost:3001');
+
+        // Fetch chat list only if userId is available
+        if (userId) {
+            socket.emit('get chat list', userId);
+        }
+
+        // Listen for chat list response
+        const handleChatList = (list: ChatList[]) => {
+            console.log('Received chat list:', list);
+            setChatList(list);
+        };
+        socket.on('chat list', handleChatList);
+
+        // Listen for chat list error
+        const handleChatListError = (error: any) => {
+            console.error('Error fetching chat list:', error);
+
+        };
+        socket.on('chat list error', handleChatListError);
+
+        // Clean up event listeners
+        return () => {
+            socket.off('chat list', handleChatList);
+            socket.off('chat list error', handleChatListError);
+        };
+    }, [userId, navigate]);
+
+    return (
+        <div>
+            <div className="dropdown dropdown-end ml-4">
+                <button className="btn btn-ghost btn-circle">
+                    <div className="indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                        </svg>
+                        <span className="badge badge-xs badge-primary indicator-item"></span>
+                    </div>
+                </button>
+                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                    {chatList.map((list) => (
+                        <li key={list.messageId} onClick={() => navigate('/chat')}>
+                            <a>{list.receiverId}</a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    );
+}
+
+export default ListChat;
