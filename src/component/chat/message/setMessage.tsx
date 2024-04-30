@@ -7,20 +7,25 @@ interface ListChat {
     senderId: string;
     receiverId: string;
     message: string;
+    listMessage: Messages[];
+    userIDLogin: string;
+}
+interface Messages {
+    messageId: number;
+    senderId: string;
+    receiverId: string;
+    message: string;
+    isRead: boolean;
 }
 
-function SetMessage({ senderId, receiverId, message }: ListChat) {
-    // const [messages, setMessage] = useState<string>(message);
-    // const [receiverID, setReceiverID] = useState<string>(receiverId);
-    // const [senderID, setSenderID] = useState<string>(senderId);
+function SetMessage({ senderId, receiverId, listMessage, userIDLogin }: ListChat) {
+    const [messages, setMessage] = useState<Messages[]>([]);
 
-    if (senderId && receiverId && message) {
-        // console.log('set', senderId);
-        // console.log('set', receiverId);
-        // console.log('set', message);
-        return <Message />;
+    if (senderId && receiverId && listMessage) {
+        // console.log('receiverID', receiverId);
+        return <Message getSenderID={senderId} getReceiverID={receiverId} listMessage={listMessage} userIDLogin={userIDLogin}/>;
     } else {
-    
+
         return <NonMessage />;
     }
 }

@@ -2,65 +2,78 @@ import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client';
 const socket = io('http://localhost:3001');
 
-interface Message {
+interface Messages {
     messageId: number;
     senderId: string;
     receiverId: string;
     message: string;
     isRead: boolean;
 }
+interface UserParam {
+    getSenderID: string;
+    getReceiverID: string;
+    listMessage: Messages[];
+    userIDLogin: string;
+}
 
-function Message() {
-    const [messages, setMessages] = useState<Message[]>([]);
+
+function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserParam) {
+    const [senderID, setSenderID] = useState<string>('');
+    const [receiverID, setReceiverID] = useState<string>('');
+    const [messages, setMessages] = useState<Messages[]>([]);
     const [messageInput, setMessageInput] = useState<string>('');
-    const [receiverID, setReceiverID] = useState<string>('90');
-    const [senderID, setSenderID] = useState<string>("18");
 
-    const fetchOldMessages = () => {
-        socket.emit('fetch old message', { senderId: senderID, receiverId: receiverID });
-        socket.on('old messages', (oldMessages: Message[]) => {
-            setMessages(oldMessages);
-        });
-    };
-    useEffect(() => {
-        if (senderID) {
-            fetchOldMessages();
-        }
-    }, [senderID]);
 
     useEffect(() => {
-        // Listen for new messages from the server
-        socket.on('new message', (newMessage: Message) => {
-            setMessages(prevMessages => [...prevMessages, newMessage]);
-        });
-        // Clean up event listener
-        return () => {
-            socket.off('new message');
-        };
-    }, []);
+        setMessages(listMessage)
+        setSenderID(getSenderID)
+        setReceiverID(getReceiverID)
+        // scrollMessageList()
+    }, [getSenderID, getReceiverID, listMessage]);
+
+
+    useEffect(() => {
+        scrollAfterTimeout()
+    }, [getReceiverID])
 
     const sendMessage = () => {
-        if (senderID && receiverID && messageInput) {
-            socket.emit('send message', { senderId: senderID, receiverId: receiverID, message: messageInput });
+        if (senderID && receiverID && messageInput && userIDLogin) {
+            socket.emit('send message', { senderId: senderID == userIDLogin ? userIDLogin : userIDLogin, receiverId: receiverID == userIDLogin ? senderID : receiverID, message: messageInput });
+            console.log('always get login user', senderID == userIDLogin ? userIDLogin : userIDLogin)
+            console.log('always get receiver', receiverID == userIDLogin ? senderID : receiverID)
             setMessageInput('');
         }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (messageInput.trim() !== '') {
-            sendMessage();
-        }
+    const scrollAfterTimeout = () => {
+        setTimeout(() => {
+            if (messageListRef.current) {
+                messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+            }
+        }, 500);
     };
 
 
+    //scroll when send
     const messageListRef = useRef<HTMLDivElement>(null);
-    // Scroll to the bottom of the message list when component mounts or when new messages are added
-    useEffect(() => {
-        if (messageListRef.current) {
-            messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (messageInput.trim() !== '') {
+            sendMessage();
+            scrollAfterTimeout()
         }
-    }, [messages]);
+    };
+
+    // useEffect(() => {
+    //     const scrollAfterTimeout = setTimeout(() => {
+    //         if (messageListRef.current) {
+    //             messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    //         }
+    //     }, 3000); // 2 minutes
+
+    //     return () => clearTimeout(scrollAfterTimeout);
+    // }, [messages]);
 
     return (
         <div className='relative flex flex-col w-full bg-black bg-opacity-85'>
@@ -82,18 +95,34 @@ function Message() {
             {/* message */}
             <div className='flex flex-col overflow-y-auto h-full mb-14 px-4' ref={messageListRef}>
                 {messages.map((msg, index) => (
-                    <div key={msg.messageId} className="bg-white rounded-md shadow-md p-4 m-2">
-                        {/* {index === 0 || messages[index - 1].senderId !== msg.senderId ? (
-                        <p className="text-gray-800">{msg.senderId === senderID ? 'Friend' : 'You'}</p>
-                    ) : null} */}
-                        <p className="text-gray-800">{msg.message}</p>
+                    <div key={msg.messageId}>
+                        {msg.senderId == userIDLogin ? (
+                            <div className="chat chat-end">
+                                <div className="chat-image avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    </div>
+                                </div>
+                                <div className="chat-bubble chat-bubble-info">{msg.message}</div>
+                            </div>
+                        ) : (
+                            <div className="chat chat-start">
+                                <div className="chat-image avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    </div>
+                                </div>
+                                <div className="chat-bubble chat-bubble-primary">{msg.message}</div>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
 
 
+
             {/* floating button and input */}
-            <form onSubmit={handleSubmit} className="h-12 mt-4 flex space-x-2 absolute bottom-2 left-2 right-2 mx-6">
+            < form onSubmit={handleSubmit} className="h-12 mt-4 flex space-x-2 absolute bottom-2 left-2 right-2 mx-6" >
                 <div className='h-4'>
                     <kbd className="kbd kbd-lg btn-outline">/</kbd>
                 </div>
@@ -110,8 +139,8 @@ function Message() {
                 >
                     Send
                 </button>
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
 
