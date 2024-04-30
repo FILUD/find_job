@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SetNavbar from '../navbar/SetNavbar'
-import ChatMessage from './ChatMessage'
+import ChatMessage from './test/ChatMessage'
 import io from 'socket.io-client';
 import SetMessage from './message/setMessage';
 import Message from './message/Message';
@@ -14,17 +14,28 @@ interface ListChatProps {
     isRead: boolean;
 }
 
+interface Messages {
+    messageId: number;
+    senderId: string;
+    receiverId: string;
+    message: string;
+    isRead: boolean;
+}
+
 function Chat_Page() {
+
     const [receiverID, setReceiverID] = useState<string>('');
     const [senderID, setSenderID] = useState<string>('');
     const [senderIDSet, setSenderIDSet] = useState<boolean>(false);
     const [listChat, setListChat] = useState<ListChatProps[]>([]);
-    const [selectedMessage, setSelectedMessage] = useState<ListChatProps | null>(null);
     // send param
     const [sendSender, setSendSender] = useState<string>('');
     const [sendReceiver, setSendReceiver] = useState<string>('');
     const [sendMsg, setSendMsg] = useState<string>('');
     const [sendCheck, setSendCheck] = useState<boolean>(false);
+    //  list message
+    const [messages, setMessages] = useState<Messages[]>([]);
+    const [userIDLogin, setUserLogin] = useState<string>('');
 
     const fetchChatList = async () => {
         socket.emit('fetch list user', { senderId: senderID });
@@ -34,36 +45,47 @@ function Chat_Page() {
     };
 
     useEffect(() => {
-        const getSenderID = localStorage.getItem('UserID');
-        if (getSenderID) {
-            setSenderID(getSenderID);
+        const userID = localStorage.getItem('UserID');
+        if (userID) {
+            setSenderID(userID);
             setSenderIDSet(true);
+            setUserLogin(userID);
         }
-    }, []);
+    }, [senderID, userIDLogin]);
 
     useEffect(() => {
         if (senderIDSet) {
             fetchChatList();
         }
-    }, [senderIDSet]);
+    }, [senderIDSet,messages]);
 
     const handleListChat = async (senderId: string, receiverId: string, message: string) => {
-        // setSelectedMessage({ senderId, receiverId, message, isRead: false });
-        // console.log(senderId)
-        // console.log(receiverId)
-        // console.log(message)
         setSendSender(senderId)
         setSendMsg(message)
         setSendReceiver(receiverId)
         setSendCheck(true)
+        // fetchOldMessages()
     };
+
+    const fetchOldMessages = async () => {
+        socket.emit('fetch old message', { senderId: sendSender, receiverId: sendReceiver });
+        socket.on('old messages', (getMessages: Messages[]) => {
+            setMessages(getMessages);
+        });
+    };
+
+    useEffect(() => {
+        if (sendSender && sendReceiver) {
+            fetchOldMessages();
+        }
+    }, [sendSender, sendReceiver, messages]);
 
 
 
 
     return (
 
-        <div className='flex flex-col max-h-screen h-screen relative '>
+        <div className='flex flex-col max-h-screen h-screen relative'>
             <div className='basis-1/12 absolute top-0 right-0 left-0 '>
                 {/* Navbar */}
                 <SetNavbar />
@@ -120,7 +142,7 @@ function Chat_Page() {
                 <div className="basis-full h-full flex  ">
                     {/* right-side */}
                     {(sendCheck === true) ? (
-                        <SetMessage senderId={sendSender} receiverId={sendReceiver} message={sendMsg} />
+                        <SetMessage userIDLogin={userIDLogin} senderId={sendSender} receiverId={sendReceiver} message={sendMsg} listMessage={messages} />
                     ) : (
                         <div className='relative flex flex-col w-full bg-black bg-opacity-85'>
                             <div className='flex justify-center flex-col place-content-center h-full '>

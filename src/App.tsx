@@ -15,7 +15,7 @@ import PostJobPage from './page/PostJobPage';
 import TestPage from './page/TestPage';
 import ViewProfilePage from './page/ViewProfilePage';
 import Admin_dashboard from './component/admin/page/Admin_Page';
-import ChatMessage from './component/chat/ChatMessage';
+import ChatMessage from './component/chat/test/ChatMessage';
 import Chat_Page from './component/chat/Chat_Page';
 
 

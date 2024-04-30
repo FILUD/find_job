@@ -108,7 +108,7 @@ function Dashboard_district() {
     return (
         <div>
             {isLoading ? (
-                <div className="flex justify-center items-center max-h-screen h-screen bg-white">
+                <div className="flex justify-center items-center max-h-screen h-screen bg-white" >
                     <PacmanLoader color="#36d7b7" />
                 </div>
             ) : error ? (
@@ -181,7 +181,7 @@ function Dashboard_district() {
                                             <span className="text-lg font-notoLao">{address.ProvinceName}</span>
                                         </td>
 
-                                        <th className="space-x-2 flex justify-center ">
+                                        <th className="space-x-2 flex justify-center">
                                             <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(address.DistrictID, address.DistrictName)} >Edit</button>
                                             <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(address.DistrictID, address.DistrictName)}>Delete</button>
                                         </th>
