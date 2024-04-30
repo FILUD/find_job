@@ -174,10 +174,7 @@ function PostJobPage() {
 
     return (
         <div>
-            {/* <div className='bg-base-200 w-full h-20 sticky top-0'> */}
             <SetNavbar />
-            {/* </div> */}
-
             {isLoading ? (<div className='w-full h-96 max-h-screen text-center place-content-center bg-black bg-opacity-75'> Loading....</div>) : (
                 <>
                     <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-3 '>
@@ -249,6 +246,7 @@ function PostJobPage() {
                                                 onChange={(e) => setOccupation(e.target.value)}
                                             >
                                                 <option disabled value="">Occupation</option>
+                                                <option disabled value="">Please Select Category</option>
                                                 {occupations.map(occupation => (
                                                     <option key={occupation.OccupationID} value={occupation.OccupationID}>
                                                         {occupation.OccupationName}

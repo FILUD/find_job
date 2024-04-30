@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Navbar from '../component/navbar/Navbar';
 import axios from 'axios';
+import Footer from '../component/footer/Footer';
+import SetNavbar from '../component/navbar/SetNavbar';
 
 const EditJobPage: React.FC = () => {
     const { jobID } = useParams<{ jobID: string }>();
@@ -11,6 +14,18 @@ const EditJobPage: React.FC = () => {
     const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
     const [isLoading, setLoading] = useState(true);
     const [occupation, setOccupation] = useState('');
+
+    // State variables
+    const [salaryMinimum, setSalaryMinimum] = useState('');
+    const [salaryMaximum, setSalaryMaximum] = useState('');
+    const [workType, setWorkType] = useState('');
+    const [title, setTitle] = useState('');
+    const [employerID, setEmployerID] = useState<number | null>(null);
+    const [formData, setFormData] = useState(new FormData());
+    const [imageUrl, setImageUrl] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
+    const [file, setFile] = useState<File | null>(null);
+
 
 
     useEffect(() => {
@@ -26,7 +41,6 @@ const EditJobPage: React.FC = () => {
 
         fetchData();
 
-        // Cleanup function to cancel fetch if component unmounts or jobID changes
         return () => { };
     }, [jobID]);
 
@@ -39,8 +53,7 @@ const EditJobPage: React.FC = () => {
 
     const handleSubmit = async () => {
         try {
-            await axios.put(`http://localhost:3001/editJob/${jobID}`, jobData);
-            // Optionally, you can redirect the user to another page after successful submission
+            await axios.put(`http://localhost:3001/editJob/${jobID}`, jobData); 
         } catch (error) {
             setError('Error updating data. Please try again.');
         }
@@ -94,105 +107,178 @@ const EditJobPage: React.FC = () => {
         fetchData();
     }, []);
 
-    // Inside your useEffect for fetching job data
-    const fetchData = async () => {
-        try {
-            const response = await axios.get(`http://localhost:3001/viewjobpostings/${jobID}`);
-            const data = response.data;
-
-            // Fetch occupations and categories only if job data is fetched successfully
-            if (!data.error) {
-                setJobData(data);
-                setSelectedCategory(data.CategoryID);
-
-                // Fetch occupation name by ID
-                const occupationResponse = await fetch(`http://localhost:3001/getoccupationbyid/${data.OccupationID}`);
-                const occupationData = await occupationResponse.json();
-                if (!occupationData.error) {
-                    setOccupation(occupationData.data.OccupationName);
+    // Handle file change
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files ? e.target.files[0] : null;
+        if (selectedFile) {
+            setFile(selectedFile);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                if (typeof reader.result === 'string') {
+                    setImageUrl(reader.result as string);
                 } else {
-                    console.error('Failed to fetch occupation:', occupationData.message);
+                    console.error('Failed to read file as string');
                 }
-
-                // Fetch occupations by category
-                const occupationsResponse = await fetch('http://localhost:3001/getoccupationbycategory', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ CategoryID: data.CategoryID })
-                });
-                const occupationsData = await occupationsResponse.json();
-                if (occupationsData.error === false) {
-                    setOccupations(occupationsData.data);
-                } else {
-                    console.error('Failed to fetch occupations:', occupationsData.message);
-                }
-            } else {
-                setError('Error fetching job data. Please try again.');
-            }
-        } catch (error) {
-            setError('Error fetching job data. Please try again.');
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            setImageUrl('');
         }
     };
 
 
-
-
     return (
         <div>
-            {error && <p>{error}</p>}
-            {jobData && (
-                <div className='grid grid-cols-1'>
-                    <input type="text" value={jobData.CompanyName} onChange={(e) => handleInputChange(e, 'CompanyName')} />
-                    <input type="text" value={jobData.Title} onChange={(e) => handleInputChange(e, 'Title')} />
-                    <input type="text" value={jobData.Description} onChange={(e) => handleInputChange(e, 'Description')} />
-                    <input type="text" value={jobData.SalaryStart} onChange={(e) => handleInputChange(e, 'SalaryStart')} />
-                    <input type="text" value={jobData.SalaryMax} onChange={(e) => handleInputChange(e, 'SalaryMax')} />
-                    <input type="text" value={jobData.OccupationID} onChange={(e) => handleInputChange(e, 'OccupationName')} />
-                    <input type="text" value={jobData.CategoryName} onChange={(e) => handleInputChange(e, 'CategoryName')} />
+            <SetNavbar />
+            {isLoading ? (
+                <div className='w-full h-96 max-h-screen text-center place-content-center bg-black bg-opacity-75'> Loading....</div>
+            ) : (
+                <>
+                    {error && <p>{error}</p>}
+                    {jobData && (
+                        <>
+                            <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-3 '>
+                                <div className='py-5 self-center font-bold text-3xl'>Edit Job</div>
+                            </div>
+                            <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-4 '>
+                                <form onSubmit={handleSubmit}>
+                                    <div className='p-6 mt-2 px-24 '>
+                                        <div className='space-y-3'>
+                                            {/* row1 */}
+                                            <div className='grid grid-cols-3'>
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal'>Title</p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Title"
+                                                        className="input input-bordered w-4/5"
+                                                        value={jobData.Title}
+                                                        onChange={(e) => setTitle(e.target.value)}
+                                                    />
+                                                </div>
+
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal'>Salary minimum</p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="1,000 ກີບ"
+                                                        className="input input-bordered w-5/6 text-end"
+                                                        value={jobData.SalaryStart}
+                                                        onChange={(e) => setSalaryMinimum(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal font'>Salary maximum</p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="3,000,000 ກີບ"
+                                                        className="input input-bordered w-5/6 text-end"
+                                                        value={jobData.SalaryMax}
+                                                        onChange={(e) => setSalaryMaximum(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
 
 
-                    <div id="col1">
-                        <p className='ml-2 horizontal'>Work Category</p>
-                        <select
-                            className="select  w-5/6"
-                            value={selectedCategory || ''}
-                            onChange={handleCategoryChange}
-                        >
-                            <option disabled value="">Work Category</option>
-                            {categories.map(category => (
-                                <option key={category.CategoryID} value={category.CategoryID}>
-                                    {category.CategoryName}
-                                </option>
-                            ))}
-                        </select>
+                                            {/* row2 */}
+                                            <div className='grid grid-cols-3'>
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal text-xs'>Old Category : {jobData.CategoryName}</p>
+                                                    <select
+                                                        className="select  w-5/6"
+                                                        value={selectedCategory || ''}
+                                                        onChange={handleCategoryChange}
+                                                    >
+                                                        <option disabled value="">{jobData.CategoryName}</option>
+                                                        {categories.map(category => (
+                                                            <option key={category.CategoryID} value={category.CategoryID}>
+                                                                {category.CategoryName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
 
-                    </div>
+                                                </div>
+                                                <div id="col2">
+                                                    <p className='ml-2 horizontal text-xs'>Old Occupation : {jobData.OccupationName}</p>
+                                                    <select
+                                                        className="select  w-5/6"
+                                                        value={occupation}
+                                                        onChange={(e) => setOccupation(e.target.value)}
+                                                    >
+                                                        <option disabled value="">{jobData.OccupationName}</option>
+                                                        <option disabled value="">Please Select Category</option>
+                                                        {occupations.map(occupation => (
+                                                            <option key={occupation.OccupationID} value={occupation.OccupationID}>
+                                                                {occupation.OccupationName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div id="col3">
+                                                    <p className='ml-2 horizontal'>Work type</p>
+                                                    <select
+                                                        className="select select-bordered w-5/6"
+                                                        value={workType}
+                                                        onChange={(e) => setWorkType(e.target.value)}
+                                                    >
+                                                        <option disabled value="">{jobData.WorkType}</option>
+                                                        <option value="Full-time">Full-time</option>
+                                                        <option value="Part-time">Part-time</option>
+                                                    </select>
+                                                </div>
+                                            </div>
 
-                    <div id="col2">
-                        <p className='ml-2 horizontal'>Occupation</p>
-                        <select
-                            className="select w-5/6"
-                            value={occupation}
-                            onChange={(e) => setOccupation(e.target.value)}
-                        >
-                            <option disabled value="">Occupation</option>
-                            {occupations.map(occupation => (
-                                <option key={occupation.OccupationID} value={occupation.OccupationName}>
-                                    {occupation.OccupationName}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+
+                                            {/* row3 */}
+                                            <div className='grid grid-cols-3 space-x-12'>
+                                                <div className=''>
+                                                    <div className='card w-full h-full max-h-60 bg-base-100 shadow-xl mt-16 p-4 self-center'>
+                                                        <textarea
+                                                            className="textarea textarea-bordered h-full"
+                                                            placeholder="Work description"
+                                                            value={jobData.Description}
+                                                            onChange={(e) => setDescription(e.target.value)}
+                                                        />
+
+                                                    </div>
+                                                </div>
+                                                <div className='col-span-2 '>
+                                                    <div className='card w-full h-full max-h-72 pl-4 bg-base-100 shadow-xl mt-8 grid grid-cols-2 '>
+                                                        {/* image input */}
+                                                        <div className='card h-60 w-5/6 border-4 bg-sky-50 rounded-2xl overflow-hidden self-center'>
+                                                            {imageUrl ? (
+                                                                <img src={imageUrl} alt="PostJob" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
+                                                            ) : (
+                                                                <img src={jobData.Post_IMG} alt="PostJob" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
+                                                            )}
+                                                        </div>
+                                                        <div className='space-y-8 p-2 pt-8'>
+                                                            <p className='text-2xl'>Input Your Image</p>
+                                                            <input
+                                                                type="file"
+                                                                accept="image/jpeg, image/png"
+                                                                className="file-input file-input-bordered file w-full max-w-xs"
+                                                                onChange={handleFileChange}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className=' col-span-2 w-full flex justify-end mb-5'>
+                                                        <button type="submit" className="btn btn-primary btn-wide m-5" >Edit Job</button>
+                                                    </div>
+                                                </div>
+                                            </div>
 
 
 
-                    <input type="text" value={new Date(jobData.PostDate).toLocaleDateString()} onChange={(e) => handleInputChange(e, 'PostDate')} />
-                    <input type="text" value={jobData.WorkType} onChange={(e) => handleInputChange(e, 'WorkType')} />
-                    <button className='btn' onClick={handleSubmit}>Submit</button>
-                    <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={jobData.Post_IMG} alt="IMG_CV" />
-                </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <Footer />
+                        </>
+                    )}
+                </>
             )}
         </div>
     );
