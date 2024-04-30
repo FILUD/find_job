@@ -9,22 +9,21 @@ const EditJobPage: React.FC = () => {
     const { jobID } = useParams<{ jobID: string }>();
     const [jobData, setJobData] = useState<any>(null);
     const [error, setError] = useState<string>('');
-    const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-    const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
-    const [isLoading, setLoading] = useState(true);
-    const [occupation, setOccupation] = useState('');
 
-    // State variables
+
     const [salaryMinimum, setSalaryMinimum] = useState('');
     const [salaryMaximum, setSalaryMaximum] = useState('');
     const [workType, setWorkType] = useState('');
     const [title, setTitle] = useState('');
-    const [employerID, setEmployerID] = useState<number | null>(null);
+    const [occupation, setOccupation] = useState('');
+    const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
+    const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [formData, setFormData] = useState(new FormData());
     const [imageUrl, setImageUrl] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [file, setFile] = useState<File | null>(null);
+    const [isLoading, setLoading] = useState(true);
 
 
 
@@ -44,20 +43,50 @@ const EditJobPage: React.FC = () => {
         return () => { };
     }, [jobID]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
-        setJobData({
-            ...jobData,
-            [field]: e.target.value,
-        });
-    };
 
-    const handleSubmit = async () => {
+
+      // Handle form submission
+      const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!file || !title || !occupation || !salaryMaximum || !salaryMinimum === null) {
+            console.error('Missing required data for job submission');
+            return;
+        }
+
+        // Remove existing form data
+
+        formData.delete('Post_IMG');
+        formData.delete('Title');
+        formData.delete('Descrition');
+        formData.delete('SalaryStart');
+        formData.delete('SalaryMax');
+        formData.delete('OccupationID');
+        formData.delete('WorkType');
+
+        // Append form data
+        formData.append('Post_IMG', file as File);
+        formData.append('Title', title);
+        formData.append('Description', description);
+        formData.append('SalaryStart', salaryMinimum);
+        formData.append('SalaryMax', salaryMaximum);
+        formData.append('OccupationID', occupation);
+        formData.append('WorkType', workType);
+
         try {
-            await axios.put(`http://localhost:3001/editJob/${jobID}`, jobData); 
+            await axios.post(`http://localhost:3001/editjobposting/${jobID}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            alert('Job posted successfully');
         } catch (error) {
-            setError('Error updating data. Please try again.');
+            console.error('Error posting job:', error);
         }
     };
+    
+
+
 
     // Handle category change
     const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -150,9 +179,9 @@ const EditJobPage: React.FC = () => {
                                                     <p className='ml-2 horizontal'>Title</p>
                                                     <input
                                                         type="text"
-                                                        placeholder="Title"
+                                                        placeholder={jobData.Title}
                                                         className="input input-bordered w-4/5"
-                                                        value={jobData.Title}
+                                                        value={title}
                                                         onChange={(e) => setTitle(e.target.value)}
                                                     />
                                                 </div>
@@ -161,9 +190,9 @@ const EditJobPage: React.FC = () => {
                                                     <p className='ml-2 horizontal'>Salary minimum</p>
                                                     <input
                                                         type="text"
-                                                        placeholder="1,000 ກີບ"
+                                                        placeholder={jobData.SalaryStart}
                                                         className="input input-bordered w-5/6 text-end"
-                                                        value={jobData.SalaryStart}
+                                                        value={salaryMinimum}
                                                         onChange={(e) => setSalaryMinimum(e.target.value)}
                                                     />
                                                 </div>
@@ -171,9 +200,9 @@ const EditJobPage: React.FC = () => {
                                                     <p className='ml-2 horizontal font'>Salary maximum</p>
                                                     <input
                                                         type="text"
-                                                        placeholder="3,000,000 ກີບ"
+                                                        placeholder={jobData.SalaryMax}
                                                         className="input input-bordered w-5/6 text-end"
-                                                        value={jobData.SalaryMax}
+                                                        value={salaryMaximum}
                                                         onChange={(e) => setSalaryMaximum(e.target.value)}
                                                     />
                                                 </div>
@@ -235,8 +264,8 @@ const EditJobPage: React.FC = () => {
                                                     <div className='card w-full h-full max-h-60 bg-base-100 shadow-xl mt-16 p-4 self-center'>
                                                         <textarea
                                                             className="textarea textarea-bordered h-full"
-                                                            placeholder="Work description"
-                                                            value={jobData.Description}
+                                                            placeholder={jobData.Description}
+                                                            value={description}
                                                             onChange={(e) => setDescription(e.target.value)}
                                                         />
 
@@ -263,7 +292,7 @@ const EditJobPage: React.FC = () => {
                                                         </div>
                                                     </div>
                                                     <div className=' col-span-2 w-full flex justify-end mb-5'>
-                                                        <button type="submit" className="btn btn-primary btn-wide m-5" >Edit Job</button>
+                                                        <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide m-5" >Edit Job</button>
                                                     </div>
                                                 </div>
                                             </div>
