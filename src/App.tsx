@@ -45,6 +45,8 @@ function App() {
             <Route path="/PostJob" element={<PostJobPage />} />
             <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
             <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
+            <Route path="/editJob/:jobID" element={<EditJobPage />} />
+            
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="*" element={<ErrorPage />} />
 
