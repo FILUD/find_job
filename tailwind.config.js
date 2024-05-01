@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         notoLao: ['NotoSanLao', 'sans-serif'],
       },
+      height: {
+        '128': '32rem',
+      }
     },
   },
   plugins: [require("daisyui")],
