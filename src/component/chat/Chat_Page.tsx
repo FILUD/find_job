@@ -103,7 +103,7 @@ function Chat_Page() {
                                         <p className='text-xl font-bold self-center'>Message</p>
                                     </div>
                                 </div>
-                                <table className="table bg-base-300 rounded-lg 1">
+                                <table className="table bg-base-200 rounded-lg 1">
                                     {/* list chat */}
                                     <tbody className=''>
                                         {/* person1 */}

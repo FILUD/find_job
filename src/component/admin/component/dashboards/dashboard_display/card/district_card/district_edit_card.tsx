@@ -10,16 +10,17 @@ interface EditProps {
     isOpen: boolean;
     onClose: () => void;
     refreshFetchdata: () => void;
+    getProvinceID: string;
 }
 
 const api = 'http://localhost:3001';
 
 
-function EditDistrictCard({ name, districtID, isOpen, onClose, refreshFetchdata }: EditProps) {
+function EditDistrictCard({ name, districtID, isOpen, onClose, refreshFetchdata, getProvinceID }: EditProps) {
     const [districtName, setDistrictName] = useState<string>(name);
     const [provinceID, setProvinceID] = useState<string>("");
     const [provinces, setProvinces] = useState<{ ProvinceID: number; ProvinceName: string }[]>([]);
-    const [selectedProvince, setSelectedProvince] = useState<number | null>(null);
+    const [selectedProvince, setSelectedProvince] = useState('');
     const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
 
@@ -30,9 +31,12 @@ function EditDistrictCard({ name, districtID, isOpen, onClose, refreshFetchdata 
 
 
     useEffect(() => {
-        setSelectedProvince(null);
         setDistrictName(name);
-    }, [name]);
+        if (getProvinceID) {
+            console.log(getProvinceID)
+            handleProvinceChange({ target: { value: getProvinceID } } as React.ChangeEvent<HTMLSelectElement>);
+        }
+    }, [name, getProvinceID]);
 
 
     //handle
@@ -60,10 +64,8 @@ function EditDistrictCard({ name, districtID, isOpen, onClose, refreshFetchdata 
     };
 
     const handleProvinceChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedProvinceId = parseInt(event.target.value);
-        const stringProvinceID = (event.target.value);
-        setSelectedProvince(selectedProvinceId);
-        setProvinceID(stringProvinceID);
+        setSelectedProvince(event.target.value);
+        setProvinceID(event.target.value);
     }
 
     // fetch part

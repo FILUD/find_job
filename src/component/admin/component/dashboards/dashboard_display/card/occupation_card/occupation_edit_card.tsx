@@ -10,15 +10,16 @@ interface EditProps {
     isOpen: boolean;
     onClose: () => void;
     refreshFetchdata: () => void;
+    categoryID: string
 }
 
 const api = 'http://localhost:3001';
 
-function EditOccupationCard({ name, occupationID, isOpen, onClose, refreshFetchdata }: EditProps) {
+function EditOccupationCard({ name, occupationID, isOpen, onClose, refreshFetchdata, categoryID }: EditProps) {
     const [occupationName, setOccupationName] = useState<string>(name);
     const [workCategoryID, setWorkCategoryID] = useState<string>("");
     const [workCategories, setWorkCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
-    const [selectedWorkCategory, setSelectedWorkCategory] = useState<number | null>(null);
+    const [selectedWorkCategory, setSelectedWorkCategory] = useState("");
     const [loading, setLoading] = useState(false);
     const { theme } = useTheme();
 
@@ -28,9 +29,12 @@ function EditOccupationCard({ name, occupationID, isOpen, onClose, refreshFetchd
     }
 
     useEffect(() => {
-        setSelectedWorkCategory(null);
         setOccupationName(name);
-    }, [name]);
+        if (categoryID) {
+            console.log(categoryID)
+            handleWorkCategoryChange({ target: { value: categoryID } } as React.ChangeEvent<HTMLSelectElement>);
+        }
+    }, [name, categoryID]);
 
     //handle
     const handleEditOccupation = async (occupationID: string, occupationName: string, workCategoryID: string) => {
@@ -57,10 +61,8 @@ function EditOccupationCard({ name, occupationID, isOpen, onClose, refreshFetchd
     };
 
     const handleWorkCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedWorkCategoryId = parseInt(event.target.value);
-        const stringWorkCategoryID = (event.target.value);
-        setSelectedWorkCategory(selectedWorkCategoryId);
-        setWorkCategoryID(stringWorkCategoryID);
+        setSelectedWorkCategory(event.target.value);
+        setWorkCategoryID(event.target.value);
     }
 
     // fetch part

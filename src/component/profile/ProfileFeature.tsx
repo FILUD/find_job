@@ -163,6 +163,7 @@ export default function Profile_feature() {
     //get jobpost
     useEffect(() => {
         const employerID = localStorage.getItem('ID');
+        console.log(employerID)
         const fetchJOBDetail = async () => {
             try {
                 const response = await axios.post('http://localhost:3001/viewjob_byid', { employerID });
@@ -181,24 +182,25 @@ export default function Profile_feature() {
     }, []);
 
     //get Cv
-    useEffect(() => {
-        const jobseekerID = localStorage.getItem('ID');
-        const fetchCVDetail = async () => {
-            try {
-                const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
-                if (response.data && response.data.length > 0) {
-                    setCvDetail(response.data);
-                    console.log(setCvDetail);
-                } else {
-                    console.error('No CV details found for this jobseeker or Role is not Jobseeker.');
-                }
-            } catch (error) {
-                console.error('Error fetching CV detail:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const jobseekerID = localStorage.getItem('ID');
+    //     console.log(jobseekerID)
+    //     const fetchCVDetail = async () => {
+    //         try {
+    //             const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
+    //             if (response.data && response.data.length > 0) {
+    //                 setCvDetail(response.data);
+    //                 console.log(setCvDetail);
+    //             } else {
+    //                 console.error('No CV details found for this jobseeker or Role is not Jobseeker.');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching CV detail:', error);
+    //         }
+    //     };
 
-        fetchCVDetail();
-    }, []);
+    //     fetchCVDetail();
+    // }, []);
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);

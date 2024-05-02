@@ -14,13 +14,14 @@ function Dashboard_district() {
     interface AddressProps {
         DistrictID: string,
         DistrictName: string,
-        ProvinceID: number,
+        ProvinceID: string,
         ProvinceName: string,
     }
 
     const [districtID, setDistrictID] = useState<string>("");
     const [districtName, setDistrictName] = useState<string>("");
     const [provinceName, setProvinceName] = useState<string>("");
+    const [provinceID, setProvinceID] = useState<string>('');
     const [address, setAddress] = useState<AddressProps[]>([]);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -62,9 +63,10 @@ function Dashboard_district() {
     }
 
     //edit part
-    const toggleEditDialog = (districtID: string, districtName: string) => {
+    const toggleEditDialog = (districtID: string, districtName: string, provinceID: string) => {
         setDistrictID(districtID);
         setDistrictName(districtName);
+        setProvinceID(provinceID);
         setIsEditDialogOpen(true);
     }
 
@@ -182,7 +184,7 @@ function Dashboard_district() {
                                         </td>
 
                                         <th className="space-x-2 flex justify-center">
-                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(address.DistrictID, address.DistrictName)} >Edit</button>
+                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(address.DistrictID, address.DistrictName, address.ProvinceID)} >Edit</button>
                                             <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(address.DistrictID, address.DistrictName)}>Delete</button>
                                         </th>
                                     </tr>
@@ -196,6 +198,7 @@ function Dashboard_district() {
                                     selectDistrictID={districtIDs}
                                     refreshFetchdata={handleRefresh} />
                                 <EditDistrictCard
+                                    getProvinceID={provinceID}
                                     name={districtName}
                                     districtID={districtID}
                                     isOpen={isEditDialogOpen}

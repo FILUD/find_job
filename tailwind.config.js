@@ -6,7 +6,7 @@ module.exports = {
   daisyui: {
     themes: ["light", "dark", "cupcake"],
   },
-  theme: {  
+  theme: {
     extend: {
       fontFamily: {
         notoLao: ['NotoSanLao', 'sans-serif'],
