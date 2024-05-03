@@ -14,13 +14,14 @@ function DashboardOccupation() {
     interface OccupationProps {
         OccupationID: string,
         OccupationName: string,
-        CategoryID: number,
+        CategoryID: string,
         CategoryName: string,
     }
 
     const [occupationID, setOccupationID] = useState<string>("");
     const [occupationName, setOccupationName] = useState<string>("");
     const [workCategoryName, setWorkCategoryName] = useState<string>("");
+    const [workCategoryID, setWorkCategoryID] = useState<string>("");
     const [occupations, setOccupations] = useState<OccupationProps[]>([]);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -62,9 +63,11 @@ function DashboardOccupation() {
     }
 
     //edit part
-    const toggleEditDialog = (occupationID: string, occupationName: string) => {
+    const toggleEditDialog = (occupationID: string, occupationName: string, categoryID: string) => {
+        console.log(categoryID);
         setOccupationID(occupationID);
         setOccupationName(occupationName);
+        setWorkCategoryID(categoryID);
         setIsEditDialogOpen(true);
     }
 
@@ -79,6 +82,7 @@ function DashboardOccupation() {
         try {
             const response = await axios.get<{ data: OccupationProps[] }>(`${api}/showOccupation`);
             setOccupations(response.data.data || []);
+            console.log(response.data.data)
         } catch (error) {
             setError("An error occurred while fetching data.");
         } finally {
@@ -177,7 +181,7 @@ function DashboardOccupation() {
                                         </td>
 
                                         <th className="space-x-2 flex justify-center ">
-                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(occupation.OccupationID, occupation.OccupationName)} >Edit</button>
+                                            <button className="btn btn-primary btn-outline btn-md" onClick={() => toggleEditDialog(occupation.OccupationID, occupation.OccupationName, occupation.CategoryID)} >Edit</button>
                                             <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(occupation.OccupationID, occupation.OccupationName)}>Delete</button>
                                         </th>
                                     </tr>
@@ -195,7 +199,8 @@ function DashboardOccupation() {
                                     occupationID={occupationID}
                                     isOpen={isEditDialogOpen}
                                     onClose={handleCloseDialog}
-                                    refreshFetchdata={handleRefresh} />
+                                    refreshFetchdata={handleRefresh}
+                                    categoryID={workCategoryID} />
                                 <InsertOccupationCard
                                     isOpen={isInsertDialogOpen}
                                     onClose={handleCloseDialog}

@@ -76,10 +76,10 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
     // }, [messages]);
 
     return (
-        <div className='relative flex flex-col w-full bg-black bg-opacity-85'>
+        <div className='flex flex-col w-full h-full  max-h-full bg-base-100 '>
             {/* profile */}
-            <div className='h-16 bg-base-300 p-2 pl-8 '>
-                <div className="flex items-center gap-3 cursor-pointer hover:opacity-60">
+            <div className='h-16 bg-base-300  pl-8 shadow-2xl '>
+                <div className="flex items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
                     {/* avatar */}
                     <div className="avatar">
                         <div className="mask mask-circle w-12 h-12">
@@ -87,13 +87,13 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
                         </div>
                     </div>
                     <div>
-                        <div className="font-bold text-white pl-4">George bounthavong</div>
+                        <div className="font-bold  pl-4">George bounthavong</div>
                     </div>
                 </div>
             </div>
 
             {/* message */}
-            <div className='flex flex-col overflow-y-auto h-full mb-14 px-4' ref={messageListRef}>
+            <div className='flex flex-col overflow-y-auto max-h-full h-[32rem] px-6 ' ref={messageListRef}>
                 {messages.map((msg, index) => (
                     <div key={msg.messageId}>
                         {msg.senderId == userIDLogin ? (
@@ -116,13 +116,11 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
                             </div>
                         )}
                     </div>
+
                 ))}
             </div>
-
-
-
             {/* floating button and input */}
-            < form onSubmit={handleSubmit} className="h-12 mt-4 flex space-x-2 absolute bottom-2 left-2 right-2 mx-6" >
+            < form onSubmit={handleSubmit} className="h-12  flex space-x-2  bottom-2 left-2 right-2 mx-6" >
                 <div className='h-4'>
                     <kbd className="kbd kbd-lg btn-outline">/</kbd>
                 </div>
@@ -140,6 +138,10 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
                     Send
                 </button>
             </form >
+
+
+
+
         </div >
     )
 }

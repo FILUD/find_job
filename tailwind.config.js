@@ -6,11 +6,14 @@ module.exports = {
   daisyui: {
     themes: ["light", "dark", "cupcake"],
   },
-  theme: {  
+  theme: {
     extend: {
       fontFamily: {
         notoLao: ['NotoSanLao', 'sans-serif'],
       },
+      height: {
+        '128': '32rem',
+      }
     },
   },
   plugins: [require("daisyui")],
