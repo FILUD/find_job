@@ -50,6 +50,7 @@ const EditJobPage: React.FC = () => {
         e.preventDefault();
 
         if (!file || !title || !occupation || !salaryMaximum || !salaryMinimum === null) {
+            
             console.error('Missing required data for job submission');
             return;
         }
@@ -73,6 +74,9 @@ const EditJobPage: React.FC = () => {
         formData.append('OccupationID', occupation);
         formData.append('WorkType', workType);
 
+        console.log("Data received:", { file, title, description, salaryMinimum, salaryMaximum, occupation, workType, jobID });
+
+        
         try {
             await axios.post(`http://localhost:3001/editjobposting/${jobID}`, formData, {
                 headers: {
