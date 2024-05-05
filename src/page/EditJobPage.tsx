@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import SetNavbar from '../component/navbar/SetNavbar';
 import Footer from '../component/footer/Footer';
+import CurrencyInput from 'react-currency-input-field';
+import Swal from 'sweetalert2';
 
 const EditJobPage: React.FC = () => {
     const { jobID } = useParams<{ jobID: string }>();
@@ -60,9 +62,28 @@ const EditJobPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!file || !title || !occupation || !salaryMaximum || !salaryMinimum || !workType === null) {
-            console.error('Missing required data for job submission');
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Enter complete information.",
+              });
+            return;
+        } else if (salaryMinimum > salaryMaximum) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "The starting salary should be less than the maximum salary.",
+              });
+            return;
+        } else if (salaryMaximum >= "100000000") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "The salary is over Maxinum",
+              });
             return;
         }
+
         const formDataToSend = new FormData();
         formDataToSend.delete('Post_IMG');
         formDataToSend.delete('Title');
@@ -80,7 +101,7 @@ const EditJobPage: React.FC = () => {
         formDataToSend.append('OccupationID', occupation);
         formDataToSend.append('WorkType', workType);
 
-        
+
         console.log(formDataToSend.get('Post_IMG'));
         console.log(formDataToSend.get('Title'));
         console.log(formDataToSend.get('Description'));
@@ -94,8 +115,22 @@ const EditJobPage: React.FC = () => {
             await axios.post(`http://localhost:3001/editjobposting/${jobID}`, formDataToSend, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            alert('Job edited successfully');
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Edit Post success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            window.location.reload();
         } catch (error) {
+            Swal.fire({
+                position: "top",
+                icon: "error",
+                title: "Something when wrong Tryagin Later",
+                showConfirmButton: false,
+                timer: 1500
+            });
             console.error('Error editing job:', error);
         }
     };
@@ -208,22 +243,41 @@ const EditJobPage: React.FC = () => {
                                                 </div>
                                                 <div id="col1">
                                                     <p className='ml-2 horizontal'>Salary minimum</p>
-                                                    <input
-                                                        type="text"
-                                                        placeholder={jobData[0].SalaryStart}
+                                                    <CurrencyInput
+                                                        placeholder={jobData[0].SalaryStart || ''}
                                                         className="input input-bordered w-5/6 text-end"
                                                         value={salaryMinimum}
-                                                        onChange={(e) => setSalaryMinimum(e.target.value)}
+                                                        onValueChange={(value) => {
+                                                            if (typeof value === 'string') {
+                                                                setSalaryMinimum(value);
+                                                            }
+                                                        }}
+                                                        prefix=""
+                                                        // suffix=' ₭ip'
+                                                        // suffix=' ກີບ'
+                                                        decimalSeparator=","
+                                                        groupSeparator=" "
+
                                                     />
                                                 </div>
+
                                                 <div id="col1">
                                                     <p className='ml-2 horizontal font'>Salary maximum</p>
-                                                    <input
-                                                        type="text"
-                                                        placeholder={jobData[0].SalaryMax}
+
+                                                    <CurrencyInput
+                                                        placeholder={jobData[0].SalaryMax || ''}
                                                         className="input input-bordered w-5/6 text-end"
                                                         value={salaryMaximum}
-                                                        onChange={(e) => setSalaryMaximum(e.target.value)}
+                                                        onValueChange={(value) => {
+                                                            if (typeof value === 'string') {
+                                                                setSalaryMaximum(value);
+                                                            }
+                                                        }}
+                                                        prefix=""
+                                                        // suffix=' ₭ip'
+                                                        // suffix='ກີບ'
+                                                        decimalSeparator=","
+                                                        groupSeparator=" "
                                                     />
                                                 </div>
                                             </div>

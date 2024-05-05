@@ -3,6 +3,7 @@ import Navbar from '../component/navbar/Navbar'
 import Footer from '../component/footer/Footer'
 import axios from 'axios';
 import SetNavbar from '../component/navbar/SetNavbar';
+import Swal from 'sweetalert2';
 
 
 function PostCvPage() {
@@ -141,8 +142,22 @@ function PostCvPage() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            alert('Image uploaded successfully');
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Upload Cv success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            window.location.reload();
         } catch (error) {
+            Swal.fire({
+                position: "top",
+                icon: "error",
+                title: "Something when wrong Tryagin Later",
+                showConfirmButton: false,
+                timer: 1500
+            });
             console.error('Error uploading image:', error);
         }
     };

@@ -12,6 +12,7 @@ import EmployerProfile from './page/EmployerProfile';
 import PostCvPage from './page/PostCvPage';
 import PostJobPage from './page/PostJobPage';
 import EditJobPage from './page/EditJobPage';
+import EditCvPage from './page/EditCvPage';
 
 import TestPage from './page/TestPage';
 import ViewProfilePage from './page/ViewProfilePage';
@@ -46,6 +47,7 @@ function App() {
             <Route path="/profile/:jobseekerID" element={<ViewProfilePage />} />
             <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/editJob/:jobID" element={<EditJobPage />} />
+            <Route path="/editCv/:cvID" element={<EditCvPage />} />
             
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="*" element={<ErrorPage />} />

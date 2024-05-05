@@ -3,6 +3,7 @@ import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
 import axios from 'axios';
 import SetNavbar from '../component/navbar/SetNavbar';
+import Swal from 'sweetalert2';
 
 function PostJobPage() {
     // State variables
@@ -124,7 +125,25 @@ function PostJobPage() {
         e.preventDefault();
 
         if (!file || !title || !occupation || !employerID || !salaryMaximum || !salaryMinimum === null) {
-            console.error('Missing required data for job submission');
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Enter complete information.",
+              });
+            return;
+        } else if (salaryMinimum > salaryMaximum) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "The starting salary should be less than the maximum salary.",
+              });
+            return;
+        } else if (salaryMaximum >= "100000000") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "The salary is over Maximum",
+              });
             return;
         }
 
@@ -154,8 +173,22 @@ function PostJobPage() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            alert('Job posted successfully');
+            Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "Post Job success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            window.location.reload();
         } catch (error) {
+            Swal.fire({
+                position: "top",
+                icon: "error",
+                title: "Something when wrong Tryagin Later",
+                showConfirmButton: false,
+                timer: 1500
+            });
             console.error('Error posting job:', error);
         }
     };

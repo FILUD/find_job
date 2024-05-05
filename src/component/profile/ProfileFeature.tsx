@@ -181,26 +181,27 @@ export default function Profile_feature() {
         fetchJOBDetail();
     }, []);
 
-    //get Cv
-    // useEffect(() => {
-    //     const jobseekerID = localStorage.getItem('ID');
-    //     console.log(jobseekerID)
-    //     const fetchCVDetail = async () => {
-    //         try {
-    //             const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
-    //             if (response.data && response.data.length > 0) {
-    //                 setCvDetail(response.data);
-    //                 console.log(setCvDetail);
-    //             } else {
-    //                 console.error('No CV details found for this jobseeker or Role is not Jobseeker.');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching CV detail:', error);
-    //         }
-    //     };
+        //get jobpost
+        useEffect(() => {
+            const jobseekerID = localStorage.getItem('ID');
+            console.log(jobseekerID)
+            const fetchCVDetail = async () => {
+                try {
+                    const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
+                    if (response.data && response.data.length > 0) {
+                        setCvDetail(response.data); // Update state with job details
+                        console.log(response.data); // Log the fetched job detail
+                    } else {
+                        console.error('No CV details found for this jobseeker or Role is not jobseeker.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching CV detail:', error);
+                }
+            };
+    
+            fetchCVDetail();
+        }, []);
 
-    //     fetchCVDetail();
-    // }, []);
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -249,8 +250,7 @@ export default function Profile_feature() {
         });
       };
 
-      const handleDeleteJOB = (JobID: number) => {
-        // Show Swal confirmation dialog
+      const handleDeleteJOB = (jobID: number) => {
         Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -261,13 +261,10 @@ export default function Profile_feature() {
           confirmButtonText: "Yes, delete it!"
         }).then((result) => {
           if (result.isConfirmed) {
-            // If confirmed, send DELETE request
-            axios.delete('http://localhost:3001/deletejob', { data: { JobID: JobID } })
+            axios.delete('http://localhost:3001/deletejob', { data: { JobID: jobID } })
               .then(response => {
                 console.log('CV deleted successfully');
-                // Update cvDetail state to remove the deleted CV
-                setJobDetail(prevJobDetail => prevJobDetail.filter(job => job.JobID !== JobID));
-                // Show success message
+                setJobDetail(prevJobDetail => prevJobDetail.filter(job => job.JobID !== jobID));
                 Swal.fire({
                   title: "Deleted!",
                   text: "Your file has been deleted.",
@@ -275,12 +272,11 @@ export default function Profile_feature() {
                 });
               })
               .catch(error => {
-                // Handle error
-                console.error('Error deleting CV:', error);
-                // Show error message
+                console.error('Error deleting Job:', error);
+                console.log('JobID:', jobID);
                 Swal.fire({
                   title: "Error!",
-                  text: "Failed to delete the CV.",
+                  text: "Failed to delete the Job.",
                   icon: "error"
                 });
               });
@@ -293,6 +289,14 @@ export default function Profile_feature() {
             navigate(`/editJob/${jobID}`);
         } else {
             console.error('Invalid jobID:', jobID);
+        }
+    };
+
+    const handleEditCv = (cvID: number) => {
+        if (typeof cvID === 'number') {
+            navigate(`/editCv/${cvID}`);
+        } else {
+            console.error('Invalid jobID:', cvID);
         }
     };
 
@@ -663,7 +667,7 @@ export default function Profile_feature() {
                                                                 {showActionsEdit && (
                                                                     //edit
                                                                     <div className="card-actions text-xs top-0 right-0 absolute ">
-                                                                        <div className='btn btn-ghost btn-circle'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                                                        <div className='btn btn-ghost btn-circle' onClick={() => handleEditCv(cv.CvID)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                         </svg></div>
                                                                     {/* Delete */}
