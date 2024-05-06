@@ -16,7 +16,9 @@ function Welcome_Page() {
         <html data-theme={theme}>
             <div className=''>
                 {/* <NavbarWelcome /> */}
+                <div className='navbar-slid-in'>
                 <SetNavbar />
+                </div>
                 <center>
                     <div className='align-middle pt-40'>
                         <p className='text-7xl focus-in-contract-bck font-semibold'>Welcome</p>

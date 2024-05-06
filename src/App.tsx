@@ -19,6 +19,7 @@ import ViewProfilePage from './page/ViewProfilePage';
 import Admin_dashboard from './component/admin/page/Admin_Page';
 import ChatMessage from './component/chat/test/ChatMessage';
 import Chat_Page from './component/chat/Chat_Page';
+import EditProfileEmp from './page/EditProfileEmp';
 
 
 
@@ -35,6 +36,7 @@ function App() {
       <Router>
         <div className="App">
           <Routes>
+            <Route path="*" element={<ErrorPage />} />
             <Route index element={<WelcomePage />} />
             <Route path="/Home" element={<HomePage />} />
             <Route path="/About" element={<AboutPage />} />
@@ -48,16 +50,18 @@ function App() {
             <Route path="/EmpProfile/:employerID" element={<EmployerProfile />} />
             <Route path="/editJob/:jobID" element={<EditJobPage />} />
             <Route path="/editCv/:cvID" element={<EditCvPage />} />
-            
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
-            <Route path="*" element={<ErrorPage />} />
+            <Route path="/edit_emp_profile/:EmployerID" element={<EditProfileEmp />} />
+
+
+
 
             <Route path="/test" element={<TestPage />} />
 
             {/* chat */}
             <Route path="/Chat_page" element={<Chat_Page />} />
             <Route path="/Chat_page/:employerID" element={<ChatMessage />} />
-            
+
           </Routes>
 
         </div>

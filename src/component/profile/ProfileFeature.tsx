@@ -98,10 +98,12 @@ export default function Profile_feature() {
     // console.log('role:', Role);
     // console.log('email:', Email);
     // console.log('userID:', UserID);
+    
     useEffect(() => {
         const getEmail = localStorage.getItem('Email');
         const getRole = localStorage.getItem('Role');
         const getUserID = localStorage.getItem('UserID');
+
 
         if (getEmail && getRole && getUserID) {
             const [resEmail, resRole, resUserID] = [getEmail, getRole, getUserID].map(value => JSON.parse(value) as string);
@@ -135,6 +137,7 @@ export default function Profile_feature() {
         }
     }, []);
 
+    
     const toggleProfile = () => {
         if (Role == "Jobseeker") {
             setIsOpenJobseeker(true);
@@ -300,6 +303,15 @@ export default function Profile_feature() {
         }
     };
 
+    function handleEditEmpProfile() {
+        const ID = localStorage.getItem('ID');
+        if (ID) {
+            navigate(`/edit_emp_profile/${ID}`);
+        } else {
+            console.error('UserID not found in localStorage');
+        }
+    }
+    
     return (
         <>
             <div className="dropdown dropdown-end ml-4">
@@ -437,7 +449,8 @@ export default function Profile_feature() {
                                                         </div>
 
                                                     </div>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-12 mt-8' onClick={() => navigate("/PostJob")}> Post Job</button >
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => handleEditEmpProfile()}> Edit Profile</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline  mt-2' onClick={() => navigate("/PostJob")}> Post Job</button >
                                                 </div>
                                             </div>
 
@@ -685,7 +698,7 @@ export default function Profile_feature() {
                                                                     <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
 
                                                                         <p className="line-clamp-4">Work Category : {cv.CategoryName} / {cv.OccupationName}</p>
-                                                                        <p className="self-start">Upload Date : {cv.PostDate ? formatDate(cv.PostDate) : 'N/A'}</p>
+                                                                        <p className="self-start">Upload Date : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                                                                     </article>
                                                                 </div>
                                                             </div>
