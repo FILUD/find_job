@@ -54,8 +54,6 @@ function App() {
             <Route path="/edit_emp_profile/:EmployerID" element={<EditProfileEmp />} />
 
 
-
-
             <Route path="/test" element={<TestPage />} />
 
             {/* chat */}
