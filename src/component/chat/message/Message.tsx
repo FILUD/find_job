@@ -79,7 +79,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
         <div className='flex flex-col w-full h-full  max-h-full bg-base-100 '>
             {/* profile */}
             <div className='h-16 bg-base-300  pl-8 shadow-2xl '>
-                <div className="flex items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
+                <div className="flex    items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
                     {/* avatar */}
                     <div className="avatar">
                         <div className="mask mask-circle w-12 h-12">

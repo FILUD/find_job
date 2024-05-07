@@ -12,6 +12,16 @@ interface ListChatProps {
     receiverId: string;
     message: string;
     isRead: boolean;
+    receiverInfo: UserInfoProps;
+    senderInfo: UserInfoProps;
+}
+
+interface UserInfoProps {
+    ID: number;
+    Name: string;
+    Title: string;
+    Email: string;
+    Tel: string;
 }
 
 interface Messages {
@@ -21,6 +31,7 @@ interface Messages {
     message: string;
     isRead: boolean;
 }
+
 
 function Chat_Page() {
     const [receiverID, setReceiverID] = useState<string>('');
@@ -41,6 +52,7 @@ function Chat_Page() {
     const fetchChatList = async () => {
         socket.emit('fetch list user', { senderId: senderID });
         socket.on('Get ChatList', (chatlistuser: ListChatProps[]) => {
+            console.log(chatlistuser)
             setListChat(chatlistuser);
         });
     };
@@ -118,7 +130,7 @@ function Chat_Page() {
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <div className="font-bold text-md">George bounthavong (userID: {msg.receiverId == userIDLogin ? msg.senderId : msg.receiverId}) </div>
+                                                            <div className="font-bold text-md"> {msg.receiverId == userIDLogin ? msg.senderInfo.Name : msg.receiverInfo.Name} (userID: {msg.receiverId == userIDLogin ? msg.senderId : msg.receiverId}) </div>
                                                             <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}: {msg.message}</div>
                                                         </div>
                                                     </div>
