@@ -53,9 +53,6 @@ function App() {
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="/edit_emp_profile/:EmployerID" element={<EditProfileEmp />} />
 
-
-
-
             <Route path="/test" element={<TestPage />} />
 
             {/* chat */}

@@ -138,7 +138,7 @@ function PostJobPage() {
                 text: "The starting salary should be less than the maximum salary.",
               });
             return;
-        } else if (salaryMaximum >= "100000000") {
+        } else if (salaryMaximum > "99999999") {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",

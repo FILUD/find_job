@@ -36,6 +36,35 @@ interface CVDetail {
     CategoryName: string;
 }
 
+
+interface Employer {
+    EmployerID: number;
+    CompanyName: string;
+    UserID: number;
+    ProfessionalTitle: string;
+    Profile_IMG: string;
+    AddressID: number;
+    Tel: string;
+    Email: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string;
+}
+interface Jobseeker {
+    JobseekerID: number;
+    JobseekerName: string;
+    UserID: number;
+    ProfessionalTitle: string;
+    Profile_IMG: string;
+    Description: string;
+    AddressID: number;
+    Tel: string;
+    Email: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string;
+}
+
 export default function Profile_feature() {
 
     const navigate = useNavigate();
@@ -58,47 +87,12 @@ export default function Profile_feature() {
     };
 
 
-
-    interface Employer {
-        EmployerID: number;
-        CompanyName: string;
-        UserID: number;
-        ProfessionalTitle: string;
-        Profile_IMG: {
-            type: string;
-            data: number[];
-        };
-        AddressID: number;
-        Tel: string;
-        Email: string;
-        VillageName: string;
-        DistrictName: string;
-        ProvinceName: string;
-    }
-    interface Jobseeker {
-        JobseekerID: number;
-        JobseekerName: string;
-        UserID: number;
-        ProfessionalTitle: string;
-        Profile_IMG: {
-            type: string;
-            data: number[];
-        };
-        Description: string;
-        AddressID: number;
-        Tel: string;
-        Email: string;
-        VillageName: string;
-        DistrictName: string;
-        ProvinceName: string;
-    }
-
     // const api = 'https://ed7c2763-d449-4c49-931f-d798e5988888-00-1ydx3p5xo4umo.pike.replit.dev';
 
     // console.log('role:', Role);
     // console.log('email:', Email);
     // console.log('userID:', UserID);
-    
+
     useEffect(() => {
         const getEmail = localStorage.getItem('Email');
         const getRole = localStorage.getItem('Role');
@@ -124,6 +118,7 @@ export default function Profile_feature() {
                         console.log('Response user data:', response.data);
                         if (resRole === "Employer") {
                             setEmployer(response.data.Employer);
+                            console.log("data emplyer popup :", Employer)
                         } else if (resRole === "Jobseeker") {
                             setJobseeker(response.data.Jobseeker);
                         }
@@ -137,7 +132,7 @@ export default function Profile_feature() {
         }
     }, []);
 
-    
+
     const toggleProfile = () => {
         if (Role == "Jobseeker") {
             setIsOpenJobseeker(true);
@@ -184,26 +179,26 @@ export default function Profile_feature() {
         fetchJOBDetail();
     }, []);
 
-        //get jobpost
-        useEffect(() => {
-            const jobseekerID = localStorage.getItem('ID');
-            console.log(jobseekerID)
-            const fetchCVDetail = async () => {
-                try {
-                    const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
-                    if (response.data && response.data.length > 0) {
-                        setCvDetail(response.data); // Update state with job details
-                        console.log(response.data); // Log the fetched job detail
-                    } else {
-                        console.error('No CV details found for this jobseeker or Role is not jobseeker.');
-                    }
-                } catch (error) {
-                    console.error('Error fetching CV detail:', error);
+    //get jobpost
+    useEffect(() => {
+        const jobseekerID = localStorage.getItem('ID');
+        console.log(jobseekerID)
+        const fetchCVDetail = async () => {
+            try {
+                const response = await axios.post('http://localhost:3001/viewcv_byid', { jobseekerID });
+                if (response.data && response.data.length > 0) {
+                    setCvDetail(response.data); // Update state with job details
+                    console.log(response.data); // Log the fetched job detail
+                } else {
+                    console.error('No CV details found for this jobseeker or Role is not jobseeker.');
                 }
-            };
-    
-            fetchCVDetail();
-        }, []);
+            } catch (error) {
+                console.error('Error fetching CV detail:', error);
+            }
+        };
+
+        fetchCVDetail();
+    }, []);
 
 
     const formatDate = (dateString: string) => {
@@ -217,77 +212,77 @@ export default function Profile_feature() {
     const handleDeleteCV = (cvId: number) => {
         // Show Swal confirmation dialog
         Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!"
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
         }).then((result) => {
-          if (result.isConfirmed) {
-            // If confirmed, send DELETE request
-            axios.delete('http://localhost:3001/deletecv', { data: { CvID: cvId } })
-              .then(response => {
-                console.log('CV deleted successfully');
-                // Update cvDetail state to remove the deleted CV
-                setCvDetail(prevCvDetail => prevCvDetail.filter(cv => cv.CvID !== cvId));
-                // Show success message
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your file has been deleted.",
-                  icon: "success"
-                });
-              })
-              .catch(error => {
-                // Handle error
-                console.error('Error deleting CV:', error);
-                // Show error message
-                Swal.fire({
-                  title: "Error!",
-                  text: "Failed to delete the CV.",
-                  icon: "error"
-                });
-              });
-          }
+            if (result.isConfirmed) {
+                // If confirmed, send DELETE request
+                axios.delete('http://localhost:3001/deletecv', { data: { CvID: cvId } })
+                    .then(response => {
+                        console.log('CV deleted successfully');
+                        // Update cvDetail state to remove the deleted CV
+                        setCvDetail(prevCvDetail => prevCvDetail.filter(cv => cv.CvID !== cvId));
+                        // Show success message
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    })
+                    .catch(error => {
+                        // Handle error
+                        console.error('Error deleting CV:', error);
+                        // Show error message
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the CV.",
+                            icon: "error"
+                        });
+                    });
+            }
         });
-      };
+    };
 
-      const handleDeleteJOB = (jobID: number) => {
+    const handleDeleteJOB = (jobID: number) => {
         Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!"
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
         }).then((result) => {
-          if (result.isConfirmed) {
-            axios.delete('http://localhost:3001/deletejob', { data: { JobID: jobID } })
-              .then(response => {
-                console.log('CV deleted successfully');
-                setJobDetail(prevJobDetail => prevJobDetail.filter(job => job.JobID !== jobID));
-                Swal.fire({
-                  title: "Deleted!",
-                  text: "Your file has been deleted.",
-                  icon: "success"
-                });
-              })
-              .catch(error => {
-                console.error('Error deleting Job:', error);
-                console.log('JobID:', jobID);
-                Swal.fire({
-                  title: "Error!",
-                  text: "Failed to delete the Job.",
-                  icon: "error"
-                });
-              });
-          }
+            if (result.isConfirmed) {
+                axios.delete('http://localhost:3001/deletejob', { data: { JobID: jobID } })
+                    .then(response => {
+                        console.log('CV deleted successfully');
+                        setJobDetail(prevJobDetail => prevJobDetail.filter(job => job.JobID !== jobID));
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error deleting Job:', error);
+                        console.log('JobID:', jobID);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete the Job.",
+                            icon: "error"
+                        });
+                    });
+            }
         });
-      };
+    };
 
-      const handleEditJob = (jobID: number) => {
+    const handleEditJob = (jobID: number) => {
         if (typeof jobID === 'number') {
             navigate(`/editJob/${jobID}`);
         } else {
@@ -311,14 +306,23 @@ export default function Profile_feature() {
             console.error('UserID not found in localStorage');
         }
     }
-    
+
     return (
         <>
             <div className="dropdown dropdown-end ml-4">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                    <div className=" w-24 rounded-full">
-                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    <div className="w-24 rounded-full object-cover border-4 border-base-100">
+                        {Employer.map((emp) => (
+                            <div key={emp.EmployerID}> {/* Make sure each item has a unique key */}
+                                {emp.Profile_IMG ? (
+                                    <img src={emp.Profile_IMG} alt="User Profile" />
+                                ) : (
+                                    <img src="/Icon/user.png" alt="PostJob" />
+                                )}
+                            </div>
+                        ))}
                     </div>
+
                 </div>
                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                     <li>
@@ -377,9 +381,17 @@ export default function Profile_feature() {
                                                         <div className="skeleton w-36 rounded-full shrink-0">
                                                         </div>
                                                     </div>
-                                                    : <div className="avatar md:mt-4 md:ml-2 sm:mt-4 sm:ml-20">
+                                                    : <div className="avatar md:mt-4 md:ml-2 sm:mt-4 sm:ml-20 justify-self-center">
                                                         <div className="w-36 h-36 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                                            {Employer.map((emp) => (
+                                                                <div key={emp.EmployerID}> {/* Make sure each item has a unique key */}
+                                                                    {emp.Profile_IMG ? (
+                                                                        <img src={emp.Profile_IMG} alt="User Profile" />
+                                                                    ) : (
+                                                                        <img src="/Icon/user.png" alt="PostJob" />
+                                                                    )}
+                                                                </div>
+                                                            ))}
                                                         </div>
                                                     </div>}
 
@@ -482,14 +494,14 @@ export default function Profile_feature() {
 
                                                         {jobDetail.map((job: any) => (
                                                             <div key={job.JobID} className="card card-side bg-base-100 shadow-xl flex w-full h-48">
-                                                                
+
                                                                 {showActionsEdit && (
                                                                     //edit
                                                                     <div className="card-actions text-xs top-0 right-0 absolute ">
                                                                         <div onClick={() => handleEditJob(job.JobID)} className='btn btn-ghost btn-circle'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                         </svg></div>
-                                                                    {/* Delete */}
+                                                                        {/* Delete */}
                                                                         <div className='btn btn-ghost btn-circle' onClick={() => handleDeleteJOB(job.JobID)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style={{ stroke: 'red' }} className="w-6 h-6">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                                         </svg></div>
@@ -683,7 +695,7 @@ export default function Profile_feature() {
                                                                         <div className='btn btn-ghost btn-circle' onClick={() => handleEditCv(cv.CvID)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                                         </svg></div>
-                                                                    {/* Delete */}
+                                                                        {/* Delete */}
                                                                         <div className='btn btn-ghost btn-circle' onClick={() => handleDeleteCV(cv.CvID)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style={{ stroke: 'red' }} className="w-6 h-6">
                                                                             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                                         </svg></div>
