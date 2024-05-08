@@ -178,8 +178,8 @@ function HomePage() {
                 <div className="card-body w-full">
                   <div>
                     {job.Employer_Profile_IMG
-                      ? <img className='w-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
-                      : <img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                      ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
+                      : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                     }
                   </div>
                   <div className=''>

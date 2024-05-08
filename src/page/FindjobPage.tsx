@@ -147,8 +147,8 @@ function FindjobPage() {
                 <div className="card-body w-full">
                   <div>
                     {job.Employer_Profile_IMG
-                      ? <img className='w-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
-                      : <img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                      ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
+                      : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                     }
                   </div>
                   <div className=''>
@@ -193,8 +193,8 @@ function FindjobPage() {
                     <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
                       <div className='grid col-span-1 justify-start justify-items-start items-start '>
                         {selectedJOB.Employer_Profile_IMG
-                          ? <img className='w-14  border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
-                          : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                          ? <img className='w-14 h-14 border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
+                          : <img className='w-14 h-14 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                         }
                       </div>
                       <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>

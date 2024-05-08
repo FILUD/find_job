@@ -115,9 +115,9 @@ function ViewProfilePage() {
           <div className='p-20 grid bg-zinc-900 rounded-3xl justify-items-center justify-center'>
             {/* Profile Image */}
             {profileData.Profile_IMG ? (
-              <img className='bg-cover w-56 rounded-full border-2 border-slate-50' src={profileData.Profile_IMG} alt="Profile" />
+              <img className='bg-cover w-56 h-56 rounded-full border-2 border-slate-50' src={profileData.Profile_IMG} alt="Profile" />
             ) : (
-              <img className='bg-cover w-56 rounded-full border-2 border-slate-50' src="/Icon/profile.png" alt="Default Profile" />
+              <img className='bg-cover w-56 h-56 rounded-full border-2 border-slate-50' src="/Icon/profile.png" alt="Default Profile" />
             )}
             <h1 className='pt-5 pb-5 text-center'>{profileData.JobseekerName}</h1>
             {/* Profile Details */}

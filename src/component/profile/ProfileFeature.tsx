@@ -78,6 +78,10 @@ export default function Profile_feature() {
     const [Email, setEmail] = useState('');
     const [cvDetail, setCvDetail] = useState<CVDetail[]>([]);
     const [jobDetail, setJobDetail] = useState<jobDetail[]>([]);
+    const getRole = localStorage.getItem('Role');
+    console.log("is role :",getRole)
+
+    
 
 
     const [showActionsEdit, setShowActionsEdit] = useState(false);
@@ -312,15 +316,33 @@ export default function Profile_feature() {
             <div className="dropdown dropdown-end ml-4">
                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                     <div className="w-24 rounded-full object-cover border-4 border-base-100">
-                        {Employer.map((emp) => (
-                            <div key={emp.EmployerID}> {/* Make sure each item has a unique key */}
-                                {emp.Profile_IMG ? (
-                                    <img src={emp.Profile_IMG} alt="User Profile" />
-                                ) : (
-                                    <img src="/Icon/user.png" alt="PostJob" />
-                                )}
-                            </div>
-                        ))}
+
+                        {Role == "Employer" ? (
+                            Employer.map((emp) => (
+                                <div key={emp.EmployerID}>
+                                    {emp.Profile_IMG ? (
+                                        <><img src={emp.Profile_IMG} alt="User Profile" />
+                                        
+                                        </>
+                                    ) : (
+                                        <img src="/Icon/user.png" alt="User Profile" />
+                                    )}
+                                </div>
+                            ))
+                        ) : (
+                            Jobseeker.map((jok) => (
+                                <div key={jok.JobseekerID}>
+                                    {jok.Profile_IMG ? (
+                                        <><img src={jok.Profile_IMG} alt="User Profile" />
+                                        <p>jok pro : {jok.Profile_IMG}</p>
+                                        </>
+                                    ) : (
+                                        <img src="/Icon/user.png" alt="User Profile" />
+                                    )}
+                                </div>
+                            ))
+                        )}
+
                     </div>
 
                 </div>
@@ -587,8 +609,16 @@ export default function Profile_feature() {
                                                         </div>
                                                     </div>
                                                     : <div className="avatar md:mt-4 md:ml-2 sm:mt-4 sm:ml-20">
-                                                        <div className="w-36 h-36 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                                        <div className="w-24 rounded-full object-cover border-4 border-base-100">
+                                                            {Jobseeker.map((jobseeker) => (
+                                                                <div key={jobseeker.JobseekerID}>
+                                                                    {jobseeker.Profile_IMG ? (
+                                                                        <img src={jobseeker.Profile_IMG} alt="User Profile" />
+                                                                    ) : (
+                                                                        <img src="/Icon/user.png" alt="User Profile" />
+                                                                    )}
+                                                                </div>
+                                                            ))}
                                                         </div>
                                                     </div>}
 

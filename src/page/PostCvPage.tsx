@@ -9,10 +9,12 @@ import Swal from 'sweetalert2';
 function PostCvPage() {
 
     const [title, setTitle] = useState('');
+
     const [occupation, setOccupation] = useState('');
     const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
     const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    
     const [jobseekerID, setJobseekerID] = useState<number | null>(null);
     const [imageUrl, setImageUrl] = useState<string>('');
 
