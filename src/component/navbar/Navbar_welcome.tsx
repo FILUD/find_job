@@ -77,7 +77,6 @@ function NavbarWelcome() {
               <ThemeToggle />
             </div>
 
-
             {userData ? (
               <Profile_feature />
             ) : (
