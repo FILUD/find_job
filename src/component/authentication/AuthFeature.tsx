@@ -163,7 +163,7 @@ export default function AuthFeat() {
                         setIsOpenLogIn(false);
                         clearInputs();
                         navigate('/Home');
-                      
+
                     }
 
                 }
@@ -177,7 +177,7 @@ export default function AuthFeat() {
                         setIsOpenLogIn(false);
                         clearInputs();
                         navigate('/Home');
-                      
+
                         console.log('signup gonna save your data')
                     }
                 }
