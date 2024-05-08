@@ -183,7 +183,7 @@ export default function Profile_feature() {
         fetchJOBDetail();
     }, []);
 
-    //get jobpost
+    //get cv
     useEffect(() => {
         const jobseekerID = localStorage.getItem('ID');
         console.log(jobseekerID)
@@ -306,6 +306,15 @@ export default function Profile_feature() {
         const ID = localStorage.getItem('ID');
         if (ID) {
             navigate(`/edit_emp_profile/${ID}`);
+        } else {
+            console.error('UserID not found in localStorage');
+        }
+    }
+
+    function handleEditJokProfile() {
+        const ID = localStorage.getItem('ID');
+        if (ID) {
+            navigate(`/edit_jok_profile/${ID}`);
         } else {
             console.error('UserID not found in localStorage');
         }
@@ -686,7 +695,7 @@ export default function Profile_feature() {
                                                         </div>
 
                                                     </div>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => navigate("/PostCV")}> Edit Profile</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => handleEditJokProfile()}> Edit Profile</button>
                                                     <button className='btn btn-square btn-wide btn-ghost btn-outline mt-2' onClick={() => navigate("/PostCV")}> Post CV</button>
                                                 </div>
 

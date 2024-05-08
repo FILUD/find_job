@@ -20,6 +20,7 @@ import Admin_dashboard from './component/admin/page/Admin_Page';
 import ChatMessage from './component/chat/test/ChatMessage';
 import Chat_Page from './component/chat/Chat_Page';
 import EditProfileEmp from './page/EditProfileEmp';
+import EditProfileJok from './page/EditProfileJok';
 
 
 
@@ -52,6 +53,7 @@ function App() {
             <Route path="/editCv/:cvID" element={<EditCvPage />} />
             <Route path="/admin_dashboard" element={<Admin_dashboard />} />
             <Route path="/edit_emp_profile/:EmployerID" element={<EditProfileEmp />} />
+             <Route path="/edit_jok_profile/:JobseekerID" element={<EditProfileJok />} />
 
 
             <Route path="/test" element={<TestPage />} />
