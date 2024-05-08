@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Footer from '../component/footer/Footer';
 import SetNavbar from '../component/navbar/SetNavbar';
+import { ThemeToggle, useTheme } from '../theme/theme'
 
 interface CVData {
   CvID: number;
@@ -24,7 +25,7 @@ interface CVData {
 function FindEmployeePage() {
 
   const navigate = useNavigate();
-
+  const { theme } = useTheme();
 
   const [cvData, setCvData] = useState<CVData[]>([]);
   useEffect(() => {
@@ -95,104 +96,107 @@ function FindEmployeePage() {
 
 
   return (
-    <div>
-      <SetNavbar />
-      <center>
-        <main className='container mx-auto'>
+    <html data-theme={theme}>
+      <div className='mx-10'>
+        <SetNavbar />
+        <center>
+          <main className='container mx-auto'>
 
-          <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-            <p className='p-2 text-slate-700 font-bold text-center'>Empolyee</p>
-          </div>
-          <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1'>
-            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-              <option disabled selected className='bg-slate-400 text-slate-950'>Sort by :</option>
-              <option>New</option>
-              <option>Popula</option>
-              <option>Lastest</option>
-            </select>
+            <div className='w-full mb-4 bg-slate-200 mt-10 rounded-md text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+              <p className='p-2 text-slate-700 font-bold text-center'>Empolyee</p>
+            </div>
+            <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1 mb-4'>
+              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+                <option disabled selected className='bg-slate-400 text-slate-950'>Sort by :</option>
+                <option>New</option>
+                <option>Popula</option>
+                <option>Lastest</option>
+              </select>
 
-            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-              <option disabled selected className='bg-slate-400 text-slate-950'>Position</option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
-            </select>
+              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+                <option disabled selected className='bg-slate-400 text-slate-950'>Position</option>
+                <option>Han Solo</option>
+                <option>Greedo</option>
+              </select>
 
-            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-              <option disabled selected className='bg-slate-400 text-slate-950'>Work Category</option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
-            </select>
+              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+                <option disabled selected className='bg-slate-400 text-slate-950'>Work Category</option>
+                <option>Han Solo</option>
+                <option>Greedo</option>
+              </select>
 
-            <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-              <option disabled selected className='bg-slate-400 text-slate-950'>Work Type</option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
-            </select>
-          </div>
+              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+                <option disabled selected className='bg-slate-400 text-slate-950'>Work Type</option>
+                <option>Han Solo</option>
+                <option>Greedo</option>
+              </select>
+            </div>
 
-          <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
-            {cvData.map((cv: any) => (
-              <div className="card w-75 bg-base-100 shadow-xl hover:shadow-amber-400 duration-1000 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
-                <figure className='h-52'>
-                  {cv.IMG_CV && <img className='bg-cover' src={cv.IMG_CV} alt="IMG_CV" />}
-                </figure>
-                <div className="card-body w-full">
-                  <div>
-                    {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
-                  </div>
-                  <div className=''>
-                    <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
-                    <p className='text-left'><b>{cv.Title}</b></p>
-                    <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
-                    <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
-                    <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
-                  </div>
-                  <div className="w-full card-actions justify-end">
-                    <button className="w-full btn btn-primary bg-purple-600">Apply</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {selectedCV && (
-              <dialog id="my_modal_3" className="modal" open>
-                <div className="modal-box">
-                  <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopup}>✕</button>
-                  <div className='bg-stone-800 rounded-2xl py-10'>
-                    <figure className='w-40'>
-                      <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClick(selectedCV)}>
-                        <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
-                      </div>
-                    </figure>
-                  </div>
-                  <div className="card-body bg-stone-800  rounded-2xl">
-                    <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
-                      <div className='grid col-span-1 justify-start justify-items-start items-start '>
-                        {selectedCV.Jobseeker_Profile_IMG
-                          ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
-                          : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
-                        }
-                      </div>
-                      <h2 className="card-title text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
+            <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
+              {cvData.map((cv: any) => (
+                <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
+                  <figure className='h-52'>
+                    {cv.IMG_CV && <img className='bg-cover h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
+                  </figure>
+                  <div className="card-body w-full">
+                    <div>
+                      {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
                     </div>
-                    <p className='text-left'><b>{selectedCV.Title}</b></p>
-                    <p className='text-left'><u>Work category:</u> {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
-                    <p className='text-left'><u>Location:</u> {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
-                    <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
-                    <div className="card-actions justify-end">
-                      <button className="btn btn-primary">Apply</button>
-                      <button className="btn btn-primary" onClick={() => openProfile(selectedCV.JobseekerID)}>View Profile</button>
+                    <div className=''>
+                      <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
+                      <p className='text-left'><b>{cv.Title}</b></p>
+                      <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
+                      <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
+                      <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                    </div>
+                    <div className="w-full card-actions max-h-full h-full flex items-end">
+                      <button className="w-full btn btn-primary bg-purple-600">Apply</button>
                     </div>
                   </div>
                 </div>
-              </dialog>
-            )}
+              ))}
 
-          </div>
-        </main>
-      </center>
-      <Footer />
-    </div>
+              {selectedCV && (
+                <dialog id="my_modal_3" className="modal" open>
+                  <div className="modal-box">
+                    <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopup}>✕</button>
+                    <div className='bg-stone-800 rounded-2xl py-10'>
+                      <figure className='w-40'>
+                        <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClick(selectedCV)}>
+                          <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                        </div>
+                      </figure>
+                    </div>
+                    <div className="card-body bg-stone-800  rounded-2xl">
+                      <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
+                        <div className='grid col-span-1 justify-start justify-items-start items-start '>
+                          {selectedCV.Jobseeker_Profile_IMG
+                            ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                            : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                          }
+                        </div>
+                        <h2 className="card-title text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
+                      </div>
+                      <p className='text-left'><b>{selectedCV.Title}</b></p>
+                      <p className='text-left'><u>Work category:</u> {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
+                      <p className='text-left'><u>Location:</u> {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
+                      <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
+                      <div className="card-actions max-h-full h-full flex items-end">
+                        <button className="btn btn-primary">Apply</button>
+                        <button className="btn btn-primary" onClick={() => openProfile(selectedCV.JobseekerID)}>View Profile</button>
+                      </div>
+                    </div>
+                  </div>
+                </dialog>
+              )}
+
+            </div>
+          </main>
+        </center>
+        <Footer />
+      </div>
+    </html>
+
   )
 }
 

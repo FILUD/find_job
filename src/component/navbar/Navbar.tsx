@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
 import Profile_feature from '../profile/ProfileFeature';
 import { ThemeToggle } from '../../theme/theme';
+import Chat_Page from '../chat/Chat_Page';
 // import ListChat from '../chat/ListChat';
 
 function Navbar() {
@@ -64,10 +65,21 @@ function Navbar() {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </button>
                         </div>
-                        {/* chat icon */}
-                        {/* <ListChat /> */}
 
-                        {/* bell icon */}  
+                        {/* chat icon */}
+                        {/* Chat */}
+                        <div>
+                            <button className="btn btn-ghost btn-circle " onClick={() => navigate('/Chat_Page')}>
+                                <div className="indicator">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                                    </svg>
+
+                                </div>
+                            </button>
+                        </div>
+
+                        {/* bell icon */}
                         <div className="dropdown dropdown-end">
                             <button className="btn btn-ghost btn-circle ">
                                 <div className="indicator">
@@ -81,6 +93,8 @@ function Navbar() {
                         <div className="btn btn-ghost btn-circle avatar">
                             <ThemeToggle />
                         </div>
+
+
 
 
 
