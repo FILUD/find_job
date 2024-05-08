@@ -14,22 +14,31 @@ interface UserParam {
     getReceiverID: string;
     listMessage: Messages[];
     userIDLogin: string;
+    receiverName: string;
+    receieverImg: string;
+    senderImg: string;
 }
 
 
-function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserParam) {
+function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receieverImg, receiverName, senderImg }: UserParam) {
     const [senderID, setSenderID] = useState<string>('');
     const [receiverID, setReceiverID] = useState<string>('');
     const [messages, setMessages] = useState<Messages[]>([]);
     const [messageInput, setMessageInput] = useState<string>('');
+    const [profile_img, setProfile_img] = useState<string>('');
+    const [profile_name, setProfile_name] = useState<string>('');
+    const [profile_ownImg, setProfile_ownImg] = useState<string>('');
 
 
     useEffect(() => {
         setMessages(listMessage)
         setSenderID(getSenderID)
         setReceiverID(getReceiverID)
+        setProfile_img(receieverImg)
+        setProfile_name(receiverName)
+        setProfile_ownImg(senderImg)
         // scrollMessageList()
-    }, [getSenderID, getReceiverID, listMessage]);
+    }, [getSenderID, getReceiverID, listMessage, receieverImg, receiverName, senderImg]);
 
 
     useEffect(() => {
@@ -65,15 +74,14 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
         }
     };
 
-    // useEffect(() => {
-    //     const scrollAfterTimeout = setTimeout(() => {
-    //         if (messageListRef.current) {
-    //             messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
-    //         }
-    //     }, 3000); // 2 minutes
 
-    //     return () => clearTimeout(scrollAfterTimeout);
-    // }, [messages]);
+    const [messagesLoaded, setMessagesLoaded] = useState(false);
+    useEffect(() => {
+        // Simulating loading messages from an API or database
+        setTimeout(() => {
+            setMessagesLoaded(true);
+        }, 2000); // Adjust the timeout duration as needed
+    }, []);
 
     return (
         <div className='flex flex-col w-full h-full  max-h-full bg-base-100 '>
@@ -83,11 +91,23 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
                     {/* avatar */}
                     <div className="avatar">
                         <div className="mask mask-circle w-12 h-12">
-                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar Tailwind CSS Component" />
+                            {(profile_img) ?
+                                (
+                                    <img src={profile_img} alt="profile Img" />
+                                )
+                                :
+                                (
+                                    < div className=''>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                        </svg>
+                                    </div>
+                                )}
+
                         </div>
                     </div>
                     <div>
-                        <div className="font-bold  pl-4">George bounthavong</div>
+                        <div className="font-bold  pl-4">{profile_name}</div>
                     </div>
                 </div>
             </div>
@@ -97,19 +117,43 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
                 {messages.map((msg, index) => (
                     <div key={msg.messageId}>
                         {msg.senderId == userIDLogin ? (
+                            // my side 
                             <div className="chat chat-end">
                                 <div className="chat-image avatar">
-                                    <div className="w-10 rounded-full">
-                                        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    <div className="w-10 rounded-full ring-ghost ring-offset-base-100 ring-offset-0 ring-2">
+                                        {(profile_ownImg) ?
+                                            (
+                                                <img src={profile_ownImg} alt="profile Img" />
+                                            )
+                                            :
+                                            (
+                                                <div className=''>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                                    </svg>
+                                                </div>
+                                            )}
                                     </div>
                                 </div>
                                 <div className="chat-bubble chat-bubble-info">{msg.message}</div>
                             </div>
                         ) : (
+                            // opponent side
                             <div className="chat chat-start">
                                 <div className="chat-image avatar">
-                                    <div className="w-10 rounded-full">
-                                        <img alt="Tailwind CSS chat bubble component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    <div className="w-10 rounded-full ring-slate-400 ring-offset-base-100 ring-offset-0 ring-2">
+                                        {(profile_img) ?
+                                            (
+                                                <img src={profile_img} alt="profile Img" />
+                                            )
+                                            :
+                                            (
+                                                < div className=''>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                                    </svg>
+                                                </div>
+                                            )}
                                     </div>
                                 </div>
                                 <div className="chat-bubble chat-bubble-primary">{msg.message}</div>
@@ -119,6 +163,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin }: UserP
 
                 ))}
             </div>
+
             {/* floating button and input */}
             < form onSubmit={handleSubmit} className="h-12  flex space-x-2  bottom-2 left-2 right-2 mx-6" >
                 <div className='h-4'>

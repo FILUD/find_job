@@ -22,6 +22,7 @@ interface UserInfoProps {
     Title: string;
     Email: string;
     Tel: string;
+    Profile_IMG: string;
 }
 
 interface Messages {
@@ -30,6 +31,8 @@ interface Messages {
     receiverId: string;
     message: string;
     isRead: boolean;
+    receiverInfo: UserInfoProps;
+    senderInfo: UserInfoProps;
 }
 
 
@@ -43,6 +46,9 @@ function Chat_Page() {
     const [sendReceiver, setSendReceiver] = useState<string>('');
     const [sendMsg, setSendMsg] = useState<string>('');
     const [sendCheck, setSendCheck] = useState<boolean>(false);
+    const [sendName, setSendName] = useState<string>('');
+    const [sendImg, setSendImg] = useState<string>('');
+    const [sendOwnImg, setSendOwnImg] = useState<string>('');
     //  list message
     const [messages, setMessages] = useState<Messages[]>([]);
     const [userIDLogin, setUserLogin] = useState<string>('');
@@ -52,7 +58,7 @@ function Chat_Page() {
     const fetchChatList = async () => {
         socket.emit('fetch list user', { senderId: senderID });
         socket.on('Get ChatList', (chatlistuser: ListChatProps[]) => {
-            console.log(chatlistuser)
+            // console.log(chatlistuser)
             setListChat(chatlistuser);
         });
     };
@@ -72,11 +78,14 @@ function Chat_Page() {
         }
     }, [senderIDSet, messages]);
 
-    const handleListChat = async (senderId: string, receiverId: string, message: string) => {
+    const handleListChat = async (senderId: string, receiverId: string, message: string, img: string, name: string, ownImg: string) => {
         setSendSender(senderId)
         setSendMsg(message)
         setSendReceiver(receiverId)
         setSendCheck(true)
+        setSendImg(img)
+        setSendName(name)
+        setSendOwnImg(ownImg)
         // fetchOldMessages()
     };
 
@@ -119,24 +128,40 @@ function Chat_Page() {
                                     {/* list chat */}
                                     <tbody className=''>
                                         {/* person1 */}
-                                        {listChat.map((msg, index) => (
-                                            <tr key={index} onClick={() => handleListChat(msg.senderId, msg.receiverId, msg.message)}>
-                                                <td>
-                                                    <div className="flex items-center gap-3 cursor-pointer hover:bg-base-100" >
-                                                        {/* avatar */}
-                                                        <div className="avatar">
-                                                            <div className="mask mask-circle w-12 h-12">
-                                                                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar Tailwind CSS Component" />
+                                        {listChat.map((msg, index) => {
+                                            const profile_img = msg.receiverId == userIDLogin ? msg.senderInfo.Profile_IMG : msg.receiverInfo.Profile_IMG;
+                                            const receiverName = msg.receiverId == userIDLogin ? msg.senderInfo.Name : msg.receiverInfo.Name;
+                                            const receiverID = msg.receiverId == userIDLogin ? msg.senderId : msg.receiverId;
+                                            const own_img = msg.senderId == userIDLogin ? msg.senderInfo.Profile_IMG : msg.receiverInfo.Profile_IMG;
+
+                                            return (
+                                                <tr key={index} onClick={() => handleListChat(msg.senderId, msg.receiverId, msg.message, profile_img, receiverName, own_img)}>
+                                                    <td>
+                                                        <div className="flex items-center gap-3 cursor-pointer hover:bg-base-100" >
+                                                            {/* avatar */}
+                                                            <div className="avatar">
+                                                                <div className="w-12 rounded-full ring-ghost ring-offset-base-100 ring-offset-0 ring-2">
+                                                                    {(profile_img) ? (
+                                                                        <img src={profile_img} alt="Avatar Tailwind CSS Component" />
+                                                                    ) : (
+                                                                        <div className=''>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                                                            </svg>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-bold text-md"> {receiverName} (userID: {receiverID}) </div>
+                                                                <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}: {msg.message}</div>
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <div className="font-bold text-md"> {msg.receiverId == userIDLogin ? msg.senderInfo.Name : msg.receiverInfo.Name} (userID: {msg.receiverId == userIDLogin ? msg.senderId : msg.receiverId}) </div>
-                                                            <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}: {msg.message}</div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        }
+                                        )}
 
                                     </tbody>
 
@@ -150,7 +175,7 @@ function Chat_Page() {
                     <div className="basis-full h-full max-h-full bg-base-100 flex">
                         {/* right-side */}
                         {(sendCheck === true) ? (
-                            <SetMessage userIDLogin={userIDLogin} senderId={sendSender} receiverId={sendReceiver} message={sendMsg} listMessage={messages} />
+                            <SetMessage userIDLogin={userIDLogin} senderId={sendSender} receiverId={sendReceiver} message={sendMsg} listMessage={messages} receiverName={sendName} receiverImg={sendImg} senderImg={sendOwnImg} />
                         ) : (
                             <div className='relative flex flex-col w-full bg-base-300 bg-opacity-100 shadow-xl'>
                                 <div className='flex justify-center flex-col place-content-center h-5/6 mt-12 '>
