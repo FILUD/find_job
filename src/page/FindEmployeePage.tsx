@@ -100,81 +100,81 @@ function FindEmployeePage() {
 
     // Check if UserID is available
     if (!UserID) {
-        console.error('UserID is not available.');
-        return;
+      console.error('UserID is not available.');
+      return;
     }
 
     try {
-        // Check if the CV is already bookmarked
-        const checkResponse = await fetch(`http://localhost:3001/checkbookmarkcv?UserID=${UserID}&CvID=${CvID}`);
-        const checkData = await checkResponse.json();
+      // Check if the CV is already bookmarked
+      const checkResponse = await fetch(`http://localhost:3001/checkbookmarkcv?UserID=${UserID}&CvID=${CvID}`);
+      const checkData = await checkResponse.json();
 
-        if (checkData.error) {
-            console.error('Failed to check bookmark.');
-            return;
-        }
+      if (checkData.error) {
+        console.error('Failed to check bookmark.');
+        return;
+      }
 
-        // If the CV is already bookmarked, show confirmation dialog to remove bookmark
-        if (checkData.bookmarked) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You want to remove this bookmark?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, remove it!"
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    // Send request to remove bookmark
-                    const deleteResponse = await fetch(`http://localhost:3001/removebookmarkcv?UserID=${UserID}&CvID=${CvID}`, {
-                        method: 'DELETE'
-                    });
-                    const deleteData = await deleteResponse.json();
-
-                    if (deleteData.error) {
-                        console.error('Failed to remove bookmark.');
-                        return;
-                    }
-
-                    // Show success message
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your bookmark has been removed.",
-                        icon: "success"
-                    });
-                }
+      // If the CV is already bookmarked, show confirmation dialog to remove bookmark
+      if (checkData.bookmarked) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to remove this bookmark?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, remove it!"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            // Send request to remove bookmark
+            const deleteResponse = await fetch(`http://localhost:3001/removebookmarkcv?UserID=${UserID}&CvID=${CvID}`, {
+              method: 'DELETE'
             });
-        } else {
-            // If the CV is not bookmarked, add the bookmark
-            const addResponse = await fetch(`http://localhost:3001/bookmarkcv`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ UserID, CvID })
-            });
-            const addData = await addResponse.json();
+            const deleteData = await deleteResponse.json();
 
-            if (addData.error) {
-                console.error('Failed to add bookmark.');
-                return;
+            if (deleteData.error) {
+              console.error('Failed to remove bookmark.');
+              return;
             }
 
+            // Show success message
             Swal.fire({
-              position: "top",
-              icon: "success",
-              title: "Save this job to your Bookmark",
-              showConfirmButton: false,
-              timer: 1500
+              title: "Deleted!",
+              text: "Your bookmark has been removed.",
+              icon: "success"
             });
+          }
+        });
+      } else {
+        // If the CV is not bookmarked, add the bookmark
+        const addResponse = await fetch(`http://localhost:3001/bookmarkcv`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ UserID, CvID })
+        });
+        const addData = await addResponse.json();
 
-            console.log('Bookmark added successfully.');
+        if (addData.error) {
+          console.error('Failed to add bookmark.');
+          return;
         }
+
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Save this job to your Bookmark",
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        console.log('Bookmark added successfully.');
+      }
     } catch (error) {
-        console.error('Error occurred:', error);
+      console.error('Error occurred:', error);
     }
-}
+  }
 
 
   return (
@@ -214,28 +214,31 @@ function FindEmployeePage() {
               </select>
             </div>
 
-            <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center'>
+            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center'>
               {cvData.map((cv: any) => (
-                <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
-                  <figure className='h-52'>
-                    {cv.IMG_CV && <img className='bg-cover h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
-                  </figure>
-                  <div className="card-body w-full">
-                    <div>
-                      {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
-                    </div>
-                    <div className=''>
-                      <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
-                      <p className='text-left'><b>{cv.Title}</b></p>
-                      <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
-                      <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
-                      <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
-                    </div>
-                    <div className="w-full card-actions max-h-full h-full flex items-end">
-                      <button className="w-full btn btn-primary bg-purple-600">Apply</button>
+                <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min '>
+                  <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
+                    <figure className='h-52'>
+                      {cv.IMG_CV && <img className='bg-cover h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
+                    </figure>
+                    <div className="card-body w-full">
+                      <div>
+                        {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
+                      </div>
+                      <div className=''>
+                        <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
+                        <p className='text-left'><b>{cv.Title}</b></p>
+                        <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
+                        <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
+                        <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                      </div>
+                      <div className="w-full card-actions max-h-full h-full flex items-end">
+                        <button className="w-full btn btn-primary bg-purple-600">Apply</button>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               ))}
 
               {selectedCV && (

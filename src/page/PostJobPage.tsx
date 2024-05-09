@@ -4,8 +4,12 @@ import Footer from '../component/footer/Footer';
 import axios from 'axios';
 import SetNavbar from '../component/navbar/SetNavbar';
 import Swal from 'sweetalert2';
+import { useTheme } from './../theme/theme';
+import HashLoader from 'react-spinners/HashLoader';
 
 function PostJobPage() {
+    //theme
+    const { theme } = useTheme();
     // State variables
     const [salaryMinimum, setSalaryMinimum] = useState('');
     const [salaryMaximum, setSalaryMaximum] = useState('');
@@ -129,21 +133,21 @@ function PostJobPage() {
                 icon: "error",
                 title: "Oops...",
                 text: "Enter complete information.",
-              });
+            });
             return;
         } else if (salaryMinimum > salaryMaximum) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "The starting salary should be less than the maximum salary.",
-              });
+            });
             return;
         } else if (salaryMaximum > "99999999") {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "The salary is over Maximum",
-              });
+            });
             return;
         }
 
@@ -206,150 +210,161 @@ function PostJobPage() {
     }
 
     return (
-        <div>
-            <SetNavbar />
-            {isLoading ? (<div className='w-full h-96 max-h-screen text-center place-content-center bg-black bg-opacity-75'> Loading....</div>) : (
-                <>
-                    <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-3 '>
-                        <div className='py-5 self-center font-bold text-3xl'>Post Job</div>
-                    </div>
-                    <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-4 '>
-                        <form onSubmit={handleSubmit}>
-                            <div className='p-6 mt-2 px-24 '>
-                                <div className='space-y-3'>
-                                    {/* row1 */}
-                                    <div className='grid grid-cols-3'>
-                                        <div id="col1">
-                                            <p className='ml-2 horizontal'>Title</p>
-                                            <input
-                                                type="text"
-                                                placeholder="Title"
-                                                className="input input-bordered w-4/5"
-                                                value={title}
-                                                onChange={(e) => setTitle(e.target.value)}
-                                            />
-                                        </div>
-
-                                        <div id="col1">
-                                            <p className='ml-2 horizontal'>Salary minimum</p>
-                                            <input
-                                                type="text"
-                                                placeholder="1,000 ກີບ"
-                                                className="input input-bordered w-5/6 text-end"
-                                                value={salaryMinimum}
-                                                onChange={(e) => setSalaryMinimum(e.target.value)}
-                                            />
-                                        </div>
-                                        <div id="col1">
-                                            <p className='ml-2 horizontal'>Salary maximum</p>
-                                            <input
-                                                type="text"
-                                                placeholder="3,000,000 ກີບ"
-                                                className="input input-bordered w-5/6 text-end"
-                                                value={salaryMaximum}
-                                                onChange={(e) => setSalaryMaximum(e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-
-
-                                    {/* row2 */}
-                                    <div className='grid grid-cols-3'>
-                                        <div id="col1">
-                                            <p className='ml-2 horizontal'>Work Category</p>
-                                            <select
-                                                className="select  w-5/6"
-                                                value={selectedCategory || ''}
-                                                onChange={handleCategoryChange}
-                                            >
-                                                <option disabled value="">Work Category</option>
-                                                {categories.map(category => (
-                                                    <option key={category.CategoryID} value={category.CategoryID}>
-                                                        {category.CategoryName}
-                                                    </option>
-                                                ))}
-                                            </select>
-
-                                        </div>
-                                        <div id="col2">
-                                            <p className='ml-2 horizontal'>Occupation</p>
-                                            <select
-                                                className="select  w-5/6"
-                                                value={occupation}
-                                                onChange={(e) => setOccupation(e.target.value)}
-                                            >
-                                                <option disabled value="">Occupation</option>
-                                                <option disabled value="">Please Select Category</option>
-                                                {occupations.map(occupation => (
-                                                    <option key={occupation.OccupationID} value={occupation.OccupationID}>
-                                                        {occupation.OccupationName}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div id="col3">
-                                            <p className='ml-2 horizontal'>Work type</p>
-                                            <select
-                                                className="select select-bordered w-5/6"
-                                                value={workType}
-                                                onChange={(e) => setWorkType(e.target.value)}
-                                            >
-                                                <option disabled value="">Work type</option>
-                                                <option value="Full-time">Full-time</option>
-                                                <option value="Part-time">Part-time</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-
-                                    {/* row3 */}
-                                    <div className='grid grid-cols-3 space-x-12'>
-                                        <div className=''>
-                                            <div className='card w-full h-full max-h-60 bg-base-100 shadow-xl mt-16 p-4 self-center'>
-                                                <textarea className="textarea textarea-bordered h-full" placeholder="Work description" value={description} onChange={(e) => setDescription(e.target.value)}>
-
-                                                </textarea>
-                                            </div>
-                                        </div>
-                                        <div className='col-span-2 '>
-                                            <div className='card w-full h-full max-h-72 pl-4 bg-base-100 shadow-xl mt-8 grid grid-cols-2 '>
-                                                {/* image input */}
-                                                <div className='card h-60 w-5/6 border-4 bg-sky-50 rounded-2xl overflow-hidden self-center'>
-                                                    {imageUrl ? (
-                                                        <img src={imageUrl} alt="PostJob" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
-                                                    ) : (
-                                                        <img src="Image/cv-example.jpg" alt="PostJob" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
-                                                    )}
-                                                </div>
-                                                <div className='space-y-8 p-2 pt-8'>
-                                                    <p className='text-2xl'>Input Your Image</p>
+        <html data-theme={theme}>
+            <div>
+                <SetNavbar />
+                {isLoading ?
+                    (
+                        <div className='flex flex-col w-full h-screen max-h-screen text-center justify-center items-center bg-base-300 bg-opacity-75 '>
+                            <HashLoader color="#36d7b7" />
+                            <p className='font-semibold'>Loading....</p>
+                        </div>
+                    ) : (
+                        <>
+                            <div className='card bg-purple-900 bg-opacity-90 rounded-2xl mx-20 mt-3'>
+                                <div className='py-5 self-center font-bold text-3xl text-white'>Post Job</div>
+                            </div>
+                            <div className='card h-fit bg-black bg-opacity-15 rounded-2xl mx-20 mt-4 shadow-xl mb-10 pb-10'>
+                                <form onSubmit={handleSubmit}>
+                                    <div className='p-6 mt-2 px-24 '>
+                                        <div className='space-y-3'>
+                                            {/* row1 */}
+                                            <div className='grid grid-cols-3'>
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal text-sm font-semibold'>Title</p>
                                                     <input
-                                                        type="file"
-                                                        accept="image/jpeg, image/png"
-                                                        className="file-input file-input-bordered file w-full max-w-xs"
-                                                        onChange={handleFileChange}
+                                                        type="text"
+                                                        placeholder="Title"
+                                                        className="input input-bordered w-4/5"
+                                                        value={title}
+                                                        onChange={(e) => setTitle(e.target.value)}
+                                                    />
+                                                </div>
+
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal text-sm font-semibold'>Salary minimum</p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="1,000 ກີບ"
+                                                        className="input input-bordered w-5/6 text-end"
+                                                        value={salaryMinimum}
+                                                        onChange={(e) => setSalaryMinimum(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal text-sm font-semibold'>Salary maximum</p>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="3,000,000 ກີບ"
+                                                        className="input input-bordered w-5/6 text-end"
+                                                        value={salaryMaximum}
+                                                        onChange={(e) => setSalaryMaximum(e.target.value)}
                                                     />
                                                 </div>
                                             </div>
-                                            <div className=' col-span-2 w-full flex justify-end mb-5'>
-                                                <button type="submit" className="btn btn-primary btn-wide m-5" >Post Job</button>
+
+
+                                            {/* row2 */}
+                                            <div className='grid grid-cols-3'>
+                                                <div id="col1">
+                                                    <p className='ml-2 horizontal text-sm font-semibold'>Work Category</p>
+                                                    <select
+                                                        className="select  w-5/6"
+                                                        value={selectedCategory || ''}
+                                                        onChange={handleCategoryChange}
+                                                    >
+                                                        <option disabled value="">Work Category</option>
+                                                        {categories.map(category => (
+                                                            <option key={category.CategoryID} value={category.CategoryID}>
+                                                                {category.CategoryName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+
+                                                </div>
+                                                <div id="col2">
+                                                    <p className='ml-2 horizontal text-sm font-semibold'>Occupation</p>
+                                                    <select
+                                                        className="select  w-5/6"
+                                                        value={occupation}
+                                                        onChange={(e) => setOccupation(e.target.value)}
+                                                    >
+                                                        <option disabled value="">Occupation</option>
+                                                        <option disabled value="">Please Select Category</option>
+                                                        {occupations.map(occupation => (
+                                                            <option key={occupation.OccupationID} value={occupation.OccupationID}>
+                                                                {occupation.OccupationName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                                <div id="col3">
+                                                    <p className='ml-2 horizontal text-sm font-semibold'>Work type</p>
+                                                    <select
+                                                        className="select select-bordered w-5/6"
+                                                        value={workType}
+                                                        onChange={(e) => setWorkType(e.target.value)}
+                                                    >
+                                                        <option disabled value="">Work type</option>
+                                                        <option value="Full-time">Full-time</option>
+                                                        <option value="Part-time">Part-time</option>
+                                                    </select>
+                                                </div>
                                             </div>
+
+
+                                            {/* row3 */}
+                                            <div className='grid grid-cols-3 space-x-12'>
+                                                <div className=''>
+                                                    <div className='card w-full h-full max-h-60 bg-base-100 shadow-xl mt-16 p-4 self-center'>
+                                                        <textarea className="textarea textarea-bordered h-full" placeholder="Work description" value={description} onChange={(e) => setDescription(e.target.value)}>
+
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                                <div className='col-span-2 '>
+                                                    <div className='card w-full h-full max-h-72 pl-4 bg-base-100 shadow-xl mt-8 grid grid-cols-2 '>
+                                                        {/* image input */}
+                                                        <div className='card h-60 w-5/6 border-4 bg-sky-50 rounded-2xl overflow-hidden self-center'>
+                                                            {imageUrl ? (
+                                                                <img src={imageUrl} alt="PostJob" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
+                                                            ) : (
+                                                                <img src="Image/cv-example.jpg" alt="PostJob" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
+                                                            )}
+                                                        </div>
+                                                        <div className='space-y-6 p-2 pt-8'>
+                                                            <p className='text-2xl'>Input Your Image</p>
+                                                            <input
+                                                                type="file"
+                                                                accept="image/jpeg, image/png"
+                                                                className="file-input file-input-bordered file w-full max-w-xs"
+                                                                onChange={handleFileChange}
+                                                            />
+                                                            <div className='w-5/6 '>
+                                                                <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide " >Edit Job</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+
                                         </div>
+
                                     </div>
-
-
-
-                                </div>
-
+                                </form>
                             </div>
-                        </form>
-                    </div>
 
-                    <Footer />
-                </>
-            )}
+                            <Footer />
+                        </>
+                    )}
 
-        </div>
+            </div>
+        </html>
+
     )
 }
 

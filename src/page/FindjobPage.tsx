@@ -222,44 +222,46 @@ function FindjobPage() {
               </select>
 
             </div>
-            <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 box-border center '>
-
+            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center '>
 
               {jobData.map((job: any) => (
-                <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={job.JobID} onClick={() => handleCardClick(job)}>
-                  <figure className='h-52'>
-                    {job.Post_IMG && <img className='bg-cover h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
-                  </figure>
-                  <div className="card-body w-full">
-                    <div>
-                      {job.Employer_Profile_IMG
-                        ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
-                        : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
-                      }
-                    </div>
-                    <div className=''>
-                      <h2 className="card-title"><b>{job.CompanyName}</b></h2>
-                      <p className='text-left'><b>{job.Title}</b></p>
-                      <p className='text-left'>
-                        <b>Salary :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
-                      </p>
-                      <p className='text-left'><b>Work category :</b> {job.CategoryName}/{job.OccupationName}</p>
-                      <p className='text-left'>
-                        <b>Location :</b>
-                        {job.VillageName
-                          ? `${job.VillageName}/${job.DistrictName}/${job.ProvinceName}`
-                          : ' ບໍ່ລະບຸ'
+                <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
+                  <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={job.JobID} onClick={() => handleCardClick(job)}>
+                    <figure className='h-52'>
+                      {job.Post_IMG && <img className='bg-cover h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
+                    </figure>
+                    <div className="card-body w-full">
+                      <div>
+                        {job.Employer_Profile_IMG
+                          ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
+                          : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                         }
-                      </p>
-                      <div className='grid grid-cols-2 pt-1'>
-                        <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
-                        <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
-                    </div>
-                    <div className="w-full card-actions max-h-full h-full flex items-end">
-                      <button className="w-full btn btn-primary bg-purple-600">View</button>
+                      </div>
+                      <div className=''>
+                        <h2 className="card-title"><b>{job.CompanyName}</b></h2>
+                        <p className='text-left'><b>{job.Title}</b></p>
+                        <p className='text-left'>
+                          <b>Salary :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
+                        </p>
+                        <p className='text-left'><b>Work category :</b> {job.CategoryName}/{job.OccupationName}</p>
+                        <p className='text-left'>
+                          <b>Location :</b>
+                          {job.VillageName
+                            ? `${job.VillageName}/${job.DistrictName}/${job.ProvinceName}`
+                            : ' ບໍ່ລະບຸ'
+                          }
+                        </p>
+                        <div className='grid grid-cols-2 pt-1'>
+                          <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
+                          <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
+                      </div>
+                      <div className="w-full card-actions max-h-full h-full flex items-end">
+                        <button className="w-full btn btn-primary bg-purple-600">View</button>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               ))}
 
               {selectedJOB && (
