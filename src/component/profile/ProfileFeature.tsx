@@ -79,9 +79,9 @@ export default function Profile_feature() {
     const [cvDetail, setCvDetail] = useState<CVDetail[]>([]);
     const [jobDetail, setJobDetail] = useState<jobDetail[]>([]);
     const getRole = localStorage.getItem('Role');
-    console.log("is role :",getRole)
+    console.log("is role :", getRole)
 
-    
+
 
 
     const [showActionsEdit, setShowActionsEdit] = useState(false);
@@ -331,7 +331,7 @@ export default function Profile_feature() {
                                 <div key={emp.EmployerID}>
                                     {emp.Profile_IMG ? (
                                         <><img src={emp.Profile_IMG} alt="User Profile" />
-                                        
+
                                         </>
                                     ) : (
                                         <img src="/Icon/user.png" alt="User Profile" />
@@ -343,7 +343,7 @@ export default function Profile_feature() {
                                 <div key={jok.JobseekerID}>
                                     {jok.Profile_IMG ? (
                                         <><img src={jok.Profile_IMG} alt="User Profile" />
-                                        <p>jok pro : {jok.Profile_IMG}</p>
+                                            <p>jok pro : {jok.Profile_IMG}</p>
                                         </>
                                     ) : (
                                         <img src="/Icon/user.png" alt="User Profile" />
@@ -614,17 +614,17 @@ export default function Profile_feature() {
                                             <div className='card-body sm:grid sm:grid-cols-2 md:flex '>
                                                 {isLoading ?
                                                     <div className='avatar'>
-                                                        <div className="skeleton w-36 rounded-full shrink-0">
+                                                        <div className="skeleton w-44 rounded-full shrink-0">
                                                         </div>
                                                     </div>
-                                                    : <div className="avatar md:mt-4 md:ml-2 sm:mt-4 sm:ml-20">
-                                                        <div className="w-24 rounded-full object-cover border-4 border-base-100">
+                                                    : <div className="avatar md:mt-2 md:ml-14 sm:mt-4 sm:ml-20">
+                                                        <div className="w-44 rounded-full object-cover border-4 border-base-100">
                                                             {Jobseeker.map((jobseeker) => (
                                                                 <div key={jobseeker.JobseekerID}>
                                                                     {jobseeker.Profile_IMG ? (
-                                                                        <img src={jobseeker.Profile_IMG} alt="User Profile" />
+                                                                        <img src={jobseeker.Profile_IMG} alt="User Profile" className='' />
                                                                     ) : (
-                                                                        <img src="/Icon/user.png" alt="User Profile" />
+                                                                        <img src="/Icon/user.png" alt="User Profile" className='' />
                                                                     )}
                                                                 </div>
                                                             ))}
@@ -639,7 +639,7 @@ export default function Profile_feature() {
                                                         <p className={cssProfile.titleWork}>
                                                             {isLoading ? <div className="skeleton h-4 w-32"></div> : Jobseeker[0]?.ProfessionalTitle}
                                                         </p>
-                                                        <div className='flex '>
+                                                        <div className='flex w-full '>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-4 h-6 self-center">
                                                                 <path fill-rule="evenodd" d=" m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
                                                             </svg>
@@ -651,7 +651,7 @@ export default function Profile_feature() {
                                                                 )}
                                                             </p>
                                                         </div>
-                                                        <div id='email' className='w-1/3 flex space-x-2 mt-2 text-sm'>
+                                                        <div id='email' className='w-full flex space-x-2 mt-2 text-sm'>
                                                             <div className=''>
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none"
@@ -669,9 +669,8 @@ export default function Profile_feature() {
                                                                 }
                                                             </div>
                                                         </div>
-
                                                     </div>
-                                                    <div className='w-1/3 flex space-x-2 mt-2 text-sm self-center'>
+                                                    <div className='w-full flex space-x-2 mt-2 text-sm '>
                                                         <div className=''>
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 fill="none" viewBox="0 0 24 24"
@@ -680,13 +679,17 @@ export default function Profile_feature() {
                                                                 className="w-5 h-5">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                                                             </svg></div>
-                                                        <div className='font-sans'>
+                                                        <div className='font-sans '>
+                                                            {/* {isLoading ? <div className="skeleton h-4 w-32"></div> :
+                                                                Jobseeker.map((e) => (
+                                                                    <p>{e.Tel !== null ? e.Tel : 'ບໍ່ລະບຸ'}</p>))
+                                                            } */}
                                                             {isLoading ? (
                                                                 <BarLoader color={"#5a5e5d"} loading={isLoading} width={140} height={5} className='mt-2' />
                                                             ) : (
                                                                 Jobseeker.length > 0 ? (
                                                                     Jobseeker.map((e, index) => (
-                                                                        <p key={index}>{e.Tel !== null ? e.Tel : 'ບໍ່ລະບຸ'}</p>
+                                                                        <p className='' key={index}>{e.Tel !== null ? e.Tel : 'ບໍ່ລະບຸ'}</p>
                                                                     ))
                                                                 ) : (
                                                                     <p>ບໍ່ລະບຸ</p>
@@ -702,7 +705,7 @@ export default function Profile_feature() {
                                             </div>
 
                                             {/* right side of Jobseeker */}
-                                            <div className='card-body md:col-span-2 md:mt-2 sm:mt-0'>
+                                            <div className='card-body md:col-span-2 md:mt-8 sm:mt-0'>
                                                 <div className='card w-full h-full'>
                                                     {/* navbar */}
                                                     <div className='navbar bg-neutral-900 text-neutral-content rounded-t-2xl'>
@@ -723,7 +726,7 @@ export default function Profile_feature() {
                                                         </div>
                                                     </div>
                                                     {/* content or bottom part */}
-                                                    <div className='w-full h-96 bg-gray-400 rounded-b-2xl p-3 space-y-2 snap-y overflow-y-auto'>
+                                                    <div className='w-full h-full max-h-96 bg-gray-400 rounded-b-2xl p-3 space-y-2 snap-y overflow-y-auto'>
 
                                                         {cvDetail.map((cv: any) => (
                                                             <div key={cv.CvID} className="card card-side bg-base-100 shadow-xl flex w-full h-48">

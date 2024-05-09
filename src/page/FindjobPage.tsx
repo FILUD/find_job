@@ -269,9 +269,9 @@ function FindjobPage() {
                   <div className="modal-box bg-base-300">
                     <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopup}>✕</button>
                     <div className=' rounded-2xl bg-base-100'>
-                      <figure className='w-full p-5'>
+                      <figure className='w-full p-5 h-52'>
                         <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClick(selectedJOB)}>
-                          <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
+                          <img id="fullScreenImage" className='object-cover w-full h-full max-h-min rounded-2xl hover:scale-110 transition duration-300' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
                         </div>
                       </figure>
                     </div>

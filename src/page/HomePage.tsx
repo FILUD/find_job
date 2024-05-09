@@ -343,7 +343,7 @@ function HomePage() {
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl  w-full max-w-full h-full max-h-min  '>
                   <div className="card w-full max-w-full h-full max-h-min bg-base-100 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={job.JobID} onClick={() => handleCardClickJOB(job)}>
                     <figure className='h-52'>
-                      {job.Post_IMG && <img className=' bg-corver h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
+                      {job.Post_IMG && <img className='object-cover w-full h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
                     </figure>
                     <div className="card-body w-full">
                       <div>
@@ -395,7 +395,7 @@ function HomePage() {
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
                   <div className="card w-full max-w-full h-full max-h-min bg-base-100 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
                     <figure className='h-52'>
-                      {cv.IMG_CV && <img className='bg-cover h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
+                      {cv.IMG_CV && <img className=' object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
                     </figure>
                     <div className="card-body w-full basic-full">
                       <div>
