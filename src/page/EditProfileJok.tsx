@@ -491,7 +491,7 @@ function EditProfileJok() {
 
                                         {isEditMode ? (
                                             <div >
-                                                <div className='grid grid-cols-5 mt-10'>
+                                                <div className='grid grid-cols-5 '>
                                                     <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Email :</p>
                                                     <input
                                                         disabled
@@ -590,7 +590,6 @@ function EditProfileJok() {
                                                     {cvDetail.length > 0 ? (
                                                         cvDetail.map((cv: any) => (
                                                             <div key={cv.CvID} className="card card-side bg-base-100 shadow-xl flex w-full h-52">
-
                                                                 <div className="card-actions text-xs top-0 right-0 absolute ">
                                                                     <div className='btn btn-ghost btn-circle' onClick={() => handleEditCv(cv.CvID)}>
                                                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
