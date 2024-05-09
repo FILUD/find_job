@@ -97,12 +97,12 @@ function Navbar() {
 
 
 
-
-                        {userData ? (
+                        <Profile_feature />
+                        {/* {userData ? (
                             <Profile_feature />
                         ) : (
                             <AuthFeat />
-                        )}
+                        )} */}
 
 
 

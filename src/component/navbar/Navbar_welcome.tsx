@@ -77,11 +77,12 @@ function NavbarWelcome() {
               <ThemeToggle />
             </div>
 
-            {userData ? (
+            <AuthFeat />
+            {/* {userData ? (
               <Profile_feature />
             ) : (
               <AuthFeat />
-            )}
+            )} */}
 
             {/* Change Language */}
             <div className="dropdown dropdown-end ">

@@ -214,7 +214,7 @@ function HomePage() {
             <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Job <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
 
 
-            <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+            <div className='w-full  bg-purple-800 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
               <p className='p-2  font-bold'>Empolyee Reccommend</p>
             </div>
 

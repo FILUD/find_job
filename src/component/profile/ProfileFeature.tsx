@@ -520,7 +520,7 @@ export default function Profile_feature() {
                                                     </div>
                                                     {/* content or bottom part */}
                                                     {/* content or bottom part */}
-                                                    <div className='w-full h-72 bg-gray-400 rounded-b-2xl p-3 space-y-2 snap-y overflow-y-auto'>
+                                                    <div className='w-full h-96 bg-gray-400 rounded-b-2xl p-3 space-y-2 snap-y overflow-y-auto'>
 
 
                                                         {jobDetail.map((job: any) => (
