@@ -129,7 +129,7 @@ function Chat_Page() {
                         <div className='flex flex-col h-full max-h-full bg-base-300 shadow-xl'>
                             <div className='basis-full max-h-full snap-y overflow-y-scroll bg-base-300 bg-opacity-65 shadow-xl m-2'>
                                 <div>
-                                    <div className='bg-base-300 h-16 flex justify-center shadow-lg my-2'>
+                                    <div className='bg-black bg-opacity-5 h-16 flex justify-center shadow-lg my-2'>
                                         <p className='text-xl font-bold self-center'>Message</p>
                                     </div>
                                 </div>

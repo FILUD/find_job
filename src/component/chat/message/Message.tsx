@@ -86,8 +86,8 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
     return (
         <div className='flex flex-col w-full h-full  max-h-full bg-base-100 '>
             {/* profile */}
-            <div className='h-16 bg-base-300  pl-8 shadow-2xl '>
-                <div className="flex    items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
+            <div className='h-16 bg-purple-900 bg-opacity-80 rounded-t-xl  pl-8 shadow-2xl '>
+                <div className="flex  items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
                     {/* avatar */}
                     <div className="avatar">
                         <div className="mask mask-circle w-12 h-12">
@@ -107,7 +107,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                         </div>
                     </div>
                     <div>
-                        <div className="font-bold  pl-4">{profile_name}</div>
+                        <div className="font-semibold pl-4 text-slate-200 text-lg">{profile_name}</div>
                     </div>
                 </div>
             </div>
