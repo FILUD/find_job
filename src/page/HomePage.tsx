@@ -8,6 +8,7 @@ import Footer from '../component/footer/Footer';
 import { SpinnerColors } from './spinner';
 import SetNavbar from '../component/navbar/SetNavbar';
 import { ThemeToggle, useTheme } from '../theme/theme'
+import Swal from 'sweetalert2';
 
 interface jobData {
   JobID: number;
@@ -156,6 +157,172 @@ function HomePage() {
   };
 
 
+  const handleJobBookmark = async (JobID: number) => {
+    const UserID = localStorage.getItem('UserID');
+
+    // Check if UserID is available
+    if (!UserID) {
+      console.error('UserID is not available.');
+      return;
+    }
+
+    try {
+      // Check if the job is already bookmarked
+      const checkResponse = await fetch(`http://localhost:3001/checkbookmarkjob?UserID=${UserID}&JobID=${JobID}`);
+      const checkData = await checkResponse.json();
+
+      if (checkData.error) {
+        console.error('Failed to check bookmark.');
+        return;
+      }
+
+      // If the job is already bookmarked, remove the bookmark
+      if (checkData.bookmarked) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to remove this bookmark?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, remove it!"
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            // Send request to remove bookmark
+            const deleteResponse = await fetch(`http://localhost:3001/removebookmarkjob?UserID=${UserID}&JobID=${JobID}`, {
+              method: 'DELETE'
+            });
+            const deleteData = await deleteResponse.json();
+
+            if (deleteData.error) {
+              console.error('Failed to remove bookmark.');
+              return;
+            }
+
+            // Show success message
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your bookmark has been removed.",
+              icon: "success"
+            });
+          }
+        });
+      } else {
+        // If the job is not bookmarked, add the bookmark
+        const addResponse = await fetch(`http://localhost:3001/addbookmarkjob`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ UserID, JobID })
+        });
+        const addData = await addResponse.json();
+
+        if (addData.error) {
+          console.error('Failed to add bookmark.');
+          return;
+        }
+
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Save this job to your Bookmark",
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        console.log('Bookmark added successfully.');
+      }
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  }
+
+
+const handleCvBookmark = async (CvID: number) => {
+    const UserID = localStorage.getItem('UserID');
+
+    // Check if UserID is available
+    if (!UserID) {
+        console.error('UserID is not available.');
+        return;
+    }
+
+    try {
+        // Check if the CV is already bookmarked
+        const checkResponse = await fetch(`http://localhost:3001/checkbookmarkcv?UserID=${UserID}&CvID=${CvID}`);
+        const checkData = await checkResponse.json();
+
+        if (checkData.error) {
+            console.error('Failed to check bookmark.');
+            return;
+        }
+
+        // If the CV is already bookmarked, show confirmation dialog to remove bookmark
+        if (checkData.bookmarked) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You want to remove this bookmark?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, remove it!"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    // Send request to remove bookmark
+                    const deleteResponse = await fetch(`http://localhost:3001/removebookmarkcv?UserID=${UserID}&CvID=${CvID}`, {
+                        method: 'DELETE'
+                    });
+                    const deleteData = await deleteResponse.json();
+
+                    if (deleteData.error) {
+                        console.error('Failed to remove bookmark.');
+                        return;
+                    }
+
+                    // Show success message
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your bookmark has been removed.",
+                        icon: "success"
+                    });
+                }
+            });
+        } else {
+            // If the CV is not bookmarked, add the bookmark
+            const addResponse = await fetch(`http://localhost:3001/bookmarkcv`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ UserID, CvID })
+            });
+            const addData = await addResponse.json();
+
+            if (addData.error) {
+                console.error('Failed to add bookmark.');
+                return;
+            }
+
+            Swal.fire({
+              position: "top",
+              icon: "success",
+              title: "Save this job to your Bookmark",
+              showConfirmButton: false,
+              timer: 1500
+            });
+
+            console.log('Bookmark added successfully.');
+        }
+    } catch (error) {
+        console.error('Error occurred:', error);
+    }
+}
+
+
+
+
 
   return (
     <html data-theme={theme}>
@@ -180,8 +347,8 @@ function HomePage() {
                   <div className="card-body w-full">
                     <div>
                       {job.Employer_Profile_IMG
-                        ? <img className='w-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
-                        : <img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                        ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Employer_Profile_IMG} alt="Profile_IMG" />
+                        : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                       }
                     </div>
                     <div className=''>
@@ -220,9 +387,9 @@ function HomePage() {
 
 
 
-            <div className='grid grid-cols-4 justify-items-center gap-1 items-center mt-2 mb-6 box-border center'>
+            <div className='grid grid-cols-4 justify-items-center gap-1 bg-base-100 items-center mt-2 mb-6 box-border center'>
               {cvData.map((cv: any) => (
-                <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
+                <div className="card w-full max-w-full h-full max-h-min shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
                   <figure className='h-52'>
                     {cv.IMG_CV && <img className='bg-cover h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
                   </figure>
@@ -251,23 +418,23 @@ function HomePage() {
 
           {selectedJOB && (
             <dialog id="my_modal_3" className="modal" open>
-              <div className="modal-box ">
+              <div className="modal-box bg-base-300">
                 <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopupJOB}>✕</button>
-                <div className='bg-stone-800 rounded-2xl py-10'>
-                  <figure className='w-40'>
+                <div className=' rounded-2xl bg-base-100'>
+                  <figure className='w-full p-5'>
                     <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>
                       <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
                     </div>
                   </figure>
                 </div>
-                <div className="card-body bg-stone-800  rounded-2xl">
+                <div className="card-body bg-base-100  rounded-2xl">
                   <div className='w-full flex justify-self-end justify-items-end justify-end -mt-7 ml-7'>
                   </div>
-                  <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
+                  <div className='grid grid-cols-5 bg-base-100 drop-shadow-xl py-2 px-3 -mt-4 rounded-full'>
                     <div className='grid col-span-1 justify-start justify-items-start items-start '>
                       {selectedJOB.Employer_Profile_IMG
-                        ? <img className='w-14  border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
-                        : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                        ? <img className='w-14 h-14 border-2 rounded-full' src={selectedJOB.Employer_Profile_IMG} alt="Profile_IMG" />
+                        : <img className='w-14 h-14 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                       }
                     </div>
                     <h2 className="card-title text-justify col-span-4"><b>{selectedJOB.CompanyName}</b></h2>
@@ -288,8 +455,22 @@ function HomePage() {
                   <p className='text-left'><u>Work type:</u> {selectedJOB.WorkType}</p>
                   <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                   <div className="card-actions justify-end">
+
+                    <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
+                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                      </svg>
+                    </button>
+
+                    <button className="btn btn-primary">
+                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                      </svg>
+                    </button>
+
                     <button className="btn btn-primary">Apply</button>
                     <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+
                   </div>
                 </div>
               </div>
@@ -299,17 +480,17 @@ function HomePage() {
 
           {selectedCV && (
             <dialog id="my_modal_3" className="modal" open>
-              <div className="modal-box">
+              <div className="modal-box bg-base-300 overflow-auto">
                 <button className="btn btn-sm btn-square btn-ghost absolute right-2 top-2" onClick={closePopupCV}>✕</button>
-                <div className='bg-stone-800 rounded-2xl py-10'>
-                  <figure className='w-40'>
+                <div className=' rounded-2xl'>
+                  <figure className='w-full shadow-xl'>
                     <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClickCV(selectedCV)}>
                       <img id="fullScreenImage" className='bg-cover rounded-2xl hover:scale-110 transition duration-300' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
                     </div>
                   </figure>
                 </div>
-                <div className="card-body bg-stone-800  rounded-2xl">
-                  <div className='grid grid-cols-5 bg-emerald-900 py-2 px-3 -mt-4 rounded-full'>
+                <div className="card-body rounded-2xl bg-base-100">
+                  <div className='grid grid-cols-5 bg-base-100 shadow-xl py-2 px-3 -mt-4 rounded-full'>
                     <div className='grid col-span-1 justify-start justify-items-start items-start '>
                       {selectedCV.Jobseeker_Profile_IMG
                         ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
@@ -323,6 +504,17 @@ function HomePage() {
                   <p className='text-left'><u>Location:</u> {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
                   <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
                   <div className="card-actions justify-end">
+                  <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
+                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                      </svg>
+                    </button>
+
+                    <button className="btn btn-primary">
+                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                      </svg>
+                    </button>
                     <button className="btn btn-primary">Apply</button>
                     <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
                   </div>
