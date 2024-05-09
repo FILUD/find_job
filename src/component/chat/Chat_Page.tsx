@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import SetMessage from './message/setMessage';
 import Message from './message/Message';
 import { ThemeToggle, useTheme } from '../../theme/theme'
+import MoonLoader from 'react-spinners/MoonLoader';
 const socket = io('http://localhost:3001');
 
 interface ListChatProps {
@@ -54,6 +55,7 @@ function Chat_Page() {
     const [userIDLogin, setUserLogin] = useState<string>('');
     //theme
     const { theme } = useTheme();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const fetchChatList = async () => {
         socket.emit('fetch list user', { senderId: senderID });
@@ -62,15 +64,22 @@ function Chat_Page() {
             setListChat(chatlistuser);
         });
     };
-
     useEffect(() => {
         const userID = localStorage.getItem('UserID');
+        setIsLoading(true);
         if (userID) {
             setSenderID(userID);
             setSenderIDSet(true);
             setUserLogin(userID);
+
+            const timeout = setTimeout(() => {
+                setIsLoading(false);
+            }, 2000);
+
+            return () => clearTimeout(timeout);
         }
     }, [senderID, userIDLogin]);
+
 
     useEffect(() => {
         if (senderIDSet) {
@@ -127,41 +136,54 @@ function Chat_Page() {
                                 <table className="table bg-base-200 rounded-lg 1">
                                     {/* list chat */}
                                     <tbody className=''>
-                                        {/* person1 */}
-                                        {listChat.map((msg, index) => {
-                                            const profile_img = msg.receiverId == userIDLogin ? msg.senderInfo.Profile_IMG : msg.receiverInfo.Profile_IMG;
-                                            const receiverName = msg.receiverId == userIDLogin ? msg.senderInfo.Name : msg.receiverInfo.Name;
-                                            const receiverID = msg.receiverId == userIDLogin ? msg.senderId : msg.receiverId;
-                                            const own_img = msg.senderId == userIDLogin ? msg.senderInfo.Profile_IMG : msg.receiverInfo.Profile_IMG;
+                                        {isLoading ? (
+                                            <div className='flex justify-center items-center w-full h-96 max-h-full bg-base-300 flex-col'>
+                                                <MoonLoader
+                                                    color="#36d7b7"
+                                                    cssOverride={{}}
+                                                    size={30}
+                                                    speedMultiplier={0.8}
+                                                />
+                                                <p className='text-md'>Loading</p>
+                                            </div>
 
-                                            return (
-                                                <tr key={index} onClick={() => handleListChat(msg.senderId, msg.receiverId, msg.message, profile_img, receiverName, own_img)}>
-                                                    <td>
-                                                        <div className="flex items-center gap-3 cursor-pointer hover:bg-base-100" >
-                                                            {/* avatar */}
-                                                            <div className="avatar">
-                                                                <div className="w-12 rounded-full ring-ghost ring-offset-base-100 ring-offset-0 ring-2">
-                                                                    {(profile_img) ? (
-                                                                        <img src={profile_img} alt="Avatar Tailwind CSS Component" />
-                                                                    ) : (
-                                                                        <div className=''>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
-                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                                                            </svg>
-                                                                        </div>
-                                                                    )}
+                                        ) : (
+                                            listChat.map((msg, index) => {
+                                                const profile_img = msg.receiverId == userIDLogin ? msg.senderInfo.Profile_IMG : msg.receiverInfo.Profile_IMG;
+                                                const receiverName = msg.receiverId == userIDLogin ? msg.senderInfo.Name : msg.receiverInfo.Name;
+                                                const receiverID = msg.receiverId == userIDLogin ? msg.senderId : msg.receiverId;
+                                                const own_img = msg.senderId == userIDLogin ? msg.senderInfo.Profile_IMG : msg.receiverInfo.Profile_IMG;
+
+                                                return (
+                                                    <tr key={index} onClick={() => handleListChat(msg.senderId, msg.receiverId, msg.message, profile_img, receiverName, own_img)}>
+                                                        <td>
+                                                            <div className="flex items-center gap-3 cursor-pointer hover:bg-base-100" >
+                                                                {/* avatar */}
+                                                                <div className="avatar">
+                                                                    <div className="w-12 rounded-full ring-ghost ring-offset-base-100 ring-offset-0 ring-2">
+                                                                        {(profile_img) ? (
+                                                                            <img src={profile_img} alt="Avatar Tailwind CSS Component" />
+                                                                        ) : (
+                                                                            <div className=''>
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-full h-full p-2 ">
+                                                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                                                                </svg>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div className="font-bold text-md"> {receiverName} (userID: {receiverID}) </div>
+                                                                    <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}: {msg.message}</div>
                                                                 </div>
                                                             </div>
-                                                            <div>
-                                                                <div className="font-bold text-md"> {receiverName} (userID: {receiverID}) </div>
-                                                                <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}: {msg.message}</div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        }
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })
                                         )}
+
+
 
                                     </tbody>
 
