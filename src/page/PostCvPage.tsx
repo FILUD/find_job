@@ -172,7 +172,7 @@ function PostCvPage() {
                 <SetNavbar />
                 <center>
                     <div className='card bg-purple-900 bg-opacity-90 rounded-2xl mx-20 mt-3'>
-                        <div className='py-5 self-center font-bold text-3xl text-white'>Post Job</div>
+                        <div className='py-5 self-center font-bold text-3xl text-white'>Post CV</div>
                     </div>
                     <div className="card h-fit bg-black bg-opacity-15 rounded-2xl mx-20 mt-4 shadow-xl mb-10 pb-10">
                         <form onSubmit={handleSubmit}>

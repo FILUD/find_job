@@ -4,9 +4,11 @@ import axios from 'axios';
 import Footer from '../component/footer/Footer';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useTheme } from '../theme/theme';
+import HashLoader from 'react-spinners/HashLoader';
 
 function EditCvPage() {
-
+    const { theme } = useTheme();
     const { cvID } = useParams<{ cvID: string }>();
     const [title, setTitle] = useState('');
     const [occupation, setOccupation] = useState('');
@@ -188,89 +190,95 @@ function EditCvPage() {
 
 
     return (
-        <div>
-            <SetNavbar />
+        <html data-theme={theme}>
+            <div>
+                <SetNavbar />
 
-            {isLoading ? (
-                <div className='w-full h-96 max-h-screen text-center place-content-center bg-black bg-opacity-75'> Loading....</div>
-            ) : (
-                <>
-                    {error && <p>{error}</p>}
-                    {cvData && (
-                        <>
-                            <center>
-                                <div className='card bg-purple-300 bg-opacity-20 rounded-2xl mx-20 mt-3 '>
-                                    <div className='py-5 self-center font-bold text-3xl'>Post CV</div>
-                                </div>
-                                <div className="card bg-purple-300 bg-opacity-20 rounded-2xl mx-20  mt-4">
-                                    <form onSubmit={handleSubmit}>
-                                        <main className='grid grid-cols-2 gap-4 justify-items-center pt-20 mt-5 pb-20'>
-                                            <div className='bg-base-100 p-12 justify-self-end rounded-2xl'>
-                                                <div className='box-content h-60 w-60 border-4 bg-sky-50 rounded-2xl mb-10 overflow-hidden items-center grid justify-items-center'>
-                                                    {imageUrl ? (
-                                                        <img src={imageUrl} alt="IMG_CV" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} />
-                                                    ) : (
-                                                        <img src={cvData[0].IMG_CV} style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} alt="IMG_CV" />
-                                                    )}
+                {isLoading ? (
+                    <div className='flex flex-col w-full h-screen max-h-screen text-center justify-center items-center bg-base-300 bg-opacity-75 '>
+                        <HashLoader color="#36d7b7" />
+                        <p className='font-semibold'>Loading...</p>
+                    </div>
+                ) : (
+                    <>
+                        {error && <p>{error}</p>}
+                        {cvData && (
+                            <>
+                                <center>
+                                    <div className='card bg-purple-900 bg-opacity-90 rounded-2xl mx-20 mt-3'>
+                                        <div className='py-5 self-center font-bold text-3xl text-white'>Edit CV</div>
+                                    </div>
+                                    <div className="card h-fit bg-black bg-opacity-15 rounded-2xl mx-20 mt-4 shadow-xl mb-10 pb-10">
+                                        <form onSubmit={handleSubmit}>
+                                            <main className='grid grid-cols-2 gap-4 justify-items-center pt-10 mt-5 pb-20'>
+                                                <div className='bg-base-100 p-12 justify-self-end rounded-2xl'>
+                                                    <div className='box-content h-60 w-60 border-2  bg-black bg-opacity-15 rounded-2xl mb-10 overflow-hidden flex items-center justify-items-center '>
+                                                        {imageUrl ? (
+                                                            <img src={imageUrl} alt="IMG_CV" style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} className='' />
+                                                        ) : (
+                                                            <img src={cvData[0].IMG_CV} style={{ width: '100%', height: '100%', objectFit: 'cover', scale: '0.80' }} alt="IMG_CV" />
+                                                        )}
+                                                    </div>
+                                                    <input
+                                                        type="file"
+                                                        accept="image/jpeg, image/png"
+                                                        className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
+                                                        // onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
+                                                        onChange={handleFileChange}
+                                                    />
+
+
                                                 </div>
-                                                <input
-                                                    type="file"
-                                                    accept="image/jpeg, image/png"
-                                                    className="file-input file-input-bordered file-input-secondary w-full max-w-xs"
-                                                    // onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-                                                    onChange={handleFileChange}
-                                                />
 
+                                                <div className='justify-self-start grid grid-cols-1 bg-base-100 p-12 rounded-2xl'>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Title"
+                                                        className="input input-bordered input-secondary w-80"
+                                                        value={title}
+                                                        onChange={(e) => setTitle(e.target.value)}
+                                                    />
 
-                                            </div>
+                                                    <select
+                                                        className="select select-primary w-full max-w-xs"
+                                                        value={selectedCategory || ''}
+                                                        onChange={handleCategoryChange}
+                                                    >
+                                                        <option disabled value="">Work Category</option>
+                                                        {categories.map(category => (
+                                                            <option key={category.CategoryID} value={category.CategoryID}>
+                                                                {category.CategoryName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
 
-                                            <div className='justify-self-start grid grid-cols-1 bg-base-100 p-12 rounded-2xl'>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Title"
-                                                    className="input input-bordered input-secondary w-80"
-                                                    value={title}
-                                                    onChange={(e) => setTitle(e.target.value)}
-                                                />
+                                                    <select
+                                                        className="select select-primary w-full max-w-xs"
+                                                        value={occupation}
+                                                        onChange={(e) => setOccupation(e.target.value)}
+                                                    >
+                                                        <option disabled value="">Occupation</option>
+                                                        {occupations.map(occupation => (
+                                                            <option key={occupation.OccupationID} value={occupation.OccupationID}>
+                                                                {occupation.OccupationName}
+                                                            </option>
+                                                        ))}
+                                                    </select>
 
-                                                <select
-                                                    className="select select-primary w-full max-w-xs"
-                                                    value={selectedCategory || ''}
-                                                    onChange={handleCategoryChange}
-                                                >
-                                                    <option disabled value="">Work Category</option>
-                                                    {categories.map(category => (
-                                                        <option key={category.CategoryID} value={category.CategoryID}>
-                                                            {category.CategoryName}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                                    <button type="submit" className="btn btn-primary self-end">Edit My CV</button>
+                                                </div>
+                                            </main>
+                                        </form>
+                                    </div>
+                                </center>
+                                <Footer />
+                            </>
+                        )}
+                    </>
+                )}
+            </div>
+        </html>
 
-                                                <select
-                                                    className="select select-primary w-full max-w-xs"
-                                                    value={occupation}
-                                                    onChange={(e) => setOccupation(e.target.value)}
-                                                >
-                                                    <option disabled value="">Occupation</option>
-                                                    {occupations.map(occupation => (
-                                                        <option key={occupation.OccupationID} value={occupation.OccupationID}>
-                                                            {occupation.OccupationName}
-                                                        </option>
-                                                    ))}
-                                                </select>
-
-                                                <button type="submit" className="btn btn-primary self-end">Edit My CV</button>
-                                            </div>
-                                        </main>
-                                    </form>
-                                </div>
-                            </center>
-                            <Footer />
-                        </>
-                    )}
-                </>
-            )}
-        </div>
     )
 }
 

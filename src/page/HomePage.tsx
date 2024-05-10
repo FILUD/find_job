@@ -334,14 +334,12 @@ function HomePage() {
               <p className='p-2 font-bold'>Work Reccommend</p>
             </div>
             <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1'>
-
-
             </div>
             <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center'>
 
               {jobData.map((job: any) => (
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl  w-full max-w-full h-full max-h-min  '>
-                  <div className="card w-full max-w-full h-full max-h-min bg-base-100 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={job.JobID} onClick={() => handleCardClickJOB(job)}>
+                  <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={job.JobID} onClick={() => handleCardClickJOB(job)}>
                     <figure className='h-52'>
                       {job.Post_IMG && <img className='object-cover w-full h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
                     </figure>
@@ -390,10 +388,10 @@ function HomePage() {
 
 
 
-            <div className='grid grid-cols-4 justify-items-center gap-2 bg-base-100 items-center mt-2 mb-6 box-border center space-2'>
+            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center space-2'>
               {cvData.map((cv: any) => (
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
-                  <div className="card w-full max-w-full h-full max-h-min bg-base-100 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
+                  <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
                     <figure className='h-52'>
                       {cv.IMG_CV && <img className=' object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
                     </figure>
