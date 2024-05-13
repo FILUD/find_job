@@ -73,7 +73,7 @@ function MyBookmark() {
 
                 const responseData = await response.json();
                 setJobData(responseData.data);
-                console.log("-------------------------",responseData.data);
+                console.log("-------------------------", responseData.data);
             } catch (error) {
                 console.error('Error fetching bookmarked job data:', error);
             }
@@ -99,7 +99,7 @@ function MyBookmark() {
 
                 const responseData = await response.json();
                 setCvData(responseData.data);
-                console.log("+++++++++++++++++++++++++++",responseData.data);
+                console.log("+++++++++++++++++++++++++++", responseData.data);
             } catch (error) {
                 console.error('Error fetching bookmarked job data:', error);
             }
@@ -352,96 +352,6 @@ function MyBookmark() {
             <div className='mx-10'>
                 <SetNavbar />
                 <center>
-                    <main className='container mx-auto'>
-                        <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-                            <p className='p-2 font-bold'>Work Reccommend</p>
-                        </div>
-                        <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1'>
-                        </div>
-                        <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center'>
-
-                            {Array.isArray(jobData) && jobData.map((job: jobData) => (
-                                <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl  w-full max-w-full h-full max-h-min  '>
-                                    <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={job.JobID} onClick={() => handleCardClickJOB(job)}>
-                                        <figure className='h-52'>
-                                            {job.Post_IMG && <img className='object-cover w-full h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
-                                        </figure>
-                                        <div className="card-body w-full">
-                                            <div>
-                                                {job.Profile_IMG
-                                                    ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Profile_IMG} alt="Profile_IMG" />
-                                                    : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
-                                                }
-                                            </div>
-                                            <div className=''>
-                                                <h2 className="card-title"><b>{job.CompanyName}</b></h2>
-                                                <p className='text-left'><b>{job.Title}</b></p>
-                                                <p className='text-left'>
-                                                    <b>Salary :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
-                                                </p>
-                                                <p className='text-left'><b>Work category :</b> {job.CategoryName}/{job.OccupationName}</p>
-                                                <p className='text-left'>
-                                                    <b>Location :</b>
-                                                    {job.VillageName
-                                                        ? `${job.VillageName}/${job.DistrictName}/${job.ProvinceName}`
-                                                        : ' ບໍ່ລະບຸ'
-                                                    }
-                                                </p>
-                                                <div className='grid grid-cols-2 pt-1'>
-                                                    <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
-                                                    <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
-                                            </div>
-                                            <div className="w-full card-actions max-h-full h-full flex items-end">
-                                                <button className="w-full btn btn-primary bg-purple-600">View</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-
-
-
-                        </div>
-                        <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Job <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
-
-
-                        <div className='w-full  bg-purple-800 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-                            <p className='p-2  font-bold'>Empolyee Reccommend</p>
-                        </div>
-
-
-
-                        <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center space-2'>
-                            {cvData.map((cv: any) => (
-                                <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
-                                    <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
-                                        <figure className='h-52'>
-                                            {cv.IMG_CV && <img className=' object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
-                                        </figure>
-                                        <div className="card-body w-full basic-full">
-                                            <div>
-                                                {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
-                                            </div>
-                                            <div className=''>
-                                                <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
-                                                <p className='text-left'><b>{cv.Title}</b></p>
-                                                <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
-                                                <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
-                                                <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
-                                            </div>
-                                            <div className="w-full max-h-full h-full flex card-actions items-end">
-                                                <button className="w-full btn btn-primary bg-purple-600">Apply</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-
-                        </div>
-                        <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Employee <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
-                    </main>
-
-
                     {selectedJOB && (
                         <dialog id="my_modal_3" className="modal" open>
                             <div className="modal-box bg-base-300">
@@ -549,6 +459,97 @@ function MyBookmark() {
                         </dialog>
                     )}
 
+                    <div role="tablist" className="tabs tabs-lifted mt-10">
+                        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Job" checked />
+                        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+                            <div className='w-full bg-slate-200  rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+                                <p className='p-2 font-bold'>Work Reccommend</p>
+                            </div>
+                            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center'>
+                                {Array.isArray(jobData) && jobData.map((job: jobData) => (
+
+                                    <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl  w-full max-w-full h-full max-h-min  '>
+                                        <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={job.JobID} onClick={() => handleCardClickJOB(job)}>
+                                            <figure className='h-52'>
+                                                {job.Post_IMG && <img className='object-cover w-full h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
+                                            </figure>
+                                            <div className="card-body w-full">
+                                                <div>
+                                                    {job.Profile_IMG
+                                                        ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={job.Profile_IMG} alt="Profile_IMG" />
+                                                        : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                                                    }
+                                                </div>
+                                                <div className=''>
+                                                    <h2 className="card-title"><b>{job.CompanyName}</b></h2>
+                                                    <p className='text-left'><b>{job.Title}</b></p>
+                                                    <p className='text-left'>
+                                                        <b>Salary :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
+                                                    </p>
+                                                    <p className='text-left'><b>Work category :</b> {job.CategoryName}/{job.OccupationName}</p>
+                                                    <p className='text-left'>
+                                                        <b>Location :</b>
+                                                        {job.VillageName
+                                                            ? `${job.VillageName}/${job.DistrictName}/${job.ProvinceName}`
+                                                            : ' ບໍ່ລະບຸ'
+                                                        }
+                                                    </p>
+                                                    <div className='grid grid-cols-2 pt-1'>
+                                                        <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
+                                                        <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
+                                                </div>
+                                                <div className="w-full card-actions max-h-full h-full flex items-end">
+                                                    <button className="w-full btn btn-primary bg-purple-600">View</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Job <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
+
+
+                        </div>
+
+                        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Employee" />
+                        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+                            <div className='w-full  bg-purple-800 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+                                <p className='p-2  font-bold'>Empolyee Reccommend</p>
+                            </div>
+
+                            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center space-2'>
+                                {cvData.map((cv: any) => (
+                                    <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
+                                        <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
+                                            <figure className='h-52'>
+                                                {cv.IMG_CV && <img className=' object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
+                                            </figure>
+                                            <div className="card-body w-full basic-full">
+                                                <div>
+                                                    {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
+                                                </div>
+                                                <div className=''>
+                                                    <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
+                                                    <p className='text-left'><b>{cv.Title}</b></p>
+                                                    <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
+                                                    <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
+                                                    <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                                                </div>
+                                                <div className="w-full max-h-full h-full flex card-actions items-end">
+                                                    <button className="w-full btn btn-primary bg-purple-600">Apply</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+
+                            </div>
+                            <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Employee <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
+
+
+
+                        </div>
+                    </div>
 
                 </center>
                 <Footer />

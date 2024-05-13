@@ -54,6 +54,7 @@ function HomePage() {
   const [selectedJOB, setselectedJOB] = useState<any>(null);
   const [showPopup, setShowPopup] = useState(false);
   const { theme } = useTheme();
+  const myID = localStorage.getItem('ID')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,7 +76,7 @@ function HomePage() {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcvhome');
         setCvData(response.data);
-        console.log("cv home data jah :",cvData);
+        console.log("cv home data jah :", cvData);
       } catch (error) {
         console.error('Error fetching CV data:', error);
       }
@@ -84,22 +85,45 @@ function HomePage() {
     fetchData();
   }, []);
 
+  const handleEditCv = (cvID: number) => {
+    if (typeof cvID === 'number') {
+      navigate(`/editCv/${cvID}`);
+    } else {
+      console.error('Invalid jobID:', cvID);
+    }
+  };
+
+  const handleEditJob = (jobID: number) => {
+    if (typeof jobID === 'number') {
+      navigate(`/editJob/${jobID}`);
+    } else {
+      console.error('Invalid jobID:', jobID);
+    }
+  };
 
   const [showPopupCV, setShowPopupCV] = useState(false);
   const [selectedCV, setSelectedCV] = useState<any>(null);
+  const [JobseekerID, setJobseekerID] = useState<any>(null);
+  const [EmployerID, setEmployerID] = useState<any>(null);
 
-  const handleCardClickCV = (cv: any) => {
+  const handleCardClickCV = (cv: CVData) => {
+    setJobseekerID(cv.JobseekerID);
     setSelectedCV(cv);
     setShowPopup(true);
+
+    // console.log("cv Employer seleted jah :", JobseekerID);
+    // console.log("cv Employer local jah :", myID);
   };
+
 
   const closePopupCV = () => {
     setShowPopup(false);
     setSelectedCV(null);
   };
 
-  const handleCardClickJOB = (cv: any) => {
-    setselectedJOB(cv);
+  const handleCardClickJOB = (job: any) => {
+    setEmployerID(job.EmployerID);
+    setselectedJOB(job);
     setShowPopup(true);
   };
 
@@ -396,7 +420,7 @@ function HomePage() {
                       {cv.IMG_CV && <img className=' object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
                     </figure>
                     <div className="card-body w-full basic-full">
-                    <div>
+                      <div>
                         {cv.Employer_Profile_IMG
                           ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={cv.Employer_Profile_IMG} alt="Profile_IMG" />
                           : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
@@ -462,20 +486,28 @@ function HomePage() {
                   <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                   <div className="card-actions justify-end">
 
-                    <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
-                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                      </svg>
-                    </button>
+                    {myID == EmployerID && (
+                      <button className='btn btn-primary' onClick={() => handleEditJob(selectedJOB.JobID)}>Edit Jobposted</button>
+                    )}
 
-                    <button className="btn btn-primary">
-                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                      </svg>
-                    </button>
+                    {myID != EmployerID && (
+                      <>
+                        <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
+                          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                          </svg>
+                        </button>
 
-                    <button className="btn btn-primary">Apply</button>
-                    <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+                        <button className="btn btn-primary">
+                          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                          </svg>
+                        </button>
+
+                        <button className="btn btn-primary">Apply</button>
+                        <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+                      </>
+                    )}
 
                   </div>
                 </div>
@@ -510,19 +542,33 @@ function HomePage() {
                   <p className='text-left'><u>Location:</u> {selectedCV.VillageName}/{selectedCV.DistrictName}/{selectedCV.ProvinceName}</p>
                   <p className='text-left'><u>Posted:</u> {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
-                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                      </svg>
-                    </button>
 
-                    <button className="btn btn-primary">
-                      <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                      </svg>
-                    </button>
-                    <button className="btn btn-primary">Apply</button>
-                    <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
+
+                    {myID == JobseekerID && (
+                      <button className='btn btn-primary' onClick={() => handleEditCv(selectedCV.CvID)}>Edit Cv</button>
+                    )}
+
+                    {myID != JobseekerID && (
+                      <>
+                        <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
+                          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                          </svg>
+                        </button>
+                        <button className="btn btn-primary">
+                          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                          </svg>
+                        </button>
+                        <button className="btn btn-primary">Apply</button>
+                        <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
+                      </>
+                    )}
+
+
+
+
+
                   </div>
                 </div>
               </div>

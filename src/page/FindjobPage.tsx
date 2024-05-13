@@ -38,6 +38,8 @@ function FindjobPage() {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedJOB, setselectedJOB] = useState<any>(null);
   const { theme } = useTheme();
+  const myID = localStorage.getItem('ID')
+  const [EmployerID, setEmployerID] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,16 +65,36 @@ function FindjobPage() {
     return `${day}/${month}/${year}`;
   };
 
+ 
 
-
-  const handleCardClick = (cv: any) => {
-    setselectedJOB(cv);
+  const handleCardClick = (job: any) => {
+    setEmployerID(job.EmployerID);
+    setselectedJOB(job);
     setShowPopup(true);
   };
 
   const closePopup = () => {
     setShowPopup(false);
     setselectedJOB(null);
+  };
+
+  const handleEditJob = (jobID: number) => {
+    if (typeof jobID === 'number') {
+      navigate(`/editJob/${jobID}`);
+    } else {
+      console.error('Invalid jobID:', jobID);
+    }
+  };
+
+  const openProfileJOB = async (EmployerID: number) => {
+    try {
+      const response = await axios.post('http://localhost:3001/viewemployer_byid', { employerID: EmployerID }); // Change EmployerID to employerID
+      const employerData = response.data.data[0];
+      navigate(`/EmpProfile/${employerData.EmployerID}`); // Change employerData.employerID to employerData.EmployerID
+      console.log('employerID: ', employerData.EmployerID); // Change EmployerID to employerData.EmployerID
+    } catch (error) {
+      console.error('Error fetching employer data:', error);
+    }
   };
 
   const openFullScreen = (imageUrl: string) => {
@@ -304,6 +326,12 @@ function FindjobPage() {
                       <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                       <div className="card-actions justify-end">
 
+                      {myID == EmployerID && (
+                      <button className='btn btn-primary' onClick={() => handleEditJob(selectedJOB.JobID)}>Edit Jobposted</button>
+                    )}
+
+                    {myID != EmployerID && (
+                      <>
                         <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
                           <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
@@ -317,7 +345,9 @@ function FindjobPage() {
                         </button>
 
                         <button className="btn btn-primary">Apply</button>
-                        <button className="btn btn-primary" onClick={() => openProfile(selectedJOB.EmployerID)}>View Profile</button>
+                        <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+                      </>
+                    )}
 
                       </div>
                     </div>
