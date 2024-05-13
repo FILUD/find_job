@@ -272,14 +272,14 @@ function EditProfileJok() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+    
         try {
             if (addressID === null && district) {
                 const data = {
                     VillageName: village,
                     DistrictID: district
                 };
-
+    
                 const response = await fetch('http://localhost:3001/postaddress', {
                     method: 'POST',
                     headers: {
@@ -287,47 +287,48 @@ function EditProfileJok() {
                     },
                     body: JSON.stringify(data)
                 });
-
+    
                 if (response.ok) {
                     const responseData = await response.json();
                     console.log('Data inserted successfully.');
-
+    
                     setAddressId(responseData.addressId);
+                    console.log("Data for uploaded address:", responseData.addressId);
                     setVillage('');
                     setDistrict('');
-
+    
                     try {
                         const editData = {
                             AddressID: responseData.addressId,
-                            //   VillageName: village,
-                            //   DistrictID: district
+                            VillageName: village,
+                            DistrictID: district
                         };
                         console.log('Edit Data:', editData);
-
+    
                         const editResponse = await fetch(`http://localhost:3001/editaddressjok/${jobseekerID}`, {
-                            method: 'PUT',
+                            method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(editData)
                         });
-
+    
                         if (editResponse.ok) {
-                            console.log('Edit Address successfully.');
+                            console.log('Edit Address successfully uploaded new data.');
                         } else {
-                            console.error('Failed to Address.');
+                            console.error('Failed to edit address.');
                         }
-
+    
                         const response2 = await fetch(`http://localhost:3001/editprofiledatajok/${jobseekerID}`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({ jobseekerName: jobseekerName, proTitle: proTitle, tel: tel, addressID: addressID, }), // Changed distirctID to district
+                            body: JSON.stringify({ jobseekerName, proTitle, tel, addressID: responseData.addressId }),
                         });
-
+    
                         if (response2.ok) {
-                            console.log("District Inserted successfully");
+                            console.log("Profile data edited successfully");
                             Swal.fire({
                                 position: "top",
                                 icon: "success",
@@ -337,9 +338,9 @@ function EditProfileJok() {
                             });
                             window.location.reload();
                         } else {
-                            console.error("Failed Edit Profile data");
+                            console.error("Failed to edit profile data");
                         }
-
+    
                     } catch (error) {
                         console.error('Error editing data:', error);
                     }
@@ -347,7 +348,6 @@ function EditProfileJok() {
                     console.error('Failed to insert data.');
                 }
             } else if (addressID !== null) {
-
                 const response = await fetch(`http://localhost:3001/editaddress/${addressID}`, {
                     method: "PUT",
                     headers: {
@@ -355,23 +355,23 @@ function EditProfileJok() {
                     },
                     body: JSON.stringify({ VillageName: village, DistrictID: district }),
                 });
-
+    
                 if (response.ok) {
-                    console.log("District Inserted successfully");
+                    console.log("Address edited successfully");
                 } else {
-                    console.error("Failed Edit Address");
+                    console.error("Failed to edit address");
                 }
-
+    
                 const response2 = await fetch(`http://localhost:3001/editprofiledatajok/${jobseekerID}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ jobseekerName: jobseekerName, proTitle: proTitle, tel: tel, addressID: addressID, }), // Changed distirctID to district
+                    body: JSON.stringify({ jobseekerName, proTitle, tel, addressID }),
                 });
-
+    
                 if (response2.ok) {
-                    console.log("District Inserted successfully");
+                    console.log("Profile data edited successfully");
                     Swal.fire({
                         position: "top",
                         icon: "success",
@@ -381,14 +381,15 @@ function EditProfileJok() {
                     });
                     window.location.reload();
                 } else {
-                    console.error("Failed Edit Profile data");
+                    console.error("Failed to edit profile data");
                 }
             }
-
+    
         } catch (error) {
-            console.error('Error inserting data:', error);
+            console.error('Error:', error);
         }
     };
+    
 
 
     return (

@@ -75,7 +75,7 @@ function HomePage() {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcvhome');
         setCvData(response.data);
-        console.log(cvData);
+        console.log("cv home data jah :",cvData);
       } catch (error) {
         console.error('Error fetching CV data:', error);
       }
@@ -396,8 +396,11 @@ function HomePage() {
                       {cv.IMG_CV && <img className=' object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
                     </figure>
                     <div className="card-body w-full basic-full">
-                      <div>
-                        {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
+                    <div>
+                        {cv.Employer_Profile_IMG
+                          ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={cv.Employer_Profile_IMG} alt="Profile_IMG" />
+                          : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                        }
                       </div>
                       <div className=''>
                         <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
