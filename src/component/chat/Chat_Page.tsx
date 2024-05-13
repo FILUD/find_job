@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SetNavbar from '../navbar/SetNavbar'
-import ChatMessage from './test/ChatMessage'
 import io from 'socket.io-client';
 import SetMessage from './message/setMessage';
-import Message from './message/Message';
 import { ThemeToggle, useTheme } from '../../theme/theme'
 import MoonLoader from 'react-spinners/MoonLoader';
 const socket = io('http://localhost:3001');
@@ -15,6 +13,7 @@ interface ListChatProps {
     isRead: boolean;
     receiverInfo: UserInfoProps;
     senderInfo: UserInfoProps;
+    type: string;
 }
 
 interface UserInfoProps {
@@ -26,6 +25,7 @@ interface UserInfoProps {
     Profile_IMG: string;
 }
 
+
 interface Messages {
     messageId: number;
     senderId: string;
@@ -34,6 +34,24 @@ interface Messages {
     isRead: boolean;
     receiverInfo: UserInfoProps;
     senderInfo: UserInfoProps;
+    type: string;
+    jobRequestID: number | null;
+    jobInvitation: number | null;
+    additionalData: CardProps
+}
+
+interface CardProps {
+    CardID: number;
+    JobseekerID: number;
+    EmployerID: number;
+    JobID: number;
+    ID: number;
+    Status: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    IMG_Card: string;
+    Title: string;
+    OccupationID: string;
 }
 
 
@@ -102,6 +120,7 @@ function Chat_Page() {
         socket.emit('fetch old message', { senderId: sendSender, receiverId: sendReceiver });
         socket.on('old messages', (getMessages: Messages[]) => {
             setMessages(getMessages);
+            // console.log("test", getMessages)
         });
     };
 
@@ -126,8 +145,8 @@ function Chat_Page() {
                 <div className='basis-full max-h-full flex flex-row pt-2 shadow-xl'>
                     <div className="basis-2/4">
                         {/* left-side */}
-                        <div className='flex flex-col h-full max-h-full bg-base-300 shadow-xl'>
-                            <div className='basis-full max-h-full snap-y overflow-y-scroll bg-base-300 bg-opacity-65 shadow-xl m-2'>
+                        <div className='flex flex-col h-full max-h-full bg-base-200 shadow-xl'>
+                            <div className='basis-full max-h-full snap-y overflow-y-scroll bg-base-200 bg-opacity-65 shadow-xl m-2'>
                                 <div>
                                     <div className='bg-black bg-opacity-5 h-16 flex justify-center shadow-lg my-2'>
                                         <p className='text-xl font-bold self-center'>Message</p>
@@ -137,7 +156,7 @@ function Chat_Page() {
                                     {/* list chat */}
                                     <tbody className=''>
                                         {isLoading ? (
-                                            <div className='flex justify-center items-center w-full h-96 max-h-full bg-base-300 flex-col'>
+                                            <div className='flex justify-center items-center w-full h-96 max-h-full bg-base-200 flex-col'>
                                                 <MoonLoader
                                                     color="#36d7b7"
                                                     cssOverride={{}}
@@ -174,7 +193,7 @@ function Chat_Page() {
                                                                 </div>
                                                                 <div>
                                                                     <div className="font-bold text-md"> {receiverName} (userID: {receiverID}) </div>
-                                                                    <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}: {msg.message}</div>
+                                                                    <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}:  {!msg.message ? "sent " + " " + msg.type + " " + " card" : msg.message}</div>
                                                                 </div>
                                                             </div>
                                                         </td>

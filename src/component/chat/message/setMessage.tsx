@@ -13,12 +13,31 @@ interface ListChat {
     receiverImg: string;
     senderImg: string;
 }
+
+interface CardProps {
+    CardID: number;
+    JobseekerID: number;
+    EmployerID: number;
+    JobID: number;
+    ID: number;
+    Status: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    IMG_Card: string;
+    Title: string;
+    OccupationID: string;
+}
+
 interface Messages {
     messageId: number;
     senderId: string;
     receiverId: string;
     message: string;
     isRead: boolean;
+    type: string;
+    jobRequestID: number | null,
+    jobInvitation: number | null,
+    additionalData: CardProps
 }
 
 function SetMessage({ senderId, receiverId, listMessage, userIDLogin, receiverImg, receiverName, senderImg }: ListChat) {

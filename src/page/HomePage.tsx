@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import '../css/style.css'
 // import Navbar from '../component/navbar/Navbar';
 import Footer from '../component/footer/Footer';
-import { SpinnerColors } from './spinner';
 import SetNavbar from '../component/navbar/SetNavbar';
-import { ThemeToggle, useTheme } from '../theme/theme'
+import { useTheme } from '../theme/theme'
 import Swal from 'sweetalert2';
+import JobRequest from '../component/chat/card/JobRequest';
+import { select } from '@material-tailwind/react';
 
 interface jobData {
   JobID: number;
@@ -44,8 +45,27 @@ interface CVData {
   ProvinceName: string;
 }
 
-
-
+//send job request
+interface SendRequestState {
+  senderId: number | undefined
+  receiverImg: string;
+  receiverId: number | undefined;
+  jobId: number | undefined;
+  receiverName: string;
+  jobTitle: string;
+  category: string,
+  type: string,
+}
+const initialState: SendRequestState = {
+  senderId: undefined,
+  receiverImg: '',
+  receiverId: undefined,
+  jobId: undefined,
+  receiverName: '',
+  jobTitle: '',
+  category: '',
+  type: '',
+};
 
 function HomePage() {
   const navigate = useNavigate();
@@ -56,6 +76,43 @@ function HomePage() {
   const { theme } = useTheme();
   const myID = localStorage.getItem('ID')
 
+
+  // toggle send job request 
+  const [isOpenJobReq, setIsOpenJobReq] = useState(false);
+  const [dataList, setDataList] = useState<SendRequestState>(initialState);
+  const [senderID, setSenderID] = useState<number>();
+  useEffect(() => {
+    const UserID = localStorage.getItem('ID');
+    if (UserID) {
+      setSenderID(parseInt(UserID));
+    }
+  }, [])
+  const handleSetData = async (emp_img: string, emp_id: number, job_id: number, emp_name: string, job_title: string, category: string,
+    type: string,) => {
+    setDataList({
+      senderId: senderID,
+      receiverImg: emp_img,
+      receiverId: emp_id,
+      jobId: job_id,
+      receiverName: emp_name,
+      jobTitle: job_title,
+      category: category,
+      type: type,
+    });
+  }
+
+  const handleIsOpenJobRequest = () => {
+    setIsOpenJobReq(true)
+    closePopupJOB();
+    closePopupCV();
+  }
+
+
+  const closeToggleJobRequest = () => {
+    setIsOpenJobReq(false)
+  }
+
+  //useEffect
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -393,7 +450,7 @@ function HomePage() {
                           <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
                       </div>
                       <div className="w-full card-actions max-h-full h-full flex items-end">
-                        <button className="w-full btn btn-primary bg-purple-600">View</button>
+                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetData(job.Employer_Profile_IMG, job.EmployerID, job.JobID, job.CompanyName, job.OccupationName, job.CategoryName, job.WorkType)}>View</button>
                       </div>
                     </div>
                   </div>
@@ -434,17 +491,25 @@ function HomePage() {
                         <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                       </div>
                       <div className="w-full max-h-full h-full flex card-actions items-end">
-                        <button className="w-full btn btn-primary bg-purple-600">Apply</button>
+                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => setIsOpenJobReq(true)}>Apply</button>
                       </div>
                     </div>
                   </div>
+                  {/* <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleIsOpenJobRequest(cv.Jobseeker_Profile_IMG,cv.Cv)}>Apply</button> */}
+
                 </div>
               ))}
 
             </div>
+
             <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Employee <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
           </main>
 
+          {isOpenJobReq && (
+            <div className='absolute'>
+              <JobRequest isOpen={isOpenJobReq} isClose={closeToggleJobRequest} senderId={dataList.senderId} receiverImg={dataList.receiverImg} receiverId={dataList.receiverId} jobId={dataList.jobId} receiverName={dataList.receiverName} jobTitle={dataList.jobTitle} category={dataList.category} type={dataList.type}/>
+            </div>
+          )}
 
           {selectedJOB && (
             <dialog id="my_modal_3" className="modal" open>
@@ -498,6 +563,7 @@ function HomePage() {
                           </svg>
                         </button>
 
+<<<<<<< Updated upstream
                         <button className="btn btn-primary">
                           <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
@@ -508,6 +574,12 @@ function HomePage() {
                         <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
                       </>
                     )}
+=======
+                    <button className="btn btn-primary" onClick={() => handleIsOpenJobRequest()}>Apply</button>
+                    {/* <button className="w-full btn btn-primary bg-purple-600"  >Apply</button> */}
+
+                    <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+>>>>>>> Stashed changes
 
                   </div>
                 </div>
@@ -574,6 +646,7 @@ function HomePage() {
               </div>
             </dialog>
           )}
+
 
 
         </center>

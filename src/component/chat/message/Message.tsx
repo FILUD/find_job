@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client';
+import Card_JobRequest from './card_message_show/Card_JobRequest';
 const socket = io('http://localhost:3001');
 
 interface Messages {
@@ -8,6 +9,10 @@ interface Messages {
     receiverId: string;
     message: string;
     isRead: boolean;
+    type: string;
+    jobRequestID: number | null,
+    jobInvitation: number | null,
+    additionalData: CardProps
 }
 interface UserParam {
     getSenderID: string;
@@ -19,6 +24,19 @@ interface UserParam {
     senderImg: string;
 }
 
+interface CardProps {
+    CardID: number;
+    JobseekerID: number;
+    EmployerID: number;
+    JobID: number;
+    ID: number;
+    Status: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    IMG_Card: string;
+    Title: string;
+    OccupationID: string;
+}
 
 function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receieverImg, receiverName, senderImg }: UserParam) {
     const [senderID, setSenderID] = useState<string>('');
@@ -37,7 +55,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
         setProfile_img(receieverImg)
         setProfile_name(receiverName)
         setProfile_ownImg(senderImg)
-        // scrollMessageList()
+        // console.log(listMessage)
     }, [getSenderID, getReceiverID, listMessage, receieverImg, receiverName, senderImg]);
 
 
@@ -77,10 +95,9 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
 
     const [messagesLoaded, setMessagesLoaded] = useState(false);
     useEffect(() => {
-        // Simulating loading messages from an API or database
         setTimeout(() => {
             setMessagesLoaded(true);
-        }, 2000); // Adjust the timeout duration as needed
+        }, 2000);
     }, []);
 
     return (
@@ -135,7 +152,23 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                             )}
                                     </div>
                                 </div>
-                                <div className="chat-bubble chat-bubble-info">{msg.message}</div>
+                                {/* message */}
+                                {msg.type == "textmessage" ? (
+                                    <div className="chat-bubble chat-bubble-info">{msg.message}</div>
+                                ) : (
+                                    // card jobrequest or invitation
+                                    <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
+                                        {msg.type == "jobrequest" ? (
+                                            <Card_JobRequest data={msg.additionalData} type={"jobseeker"} />
+                                        ) : (
+                                            //TODO: create card Job Invitation
+                                            <Card_JobRequest data={msg.additionalData} type={"employer"} />
+                                        )}
+
+                                    </div>
+
+                                )}
+
                             </div>
                         ) : (
                             // opponent side
@@ -156,7 +189,21 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                             )}
                                     </div>
                                 </div>
-                                <div className="chat-bubble chat-bubble-primary">{msg.message}</div>
+                                {/* message */}
+                                {msg.type == "textmessage" ? (
+                                    <div className="chat-bubble chat-bubble-info">{msg.message}</div>
+                                ) : (
+                                    // card jobrequest or invitation
+                                    <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
+                                        {msg.type == "jobrequest" ? (
+                                            <Card_JobRequest data={msg.additionalData} type={"employer"} />
+                                        ) : (
+                                            //TODO: create card Job Invitation
+                                            <Card_JobRequest data={msg.additionalData} type={"jobseeker"} />
+                                        )}
+
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

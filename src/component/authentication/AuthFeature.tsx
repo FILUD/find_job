@@ -157,13 +157,14 @@ export default function AuthFeat() {
                 if (isOpenLogIn) {
                     console.log('login with vertication successful')
                     const res = await getCrediatial(emailLogin);
+
                     if (res !== null) {
                         setIsOpenOTP(false);
                         setIsOpenSignUp(false);
                         setIsOpenLogIn(false);
                         clearInputs();
                         navigate('/Home');
-
+                        window.location.reload();
                     }
 
                 }
@@ -177,7 +178,7 @@ export default function AuthFeat() {
                         setIsOpenLogIn(false);
                         clearInputs();
                         navigate('/Home');
-
+                        window.location.reload();
                         console.log('signup gonna save your data')
                     }
                 }

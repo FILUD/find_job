@@ -79,8 +79,8 @@ export default function Profile_feature() {
     const [cvDetail, setCvDetail] = useState<CVDetail[]>([]);
     const [jobDetail, setJobDetail] = useState<jobDetail[]>([]);
     const getRole = localStorage.getItem('Role');
-    console.log("is role :", getRole)
-
+    
+    
 
 
 
