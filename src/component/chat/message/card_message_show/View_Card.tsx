@@ -84,7 +84,7 @@ function View_Card({ isOpen, isClose, data, type, handleAccept }: Toggle) {
                                         <h2 className='font-bold'>View </h2>
                                     </Dialog.Title>
                                     <div className=''>
-                                        <div className='card card-side  shadow-xl bg-primary m-4' >
+                                        <div className='card card-side  shadow-xl bg-primary glass m-4' >
                                             <div className='card-body'>
                                                 <figure className=''>
                                                     <a href={data.IMG_Card} target="_blank" rel="noopener noreferrer" onClick={handleFullScreen} className='flex justify-center'>

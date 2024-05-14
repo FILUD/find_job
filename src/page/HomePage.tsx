@@ -10,6 +10,7 @@ import { useTheme } from '../theme/theme'
 import Swal from 'sweetalert2';
 import JobRequest from '../component/chat/card/JobRequest';
 import { select } from '@material-tailwind/react';
+import JobInvitation from '../component/chat/card/JobInvitation';
 
 interface jobData {
   JobID: number;
@@ -67,6 +68,19 @@ const initialState: SendRequestState = {
   type: '',
 };
 
+
+//send job invitation 
+interface SendInvitation {
+  senderId: number | undefined
+  // jobData: jobData | [],
+  cvData: CVData[] | [],
+}
+const initialInvite: SendInvitation = {
+  senderId: undefined,
+  // jobData: [],
+  cvData: [],
+};
+
 function HomePage() {
   const navigate = useNavigate();
   const [jobData, setJobData] = useState<jobData[]>([]);
@@ -77,16 +91,21 @@ function HomePage() {
   const myID = localStorage.getItem('ID')
 
 
-  // toggle send job request 
+  // toggle send job request and job invitation
   const [isOpenJobReq, setIsOpenJobReq] = useState(false);
+  const [isOpenJobInvite, setIsOpenJobInvite] = useState(false);
   const [dataList, setDataList] = useState<SendRequestState>(initialState);
+  const [invitationList, setInvitationList] = useState<SendInvitation>(initialInvite);
   const [senderID, setSenderID] = useState<number>();
+
   useEffect(() => {
     const UserID = localStorage.getItem('ID');
     if (UserID) {
       setSenderID(parseInt(UserID));
     }
   }, [])
+
+  // job request
   const handleSetData = async (emp_img: string, emp_id: number, job_id: number, emp_name: string, job_title: string, category: string,
     type: string,) => {
     setDataList({
@@ -106,11 +125,28 @@ function HomePage() {
     closePopupJOB();
     closePopupCV();
   }
-
-
   const closeToggleJobRequest = () => {
     setIsOpenJobReq(false)
   }
+
+  //job invitation
+  const handleSetDataInvitation = async (cvData: CVData[]) => {
+    setInvitationList({
+      senderId: senderID,
+      cvData: cvData
+    })
+    console.log("show me cv list", cvData)
+  }
+
+  const handleIsOpenJobInvite = () => {
+    setIsOpenJobInvite(true)
+    closePopupJOB();
+    closePopupCV();
+  }
+  const closeToggleJobInvite = () => {
+    setIsOpenJobInvite(false)
+  }
+
 
   //useEffect
   useEffect(() => {
@@ -133,7 +169,8 @@ function HomePage() {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcvhome');
         setCvData(response.data);
-        console.log("cv home data jah :", cvData);
+        // console.log("show me ", response.data)
+        console.log("cv home data jah :", cvData) ;
       } catch (error) {
         console.error('Error fetching CV data:', error);
       }
@@ -159,7 +196,7 @@ function HomePage() {
   };
 
   const [showPopupCV, setShowPopupCV] = useState(false);
-  const [selectedCV, setSelectedCV] = useState<any>(null);
+  const [selectedCV, setSelectedCV] = useState<CVData | null>();
   const [JobseekerID, setJobseekerID] = useState<any>(null);
   const [EmployerID, setEmployerID] = useState<any>(null);
 
@@ -167,9 +204,6 @@ function HomePage() {
     setJobseekerID(cv.JobseekerID);
     setSelectedCV(cv);
     setShowPopup(true);
-
-    // console.log("cv Employer seleted jah :", JobseekerID);
-    // console.log("cv Employer local jah :", myID);
   };
 
 
@@ -470,7 +504,7 @@ function HomePage() {
 
 
             <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center space-2'>
-              {cvData.map((cv: any) => (
+              {cvData.map((cv: CVData) => (
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
                   <div className="card w-full max-w-full h-full max-h-min bg-base-300 card-bordered shadow-lg  hover:shadow-purple-400 duration-700 cursor-pointer" key={cv.CvID} onClick={() => handleCardClickCV(cv)}>
                     <figure className='h-52'>
@@ -478,8 +512,8 @@ function HomePage() {
                     </figure>
                     <div className="card-body w-full basic-full">
                       <div>
-                        {cv.Employer_Profile_IMG
-                          ? <img className='w-14 h-14 -mt-16 border-2 rounded-full' src={cv.Employer_Profile_IMG} alt="Profile_IMG" />
+                        {cv.Jobseeker_Profile_IMG != ''
+                          ? <img className='w-14 h-14 -mt-16 border-2 rounded-full bg-white' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />
                           : <img className='w-14 h-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
                         }
                       </div>
@@ -491,7 +525,7 @@ function HomePage() {
                         <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                       </div>
                       <div className="w-full max-h-full h-full flex card-actions items-end">
-                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => setIsOpenJobReq(true)}>Apply</button>
+                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetDataInvitation(cvData)}>View</button>
                       </div>
                     </div>
                   </div>
@@ -505,9 +539,17 @@ function HomePage() {
             <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Employee <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
           </main>
 
+          {/* Is Open job Request or not */}
           {isOpenJobReq && (
             <div className='absolute'>
               <JobRequest isOpen={isOpenJobReq} isClose={closeToggleJobRequest} senderId={dataList.senderId} receiverImg={dataList.receiverImg} receiverId={dataList.receiverId} jobId={dataList.jobId} receiverName={dataList.receiverName} jobTitle={dataList.jobTitle} category={dataList.category} type={dataList.type} />
+            </div>
+          )}
+
+          {/* Is Open Job Invitation or not  */}
+          {isOpenJobInvite && (
+            <div className='absolute'>
+              <JobInvitation isOpen={isOpenJobInvite} isClose={closeToggleJobInvite} employerID={invitationList.senderId} dataList={invitationList.cvData} />
             </div>
           )}
 
@@ -573,11 +615,6 @@ function HomePage() {
                         <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
                       </>
                     )}
-                    {/* todo */}
-                    {/* <button className="btn btn-primary" onClick={() => handleIsOpenJobRequest()}>Apply</button>
-                    {/* <button className="w-full btn btn-primary bg-purple-600"  >Apply</button> */}
-
-                    {/* <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button> */}
 
                   </div>
                 </div>
@@ -630,7 +667,7 @@ function HomePage() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
                           </svg>
                         </button>
-                        <button className="btn btn-primary">Apply</button>
+                        <button className="btn btn-primary" onClick={() => handleIsOpenJobInvite()}>Apply</button>
                         <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
                       </>
                     )}

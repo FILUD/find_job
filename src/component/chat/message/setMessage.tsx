@@ -26,6 +26,10 @@ interface CardProps {
     IMG_Card: string;
     Title: string;
     OccupationID: string;
+    Description: string,
+    SalaryStart: string,
+    SalaryMax: string,
+    WorkType: string
 }
 
 interface Messages {

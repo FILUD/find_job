@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client';
 import Card_JobRequest from './card_message_show/Card_JobRequest';
+import Card_JobInvitation from './card_message_show/Card_JobInvitation';
 const socket = io('http://localhost:3001');
 
 interface Messages {
@@ -36,6 +37,10 @@ interface CardProps {
     IMG_Card: string;
     Title: string;
     OccupationID: string;
+    Description: string,
+    SalaryStart: string,
+    SalaryMax: string,
+    WorkType: string
 }
 
 function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receieverImg, receiverName, senderImg }: UserParam) {
@@ -66,10 +71,12 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
     const sendMessage = () => {
         if (senderID && receiverID && messageInput && userIDLogin) {
             socket.emit('send message', { senderId: senderID == userIDLogin ? userIDLogin : userIDLogin, receiverId: receiverID == userIDLogin ? senderID : receiverID, message: messageInput });
-            console.log('always get login user', senderID == userIDLogin ? userIDLogin : userIDLogin)
-            console.log('always get receiver', receiverID == userIDLogin ? senderID : receiverID)
+            // console.log('always get login user', senderID == userIDLogin ? userIDLogin : userIDLogin)
+            // console.log('always get receiver', receiverID == userIDLogin ? senderID : receiverID)
             setMessageInput('');
+            scrollAfterTimeout();
         }
+        
     };
 
     const scrollAfterTimeout = () => {
@@ -77,7 +84,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
             if (messageListRef.current) {
                 messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
             }
-        }, 500);
+        }, 2000);
     };
 
 
@@ -88,7 +95,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
         e.preventDefault();
         if (messageInput.trim() !== '') {
             sendMessage();
-            scrollAfterTimeout()
+            scrollAfterTimeout();
         }
     };
 
@@ -116,11 +123,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                 )
                                 :
                                 (
-                                    < div className=''>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                        </svg>
-                                    </div>
+                                    <img src="/Icon/user.png" alt="PostJob" />
                                 )}
 
                         </div>
@@ -146,11 +149,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                             )
                                             :
                                             (
-                                                <div className=''>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                                    </svg>
-                                                </div>
+                                                <img src="/Icon/user.png" alt="PostJob" />
                                             )}
                                     </div>
                                 </div>
@@ -164,7 +163,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                             <Card_JobRequest data={msg.additionalData} type={"jobseeker"} />
                                         ) : (
                                             //TODO: create card Job Invitation
-                                            <Card_JobRequest data={msg.additionalData} type={"employer"} />
+                                            <Card_JobInvitation data={msg.additionalData} type={"employer"} />
                                         )}
 
                                     </div>
@@ -183,11 +182,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                             )
                                             :
                                             (
-                                                < div className=''>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full p-2 ">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                                    </svg>
-                                                </div>
+                                                <img src="/Icon/user.png" alt="PostJob" />
                                             )}
                                     </div>
                                 </div>
@@ -201,7 +196,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                             <Card_JobRequest data={msg.additionalData} type={"employer"} />
                                         ) : (
                                             //TODO: create card Job Invitation
-                                            <Card_JobRequest data={msg.additionalData} type={"jobseeker"} />
+                                            <Card_JobInvitation data={msg.additionalData} type={"jobseeker"} />
                                         )}
 
                                     </div>

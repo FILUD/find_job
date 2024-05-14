@@ -50,6 +50,27 @@ function JobRequest({ senderId, receiverId, jobId, receiverName, receiverImg, jo
         }
     }, [senderId]);
 
+    // // show cv of jobseeker
+    // useEffect(() => {
+    //     const fetchData = async (Id: number) => {
+    //         setIsLoading(true)
+    //         try {
+    //             const response = await axios.post('http://localhost:3001/jobseeker', { jobseekerID: Id });
+    //             if (response.data) {
+    //                 const data = response.data.data;
+    //                 setIsLoading(false);
+    //                 setListCv(data);
+    //             } else {
+    //                 console.error('No CV details found for this jobseeker.');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching CV detail:', error);
+    //         }
+    //     };
+    //     if (senderId) {
+    //         fetchData(senderId);
+    //     }
+    // }, [senderId]);
 
     // send CV: Sending Job Request
     const sendCV = async () => {
