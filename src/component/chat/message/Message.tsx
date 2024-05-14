@@ -100,10 +100,12 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
         }, 2000);
     }, []);
 
+
+
     return (
         <div className='flex flex-col w-full h-full  max-h-full bg-base-100 '>
             {/* profile */}
-            <div className='h-16 bg-purple-900 bg-opacity-80 rounded-t-xl  pl-8 shadow-2xl '>
+            <div className='h-16 bg-primary rounded-t-xl  pl-8 shadow-2xl '>
                 <div className="flex  items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
                     {/* avatar */}
                     <div className="avatar">
@@ -124,7 +126,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                         </div>
                     </div>
                     <div>
-                        <div className="font-semibold pl-4 text-slate-200 text-lg">{profile_name}</div>
+                        <div className="font-semibold pl-4  text-lg">{profile_name}</div>
                     </div>
                 </div>
             </div>
@@ -154,7 +156,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                 </div>
                                 {/* message */}
                                 {msg.type == "textmessage" ? (
-                                    <div className="chat-bubble chat-bubble-info">{msg.message}</div>
+                                    <div className="chat-bubble chat-bubble-info max-w-80 break-words">{msg.message}</div>
                                 ) : (
                                     // card jobrequest or invitation
                                     <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
@@ -191,7 +193,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                 </div>
                                 {/* message */}
                                 {msg.type == "textmessage" ? (
-                                    <div className="chat-bubble chat-bubble-info">{msg.message}</div>
+                                    <div className="chat-bubble chat-bubble-info max-w-80 break-words">{msg.message}</div>
                                 ) : (
                                     // card jobrequest or invitation
                                     <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>

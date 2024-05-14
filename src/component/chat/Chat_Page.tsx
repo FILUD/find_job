@@ -193,7 +193,7 @@ function Chat_Page() {
                                                                 </div>
                                                                 <div>
                                                                     <div className="font-bold text-md"> {receiverName} (userID: {receiverID}) </div>
-                                                                    <div className="text-sm opacity-50">{msg.senderId == userIDLogin ? "You" : "Your friend"}:  {!msg.message ? "sent " + " " + msg.type + " " + " card" : msg.message}</div>
+                                                                    <div className="text-sm opacity-50 break-words line-clamp-1">{msg.senderId == userIDLogin ? "You" : "Your friend"}:  {!msg.message ? "sent " + " " + msg.type + " " + " card" : msg.message}</div>
                                                                 </div>
                                                             </div>
                                                         </td>

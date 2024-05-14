@@ -569,7 +569,7 @@ function HomePage() {
                           </svg>
                         </button>
 
-                        <button className="btn btn-primary">Apply</button>
+                        <button className="btn btn-primary" onClick={() => handleIsOpenJobRequest()}>Apply</button>
                         <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
                       </>
                     )}
@@ -634,10 +634,6 @@ function HomePage() {
                         <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
                       </>
                     )}
-
-
-
-
 
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Message from "./Message";
+import  Message from "./Message";
 import NonMessage from "./NonMessage";
 import HashLoader from "react-spinners/HashLoader";
 
