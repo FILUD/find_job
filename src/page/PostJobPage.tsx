@@ -244,7 +244,7 @@ function PostJobPage() {
                                                 <div id="col1">
                                                     <p className='ml-2 horizontal text-sm font-semibold'>Salary minimum</p>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         placeholder="1,000 ກີບ"
                                                         className="input input-bordered w-5/6 text-end"
                                                         value={salaryMinimum}
@@ -254,7 +254,7 @@ function PostJobPage() {
                                                 <div id="col1">
                                                     <p className='ml-2 horizontal text-sm font-semibold'>Salary maximum</p>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         placeholder="3,000,000 ກີບ"
                                                         className="input input-bordered w-5/6 text-end"
                                                         value={salaryMaximum}

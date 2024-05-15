@@ -40,6 +40,14 @@ function FindjobPage() {
   const { theme } = useTheme();
   const myID = localStorage.getItem('ID')
   const [EmployerID, setEmployerID] = useState<any>(null);
+  const [isLoading, setLoading] = useState(true);
+  const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
+  const [occupation, setOccupation] = useState('');
+  const [provinces, setProvinces] = useState<{ ProvinceID: number; ProvinceName: string }[]>([]);
+  const [province, setProvince] = useState('');
+  const [selectedOption, setSelectedOption] = useState<string>('none');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +73,7 @@ function FindjobPage() {
     return `${day}/${month}/${year}`;
   };
 
- 
+
 
   const handleCardClick = (job: any) => {
     setEmployerID(job.EmployerID);
@@ -129,7 +137,6 @@ function FindjobPage() {
   const handleJobBookmark = async (JobID: number) => {
     const UserID = localStorage.getItem('UserID');
 
-    // Check if UserID is available
     if (!UserID) {
       console.error('UserID is not available.');
       return;
@@ -207,6 +214,84 @@ function FindjobPage() {
     }
   }
 
+  // Fetch categories data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const categoriesResponse = await fetch('http://localhost:3001/getallcategory');
+        const categoriesData = await categoriesResponse.json();
+        if (categoriesData.error === false) {
+          setCategories(categoriesData.data);
+        } else {
+          console.error('Failed to fetch categories:', categoriesData.message);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Fetch province data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const provincesResponse = await fetch('http://localhost:3001/getprovince');
+        const provincesData = await provincesResponse.json();
+        if (provincesData.error === false) {
+          setProvinces(provincesData.data);
+        } else {
+          console.error('Failed to fetch categories:', provincesData.message);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Handle category change
+  const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategoryId = parseInt(event.target.value);
+    setSelectedCategory(selectedCategoryId);
+    try {
+      const response = await fetch('http://localhost:3001/getoccupationbycategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ CategoryID: selectedCategoryId })
+      });
+
+      const data = await response.json();
+      if (data.error === false) {
+        setOccupations(data.data);
+      } else {
+        console.error('Failed to fetch occupations:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching occupations:', error);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
+  };
+
+  
+
   return (
     <html data-theme={theme}>
       <div className='mx-10'>
@@ -218,29 +303,60 @@ function FindjobPage() {
             </div>
             <div className='mx-auto grid grid-cols-4 justify-items-center gap-1 mb-4'>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Sort by :</option>
-                <option>New</option>
-                <option>Popula</option>
-                <option>Lastest</option>
+            <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                value={selectedOption}
+                onChange={handleChange}
+              >
+                <option disabled value="none" className='bg-slate-400 text-slate-950'>
+                  Sort by :
+                </option>
+                <option value="none" className='bg-base-300'>none</option>
+                <option value="new">New</option>
+                <option value="latest">Latest</option>
               </select>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Position</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+              <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                value={selectedCategory || ''}
+                onChange={handleCategoryChange}
+              >
+                <option disabled value="">Work Category</option>
+                <option className='bg-base-300'>none</option>
+                {categories.map(category => (
+                  <option key={category.CategoryID} value={category.CategoryID}>
+                    {category.CategoryName}
+                  </option>
+                ))}
               </select>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Work Category</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+              <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                value={occupation}
+                onChange={(e) => setOccupation(e.target.value)}
+              >
+                <option disabled value="">Occupation</option>
+                <option disabled value="">Please Select Category</option>
+                <option className='bg-base-300'>none</option>
+                {occupations.map(occupation => (
+                  <option key={occupation.OccupationID} value={occupation.OccupationID}>
+                    {occupation.OccupationName}
+                  </option>
+                ))}
               </select>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Work Type</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+              <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                value={province}
+                onChange={(e) => setProvince(e.target.value)}
+              >
+                <option disabled value="">Province</option>
+                <option className='bg-base-300'>none</option>
+                {provinces.map(province => (
+                  <option key={province.ProvinceID} value={province.ProvinceID}>
+                    {province.ProvinceName}
+                  </option>
+                ))}
               </select>
 
             </div>
@@ -326,28 +442,28 @@ function FindjobPage() {
                       <p className='text-left'><u>Posted</u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                       <div className="card-actions justify-end">
 
-                      {myID == EmployerID && (
-                      <button className='btn btn-primary' onClick={() => handleEditJob(selectedJOB.JobID)}>Edit Jobposted</button>
-                    )}
+                        {myID == EmployerID && (
+                          <button className='btn btn-primary' onClick={() => handleEditJob(selectedJOB.JobID)}>Edit Jobposted</button>
+                        )}
 
-                    {myID != EmployerID && (
-                      <>
-                        <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
-                          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                          </svg>
-                        </button>
+                        {myID != EmployerID && (
+                          <>
+                            <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
+                              <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                              </svg>
+                            </button>
 
-                        <button className="btn btn-primary">
-                          <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                          </svg>
-                        </button>
+                            <button className="btn btn-primary">
+                              <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                              </svg>
+                            </button>
 
-                        <button className="btn btn-primary">Apply</button>
-                        <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
-                      </>
-                    )}
+                            <button className="btn btn-primary">Apply</button>
+                            <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>View Profile</button>
+                          </>
+                        )}
 
                       </div>
                     </div>

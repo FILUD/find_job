@@ -4,6 +4,7 @@ import SetNavbar from '../component/navbar/SetNavbar';
 import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from './../theme/theme';
+import Footer from '../component/footer/Footer';
 
 interface jobDetail {
     JobID: number;
@@ -393,7 +394,7 @@ function EditProfileEmp() {
         <html data-theme={theme}>
             <div className=' h-screen max-h-screen bg-base-100'>
                 <SetNavbar />
-                <div className='max-h-screen h-3/4 mt-2'>
+                <div className='max-h-screen h-3/4 mt-2 bg-base-100'>
 
                     <center className='grid bg-base-100 h-full '>
                         <div className='container justify-self-center bg-base-100 mt-8'>
@@ -401,7 +402,7 @@ function EditProfileEmp() {
                                 <p className="text-2xl font-bold text-white"> My Profile</p>
                             </div>
                         </div>
-                        <div className='self-center h-full '>
+                        <div className='self-center h-full'>
                             {EmpData.map(emp => (
                                 <div className='container -mt-14 grid grid-cols-3 justify-center center bg-base-100  gap-1' key={emp.UserID}>
                                     <div className='col-span-1 grid justify-center bg-base-300 rounded-xl  ml-4 '>
@@ -635,19 +636,16 @@ function EditProfileEmp() {
 
                                         )}
 
-
-
-
-
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </center>
+
                 </div>
             </div>
-
-
+            <br /><br /><br />
+            <Footer />
         </html>
     )
 }
