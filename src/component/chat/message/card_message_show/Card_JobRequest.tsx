@@ -61,11 +61,17 @@ function Card_JobRequest({ data, type }: DataProps) {
         <div className='card max-w-96  w-full bg-primary text-info-content glass '>
 
             <figure><img src="/Logo/resume logo.jpg" alt="cv or resume" className='' /></figure>
-            {type == "employer" ? (
+            {type == "jobseeker" ? (
                 < div className="card-body">
                     <h2 className="card-title justify-center">Job Request</h2>
                     {data.Status == "Pending" ? (
-                        <p className='self-center'>Please waiting employer to accept... </p>
+                        <div>
+                            <p className='self-center'>Please waiting employer to accept... </p>
+                            <p>Occuaption : {data.OccupationName}</p>
+                            <p className='line-clamp-1'>Category : {data.CategoryName}</p>
+                        </div>
+
+
                     ) : (
                         <p className='self-center'>the resume or cv was accepted </p>
                     )}
@@ -89,7 +95,11 @@ function Card_JobRequest({ data, type }: DataProps) {
                 < div className="card-body">
                     <h2 className="card-title justify-center">Job Request</h2>
                     {data.Status == "Pending" ? (
-                        <p className='self-center'>Do you want to accept this job request? </p>
+                        <div>
+                            <p className='self-center'>Do you want to accept this job request? </p>
+                            <p>Occuaption : {data.OccupationName}</p>
+                            <p className='line-clamp-1'>Category : {data.CategoryName}</p>
+                        </div>
                     ) : (
                         <p className='self-center'>You are already accepted </p>
                     )}

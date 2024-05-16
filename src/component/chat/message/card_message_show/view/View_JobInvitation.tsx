@@ -5,6 +5,7 @@ import HashLoader from 'react-spinners/HashLoader';
 import Swal from 'sweetalert2';
 import { useTheme } from '../../../../../theme/theme';
 
+
 interface Toggle {
     isOpen: boolean;
     isClose: () => void;
@@ -34,7 +35,6 @@ interface CardProps {
 }
 
 function View_JobInvitation({ isOpen, isClose, data, type, handleAccept }: Toggle) {
-
     const { theme } = useTheme();
 
     const handleFullScreen = () => {
@@ -51,6 +51,7 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept }: Toggl
             }
         }
     };
+
     return (
         <html>
             <Transition appear show={isOpen} as={Fragment}>
@@ -79,7 +80,7 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept }: Toggl
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className='w-full max-w-md  card w-200 bg-base-100 shadow-xl transition-all' data-theme={theme}>
+                                <Dialog.Panel className='w-fit max-w-fit card w-200 bg-base-300 shadow-xl transition-all' data-theme={theme}>
                                     {/* Close button */}
                                     <button className="btn btn-square btn-sm absolute top-0 right-0 m-3 " onClick={isClose}>
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -89,29 +90,33 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept }: Toggl
                                         <h2 className='font-bold'>View </h2>
                                     </Dialog.Title>
                                     <div className=''>
-                                        <div className='card card-side  shadow-xl bg-primary glass m-4' >
-                                            <div className='card-body'>
-                                                <div className='flex flex-col justify-start'>
-
-                                                    <p>Occupation: {data.OccupationName}</p>
-                                                    <p>Category: {data.CategoryName}</p>
-                                                    <p >SalaryMinimum: {data.SalaryStart}</p>
-                                                    <p>SalaryMaximum: {data.SalaryMax}</p>
-                                                    
-
-
-
+                                        <div className='card card-side bg-base-100 shadow-xl m-4  w-fit' >
+                                            <div className='lg:w-56 flex items-center bg-base-100 rounded-xl '>
+                                                <a href={data.IMG_Card} target="_blank" rel="noopener noreferrer" onClick={handleFullScreen} className='flex justify-center '>
+                                                    <figure><img id="fullScreenImage" data-original-url={data.IMG_Card} src={data.IMG_Card} alt="Album" className='rounded-xl h-56 w-56 ' /></figure>
+                                                </a>
+                                            </div>
+                                            <div className="card-body">
+                                                <h2 className="card-title self-center">Job Details</h2>
+                                                <div className='text-sm text-start'>
+                                                    <p >Occupation : {data.OccupationName}</p>
+                                                    <p>Category : {data.CategoryName}</p>
+                                                    <p>Type : {data.WorkType}</p>
                                                 </div>
-                                                {/* <figure className=''>
-                                                    <a href={data.IMG_Card} target="_blank" rel="noopener noreferrer" onClick={handleFullScreen} className='flex justify-center'>
-                                                        <img id="fullScreenImage" src={data.IMG_Card} data-original-url={data.IMG_Card} alt="Movie" className='rounded-xl h-96 ' />
-                                                    </a>
-                                                    <img id="fullScreenImage" src={data.IMG_Card} alt="Movie" className='rounded-xl' />
-                                                 </figure> 
-                                                <button className='btn btn-wide self-center hover:btn-outline' onClick={handleFullScreen}>Full screen</ button> */}
+                                                <div className="stats bg-primary text-primary-content">
+                                                    <div className="stat">
+                                                        <div className="stat-title text-black">Salary Minimum</div>
+                                                        <div className="stat-value">{data.SalaryStart}</div>
+                                                    </div>
+
+                                                    <div className="stat">
+                                                        <div className="stat-title text-black">Salary Maximum</div>
+                                                        <div className="stat-value">{data.SalaryMax}</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        {type == "jobseeker" ? (
+                                        {type == "employer" ? (
                                             <div className='flex flex-row space-x-4 m-4 justify-end'>
                                                 <button className='btn btn-outline' onClick={isClose}>Close</button>
                                             </div>

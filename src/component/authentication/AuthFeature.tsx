@@ -61,6 +61,8 @@ export default function AuthFeat() {
                     console.log("Error sending OTP");
                 }
             } else {
+                setLoading(false);
+                // alert("Incorrect email or password");
                 console.log("Incorrect email or password");
             }
         } catch (error) {

@@ -65,7 +65,11 @@ function Card_JobInvitation({ data, type }: DataProps) {
                 < div className="card-body">
                     <h2 className="card-title justify-center">Job Invitation</h2>
                     {data.Status == "Pending" ? (
-                        <p className='self-center'>Please waiting jobseeker to join... </p>
+                        <div>
+                            <p className='self-center text-center'>Please waiting jobseeker to join </p>
+                            <p> Occupation : {data.OccupationName}</p>
+                            <p className='line-clamp-1'>Category: {data.CategoryName} </p>
+                        </div>
                     ) : (
                         <p className='self-center'>The Invitation was accepted </p>
                     )}
