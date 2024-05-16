@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from './../theme/theme';
+import Footer from '../component/footer/Footer';
 
 interface CVData {
     CvID: number;
@@ -645,8 +646,9 @@ function EditProfileJok() {
                         </div>
                     </center>
                 </div>
-
             </div>
+            <br /><br /><br />
+            <Footer />
         </html>
 
     )
