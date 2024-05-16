@@ -36,11 +36,13 @@ interface CardProps {
     UpdatedAt: string;
     IMG_Card: string;
     Title: string;
-    OccupationID: string;
+    OccupationID: number;
     Description: string,
-    SalaryStart: string,
-    SalaryMax: string,
-    WorkType: string
+    SalaryStart: number,
+    SalaryMax: number,
+    WorkType: string,
+    OccupationName: string,
+    CategoryName: string,
 }
 
 function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receieverImg, receiverName, senderImg }: UserParam) {

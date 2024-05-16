@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import View_Card from './View_Card';
+import View_JobRequest from './view/View_JobRequest';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -14,11 +14,13 @@ interface CardProps {
     UpdatedAt: string;
     IMG_Card: string;
     Title: string;
-    OccupationID: string;
+    OccupationID: number;
     Description: string,
-    SalaryStart: string,
-    SalaryMax: string,
-    WorkType: string
+    SalaryStart: number,
+    SalaryMax: number,
+    WorkType: string,
+    OccupationName: string,
+    CategoryName: string,
 }
 
 interface DataProps {
@@ -59,7 +61,7 @@ function Card_JobRequest({ data, type }: DataProps) {
         <div className='card max-w-96  w-full bg-primary text-info-content glass '>
 
             <figure><img src="/Logo/resume logo.jpg" alt="cv or resume" className='' /></figure>
-            {type == "jobseeker" ? (
+            {type == "employer" ? (
                 < div className="card-body">
                     <h2 className="card-title justify-center">Job Request</h2>
                     {data.Status == "Pending" ? (
@@ -112,7 +114,7 @@ function Card_JobRequest({ data, type }: DataProps) {
             {/* view card */}
             {
                 isOpenView && (
-                    <View_Card isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} />
+                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} />
                 )
             }
         </div >

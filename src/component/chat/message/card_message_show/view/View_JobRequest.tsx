@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { Fragment, useEffect, useState } from 'react'
 import HashLoader from 'react-spinners/HashLoader';
 import Swal from 'sweetalert2';
-import { useTheme } from '../../../../theme/theme';
+import { useTheme } from '../../../../../theme/theme';
 
 interface Toggle {
     isOpen: boolean;
@@ -24,10 +24,16 @@ interface CardProps {
     UpdatedAt: string;
     IMG_Card: string;
     Title: string;
-    OccupationID: string;
+    OccupationID: number;
+    Description: string,
+    SalaryStart: number,
+    SalaryMax: number,
+    WorkType: string,
+    OccupationName: string,
+    CategoryName: string,
 }
 
-function View_Card({ isOpen, isClose, data, type, handleAccept }: Toggle) {
+function View_JobRequest({ isOpen, isClose, data, type, handleAccept }: Toggle) {
     const { theme } = useTheme();
 
     const handleFullScreen = () => {
@@ -130,4 +136,4 @@ function View_Card({ isOpen, isClose, data, type, handleAccept }: Toggle) {
     )
 }
 
-export default View_Card
+export default View_JobRequest
