@@ -4,6 +4,22 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 
+
+interface InfoProps {
+    ID: number;
+    UserID: number;
+    Name: string;
+    Title: string;
+    AddressID: number;
+    Tel: string;
+    Profile_IMG: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string,
+    Email: string,
+    Role: string
+}
+
 interface CardProps {
     CardID: number;
     JobseekerID: number;
@@ -24,12 +40,14 @@ interface CardProps {
     CategoryName: string,
 }
 
+
 interface DataProps {
     data: CardProps
     type: string
+    info: InfoProps
 }
 
-function Card_JobInvitation({ data, type }: DataProps) {
+function Card_JobInvitation({ data, type, info }: DataProps) {
     const [isOpenView, setIsOpenView] = useState(false);
     const toggleView = () => {
         setIsOpenView(true);
@@ -123,7 +141,7 @@ function Card_JobInvitation({ data, type }: DataProps) {
             {/* view card */}
             {
                 isOpenView && (
-                    <View_JobInvitation isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobInvitation} />
+                    <View_JobInvitation isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobInvitation} info={info} />
                 )
             }
         </div >

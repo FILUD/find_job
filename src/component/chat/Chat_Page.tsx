@@ -30,6 +30,7 @@ interface Messages {
     messageId: number;
     senderId: string;
     receiverId: string;
+    info: InfoProps
     message: string;
     isRead: boolean;
     receiverInfo: UserInfoProps;
@@ -38,6 +39,22 @@ interface Messages {
     jobRequestID: number | null;
     jobInvitation: number | null;
     additionalData: CardProps
+}
+
+
+interface InfoProps {
+    ID: number;
+    UserID: number;
+    Name: string;
+    Title: string;
+    AddressID: number;
+    Tel: string;
+    Profile_IMG: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string,
+    Email: string,
+    Role: string
 }
 
 interface CardProps {
@@ -59,6 +76,7 @@ interface CardProps {
     OccupationName: string,
     CategoryName: string,
 }
+
 
 
 function Chat_Page() {
@@ -126,7 +144,7 @@ function Chat_Page() {
         socket.emit('fetch old message', { senderId: sendSender, receiverId: sendReceiver });
         socket.on('old messages', (getMessages: Messages[]) => {
             setMessages(getMessages);
-            console.log("test", getMessages)
+            // console.log("test", getMessages)
         });
     };
 

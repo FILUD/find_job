@@ -8,6 +8,7 @@ interface Messages {
     messageId: number;
     senderId: string;
     receiverId: string;
+    info: InfoProps ;
     message: string;
     isRead: boolean;
     type: string;
@@ -23,6 +24,21 @@ interface UserParam {
     receiverName: string;
     receieverImg: string;
     senderImg: string;
+}
+
+interface InfoProps {
+    ID: number;
+    UserID: number;
+    Name: string;
+    Title: string;
+    AddressID: number;
+    Tel: string;
+    Profile_IMG: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string,
+    Email: string,
+    Role: string
 }
 
 interface CardProps {
@@ -62,7 +78,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
         setProfile_img(receieverImg)
         setProfile_name(receiverName)
         setProfile_ownImg(senderImg)
-        // console.log(listMessage)
+        // console.log("get or not",listMessage)
     }, [getSenderID, getReceiverID, listMessage, receieverImg, receiverName, senderImg]);
 
 
@@ -78,7 +94,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
             setMessageInput('');
             scrollAfterTimeout();
         }
-        
+
     };
 
     const scrollAfterTimeout = () => {
@@ -162,10 +178,10 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                     // card jobrequest or invitation
                                     <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
                                         {msg.type == "jobrequest" ? (
-                                            <Card_JobRequest data={msg.additionalData} type={"jobseeker"} />
+                                            <Card_JobRequest data={msg.additionalData} type={"jobseeker"} info={msg.info}/>
                                         ) : (
                                             //TODO: create card Job Invitation
-                                            <Card_JobInvitation data={msg.additionalData} type={"employer"} />
+                                            <Card_JobInvitation data={msg.additionalData} type={"employer"} info={msg.info}/>
                                         )}
 
                                     </div>
@@ -195,10 +211,10 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                     // card jobrequest or invitation
                                     <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
                                         {msg.type == "jobrequest" ? (
-                                            <Card_JobRequest data={msg.additionalData} type={"employer"} />
+                                            <Card_JobRequest data={msg.additionalData} type={"employer"} info={msg.info}/>
                                         ) : (
                                             //TODO: create card Job Invitation
-                                            <Card_JobInvitation data={msg.additionalData} type={"jobseeker"} />
+                                            <Card_JobInvitation data={msg.additionalData} type={"jobseeker"} info={msg.info}/>
                                         )}
 
                                     </div>

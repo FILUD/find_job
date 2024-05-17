@@ -3,6 +3,22 @@ import View_JobRequest from './view/View_JobRequest';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+
+interface UserInfoProps {
+    ID: number;
+    UserID: number;
+    Name: string;
+    Title: string;
+    AddressID: number;
+    Tel: string;
+    Profile_IMG: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string,
+    Email: string,
+    Role: string
+}
+
 interface CardProps {
     CardID: number;
     JobseekerID: number;
@@ -23,12 +39,29 @@ interface CardProps {
     CategoryName: string,
 }
 
+
 interface DataProps {
     data: CardProps
     type: string
+    info: InfoProps
 }
 
-function Card_JobRequest({ data, type }: DataProps) {
+interface InfoProps {
+    ID: number;
+    UserID: number;
+    Name: string;
+    Title: string;
+    AddressID: number;
+    Tel: string;
+    Profile_IMG: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string,
+    Email: string,
+    Role: string
+}
+
+function Card_JobRequest({ data, type, info }: DataProps) {
     const [isOpenView, setIsOpenView] = useState(false);
     const toggleView = () => {
         setIsOpenView(true);
@@ -66,7 +99,7 @@ function Card_JobRequest({ data, type }: DataProps) {
                     <h2 className="card-title justify-center">Job Request</h2>
                     {data.Status == "Pending" ? (
                         <div>
-                            <p className='self-center'>Please waiting employer to accept... </p>
+                            <p className='self-center'>Please waiting employer to accept...  </p>
                             <p>Occuaption : {data.OccupationName}</p>
                             <p className='line-clamp-1'>Category : {data.CategoryName}</p>
                         </div>
@@ -124,7 +157,7 @@ function Card_JobRequest({ data, type }: DataProps) {
             {/* view card */}
             {
                 isOpenView && (
-                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} />
+                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} info={info}/>
                 )
             }
         </div >

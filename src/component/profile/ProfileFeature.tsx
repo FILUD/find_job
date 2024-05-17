@@ -362,6 +362,8 @@ export default function Profile_feature() {
                             <span className="badge">New</span>
                         </a>
                     </li>
+                    <li onClick={() => navigate('/')}><a>Accepted Book</a></li>
+
                     <li onClick={() => navigate('/myBookmark')}><a>My bookmark</a></li>
                     <li>
                         <a onClick={() => logoutAuth()}>Logout</a>

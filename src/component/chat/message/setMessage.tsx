@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import  Message from "./Message";
+import Message from "./Message";
 import NonMessage from "./NonMessage";
 import HashLoader from "react-spinners/HashLoader";
 
@@ -12,6 +12,21 @@ interface ListChat {
     receiverName: string;
     receiverImg: string;
     senderImg: string;
+}
+
+interface InfoProps {
+    ID: number;
+    UserID: number;
+    Name: string;
+    Title: string;
+    AddressID: number;
+    Tel: string;
+    Profile_IMG: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string,
+    Email: string,
+    Role: string
 }
 
 interface CardProps {
@@ -34,10 +49,12 @@ interface CardProps {
     CategoryName: string,
 }
 
+
 interface Messages {
     messageId: number;
     senderId: string;
     receiverId: string;
+    info: InfoProps
     message: string;
     isRead: boolean;
     type: string;
