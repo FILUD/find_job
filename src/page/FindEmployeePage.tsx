@@ -197,6 +197,25 @@ function FindEmployeePage() {
     }
   }
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(cvData.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const currentCvs = cvData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+
 
   return (
     <html data-theme={theme}>
@@ -236,7 +255,7 @@ function FindEmployeePage() {
             </div>
 
             <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center'>
-              {cvData.map((cv: any) => (
+              {currentCvs.map((cv: any) => (
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min '>
                   <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
                     <figure className='h-52'>
@@ -261,6 +280,11 @@ function FindEmployeePage() {
                 </div>
 
               ))}
+
+              <div className="flex justify-center my-5 col-span-4">
+                <button onClick={handlePrevPage} disabled={currentPage === 1} className="btn btn-secondary mr-2">Previous</button>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages} className="btn btn-secondary">Next</button>
+              </div>
 
               {selectedCV && (
                 <dialog id="my_modal_3" className="modal" open>

@@ -89,7 +89,8 @@ function HomePage() {
   const [showPopup, setShowPopup] = useState(false);
   const { theme } = useTheme();
   const myID = localStorage.getItem('ID')
-
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState("");
 
   // toggle send job request and job invitation
   const [isOpenJobReq, setIsOpenJobReq] = useState(false);
@@ -97,6 +98,9 @@ function HomePage() {
   const [dataList, setDataList] = useState<SendRequestState>(initialState);
   const [invitationList, setInvitationList] = useState<SendInvitation>(initialInvite);
   const [senderID, setSenderID] = useState<number>();
+
+
+
 
   useEffect(() => {
     const UserID = localStorage.getItem('ID');
@@ -148,15 +152,16 @@ function HomePage() {
   }
 
 
-  //useEffect
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<jobData[]>('http://localhost:3001/viewjobhome');
+        const response = await axios.get('http://localhost:3001/viewjobhome');
         setJobData(response.data);
-        console.log(jobData);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching CV data:', error);
+        setError("An error occurred while fetching data.");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -169,8 +174,6 @@ function HomePage() {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcvhome');
         setCvData(response.data);
-        // console.log("show me ", response.data)
-        console.log("cv home data jah :", cvData) ;
       } catch (error) {
         console.error('Error fetching CV data:', error);
       }
@@ -489,7 +492,6 @@ function HomePage() {
                     </div>
                   </div>
                 </div>
-
               ))}
 
 
