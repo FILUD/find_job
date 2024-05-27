@@ -9,23 +9,39 @@ import { ThemeToggle, useTheme } from '../theme/theme'
 import Swal from 'sweetalert2';
 
 
-interface jobData {
+interface Job {
   JobID: number;
-  EmployerID: number;
-  Post_IMG: string;
-  Title: string;
+  Post_IMG: string | null;
+  Employer_Profile_IMG: string | null;
   CompanyName: string;
-  Employer_Profile_IMG: string;
-  Description: string;
+  Title: string;
   SalaryStart: number;
   SalaryMax: number;
   CategoryName: string;
+  CategoryID: number;
   OccupationName: string;
-  PostDate: string;
-  VillageName: string;
+  VillageName: string | null;
   DistrictName: string;
   ProvinceName: string;
-  WorkType: string
+  PostDate: string;
+  WorkType: string;
+}
+
+interface Category {
+  CategoryID: number;
+  CategoryName: string;
+}
+
+interface Occupation {
+  OccupationID: number;
+  OccupationName: string;
+}
+
+interface JobListProps {
+  jobData: Job[];
+  categories: Category[];
+  handleCardClick: (job: Job) => void;
+  formatDate: (date: string) => string;
 }
 
 
@@ -34,7 +50,7 @@ function FindjobPage() {
   const navigate = useNavigate();
 
 
-  const [jobData, setJobData] = useState<jobData[]>([]);
+  const [jobData, setJobData] = useState<Job[]>([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedJOB, setselectedJOB] = useState<any>(null);
   const { theme } = useTheme();
@@ -45,14 +61,16 @@ function FindjobPage() {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
   const [occupation, setOccupation] = useState('');
-  const [provinces, setProvinces] = useState<{ ProvinceID: number; ProvinceName: string }[]>([]);
-  const [province, setProvince] = useState('');
-  const [selectedOption, setSelectedOption] = useState<string>('none');
+
+  const [sortedJobs, setSortedJobs] = useState<Job[]>([]);
+  const [sortOrder, setSortOrder] = useState<string>('none');
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<jobData[]>('http://localhost:3001/viewjobpostings');
+        const response = await axios.get<Job[]>('http://localhost:3001/viewjobpostings');
         setJobData(response.data);
         console.log(jobData);
       } catch (error) {
@@ -63,8 +81,6 @@ function FindjobPage() {
     fetchData();
   }, []);
 
-
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
@@ -72,8 +88,6 @@ function FindjobPage() {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
-
-
 
   const handleCardClick = (job: any) => {
     setEmployerID(job.EmployerID);
@@ -234,33 +248,10 @@ function FindjobPage() {
         }, 3000);
       }
     };
-
     fetchData();
   }, []);
 
-  // Fetch province data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const provincesResponse = await fetch('http://localhost:3001/getprovince');
-        const provincesData = await provincesResponse.json();
-        if (provincesData.error === false) {
-          setProvinces(provincesData.data);
-        } else {
-          console.error('Failed to fetch categories:', provincesData.message);
-        }
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 3000);
-      }
-    };
 
-    fetchData();
-  }, []);
 
   // Handle category change
   const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -286,11 +277,44 @@ function FindjobPage() {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+
+
+  useEffect(() => {
+    let sortedArray = [...jobData];
+    if (sortOrder === 'new') {
+      sortedArray.sort((a, b) => new Date(b.PostDate).getTime() - new Date(a.PostDate).getTime());
+    } else if (sortOrder === 'latest') {
+      sortedArray.sort((a, b) => new Date(a.PostDate).getTime() - new Date(b.PostDate).getTime());
+    }
+    if (selectedCategory !== null) {
+      sortedArray = sortedArray.filter(job => job.CategoryID === selectedCategory);
+    }
+    setSortedJobs(sortedArray);
+  }, [sortOrder, jobData, selectedCategory]);
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOrder(e.target.value);
   };
 
-  
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(sortedJobs.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const currentJobs = sortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <html data-theme={theme}>
@@ -303,13 +327,13 @@ function FindjobPage() {
             </div>
             <div className='mx-auto grid grid-cols-4 justify-items-center gap-1 mb-4'>
 
-            <select
+              <select
                 className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
-                value={selectedOption}
-                onChange={handleChange}
+                onChange={handleSortChange}
+                value={sortOrder}
               >
                 <option disabled value="none" className='bg-slate-400 text-slate-950'>
-                  Sort by :
+                  Order by :
                 </option>
                 <option value="none" className='bg-base-300'>none</option>
                 <option value="new">New</option>
@@ -318,11 +342,11 @@ function FindjobPage() {
 
               <select
                 className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
-                value={selectedCategory || ''}
+                value={selectedCategory != null ? selectedCategory : ''}
                 onChange={handleCategoryChange}
               >
-                <option disabled value="">Work Category</option>
-                <option className='bg-base-300'>none</option>
+                <option disabled value="">Work Category : </option>
+                <option value="" className='bg-base-300'>none</option>
                 {categories.map(category => (
                   <option key={category.CategoryID} value={category.CategoryID}>
                     {category.CategoryName}
@@ -335,7 +359,7 @@ function FindjobPage() {
                 value={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
               >
-                <option disabled value="">Occupation</option>
+                <option disabled value="">Occupation : </option>
                 <option disabled value="">Please Select Category</option>
                 <option className='bg-base-300'>none</option>
                 {occupations.map(occupation => (
@@ -347,24 +371,35 @@ function FindjobPage() {
 
               <select
                 className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
-                value={province}
-                onChange={(e) => setProvince(e.target.value)}
+                onChange={handleSortChange}
+                value={sortOrder}
               >
-                <option disabled value="">Province</option>
-                <option className='bg-base-300'>none</option>
-                {provinces.map(province => (
-                  <option key={province.ProvinceID} value={province.ProvinceID}>
-                    {province.ProvinceName}
-                  </option>
-                ))}
+                <option disabled value="none" className='bg-slate-400 text-slate-950'>
+                  Saraly :
+                </option>
+                <option value="none" className='bg-base-300'>none</option>
+                <option value="1500000">0 - 1,500,0000</option>
+                <option value="3000000">1,500,001 - 3,000,0000 LAK</option>
+                <option value="5000000">3,000,001 - 5,000,0000 LAK</option>
+                <option value="7000000">5,000,001 - 7,000,0000 LAK</option>
+                <option value="10000000">7,000,001 - 10,000,0000 LAK</option>
+                <option value="15000000">10,000,001 - 15,000,0000 LAK</option>
+                <option value="20000000">15,000,001 - 20,000,0000 LAK</option>
+                <option value="30000000">20,000,001 - 30,000,0000 LAK</option>
+                <option value="50000000">30,000,001 - 50,000,0000 LAK</option>
+                <option value="75000000">50,000,001 - 75,000,0000 LAK</option>
+                <option value="100000000">75,000,001 - 100,000,0000 LAK</option>
               </select>
 
             </div>
-            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center '>
 
-              {jobData.map((job: any) => (
-                <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min'>
-                  <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={job.JobID} onClick={() => handleCardClick(job)}>
+            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center'>
+              {currentJobs.map((job) => (
+                <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min' key={job.JobID}>
+                  <div
+                    className="card w-full max-w-full h-full max-h-min bg-base-300 shadow-lg hover:shadow-purple-400 duration-500 cursor-pointer"
+                    onClick={() => handleCardClick(job)}
+                  >
                     <figure className='h-52'>
                       {job.Post_IMG && <img className='bg-cover h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
                     </figure>
@@ -399,8 +434,13 @@ function FindjobPage() {
                     </div>
                   </div>
                 </div>
-
               ))}
+
+
+              <div className="flex justify-center mt-4 col-span-4 my-5">
+                <button onClick={handlePrevPage} disabled={currentPage === 1} className="btn btn-secondary mr-2">Previous</button>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages} className="btn btn-secondary">Next</button>
+              </div>
 
               {selectedJOB && (
                 <dialog id="my_modal_3" className="modal" open>
