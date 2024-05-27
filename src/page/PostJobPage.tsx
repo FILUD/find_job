@@ -341,7 +341,7 @@ function PostJobPage() {
                                                                 onChange={handleFileChange}
                                                             />
                                                             <div className='w-5/6 '>
-                                                                <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide " >Edit Job</button>
+                                                                <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide " >Post Job</button>
                                                             </div>
                                                         </div>
 

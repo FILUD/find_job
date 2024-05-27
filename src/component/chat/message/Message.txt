@@ -2,14 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import io from 'socket.io-client';
 import Card_JobRequest from './card_message_show/Card_JobRequest';
 import Card_JobInvitation from './card_message_show/Card_JobInvitation';
-import MoonLoader from 'react-spinners/MoonLoader';
 const socket = io('http://localhost:3001');
 
 interface Messages {
     messageId: number;
     senderId: string;
     receiverId: string;
-    info: InfoProps;
+    info: InfoProps ;
     message: string;
     isRead: boolean;
     type: string;
@@ -70,7 +69,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
     const [profile_img, setProfile_img] = useState<string>('');
     const [profile_name, setProfile_name] = useState<string>('');
     const [profile_ownImg, setProfile_ownImg] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+
 
     useEffect(() => {
         setMessages(listMessage)
@@ -80,16 +79,12 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
         setProfile_name(receiverName)
         setProfile_ownImg(senderImg)
         // console.log("get or not",listMessage)
-        
     }, [getSenderID, getReceiverID, listMessage, receieverImg, receiverName, senderImg]);
 
+
     useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => {
-            scrollAfterTimeout();
-            setIsLoading(false);
-        }, 2000);
-    }, [getReceiverID]);
+        scrollAfterTimeout()
+    }, [getReceiverID])
 
     const sendMessage = () => {
         if (senderID && receiverID && messageInput && userIDLogin) {
@@ -158,95 +153,77 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
             </div>
 
             {/* message */}
-
             <div className='flex flex-col overflow-y-auto max-h-full h-[32rem] px-6 ' ref={messageListRef}>
-                {isLoading ?
-                    (
-                        <div className='flex justify-center items-center w-full'>
-                            <MoonLoader
-                                color="#36d7b7"
-                                cssOverride={{}}
-                                size={30}
-                                speedMultiplier={0.8}
-                            />
-                        </div>
-
-
-                    ) : (
-                        <div>
-                            {messages.map((msg, index) => (
-                                <div key={msg.messageId}>
-                                    {msg.senderId == userIDLogin ? (
-                                        // my side 
-                                        <div className="chat chat-end">
-                                            <div className="chat-image avatar">
-                                                <div className="w-10 rounded-full ring-ghost ring-offset-base-100 ring-offset-0 ring-2">
-                                                    {(profile_ownImg) ?
-                                                        (
-                                                            <img src={profile_ownImg} alt="profile Img" />
-                                                        )
-                                                        :
-                                                        (
-                                                            <img src="/Icon/user.png" alt="PostJob" />
-                                                        )}
-                                                </div>
-                                            </div>
-                                            {/* message */}
-                                            {msg.type == "textmessage" ? (
-                                                <div className="chat-bubble chat-bubble-info max-w-80 break-words">{msg.message}</div>
-                                            ) : (
-                                                // card jobrequest or invitation
-                                                <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
-                                                    {msg.type == "jobrequest" ? (
-                                                        <Card_JobRequest data={msg.additionalData} type={"jobseeker"} info={msg.info} />
-                                                    ) : (
-                                                        //TODO: create card Job Invitation
-                                                        <Card_JobInvitation data={msg.additionalData} type={"employer"} info={msg.info} />
-                                                    )}
-
-                                                </div>
-
+                {messages.slice(-20).map((msg, index) => (
+                    <div key={msg.messageId}>
+                        {msg.senderId == userIDLogin ? (
+                            // my side 
+                            <div className="chat chat-end">
+                                <div className="chat-image avatar">
+                                    <div className="w-10 rounded-full ring-ghost ring-offset-base-100 ring-offset-0 ring-2">
+                                        {(profile_ownImg) ?
+                                            (
+                                                <img src={profile_ownImg} alt="profile Img" />
+                                            )
+                                            :
+                                            (
+                                                <img src="/Icon/user.png" alt="PostJob" />
                                             )}
-
-                                        </div>
-                                    ) : (
-                                        // opponent side
-                                        <div className="chat chat-start">
-                                            <div className="chat-image avatar">
-                                                <div className="w-10 rounded-full ring-slate-400 ring-offset-base-100 ring-offset-0 ring-2">
-                                                    {(profile_img) ?
-                                                        (
-                                                            <img src={profile_img} alt="profile Img" />
-                                                        )
-                                                        :
-                                                        (
-                                                            <img src="/Icon/user.png" alt="PostJob" />
-                                                        )}
-                                                </div>
-                                            </div>
-                                            {/* message */}
-                                            {msg.type == "textmessage" ? (
-                                                <div className="chat-bubble chat-bubble-info max-w-80 break-words">{msg.message}</div>
-                                            ) : (
-                                                // card jobrequest or invitation
-                                                <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
-                                                    {msg.type == "jobrequest" ? (
-                                                        <Card_JobRequest data={msg.additionalData} type={"employer"} info={msg.info} />
-                                                    ) : (
-                                                        //TODO: create card Job Invitation
-                                                        <Card_JobInvitation data={msg.additionalData} type={"jobseeker"} info={msg.info} />
-                                                    )}
-
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
+                                    </div>
                                 </div>
+                                {/* message */}
+                                {msg.type == "textmessage" ? (
+                                    <div className="chat-bubble chat-bubble-info max-w-80 break-words">{msg.message}</div>
+                                ) : (
+                                    // card jobrequest or invitation
+                                    <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
+                                        {msg.type == "jobrequest" ? (
+                                            <Card_JobRequest data={msg.additionalData} type={"jobseeker"} info={msg.info}/>
+                                        ) : (
+                                            //TODO: create card Job Invitation
+                                            <Card_JobInvitation data={msg.additionalData} type={"employer"} info={msg.info}/>
+                                        )}
 
-                            ))}
-                        </div>
-                    )}
+                                    </div>
 
+                                )}
+
+                            </div>
+                        ) : (
+                            // opponent side
+                            <div className="chat chat-start">
+                                <div className="chat-image avatar">
+                                    <div className="w-10 rounded-full ring-slate-400 ring-offset-base-100 ring-offset-0 ring-2">
+                                        {(profile_img) ?
+                                            (
+                                                <img src={profile_img} alt="profile Img" />
+                                            )
+                                            :
+                                            (
+                                                <img src="/Icon/user.png" alt="PostJob" />
+                                            )}
+                                    </div>
+                                </div>
+                                {/* message */}
+                                {msg.type == "textmessage" ? (
+                                    <div className="chat-bubble chat-bubble-info max-w-80 break-words">{msg.message}</div>
+                                ) : (
+                                    // card jobrequest or invitation
+                                    <div className=' chat-bubble chat-bubble-info max-w-96 w-full'>
+                                        {msg.type == "jobrequest" ? (
+                                            <Card_JobRequest data={msg.additionalData} type={"employer"} info={msg.info}/>
+                                        ) : (
+                                            //TODO: create card Job Invitation
+                                            <Card_JobInvitation data={msg.additionalData} type={"jobseeker"} info={msg.info}/>
+                                        )}
+
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                ))}
             </div>
 
             {/* floating button and input */}

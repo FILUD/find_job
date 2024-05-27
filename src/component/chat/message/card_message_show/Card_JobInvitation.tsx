@@ -59,15 +59,15 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
 
     const handleAcceptJobInvitation = async () => {
         try {
-            // await axios.post('http://localhost:3001/acceptJobRequest', { requestID: data.CardID });
+            await axios.post('http://localhost:3001/acceptInvitation', { invitationID: data.CardID });
             Swal.fire({
                 icon: 'success',
-                title: 'Job Request',
-                text: 'Accepted Job Request!',
+                title: 'Job Invitation',
+                text: 'Accepted Job Invitation!',
             });
             // isCloseToggle();
         } catch (error) {
-            console.error('Error accept job request:', error);
+            console.error('Error accept job Invitation:', error);
         }
         // finally {
         //     // setIsSendLoading(false);
@@ -124,7 +124,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
                         {data.Status == "Pending" ? (
                             <div className='flex space-x-4 justify-center'>
                                 <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>View Detail</button>
-                                <button className='btn hover:btn-outline'>Accept</button>
+                                <button className='btn hover:btn-outline' onClick={()=> handleAcceptJobInvitation()}>Accept</button>
                             </div>
                         ) : (
                             <div className='flex space-x-4 justify-center'>

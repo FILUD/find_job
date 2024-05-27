@@ -138,6 +138,8 @@ function Chat_Page() {
         setSendName(name)
         setSendOwnImg(ownImg)
         // fetchOldMessages()
+        const newUrl = `/Chat_Page/${receiverId}`;
+        window.history.pushState({ path: newUrl }, '', newUrl);
     };
 
     const fetchOldMessages = async () => {
