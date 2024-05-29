@@ -20,6 +20,7 @@ interface Job {
   CategoryName: string;
   CategoryID: number;
   OccupationName: string;
+  OccupationID: number;
   VillageName: string | null;
   DistrictName: string;
   ProvinceName: string;
@@ -61,10 +62,16 @@ function FindjobPage() {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
   const [occupation, setOccupation] = useState('');
+  const [selectedOccupation, setSelectedOccupation] = useState<number | null>(null);
 
   const [sortedJobs, setSortedJobs] = useState<Job[]>([]);
   const [sortOrder, setSortOrder] = useState<string>('none');
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(sortedJobs.length / itemsPerPage);
+  const currentJobs = sortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const [selectedSalaryRange, setSelectedSalaryRange] = useState<string>("");
+  const [selectedMaxSalary, setSelectedMaxSalary] = useState<string>("");
 
 
   useEffect(() => {
@@ -72,7 +79,7 @@ function FindjobPage() {
       try {
         const response = await axios.get<Job[]>('http://localhost:3001/viewjobpostings');
         setJobData(response.data);
-        console.log(jobData);
+        console.log("job data in findjob ++++++++ :", response.data);
       } catch (error) {
         console.error('Error fetching CV data:', error);
       }
@@ -230,7 +237,7 @@ function FindjobPage() {
 
   // Fetch categories data
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCategories = async () => {
       try {
         setLoading(true);
         const categoriesResponse = await fetch('http://localhost:3001/getallcategory');
@@ -248,15 +255,24 @@ function FindjobPage() {
         }, 3000);
       }
     };
-    fetchData();
+    fetchCategories();
   }, []);
 
 
 
   // Handle category change
+  // Modify handleCategoryChange to set occupation to null when "All Categories" is selected
   const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategoryId = parseInt(event.target.value);
+    const selectedCategoryId = parseInt(event.target.value, 10);
+
+    if (isNaN(selectedCategoryId) || selectedCategoryId === 0) {
+      setSelectedCategory(null);
+      setSelectedOccupation(null); // Reset selected occupation when category is set to "All Categories"
+      return;
+    }
+
     setSelectedCategory(selectedCategoryId);
+
     try {
       const response = await fetch('http://localhost:3001/getoccupationbycategory', {
         method: 'POST',
@@ -267,7 +283,7 @@ function FindjobPage() {
       });
 
       const data = await response.json();
-      if (data.error === false) {
+      if (!data.error) {
         setOccupations(data.data);
       } else {
         console.error('Failed to fetch occupations:', data.message);
@@ -279,12 +295,27 @@ function FindjobPage() {
 
 
 
+  // Function to handle occupation change
+  const handleOccupationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOccupationId = event.target.value;
+    if (selectedOccupationId === "") {
+      // If "All Occupations" is selected, set selectedOccupation to null
+      setSelectedOccupation(null);
+    } else {
+      setSelectedOccupation(parseInt(selectedOccupationId, 10));
+    }
+  };
+
+
+
   useEffect(() => {
     let sortedArray = [...jobData];
     if (sortOrder === 'new') {
       sortedArray.sort((a, b) => new Date(b.PostDate).getTime() - new Date(a.PostDate).getTime());
     } else if (sortOrder === 'latest') {
       sortedArray.sort((a, b) => new Date(a.PostDate).getTime() - new Date(b.PostDate).getTime());
+    } else if (sortOrder === 'none') {
+      setSortedJobs(jobData);
     }
     if (selectedCategory !== null) {
       sortedArray = sortedArray.filter(job => job.CategoryID === selectedCategory);
@@ -296,11 +327,32 @@ function FindjobPage() {
     setSortOrder(e.target.value);
   };
 
+  useEffect(() => {
+    let filteredJobs = [...jobData];
+
+    // Filter by selected category
+    if (selectedCategory !== null) {
+      filteredJobs = filteredJobs.filter(job => job.CategoryID === selectedCategory);
+    }
+
+    // Filter by selected occupation
+    if (selectedOccupation !== null) {
+      filteredJobs = filteredJobs.filter(job => job.OccupationID === selectedOccupation);
+    }
+
+    // Filter by selected maximum salary
+    if (selectedMaxSalary !== "") {
+      const maxSalary = parseInt(selectedMaxSalary, 10);
+      filteredJobs = filteredJobs.filter(job => job.SalaryMax >= maxSalary);
+    }
+
+    // Update sorted jobs
+    setSortedJobs(filteredJobs);
+  }, [selectedCategory, selectedOccupation, selectedMaxSalary, jobData]);
 
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
-  const totalPages = Math.ceil(sortedJobs.length / itemsPerPage);
+
+
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -314,7 +366,13 @@ function FindjobPage() {
     }
   };
 
-  const currentJobs = sortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+
+  const handleMaxSalaryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMaxSalary(event.target.value);
+  };
+
+
 
   return (
     <html data-theme={theme}>
@@ -345,8 +403,8 @@ function FindjobPage() {
                 value={selectedCategory != null ? selectedCategory : ''}
                 onChange={handleCategoryChange}
               >
-                <option disabled value="">Work Category : </option>
-                <option value="" className='bg-base-300'>none</option>
+                <option value="">All Categories</option>
+                <option disabled value="">Select Category</option>
                 {categories.map(category => (
                   <option key={category.CategoryID} value={category.CategoryID}>
                     {category.CategoryName}
@@ -354,14 +412,14 @@ function FindjobPage() {
                 ))}
               </select>
 
+
               <select
                 className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
-                value={occupation}
-                onChange={(e) => setOccupation(e.target.value)}
+                value={selectedOccupation != null ? selectedOccupation : ''}
+                onChange={handleOccupationChange}
               >
-                <option disabled value="">Occupation : </option>
-                <option disabled value="">Please Select Category</option>
-                <option className='bg-base-300'>none</option>
+                <option disabled value="">All Occupations</option>
+                <option value="">All Occupations</option>
                 {occupations.map(occupation => (
                   <option key={occupation.OccupationID} value={occupation.OccupationID}>
                     {occupation.OccupationName}
@@ -369,26 +427,27 @@ function FindjobPage() {
                 ))}
               </select>
 
+
+
               <select
                 className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
-                onChange={handleSortChange}
-                value={sortOrder}
+                value={selectedMaxSalary}
+                onChange={handleMaxSalaryChange}
               >
                 <option disabled value="none" className='bg-slate-400 text-slate-950'>
                   Saraly :
                 </option>
                 <option value="none" className='bg-base-300'>none</option>
-                <option value="1500000">0 - 1,500,0000</option>
-                <option value="3000000">1,500,001 - 3,000,0000 LAK</option>
-                <option value="5000000">3,000,001 - 5,000,0000 LAK</option>
-                <option value="7000000">5,000,001 - 7,000,0000 LAK</option>
-                <option value="10000000">7,000,001 - 10,000,0000 LAK</option>
-                <option value="15000000">10,000,001 - 15,000,0000 LAK</option>
-                <option value="20000000">15,000,001 - 20,000,0000 LAK</option>
-                <option value="30000000">20,000,001 - 30,000,0000 LAK</option>
-                <option value="50000000">30,000,001 - 50,000,0000 LAK</option>
-                <option value="75000000">50,000,001 - 75,000,0000 LAK</option>
-                <option value="100000000">75,000,001 - 100,000,0000 LAK</option>
+                <option value="1500000">1,500,0000 ກີບ ຂື້ນໄປ</option>
+                <option value="3000000">3,000,0000 ກີບ ຂື້ນໄປ</option>
+                <option value="5000000">5,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="7000000">7,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="10000000">10,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="15000000">15,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="30000000">20,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="50000000">30,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="75000000">50,000,000 ກີບ ຂື້ນໄປ</option>
+                <option value="100000000">75,000,000 ກີບ ຂື້ນໄປ</option>
               </select>
 
             </div>

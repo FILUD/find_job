@@ -128,21 +128,24 @@ function PostJobPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!file || !title || !occupation || !employerID || !salaryMaximum || !salaryMinimum === null) {
+        const salaryMinNumber = Number(salaryMinimum);
+        const salaryMaxNumber = Number(salaryMaximum);
+
+        if (!file || !title || !occupation || !employerID || !salaryMinNumber || !salaryMaxNumber === null) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Enter complete information.",
             });
             return;
-        } else if (salaryMinimum > salaryMaximum) {
+        } else if (salaryMinNumber > salaryMaxNumber) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "The starting salary should be less than the maximum salary.",
             });
             return;
-        } else if (salaryMaximum > "99999999") {
+        } else if (salaryMaxNumber > 99999999) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -341,7 +344,7 @@ function PostJobPage() {
                                                                 onChange={handleFileChange}
                                                             />
                                                             <div className='w-5/6 '>
-                                                                <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide " >Edit Job</button>
+                                                                <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide " >Post Job</button>
                                                             </div>
                                                         </div>
 
@@ -349,11 +352,7 @@ function PostJobPage() {
 
                                                 </div>
                                             </div>
-
-
-
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
