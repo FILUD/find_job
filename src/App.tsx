@@ -22,7 +22,7 @@ import Chat_Page from './component/chat/Chat_Page';
 import EditProfileEmp from './page/EditProfileEmp';
 import EditProfileJok from './page/EditProfileJok';
 import MyBookmark from './page/MyBookmark';
-
+import AcceptedBook from './component/book/AcceptedBook';
 
 
 
@@ -56,13 +56,13 @@ function App() {
             <Route path="/edit_emp_profile/:EmployerID" element={<EditProfileEmp />} />
             <Route path="/edit_jok_profile/:JobseekerID" element={<EditProfileJok />} />
             <Route path="/myBookmark" element={<MyBookmark />} />
-
+            <Route path="acceptedBook" element={<AcceptedBook />} />
 
             <Route path="/test" element={<TestPage />} />
 
             {/* chat */}
             <Route path="/Chat_page" element={<Chat_Page />} />
-            <Route path="/Chat_page/:employerID" element={<ChatMessage />} />
+            <Route path="/Chat_page/:ID" element={<Chat_Page />} />
 
           </Routes>
 
