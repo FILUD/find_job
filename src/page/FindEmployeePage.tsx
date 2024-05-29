@@ -14,7 +14,9 @@ interface CVData {
   JobseekerName: string;
   Jobseeker_Profile_IMG: string;
   CategoryName: string;
+  CategoryID: number;
   OccupationName: string;
+  OccupationID: number;
   Title: string;
   UploadDate: string;
   VillageName: string;
@@ -33,12 +35,23 @@ function FindEmployeePage() {
   const [selectedCV, setSelectedCV] = useState<any>(null);
 
   const [cvData, setCvData] = useState<CVData[]>([]);
+  const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [occupations, setOccupations] = useState<{ OccupationID: number; OccupationName: string }[]>([]);
+  const [occupation, setOccupation] = useState('');
+  const [selectedOccupation, setSelectedOccupation] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState<string>('none');
+  const [sortedJobs, setSortedJobs] = useState<CVData[]>([]);
+  const [isLoading, setLoading] = useState(true);
+
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcv');
         setCvData(response.data);
-        console.log(cvData);
+        console.log("+++++++++++++++++++++++++++++++++++++++++++++",cvData);
       } catch (error) {
         console.error('Error fetching CV data:', error);
       }
@@ -54,6 +67,28 @@ function FindEmployeePage() {
       console.error('Invalid jobID:', cvID);
     }
   };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true);
+        const categoriesResponse = await fetch('http://localhost:3001/getallcategory');
+        const categoriesData = await categoriesResponse.json();
+        if (categoriesData.error === false) {
+          setCategories(categoriesData.data);
+        } else {
+          console.error('Failed to fetch categories:', categoriesData.message);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+        }, 3000);
+      }
+    };
+    fetchCategories();
+  }, []);
 
 
 
@@ -217,6 +252,84 @@ function FindEmployeePage() {
 
 
 
+  const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategoryId = parseInt(event.target.value, 10);
+
+    if (isNaN(selectedCategoryId) || selectedCategoryId === 0) {
+      setSelectedCategory(null);
+      setSelectedOccupation(null); // Reset selected occupation when category is set to "All Categories"
+      return;
+    }
+
+    setSelectedCategory(selectedCategoryId);
+
+    try {
+      const response = await fetch('http://localhost:3001/getoccupationbycategory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ CategoryID: selectedCategoryId })
+      });
+
+      const data = await response.json();
+      if (!data.error) {
+        setOccupations(data.data);
+      } else {
+        console.error('Failed to fetch occupations:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching occupations:', error);
+    }
+  };
+
+  const handleOccupationChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOccupationId = event.target.value;
+    if (selectedOccupationId === "") {
+      // If "All Occupations" is selected, set selectedOccupation to null
+      setSelectedOccupation(null);
+    } else {
+      setSelectedOccupation(parseInt(selectedOccupationId, 10));
+    }
+  };
+
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOrder(e.target.value);
+  };
+
+  useEffect(() => {
+    let filteredJobs = [...cvData];
+  
+    // Filter by selected category
+    if (selectedCategory !== null) {
+      filteredJobs = filteredJobs.filter(job => job.CategoryID === selectedCategory);
+    }
+  
+    // Filter by selected occupation
+    if (selectedOccupation !== null) {
+      filteredJobs = filteredJobs.filter(job => job.OccupationID === selectedOccupation);
+    }
+  
+    // Update sorted jobs
+    setSortedJobs(filteredJobs);
+  }, [selectedCategory, selectedOccupation, cvData]);
+
+  useEffect(() => {
+    let sortedArray = [...sortedJobs]; // Use sortedJobs instead of cvData for sorting
+  
+    if (sortOrder === 'new') {
+      sortedArray.sort((a, b) => new Date(b.UploadDate).getTime() - new Date(a.UploadDate).getTime());
+    } else if (sortOrder === 'latest') {
+      sortedArray.sort((a, b) => new Date(a.UploadDate).getTime() - new Date(b.UploadDate).getTime());
+    }
+  
+    setSortedJobs(sortedArray);
+  }, [sortOrder, sortedJobs]); // Use sortedJobs instead of cvData for dependency
+  
+  
+  
+
   return (
     <html data-theme={theme}>
       <div className='mx-10'>
@@ -228,30 +341,54 @@ function FindEmployeePage() {
               <p className='p-2 text-slate-700 font-bold text-center'>Empolyee</p>
             </div>
             <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1 mb-4'>
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Sort by :</option>
-                <option>New</option>
-                <option>Popula</option>
-                <option>Lastest</option>
+            <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                onChange={handleSortChange}
+                value={sortOrder}
+              >
+                <option disabled value="none" className='bg-slate-400 text-slate-950'>
+                  Order by :
+                </option>
+                <option value="none" className='bg-base-300'>none</option>
+                <option value="new">New</option>
+                <option value="latest">Latest</option>
               </select>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Position</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+              <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                value={selectedCategory != null ? selectedCategory : ''}
+                onChange={handleCategoryChange}
+              >
+                <option value="">All Categories</option>
+                <option disabled value="">Select Category</option>
+                {categories.map(category => (
+                  <option key={category.CategoryID} value={category.CategoryID}>
+                    {category.CategoryName}
+                  </option>
+                ))}
               </select>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
-                <option disabled selected className='bg-slate-400 text-slate-950'>Work Category</option>
-                <option>Han Solo</option>
-                <option>Greedo</option>
+
+              <select
+                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                value={selectedOccupation != null ? selectedOccupation : ''}
+                onChange={handleOccupationChange}
+              >
+                <option disabled value="">All Occupations</option>
+                <option value="">All Occupations</option>
+                {occupations.map(occupation => (
+                  <option key={occupation.OccupationID} value={occupation.OccupationID}>
+                    {occupation.OccupationName}
+                  </option>
+                ))}
               </select>
 
-              <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
+              {/* <select className="select select-bordered border-2 border-slate-300 w-full max-w-xs bg-slate-200 text-slate-950">
                 <option disabled selected className='bg-slate-400 text-slate-950'>Work Type</option>
                 <option>Han Solo</option>
                 <option>Greedo</option>
-              </select>
+              </select> */}
+
             </div>
 
             <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center'>
