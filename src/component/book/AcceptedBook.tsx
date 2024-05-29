@@ -28,7 +28,9 @@ interface CardProps {
     OccupationName: string;
     CategoryName: string;
     UserInfo: UserInfo;
+    JobType: string;
 }
+
 interface UserInfo {
     ID: number,
     UserID: number,

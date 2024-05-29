@@ -23,6 +23,7 @@ import EditProfileEmp from './page/EditProfileEmp';
 import EditProfileJok from './page/EditProfileJok';
 import MyBookmark from './page/MyBookmark';
 import AcceptedBook from './component/book/AcceptedBook';
+import NewChat_Page from './component/chat/NewChat_Page';
 
 
 
@@ -62,7 +63,7 @@ function App() {
 
             {/* chat */}
             <Route path="/Chat_page" element={<Chat_Page />} />
-            <Route path="/Chat_page/:ID" element={<Chat_Page />} />
+            <Route path="/NewChat_Page/:ID?" element={<NewChat_Page/>} />
 
           </Routes>
 
