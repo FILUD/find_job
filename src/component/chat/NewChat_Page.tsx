@@ -5,6 +5,7 @@ import SetMessage from './messages/setMessage';
 import { useTheme } from '../../theme/theme';
 import MoonLoader from 'react-spinners/MoonLoader';
 import { useParams } from 'react-router-dom';
+import Search_Chat from './card/Search_Chat';
 
 const socket = io('http://localhost:3001');
 
@@ -46,6 +47,7 @@ function NewChat_Page() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [dataList, setDataList] = useState<DatalistProps[]>([]);
     const [currentChat, setCurrentChat] = useState<string | null>(null);
+    const [isOpenSearch, setIsOpenSearch] = useState<boolean>(false);
 
     // this is receiverID 
     useEffect(() => {
@@ -66,7 +68,7 @@ function NewChat_Page() {
         if (userIDLogin) {
             fetchChatList(userIDLogin);
         }
-    }, [userIDLogin,listChat]);
+    }, [userIDLogin, listChat]);
 
     useEffect(() => {
         if (selectUser) {
@@ -104,6 +106,13 @@ function NewChat_Page() {
         // console.log("senderID", senderId)
         setSelectUser(true);
     };
+
+    const ToggleNewChat = () => {
+        setIsOpenSearch(true)
+    }
+    const isCloseNewChat = () => {
+        setIsOpenSearch(false)
+    }
 
     return (
         <html data-theme={theme}>
@@ -188,7 +197,11 @@ function NewChat_Page() {
                                             </div>
                                             <div className='text-center'>Your Message</div>
                                             <div className='text-xs text-center'>Send private messages to friend or other</div>
-                                            <button className='btn btn-outline btn-info m-4 w-32 self-center rounded-2xl'>Send Message</button>
+                                            <button className='btn btn-outline btn-info m-4 w-32 self-center rounded-2xl' onClick={() => ToggleNewChat} >Send Message</button>
+                                            {isOpenSearch && (
+                                                // <Search_Chat isClose={isCloseNewChat} isOpen={isOpenSearch} senderID={userIDLogin} />
+                                                <Search_Chat />
+                                            )}
                                         </div>
                                     </div>
                                 )}
