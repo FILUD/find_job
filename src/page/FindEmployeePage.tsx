@@ -42,8 +42,8 @@ function FindEmployeePage() {
   const [isLoading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
-
   const totalPages = Math.ceil(cvData.length / itemsPerPage);
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -249,8 +249,18 @@ function FindEmployeePage() {
       filteredJobs = filteredJobs.filter(job => job.OccupationID === selectedOccupation);
     }
 
+    if (searchQuery !== '') {
+      filteredJobs = filteredJobs.filter(job => 
+        (job.Title?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.JobseekerName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.VillageName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.DistrictName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.ProvinceName?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+      );
+    }
+
     setSortedJobs(filteredJobs);
-  }, [selectedCategory, selectedOccupation, cvData]);
+  }, [selectedCategory, selectedOccupation, cvData, searchQuery]);
 
   useEffect(() => {
     let sortedArray = [...sortedJobs];
@@ -292,9 +302,21 @@ function FindEmployeePage() {
             <div className='w-full mb-4 bg-slate-200 mt-10 rounded-md text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
               <p className='p-2 text-slate-700 font-bold text-center'>ຫນ້າຫາພະນັກງານ</p>
             </div>
+
+            <label className="input input-bordered flex items-center gap-2 my-2 bg-base-300">
+            <input 
+              type="text" 
+              className="grow text-center" 
+              placeholder="ຄົ້ນຫາວຽກ" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <svg className="w-6 h-6 mr-2 text-warning shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </label>
+
             <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1 mb-4'>
-
-
               <button
                 className="btn btn-secondary border-2 border-base-300 w-full bg-base-200"
                 onClick={() => {

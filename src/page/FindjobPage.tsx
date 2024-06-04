@@ -72,6 +72,7 @@ function FindjobPage() {
   const currentJobs = sortedJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   const [selectedSalaryRange, setSelectedSalaryRange] = useState<string>("");
   const [selectedMaxSalary, setSelectedMaxSalary] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
 
   useEffect(() => {
@@ -329,26 +330,34 @@ function FindjobPage() {
 
   useEffect(() => {
     let filteredJobs = [...jobData];
-
-    // Filter by selected category
+  
     if (selectedCategory !== null) {
       filteredJobs = filteredJobs.filter(job => job.CategoryID === selectedCategory);
     }
-
-    // Filter by selected occupation
+  
     if (selectedOccupation !== null) {
       filteredJobs = filteredJobs.filter(job => job.OccupationID === selectedOccupation);
     }
-
-    // Filter by selected maximum salary
-    if (selectedMaxSalary !== "") {
+  
+    if (selectedMaxSalary !== '') {
       const maxSalary = parseInt(selectedMaxSalary, 10);
       filteredJobs = filteredJobs.filter(job => job.SalaryMax >= maxSalary);
     }
-
-    // Update sorted jobs
+  
+    if (searchQuery !== '') {
+      filteredJobs = filteredJobs.filter(job => 
+        (job.Title?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.CompanyName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.VillageName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.DistrictName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.ProvinceName?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+      );
+    }
+  
     setSortedJobs(filteredJobs);
-  }, [selectedCategory, selectedOccupation, selectedMaxSalary, jobData]);
+  }, [selectedCategory, selectedOccupation, selectedMaxSalary, searchQuery, jobData]);
+  
+  
 
 
 
@@ -376,13 +385,27 @@ function FindjobPage() {
 
   return (
     <html data-theme={theme}>
-      <div className='mx-10'>
+      <div className='mx-10 font-notoLao'>
         <SetNavbar />
         <center>
           <main className='container mx-auto shadow-lg'>
             <div className='w-full mb-4 bg-slate-200 mt-10 rounded-md  text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
               <p className='p-2  font-bold text-center font-notoLao'>ຫນ້າຫາວຽກ</p>
             </div>
+
+            <label className="input input-bordered flex items-center gap-2 my-2 bg-base-300">
+            <input 
+              type="text" 
+              className="grow text-center" 
+              placeholder="ຄົ້ນຫາວຽກ" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <svg className="w-6 h-6 mr-2 text-warning shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </label>
+
             <div className='mx-auto grid grid-cols-5 justify-items-center gap-1 mb-4'>
 
               <button
@@ -436,7 +459,7 @@ function FindjobPage() {
               >
                 <option value="">ອາຊີບທັງຫມົດ</option>
                 <option disabled value="">ເລືອກປະເພດອາຊີບກ່ອນ</option>
-                
+
                 {occupations.map(occupation => (
                   <option key={occupation.OccupationID} value={occupation.OccupationID}>
                     {occupation.OccupationName}
