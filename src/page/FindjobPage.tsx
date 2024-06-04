@@ -381,30 +381,46 @@ function FindjobPage() {
         <center>
           <main className='container mx-auto shadow-lg'>
             <div className='w-full mb-4 bg-slate-200 mt-10 rounded-md  text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-              <p className='p-2  font-bold text-center'>Job</p>
+              <p className='p-2  font-bold text-center font-notoLao'>ຫນ້າຫາວຽກ</p>
             </div>
-            <div className='mx-auto grid grid-cols-4 justify-items-center gap-1 mb-4'>
+            <div className='mx-auto grid grid-cols-5 justify-items-center gap-1 mb-4'>
+
+              <button
+                className="btn border-2 border-base-300 w-full bg-base-200 font-notoLao"
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setSelectedOccupation(null);
+                  setSortOrder('none');
+                  setSelectedMaxSalary('')
+                }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                </svg>
+
+                ລ້າງຕົວກອງ
+              </button>
 
               <select
-                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                className="select select-bordered border-2 border-base-300 w-full bg-base-200 font-notoLao"
                 onChange={handleSortChange}
                 value={sortOrder}
               >
-                <option disabled value="none" className='bg-slate-400 text-slate-950'>
-                  Order by :
+                <option disabled value="none" className='bg-slate-400 text-slate-950 font-notoLao'>
+                  ຈັດລຽງຕາມ :
                 </option>
-                <option value="none" className='bg-base-300'>none</option>
-                <option value="new">New</option>
-                <option value="latest">Latest</option>
+                <option value="none" className='bg-base-300'>ບໍ່ມີ</option>
+                <option value="new">ໃຫມ່ສຸດກ່ອນ</option>
+                <option value="latest">ເກົ່າສຸດກ່ອນ</option>
               </select>
 
               <select
-                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                className="select select-bordered border-2 border-base-300 w-full bg-base-200 font-notoLao"
                 value={selectedCategory != null ? selectedCategory : ''}
                 onChange={handleCategoryChange}
               >
-                <option value="">All Categories</option>
-                <option disabled value="">Select Category</option>
+                <option value="">ປະເພດອາຊີບທັງຫມົດ</option>
+                <option disabled value="">ເລືອກປະເພດອາຊີບ</option>
                 {categories.map(category => (
                   <option key={category.CategoryID} value={category.CategoryID}>
                     {category.CategoryName}
@@ -414,12 +430,13 @@ function FindjobPage() {
 
 
               <select
-                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                className="select select-bordered border-2 border-base-300 w-full bg-base-200 font-notoLao"
                 value={selectedOccupation != null ? selectedOccupation : ''}
                 onChange={handleOccupationChange}
               >
-                <option disabled value="">All Occupations</option>
-                <option value="">All Occupations</option>
+                <option value="">ອາຊີບທັງຫມົດ</option>
+                <option disabled value="">ເລືອກປະເພດອາຊີບກ່ອນ</option>
+                
                 {occupations.map(occupation => (
                   <option key={occupation.OccupationID} value={occupation.OccupationID}>
                     {occupation.OccupationName}
@@ -430,14 +447,15 @@ function FindjobPage() {
 
 
               <select
-                className="select select-bordered border-2 border-base-300 w-full max-w-xs bg-base-200"
+                className="select select-bordered border-2 border-base-300 w-full bg-base-200 font-notoLao"
                 value={selectedMaxSalary}
                 onChange={handleMaxSalaryChange}
               >
                 <option disabled value="none" className='bg-slate-400 text-slate-950'>
-                  Saraly :
+                  ເລືອກເງິນເດືອນ :
                 </option>
-                <option value="none" className='bg-base-300'>none</option>
+                <option disabled value="">ກອງຕາມເງິນເດືອນ</option>
+                <option value="none" className='bg-base-300'>ທັງຫມົດ</option>
                 <option value="1500000">1,500,0000 ກີບ ຂື້ນໄປ</option>
                 <option value="3000000">3,000,0000 ກີບ ຂື້ນໄປ</option>
                 <option value="5000000">5,000,000 ກີບ ຂື້ນໄປ</option>
@@ -452,7 +470,7 @@ function FindjobPage() {
 
             </div>
 
-            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center'>
+            <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center font-notoLao'>
               {currentJobs.map((job) => (
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min' key={job.JobID}>
                   <div

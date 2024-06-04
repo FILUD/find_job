@@ -444,12 +444,12 @@ function HomePage() {
 
   return (
     <html data-theme={theme}>
-      <div className='mx-10'>
+      <div className='mx-10 font-notoLao'>
         <SetNavbar />
         <center>
           <main className='container mx-auto'>
             <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-              <p className='p-2 font-bold'>Work Reccommend</p>
+              <p className='p-2 font-bold'>ວຽກແນະນຳ</p>
             </div>
             <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1'>
             </div>
@@ -472,22 +472,22 @@ function HomePage() {
                         <h2 className="card-title"><b>{job.CompanyName}</b></h2>
                         <p className='text-left'><b>{job.Title}</b></p>
                         <p className='text-left'>
-                          <b>Salary :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
+                          <b>ເງິນເດືອນ :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
                         </p>
-                        <p className='text-left'><b>Work category :</b> {job.CategoryName}/{job.OccupationName}</p>
+                        <p className='text-left'><b>ປະເພດອາຊີບ :</b> {job.CategoryName}/{job.OccupationName}</p>
                         <p className='text-left'>
-                          <b>Location :</b>
+                          <b>ທີ່ຢູ່ :</b>
                           {job.VillageName
                             ? `${job.VillageName}/${job.DistrictName}/${job.ProvinceName}`
                             : ' ບໍ່ລະບຸ'
                           }
                         </p>
                         <div className='grid grid-cols-2 pt-1'>
-                          <p className='text-left text-xs col-span-1'><b>Posted:</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
-                          <p className='text-left text-xs col-span-1'><b>Work type:</b> {job.WorkType}</p></div>
+                          <p className='text-left text-xs col-span-1'><b>ວິນທີ່ອັບໂຫລດ :</b> {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
+                          <p className='text-left text-xs col-span-1'><b>ປະເພດຫນ້າວຽກ :</b> {job.WorkType}</p></div>
                       </div>
                       <div className="w-full card-actions max-h-full h-full flex items-end">
-                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetData(job.Employer_Profile_IMG, job.EmployerID, job.JobID, job.CompanyName, job.OccupationName, job.CategoryName, job.WorkType)}>View</button>
+                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetData(job.Employer_Profile_IMG, job.EmployerID, job.JobID, job.CompanyName, job.OccupationName, job.CategoryName, job.WorkType)}>ເບິ່ງລາຍລະອຽດ</button>
                       </div>
                     </div>
                   </div>
@@ -496,14 +496,12 @@ function HomePage() {
 
 
             </div>
-            <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Job <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
+            <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ລະແດງວຽກທັງຫມົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
 
 
             <div className='w-full  bg-purple-800 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-              <p className='p-2  font-bold'>Empolyee Reccommend</p>
+              <p className='p-2  font-bold'>ພະນັກງານແນະນຳ</p>
             </div>
-
-
 
             <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 mb-6 box-border center space-2'>
               {cvData.map((cv: CVData) => (
@@ -522,12 +520,12 @@ function HomePage() {
                       <div className=''>
                         <h2 className="card-title"><b>{cv.JobseekerName}</b></h2>
                         <p className='text-left'><b>{cv.Title}</b></p>
-                        <p className='text-left'>Work category: {cv.CategoryName}/{cv.OccupationName}</p>
-                        <p className='text-left'>Location: {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
-                        <p className='text-left'>Posted: {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                        <p className='text-left'><b>ປະເພດອາຊີບ :</b> {cv.CategoryName}/{cv.OccupationName}</p>
+                        <p className='text-left'><b>ທີ່ຢູ່ :</b> {cv.VillageName}/{cv.DistrictName}/{cv.ProvinceName}</p>
+                        <p className='text-left'><b>ວັນທີ່ອັບໂຫຼດ :</b> {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                       </div>
                       <div className="w-full max-h-full h-full flex card-actions items-end">
-                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetDataInvitation(cvData)}>View</button>
+                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetDataInvitation(cvData)}>ເບິ່ງລາຍລະອຽດ</button>
                       </div>
                     </div>
                   </div>
@@ -538,7 +536,7 @@ function HomePage() {
 
             </div>
 
-            <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">View All Employee <img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
+            <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
           </main>
 
           {/* Is Open job Request or not */}
