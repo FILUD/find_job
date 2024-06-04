@@ -192,7 +192,7 @@ function Message({ getSenderID, getReceiverID }: UserParam) {
                     {
                         isLoading ?
                             (
-                                <div className='flex justify-center items-center w-full' >
+                                <div className='flex justify-center items-center w-full h-screen' >
                                     <MoonLoader
                                         color="#36d7b7"
                                         cssOverride={{}}

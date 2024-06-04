@@ -102,14 +102,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                             <div className="collapse-content space-y-1">
                                 <ul className="font-semibold">
                                     <li onClick={() => handleDashboardClick("dashboard_manager")}>
-                                        <a href="#">Mangement1</a>
+                                        <a href="#">Main </a>
                                     </li>
 
                                     <li onClick={() => handleDashboardClick("dashboard_people")}>
-                                        <a href="#">Mangement2</a>
+                                        <a href="#">User Account</a>
                                     </li>
                                     <li onClick={() => handleDashboardClick("dashboard_report")}>
-                                        <a href="#">report test</a>
+                                        <a href="#">Report</a>
                                     </li>
 
                                 </ul>
