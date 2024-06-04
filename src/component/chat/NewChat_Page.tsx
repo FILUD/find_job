@@ -127,7 +127,7 @@ function NewChat_Page() {
                             <div className='basis-full max-h-full snap-y overflow-y-scroll bg-base-200 bg-opacity-65 shadow-xl m-2'>
                                 <div>
                                     <div className='bg-black bg-opacity-5 h-16 flex justify-center shadow-lg my-2'>
-                                        <p className='text-xl font-bold self-center'>Message</p>
+                                        <p className='text-xl font-bold self-center font-notoLao'>ຂໍ້ຄວາມ</p>
                                     </div>
                                 </div>
                                 <table className="table bg-base-200 rounded-lg 1">

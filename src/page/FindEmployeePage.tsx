@@ -11,6 +11,7 @@ interface CVData {
   CvID: number;
   JobseekerID: number;
   IMG_CV: string;
+  UserID: number;
   JobseekerName: string;
   Jobseeker_Profile_IMG: string;
   CategoryName: string;
@@ -368,7 +369,7 @@ function FindEmployeePage() {
               >
                 <option value="">ອາຊີບທັງຫມົດ</option>
                 <option disabled value="">ເລືອກປະເພດອາຊີບກ່ອນ</option>
-                
+
                 {occupations.map(occupation => (
                   <option key={occupation.OccupationID} value={occupation.OccupationID}>
                     {occupation.OccupationName}
@@ -395,7 +396,10 @@ function FindEmployeePage() {
                     </figure>
                     <div className="card-body w-full">
                       <div>
-                        {cv.Jobseeker_Profile_IMG && <img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />}
+                        {cv.Jobseeker_Profile_IMG ?
+                          < img className='w-14 -mt-16 border-2 rounded-full' src={cv.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                          :
+                          <img className='w-14 -mt-16 border-2 rounded-full' src="/Icon/user.png" alt="Profile_IMG" />}
                       </div>
                       <div className=''>
                         <p className="card-title"><b>{cv.JobseekerName}</b></p>
@@ -462,7 +466,7 @@ function FindEmployeePage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                               </svg>
                             </button>
-                            <button className="btn btn-primary">
+                            <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
                               <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
                               </svg>

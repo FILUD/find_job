@@ -6,7 +6,7 @@ import SetDashboard from '../component/dashboards/set_dashboard';
 const Admin_Dashboard: React.FC = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { theme } = useTheme();
-    const [dashboardName, setDashboardName] = useState<string>("dashboard_report");
+    const [dashboardName, setDashboardName] = useState<string>("dashboard_manager");
 
     const changeDashboard = (newDashboardName: string) => {
         setDashboardName(newDashboardName);
