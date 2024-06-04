@@ -170,8 +170,6 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                                 speedMultiplier={0.8}
                             />
                         </div>
-
-
                     ) : (
                         <div>
                             {messages.map((msg, index) => (

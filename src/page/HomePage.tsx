@@ -15,6 +15,7 @@ import JobInvitation from '../component/chat/card/JobInvitation';
 interface jobData {
   JobID: number;
   JobseekerID: number;
+  UserID: number;
   Post_IMG: string;
   Title: string;
   CompanyName: string;
@@ -35,6 +36,7 @@ interface CVData {
   CvID: number;
   JobseekerID: number;
   IMG_CV: string;
+  UserID: number;
   JobseekerName: string;
   Jobseeker_Profile_IMG: string;
   CategoryName: string;
@@ -205,6 +207,7 @@ function HomePage() {
 
   const handleCardClickCV = (cv: CVData) => {
     setJobseekerID(cv.JobseekerID);
+    console.log("show select cv", cv);
     setSelectedCV(cv);
     setShowPopup(true);
   };
@@ -216,6 +219,7 @@ function HomePage() {
   };
 
   const handleCardClickJOB = (job: any) => {
+    console.log("show select job", job)
     setEmployerID(job.EmployerID);
     setselectedJOB(job);
     setShowPopup(true);
@@ -604,8 +608,8 @@ function HomePage() {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                           </svg>
                         </button>
-
-                        <button className="btn btn-primary">
+                        {/* todo  */}
+                        <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedJOB.UserID}`)}>Chat
                           <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
                           </svg>
@@ -662,7 +666,8 @@ function HomePage() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
                           </svg>
                         </button>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                          Chat
                           <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
                           </svg>
