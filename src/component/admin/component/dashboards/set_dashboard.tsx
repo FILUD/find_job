@@ -6,6 +6,7 @@ import Dashboard_workcategory from "./dashboard_display/dashboard_workcategory";
 import Dashboard_occupation from "./dashboard_display/dashboard_occupation";
 import Dashboard_welcome from "./dashboard_display/dashboard_welcome";
 import Test_report from "./dashboard_display/test";
+import Dashboard_report from "./dashboard_display/dashboard_report";
 
 interface SetDashboardProps {
     dashboardName: string;
@@ -24,7 +25,8 @@ const SetDashboard: React.FC<SetDashboardProps> = ({ dashboardName }) => {
             {dashboardName === "dashboard_workcategory" && <Dashboard_workcategory />}
             {dashboardName === "dashboard_occupation" && <Dashboard_occupation />}
             {/* report */}
-            {dashboardName === "dashboard_report" && <Test_report/>}
+            {dashboardName === "test" && <Test_report/>}
+            {dashboardName === "dashboard_report" && <Dashboard_report/>}
         </div>
     );
 };

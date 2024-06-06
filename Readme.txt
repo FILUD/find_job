@@ -19,6 +19,9 @@ npm install --save react-spinners
 npm i pdfviewer
 npm i quixote-ui
 npm install sweetalert2
+npm install react-to-print
+npm install spline/runtime
+npm install react-to-print react-pdf @react-pdf/renderer
 
 
 
