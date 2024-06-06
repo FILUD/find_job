@@ -34,7 +34,7 @@ function Navbar() {
 
 
     return (
-        <div className='mx-10 px-5 shadow-xl py-4'>
+        <div className='mx-10 px-5 shadow-xl py-4 font-notoLao'>
 
             <div className='container-nav'>
                 <div className="navbar bg-base-500">
@@ -44,27 +44,17 @@ function Navbar() {
                     <div className="flex-none">
 
                         <div className="dropdown dropdown-end px-5 hover:text-orange-300 duration-1000 cursor-pointer">
-                            <p onClick={() => navigate('/Home')}>Home</p>
+                            <p onClick={() => navigate('/Home')}>ໜ້າຫຼັກ</p>
                         </div>
 
                         <div className="dropdown dropdown-end px-5 hover:text-orange-300 duration-1000 cursor-pointer">
-                            <p onClick={() => navigate('/Findjob')}>Find job</p>
+                            <p onClick={() => navigate('/Findjob')}>ຊອກວຽກ</p>
                         </div>
 
                         <div className="dropdown dropdown-end px-5 hover:text-orange-300 duration-1000 cursor-pointer">
-                            <p onClick={() => navigate('/FindEmployee')}>Find Employee</p>
+                            <p onClick={() => navigate('/FindEmployee')}>ຊອກພະນັກງານ</p>
                         </div>
 
-                        {/* Search icon */}
-                        <div className="dropdown dropdown-end">
-                            <button className="btn btn-ghost btn-circle w-80">
-                                <label className="input input-bordered flex items-center gap-2 ">
-                                    <input type="text" className="grow" placeholder="Search" />
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-6 h-6 opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
-                                </label>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                            </button>
-                        </div>
 
                         {/* chat icon */}
                         {/* Chat */}
@@ -107,7 +97,7 @@ function Navbar() {
 
 
                         {/* Change Language */}
-                        <div className="dropdown dropdown-end ml-7">
+                        {/* <div className="dropdown dropdown-end ml-7">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-8 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" className="w-full h-full">
@@ -120,7 +110,7 @@ function Navbar() {
                                 <li ><a>ລາວ</a></li>
                                 <li className=''><a>English</a></li>
                             </ul>
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>

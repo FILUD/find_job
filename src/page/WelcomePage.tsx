@@ -22,7 +22,7 @@ function Welcome_Page() {
                 <center>
                     <div className='align-middle pt-40'>
                         <p className='text-7xl focus-in-contract-bck font-semibold'>ຍິນດີຕອນຮັບ</p>
-                        <button className="bounce-top btn btn-outline btn-primary rounded-xl text-lg w-60 align-middle mt-10" onClick={() => navigate('/Home')}>ເລີ່ມຕົ້ນ</button>
+                        <button className="bounce-top btn btn-outline btn-primary rounded-xl text-lg w-60 align-middle mt-10" onClick={() => navigate('/Home')}>ເຂົ້າສູ່ເວັບໄຊ້</button>
                     </div>
 
                                             <div className='grid grid-cols-5 justify-center items-center justify-items-center mt-28 gap-0 shadow-xl pb-40 font-notoLao'>

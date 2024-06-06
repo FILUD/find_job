@@ -333,7 +333,7 @@ const EditJobPage: React.FC = () => {
                                                     </div>
                                                 </div>
                                                 <div className='grid grid-cols-3 space-x-12'>
-                                                    <div className=''>
+                                                    <div className='-mt-8 mb-8'>
                                                         <div className='card w-full h-full max-h-60 bg-base-100 shadow-xl mt-16 p-4 self-center'>
                                                             <textarea
                                                                 className="textarea textarea-bordered h-full"
