@@ -74,6 +74,7 @@ function Message({ getSenderID, getReceiverID }: UserParam) {
     const [firstFetch, setFirstFecth] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [profileInfo, setProfileInfo] = useState<ChatProfile>();
+    const [lenght, setLenght] = useState<number>();
 
 
 
@@ -106,8 +107,15 @@ function Message({ getSenderID, getReceiverID }: UserParam) {
     useEffect(() => {
         if (getSenderID && getReceiverID) {
             fetchOldMessages();
+            // scrollAfterTimeout();
+            if (lenght != messages.length) {
+                setLenght(messages.length)
+                scrollAfterTimeout();
+            }
             if (firstFetch != getReceiverID) {
                 setIsLoading(true);
+                setLenght(messages.length)
+                scrollAfterTimeout();
                 setTimeout(() => {
                     scrollAfterTimeout();
                     setFirstFecth(getReceiverID);
@@ -115,16 +123,14 @@ function Message({ getSenderID, getReceiverID }: UserParam) {
                 }, 2000);
             }
         }
-    }, [getSenderID, getReceiverID])
-    
+    }, [getSenderID, getReceiverID, messages])
+
 
 
     const sendMessage = () => {
         if (getSenderID && getReceiverID && messageInput) {
-            socket.emit('send message', { senderId: getSenderID, receiverId: getReceiverID, message: messageInput });
-            fetchOldMessages();
+            socket.emit('send message', { senderId: getSenderID, receiverId: getReceiverID, message: messageInput }); 
             setMessageInput('');
-            // scrollAfterTimeout();
         }
 
     };

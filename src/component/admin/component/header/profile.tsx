@@ -1,8 +1,9 @@
-
+import { useNavigate } from "react-router-dom"
 
 function Profile_admin() {
+    const navigate = useNavigate();
     return (
-        <div className="dropdown dropdown-end"> 
+        <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                 <div className="w-8 rounded-full">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full">
@@ -18,7 +19,7 @@ function Profile_admin() {
                     </a>
                 </li>
                 <li><a>Settings</a></li>
-                <li><a>Logout</a></li>
+                <li><a onClick={() => navigate('/')}>Logout</a ></li>
             </ul>
         </div>
 

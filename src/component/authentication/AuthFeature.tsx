@@ -33,6 +33,7 @@ export default function AuthFeat() {
         }, 3000);
         return () => clearTimeout(timeoutId);
     }, []);
+
     const handleLogin = async (email: string, password: string) => {
         try {
             setLoading(true);
@@ -44,21 +45,30 @@ export default function AuthFeat() {
                 body: JSON.stringify({ email: email, password: password }),
             });
 
+            // console.log(userData);
             if (response.ok) {
                 console.log("Login successful");
-                const sendOTP = await fetch(`${api}/sendOTP`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email }),
-                });
+                const responseData = await response.json(); // Parse response body as JSON
+                const userData = responseData.userData;
+                if (userData != "Admin") {
+                    console.log("Role", userData)
+                    const sendOTP = await fetch(`${api}/sendOTP`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ email }),
+                    });
 
-                if (sendOTP.ok) {
-                    console.log("Check your email for OTP verification");
-                    togglePopupOTP(email);
+                    if (sendOTP.ok) {
+                        console.log("Check your email for OTP verification");
+                        togglePopupOTP(email);
+                    } else {
+                        console.log("Error sending OTP");
+                    }
                 } else {
-                    console.log("Error sending OTP");
+                    console.log("Role", userData)
+                    navigate('/admin_dashboard')
                 }
             } else {
                 setLoading(false);
