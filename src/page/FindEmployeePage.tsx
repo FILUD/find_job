@@ -268,6 +268,8 @@ function FindEmployeePage() {
       filteredJobs = filteredJobs.filter(job =>
         (job.Title?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.JobseekerName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.OccupationName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.CategoryName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.VillageName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.DistrictName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.ProvinceName?.toLowerCase() || '').includes(searchQuery.toLowerCase())
@@ -314,11 +316,11 @@ function FindEmployeePage() {
         <center>
           <main className='container mx-auto'>
 
-            <div className='w-full mb-4 bg-slate-200 mt-10 rounded-md text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
-              <p className='p-2 text-slate-700 font-bold text-center'>ຫນ້າຫາພະນັກງານ</p>
+            <div className='w-full mb-4 mt-10 rounded-md text-4xl text-white bg-purple-900'>
+              <p className='p-2 font-bold text-center'>ຫນ້າຫາພະນັກງານ</p>
             </div>
 
-            <label className="input input-bordered flex items-center gap-2 my-2 bg-base-300">
+            <label className="border-2 border-purple-900/30 input flex items-center gap-2 my-2 bg-base-300">
               <input
                 type="text"
                 className="grow text-center"
@@ -442,14 +444,15 @@ function FindEmployeePage() {
               {selectedCV && (
                 <dialog id="my_modal_3" className="modal" open>
                   <div className="modal-box w-11/12 max-w-7xl bg-base-100 border-2 border-white/10">
+
                     <button className="btn btn-xl btn-circle btn-ghost absolute right-1 top-1" onClick={closePopup}>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
                     </button>
 
                     <div className='grid grid-cols-2 -m-5'>
-                      <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-base-300'>ລາຍລະອຽດວຽກ</div>
+                      <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl text-white bg-purple-900'>ລາຍລະອຽດ cv</div>
                       <figure className='w-full'>
                         <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClick(selectedCV)}>
                           <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
@@ -479,7 +482,7 @@ function FindEmployeePage() {
 
                         <div className="card-actions flex justify-end h-full items-end">
                           {myID == JobseekerID && (
-                            <button className='btn btn-primary' onClick={() => handleEditCv(selectedCV.CvID)}>Edit Cv</button>
+                            <button className='btn btn-primary' onClick={() => handleEditCv(selectedCV.CvID)}>ແກ້ໄຂລາຍລະອຽດ</button>
                           )}
 
                           {myID != JobseekerID && (
@@ -494,13 +497,13 @@ function FindEmployeePage() {
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
                                 </svg>
                               </button>
-                              <button className="btn btn-primary">Apply</button>
-                              <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
+                              <button className="btn btn-primary">ຮັບສະໝັກພະນັກງານ</button>
+                              <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button>
                             </>
                           )}
                         </div>
                       </div>
-                      <div className='col-span-2 w-full text-white text-3xl py-6 rounded-b-2xl bg-base-300'></div>
+                      <div className='col-span-2 w-full text-white text-3xl py-6 rounded-b-2xl bg-purple-900'></div>
                     </div>
                   </div>
                 </dialog>

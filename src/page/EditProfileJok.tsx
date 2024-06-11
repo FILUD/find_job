@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTheme } from './../theme/theme';
 import Footer from '../component/footer/Footer';
+import '../css/style.css';
 
 interface CVData {
     CvID: number;
@@ -73,13 +74,14 @@ function EditProfileJok() {
     const handleDeleteCV = (cvId: number) => {
         // Show Swal confirmation dialog
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "ຢືນຢັນການລົບ ?",
+            text: "ທ່ານຕ້ອງການຢືນຢັນບໍ່ !",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "ຢືນຢັນການລົບ !",
+            cancelButtonText: "ຍົກເລີກ"
         }).then((result) => {
             if (result.isConfirmed) {
                 // If confirmed, send DELETE request
@@ -91,7 +93,7 @@ function EditProfileJok() {
                         // Show success message
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Your file has been deleted.",
+                            text: "ລົບຮຽບຮ້ອຍແລ້ວ.",
                             icon: "success"
                         });
                     })
@@ -101,7 +103,7 @@ function EditProfileJok() {
                         // Show error message
                         Swal.fire({
                             title: "Error!",
-                            text: "Failed to delete the CV.",
+                            text: "ເກີດຂໍ້ຜິດພາດໃນການລົບ.",
                             icon: "error"
                         });
                     });
@@ -144,12 +146,12 @@ function EditProfileJok() {
         const selectedFile = e.target.files ? e.target.files[0] : null;
         if (selectedFile) {
             Swal.fire({
-                title: 'Save Image?',
-                text: 'Do you want to save the selected image?',
+                title: 'ຢືນຢັນ ?',
+                text: 'ທ່ານຕ້ອງການປ່ຽນຮູບໂປຣຟາຍບໍ່?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, save it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: 'ບັນທືກ',
+                cancelButtonText: 'ຍົກເລີກ',
             }).then((result) => {
                 if (result.isConfirmed) {
                     saveImage(selectedFile);
@@ -177,7 +179,7 @@ function EditProfileJok() {
             Swal.fire({
                 position: "top",
                 icon: "success",
-                title: "Edit Profile success",
+                title: "ແກ້ໄຂໂປຣຟາຍສຳເລັດ",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -186,7 +188,7 @@ function EditProfileJok() {
             Swal.fire({
                 position: "top",
                 icon: "error",
-                title: "Something went wrong. Please try again later.",
+                title: "ຜິດພາດໃນແກ້ໄຂ ລອງໃໝ່ອີກຄັ້ງພາຍຫຼັງ.",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -333,7 +335,7 @@ function EditProfileJok() {
                             Swal.fire({
                                 position: "top",
                                 icon: "success",
-                                title: "Edit profile success",
+                                title: "ແກ້ໄຂຂໍ້ມູນໂປຣຟາຍສຳເລັດ",
                                 showConfirmButton: false,
                                 timer: 1500
                             });
@@ -376,7 +378,7 @@ function EditProfileJok() {
                     Swal.fire({
                         position: "top",
                         icon: "success",
-                        title: "Edit profile success",
+                        title: "ແກ້ໄຂຂໍ້ມູນໂປຣຟາຍສຳເລັດ",
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -395,20 +397,21 @@ function EditProfileJok() {
 
     return (
         <html data-theme={theme}>
-            <div className=' h-screen max-h-screen bg-base-100'>
+            <div className=' h-screen max-h-screen bg-base-100 font-notoLao'>
                 <SetNavbar />
-                <div className='max-h-screen h-3/4 mt-2'>
+                <div className='max-h-screen h-3/4 mt-2 px-10'>
                     <center className='grid bg-base-100 h-full'>
                         <div className='container justify-self-center bg-base-100 mt-8'>
-                            <div className='mb-20 bg-purple-900 p-4 rounded-xl shadow-lg '>
-                                <p className="text-2xl font-bold text-white"> My Profile</p>
+                            <div className='mb-20 bg-purple-900 p-3 rounded-xl shadow-lg '>
+                                <p className="text-2xl font-bold text-white">ໂປຣຟາຍ ຂອງຂ້ອຍ</p>
                             </div>
                         </div>
+
                         <div className='self-center h-full'>
                             {jokData.map(jok => (
                                 <div className='container -mt-14 grid grid-cols-3 justify-center center bg-base-100  gap-1' key={jok.UserID}>
                                     <div className='col-span-1 grid justify-center bg-base-300 rounded-2xl ml-4 '>
-                                        <div className='w-44 h-44 mt-2 justify-self-center static rounded-full'>
+                                        <div className='w-36 h-36 mt-4 justify-self-center static rounded-full'>
                                             <button className="btn btn-ghost btn-circle absolute -mt-2 ml-5 bg-base-100  rounded-full bg-opacity-75">
                                                 <label className="flex items-center gap-2 ">
                                                     <input
@@ -434,8 +437,8 @@ function EditProfileJok() {
                                             )}
 
                                         </div>
-                                        <p className='pb-2 pt-2 text-2xl'>{jok.JobseekerName}</p>
-                                        <div className='pb-5'>
+                                        <p className='pb-2 text-2xl'><b>{jok.JobseekerName}</b></p>
+                                        <div className='pb-5 '>
                                             <div>
                                                 <div className='pb-2 grid grid-cols-3'>
                                                     <svg className="w-6 h-6 col-span-1 justify-self-center ml-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
@@ -464,7 +467,7 @@ function EditProfileJok() {
                                                         {jok.VillageName ? (
                                                             <p className='text-left'>ບ້ານ{jok.VillageName} / ເມືອງ{jok.DistrictName} / ແຂວງ{jok.ProvinceName}</p>
                                                         ) : (
-                                                            <p className='text-left'>Address : ຍັງບໍ່ມີຂໍ້ມູນ</p>
+                                                            <p className='text-left'>ທີ່ຢູ່ : ຍັງບໍ່ມີຂໍ້ມູນ</p>
                                                         )}
                                                     </div>
                                                 </div>
@@ -476,15 +479,15 @@ function EditProfileJok() {
                                                         {jok.ProfessionalTitle ? (
                                                             <div className='text-left'>{jok.ProfessionalTitle}</div>
                                                         ) : (
-                                                            <p className='text-left'>Professional Title : ຍັງບໍ່ມີຂໍ້ມູນ</p>
+                                                            <p className='text-left'>ຫົວຂໍ້ວຽກທີ່ຖະໜັດ : ຍັງບໍ່ມີຂໍ້ມູນ</p>
                                                         )}
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div>
-                                                <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-2 ' onClick={handleToggleEditMode}> Edit mode</button>
-                                                <button className='btn btn-square btn-wide btn-ghost btn-outline  mt-2' onClick={() => navigate("/PostCV")}> Post Job</button >
+                                            <div className='grid grid-cols-2 mt-4'>
+                                                <button className='btn btn-square btn-ghost w-5/6 btn-outline mr-2 justify-self-end' onClick={handleToggleEditMode}>ແກ້ໄຂຂໍ້ມູນ</button>
+                                                <button className='btn btn-square w-5/6 btn-ghost btn-outline ml-2' onClick={() => navigate("/PostCV")}>ປະກາດວຽກໃຫມ່</button >
                                             </div>
                                         </div>
                                     </div>
@@ -492,7 +495,7 @@ function EditProfileJok() {
                                     <div className='col-span-2 h-fit text-right'>
 
                                         {isEditMode ? (
-                                            <div >
+                                            <div className='bg-base-300 rounded-2xl pt-5 pb-5'>
                                                 <div className='grid grid-cols-5 '>
                                                     <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Email :</p>
                                                     <input
@@ -506,7 +509,7 @@ function EditProfileJok() {
                                                 </div>
 
                                                 <div className='grid grid-cols-5'>
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>name :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ຊື່ ແລະ ນາມສະກຸນ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={jok.CompanyName}
@@ -516,7 +519,7 @@ function EditProfileJok() {
                                                     />
                                                 </div>
                                                 <div className='grid grid-cols-5'>
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Telephone :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ເບີໂທ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={jok.Tel}
@@ -528,13 +531,13 @@ function EditProfileJok() {
 
                                                 <div className='grid grid-cols-5 my-5'>
 
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Province :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ແຂວງ :</p>
                                                     <select
                                                         className="select select-primary w-4/5 max-w-xs col-span-4"
                                                         value={selectedprovice || ''}
                                                         onChange={handleProvinceChange}
                                                     >
-                                                        <option disabled value="">Province</option>
+                                                        <option disabled value="">ເລືອກແຂວງ</option>
                                                         {province.map(province => (
                                                             <option key={province.ProvinceID} value={province.ProvinceID}>
                                                                 {province.ProvinceName}
@@ -542,13 +545,13 @@ function EditProfileJok() {
                                                         ))}
                                                     </select>
 
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>District :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ເມືອງ :</p>
                                                     <select
                                                         className="select select-primary w-4/5 max-w-xs col-span-4"
                                                         value={district}
                                                         onChange={(e) => setDistrict(e.target.value)}
                                                     >
-                                                        <option disabled value="">Distict</option>
+                                                        <option disabled value="">ກະລຸນາເລືອກແຂວງກ່ອນ</option>
                                                         {districts.map(district => (
                                                             <option key={district.DistrictID} value={district.DistrictID}>
                                                                 {district.DistrictName}
@@ -556,7 +559,7 @@ function EditProfileJok() {
                                                         ))}
                                                     </select>
 
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Vilage :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ບ້ານ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={jok.VillageName}
@@ -566,7 +569,7 @@ function EditProfileJok() {
                                                     />
                                                 </div>
                                                 <div className='grid grid-cols-5 my-5'>
-                                                    <p className='ml-2 horizontal col-span-2 pr-5 self-center'>Professional title :</p>
+                                                    <p className='ml-2 horizontal col-span-2 pr-5 self-center'>ຫົວຂໍ້ວຽກທີ່ຖະໜັດ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={jok.ProfessionalTitle}
@@ -576,19 +579,19 @@ function EditProfileJok() {
                                                     /></div>
 
                                                 <div className='grid grid-cols-8 my-5 gap-5'>
-                                                    <button className='btn btn-square  btn-primary w-full md:mt-6 mt-2 justify-center col-start-3 col-end-5' onClick={handleSubmit}>Save</button>
-                                                    <button className='btn btn-square  btn-ghost btn-outline w-full md:mt-6 mt-2 justify-center col-start-5 col-end-7' onClick={handleCloseEditMode}>Cancel</button>
+                                                    <button className='btn btn-square  btn-primary w-full md:mt-6 mt-2 justify-center col-start-3 col-end-5' onClick={handleSubmit}>ບັນທືກ</button>
+                                                    <button className='btn btn-square  btn-ghost btn-outline w-full md:mt-6 mt-2 justify-center col-start-5 col-end-7' onClick={handleCloseEditMode}>ຍົກເລີກ</button>
                                                 </div>
                                             </div>
                                         ) : (
 
-                                            <div className='m-2 mt-2'>
-                                                <div className='navbar bg-neutral-900 text-neutral-content rounded-t-2xl'>
-                                                    <div className="flex-1">
-                                                        <a className="btn btn-ghost text-xl">CV Posting</a>
+                                            <div className='mx-2'>
+                                                <div className='bg-purple-900 py-2 text-white rounded-t-2xl'>
+                                                    <div className="text-center">
+                                                        <p className="text-xl font-bold">CV ຂອງຂ້ອຍ</p>
                                                     </div>
                                                 </div>
-                                                <div className='w-full h-full max-h-96 bg-purple-900 rounded-b-2xl p-3 space-y-4 snap-y overflow-y-auto shadow-md mb-2'>
+                                                <div className='w-full h-full max-h-96 bg-base-300 rounded-b-2xl p-3 space-y-4 snap-y overflow-y-auto shadow-md mb-2'>
                                                     {cvDetail.length > 0 ? (
                                                         cvDetail.map((cv: any) => (
                                                             <div key={cv.CvID} className="card card-side bg-base-100 shadow-xl flex w-full h-52">
@@ -610,11 +613,11 @@ function EditProfileJok() {
                                                                     <img src={cv.IMG_CV} alt="CV" className="w-full h-full object-cover rounded-md" />
                                                                 </figure>
                                                                 <div className="card-body flex-grow">
-                                                                    <h2 className="card-title">{cv.Title}</h2>
-                                                                    <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
+                                                                    <h1 className="card-title">{cv.Title}</h1>
+                                                                    <article className="text-xs font-notoLao ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
 
-                                                                        <p className="line-clamp-4">Work Category : {cv.CategoryName} / {cv.OccupationName}</p>
-                                                                        <p className="self-start">Upload Date : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                                                                        <p className="line-clamp-4 text-lg"><b>ປະເພດຂອງອາຊີບ</b> : {cv.CategoryName} / {cv.OccupationName}</p>
+                                                                        <p className="self-start text-lg"><b>ວັນທີ່ປະກາດ</b> : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                                                                     </article>
                                                                 </div>
                                                             </div>
@@ -625,8 +628,8 @@ function EditProfileJok() {
                                                             <svg className="w-20 h-20 mt-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
                                                             </svg>
-                                                            <p className='p-3'>You don't have any cv postings.</p>
-                                                            <button className='btn btn-square btn-wide btn-primary' onClick={() => navigate("/PostCV")}> Post cv</button >
+                                                            <p className='p-3'>ຍັງບໍ່ມີຂໍ້ມູນ cv.</p>
+                                                            <button className='btn btn-square btn-wide btn-primary' onClick={() => navigate("/PostCV")}>ປະກາດ cv ໃຫມ່</button >
 
                                                         </div>
                                                     )}
