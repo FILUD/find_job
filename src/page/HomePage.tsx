@@ -144,6 +144,7 @@ function HomePage() {
   }
 
   const handleIsOpenJobRequest = () => {
+    console.log("hello wrold")
     setIsOpenJobReq(true)
     closePopupJOB();
     closePopupCV();
@@ -466,7 +467,7 @@ function HomePage() {
         <SetNavbar />
         <center>
           <main className='container mx-auto'>
-            <div className='w-full bg-slate-200 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+            <div className='w-full text-white bg-purple-900 mt-10 rounded-md mb-1 text-4xl '>
               <p className='p-2 font-bold'>ວຽກແນະນຳ</p>
             </div>
             <div className='mx-auto  grid grid-cols-4 justify-items-center gap-1'>
@@ -517,7 +518,7 @@ function HomePage() {
             <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ລະແດງວຽກທັງຫມົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
 
 
-            <div className='w-full  bg-purple-800 mt-10 rounded-md mb-1 text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+            <div className='w-full  text-white bg-purple-900 mt-10 rounded-md mb-1 text-4xl'>
               <p className='p-2  font-bold'>ພະນັກງານແນະນຳ</p>
             </div>
 
@@ -557,32 +558,19 @@ function HomePage() {
             <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
           </main>
 
-          {/* Is Open job Request or not */}
-          {isOpenJobReq && (
-            <div className='absolute'>
-              <JobRequest isOpen={isOpenJobReq} isClose={closeToggleJobRequest} senderId={dataList.senderId} receiverImg={dataList.receiverImg} receiverId={dataList.receiverId} jobId={dataList.jobId} receiverName={dataList.receiverName} jobTitle={dataList.jobTitle} category={dataList.category} type={dataList.type} />
-            </div>
-          )}
-
-          {/* Is Open Job Invitation or not  */}
-          {isOpenJobInvite && (
-            <div className='absolute'>
-              <JobInvitation isOpen={isOpenJobInvite} isClose={closeToggleJobInvite} employerID={invitationList.senderId} dataList={invitationList.cvData} />
-            </div>
-          )}
-
+      
           {selectedJOB && (
             <dialog id="my_modal_4" className="modal" open>
               <div className="modal-box w-11/12 max-w-7xl bg-base-100 border-2 border-white/10">
                 <button className="btn btn-xl btn-circle btn-ghost absolute right-1 top-1" onClick={closePopupJOB}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                   </svg>
 
                 </button>
 
                 <div className='grid grid-cols-2 -m-5'>
-                  <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-base-300'>ລາຍລະອຽດວຽກ</div>
+                  <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-purple-900 text-white'>ລາຍລະອຽດວຽກ</div>
                   <div className=' rounded-2xl '>
                     <figure className='w-full'>
                       <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>
@@ -637,14 +625,14 @@ function HomePage() {
                             </svg>
                           </button>
 
-                          <button className="btn btn-primary">ສະໝັກວຽກ</button>
+                          <button className="btn btn-primary" onClick={() => handleIsOpenJobRequest()}>ສະໝັກວຽກ</button>
                           <button className="btn btn-primary" onClick={() => openProfileJOB(selectedJOB.EmployerID)}>ເບິ່ງໂປຣຟາຍ</button>
                         </>
                       )}
 
                     </div>
                   </div>
-                  <div className='col-span-2 w-full text-white text-3xl py-6 rounded-b-2xl bg-base-300'></div>
+                  <div className='col-span-2 w-full text-white text-3xl py-6 rounded-b-2xl bg-purple-900'></div>
                 </div>
 
 
@@ -652,73 +640,85 @@ function HomePage() {
             </dialog>
           )}
 
+          {isOpenJobReq && (
+            <div className='absolute'>
+              <JobRequest isOpen={isOpenJobReq} isClose={closeToggleJobRequest} senderId={dataList.senderId} receiverImg={dataList.receiverImg} receiverId={dataList.receiverId} jobId={dataList.jobId} receiverName={dataList.receiverName} jobTitle={dataList.jobTitle} category={dataList.category} type={dataList.type} />
+            </div>
+          )}
 
-{selectedCV && (
-                <dialog id="my_modal_3" className="modal" open>
-                  <div className="modal-box w-11/12 max-w-7xl bg-base-100 border-2 border-white/10">
-                    <button className="btn btn-xl btn-circle btn-ghost absolute right-1 top-1" onClick={closePopupCV}>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-700">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                      </svg>
-                    </button>
+          {/* Is Open Job Invitation or not  */}
+          {isOpenJobInvite && (
+            <div className='absolute'>
+              <JobInvitation isOpen={isOpenJobInvite} isClose={closeToggleJobInvite} employerID={invitationList.senderId} dataList={invitationList.cvData} />
+            </div>
+          )}
 
-                    <div className='grid grid-cols-2 -m-5'>
-                      <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-base-300'>ລາຍລະອຽດວຽກ</div>
-                      <figure className='w-full'>
-                        <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClickCV(selectedCV)}>
-                          <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
-                        </div>
-                      </figure>
+          {selectedCV && (
+            <dialog id="my_modal_3" className="modal" open>
+              <div className="modal-box w-11/12 max-w-7xl bg-base-100 border-2 border-white/10">
+                <button className="btn btn-xl btn-circle btn-ghost absolute right-1 top-1" onClick={closePopupCV}>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </button>
 
-                      <div className="card-body bg-base-200 flex">
-                        <div className='w-full flex justify-items-end'>
-                          <div className='grid col-span-1 justify-start justify-items-start items-start '>
-                            {selectedCV.Jobseeker_Profile_IMG
-                              ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
-                              : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
-                            }
-                          </div>
-                          <h2 className="card-title ml-5 text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
-                        </div>
+                <div className='grid grid-cols-2 -m-5'>
+                  <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-purple-900 text-white'>ລາຍລະອຽດວຽກ</div>
+                  <figure className='w-full'>
+                    <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClickCV(selectedCV)}>
+                      <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                    </div>
+                  </figure>
 
-                        <div className='flex flex-col mt-5'>
-                          <p className='text-left'><b><u>ຫົວຂໍ້</u></b> : {selectedCV.Title}</p>
-                          <p className='text-left'><u><b>ປະເພດອາຊີບ</b></u> : {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
-                          <p className='text-left'><u><b>ທີ່ຢູ່</b></u> : {selectedCV.VillageName
-                            ? `${selectedCV.VillageName}/${selectedCV.DistrictName}/${selectedCV.ProvinceName}`
-                            : ' ບໍ່ລະບຸ'
-                          }</p>
-                          <p className='text-left'><u><b>ວັນທີ່ປະກາດ</b></u> : {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
-                        </div>
-
-                        <div className="card-actions flex justify-end h-full items-end">
-                          {myID == JobseekerID && (
-                            <button className='btn btn-primary' onClick={() => handleEditCv(selectedCV.CvID)}>Edit Cv</button>
-                          )}
-
-                          {myID != JobseekerID && (
-                            <>
-                              <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
-                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                                </svg>
-                              </button>
-                              <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
-                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                                </svg>
-                              </button>
-                              <button className="btn btn-primary">Apply</button>
-                              <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
-                            </>
-                          )}
-                        </div>
+                  <div className="card-body bg-base-200 flex">
+                    <div className='w-full flex justify-items-end'>
+                      <div className='grid col-span-1 justify-start justify-items-start items-start '>
+                        {selectedCV.Jobseeker_Profile_IMG
+                          ? <img className='w-14  border-2 rounded-full' src={selectedCV.Jobseeker_Profile_IMG} alt="Profile_IMG" />
+                          : <img className='w-14  border-2 rounded-full' src="/Icon/user.png" alt="Profile" />
+                        }
                       </div>
-                      <div className='col-span-2 w-full text-white text-3xl py-6 rounded-b-2xl bg-base-300'></div>
+                      <h2 className="card-title ml-5 text-justify col-span-4"><b>{selectedCV.JobseekerName}</b></h2>
+                    </div>
+
+                    <div className='flex flex-col mt-5'>
+                      <p className='text-left'><b><u>ຫົວຂໍ້</u></b> : {selectedCV.Title}</p>
+                      <p className='text-left'><u><b>ປະເພດອາຊີບ</b></u> : {selectedCV.CategoryName}/{selectedCV.OccupationName}</p>
+                      <p className='text-left'><u><b>ທີ່ຢູ່</b></u> : {selectedCV.VillageName
+                        ? `${selectedCV.VillageName}/${selectedCV.DistrictName}/${selectedCV.ProvinceName}`
+                        : ' ບໍ່ລະບຸ'
+                      }</p>
+                      <p className='text-left'><u><b>ວັນທີ່ປະກາດ</b></u> : {selectedCV.UploadDate ? formatDate(selectedCV.UploadDate) : 'N/A'}</p>
+                    </div>
+
+                    <div className="card-actions flex justify-end h-full items-end">
+                      {myID == JobseekerID && (
+                        <button className='btn btn-primary' onClick={() => handleEditCv(selectedCV.CvID)}>Edit Cv</button>
+                      )}
+
+                      {myID != JobseekerID && (
+                        <>
+                          <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                            </svg>
+                          </button>
+                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                            </svg>
+                          </button>
+                          <button className="btn btn-primary" onClick={() => handleIsOpenJobInvite()}>Apply</button>
+                          <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
+                        </>
+                      )}
                     </div>
                   </div>
-                </dialog>
-              )}
+                  <div className='col-span-2 w-full text-white  text-3xl py-6 rounded-b-2xl bg-purple-900'></div>
+                </div>
+              </div>
+            </dialog>
+          )}
 
 
 

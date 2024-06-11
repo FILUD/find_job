@@ -370,6 +370,7 @@ function FindjobPage() {
         (job.CompanyName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.OccupationName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.CategoryName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (job.CategoryName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.VillageName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.DistrictName?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
         (job.ProvinceName?.toLowerCase() || '').includes(searchQuery.toLowerCase())
@@ -411,14 +412,14 @@ function FindjobPage() {
         <SetNavbar />
         <center>
           <main className='container mx-auto shadow-lg'>
-            <div className='w-full mb-4 bg-slate-200 mt-10 rounded-md  text-4xl bg-gradient-to-r from-purple-500 to-pink-500'>
+            <div className='w-full mb-4 text-white bg-purple-900 mt-10 rounded-md  text-4xl '>
               <p className='p-2  font-bold text-center font-notoLao'>ຫນ້າຫາວຽກ</p>
             </div>
 
-            <label className="input input-bordered flex items-center gap-2 my-2 bg-base-300">
+            <label className="border-2 border-purple-900/30 input flex items-center gap-2 my-2 bg-base-300">
               <input
                 type="text"
-                className="grow text-center"
+                className="grow text-center "
                 placeholder="ຄົ້ນຫາວຽກ"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -568,14 +569,14 @@ function FindjobPage() {
                 <dialog id="my_modal_4" className="modal" open>
                   <div className="modal-box w-11/12 max-w-7xl bg-base-100 border-2 border-white/10">
                     <button className="btn btn-xl btn-circle btn-ghost absolute right-1 top-1" onClick={closePopup}>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 text-red-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
 
                     </button>
 
                     <div className='grid grid-cols-2 -m-5'>
-                      <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-base-300'>ລາຍລະອຽດວຽກ</div>
+                      <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl text-white bg-purple-900'>ລາຍລະອຽດວຽກ</div>
                       <div className=' rounded-2xl '>
                         <figure className='w-full'>
                           <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClick(selectedJOB)}>
@@ -637,7 +638,7 @@ function FindjobPage() {
 
                         </div>
                       </div>
-                      <div className='col-span-2 w-full text-white text-3xl py-6 rounded-b-2xl bg-base-300'></div>
+                      <div className='col-span-2 w-full text-3xl py-6 rounded-b-2xl text-white bg-purple-900'></div>
                     </div>
 
 
