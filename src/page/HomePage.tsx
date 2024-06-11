@@ -91,6 +91,7 @@ function HomePage() {
   const [showPopup, setShowPopup] = useState(false);
   const { theme } = useTheme();
   const myID = localStorage.getItem('ID')
+  const [myRole, setMyRole] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState("");
 
@@ -121,11 +122,15 @@ function HomePage() {
     };
   }, []);
 
+
   useEffect(() => {
     const UserID = localStorage.getItem('ID');
+    const role = localStorage.getItem('Role');
     if (UserID) {
       setSenderID(parseInt(UserID));
     }
+    console.log("MyRole fetched from localStorage:", role);
+    setMyRole(role);
   }, [])
 
   // job request
@@ -190,6 +195,7 @@ function HomePage() {
 
 
   useEffect(() => {
+    console.log("MyRole tex ++++++++++ :", myRole)
     const fetchData = async () => {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcvhome');
@@ -491,7 +497,7 @@ function HomePage() {
                         <h2 className="card-title"><b>{job.CompanyName}</b></h2>
                         <p className='text-left'><b>{job.Title}</b></p>
                         <p className='text-left'>
-                          <b>ເງິນເດືອນ :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} LAK
+                          <b>ເງິນເດືອນ :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} ກີບ
                         </p>
                         <p className='text-left'><b>ປະເພດອາຊີບ :</b> {job.CategoryName}/{job.OccupationName}</p>
                         <p className='text-left'>
@@ -515,7 +521,7 @@ function HomePage() {
 
 
             </div>
-            <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ລະແດງວຽກທັງຫມົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
+            <button onClick={() => navigate('/Findjob')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະະແດງວຽກທັງຫມົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
 
 
             <div className='w-full  text-white bg-purple-900 mt-10 rounded-md mb-1 text-4xl'>
@@ -558,7 +564,7 @@ function HomePage() {
             <button onClick={() => navigate('/FindEmployee')} className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5' src="Icon/arrowhead.png" alt="" /></button>
           </main>
 
-      
+
           {selectedJOB && (
             <dialog id="my_modal_4" className="modal" open>
               <div className="modal-box w-11/12 max-w-7xl bg-base-100 border-2 border-white/10">
@@ -698,18 +704,28 @@ function HomePage() {
 
                       {myID != JobseekerID && (
                         <>
-                          <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
-                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
-                            </svg>
-                          </button>
-                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
-                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-                            </svg>
-                          </button>
-                          <button className="btn btn-primary" onClick={() => handleIsOpenJobInvite()}>Apply</button>
-                          <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>View Profile</button>
+                          {myRole == "Jobseeker" && (
+                            <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>
+                              ເບິ່ງໂປຣຟາຍ
+                            </button>
+                          )}
+
+                          {myRole == "Employer" && (
+                            <>
+                              <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
+                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                                </svg>
+                              </button>
+                              <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                                </svg>
+                              </button>
+                              <button className="btn btn-primary" onClick={handleIsOpenJobInvite}>ສະໝັກ</button>
+                              <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button>
+                            </>
+                          )}
                         </>
                       )}
                     </div>
