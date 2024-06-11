@@ -3,17 +3,21 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+interface UserData {
+    ID: string;
+    Role: string;
+}
+
 interface DropdownNotificationsProps {
     align: 'left' | 'right';
 }
 
 const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
     const trigger = useRef<HTMLButtonElement>(null);
     const dropdown = useRef<HTMLDivElement>(null);
+    const [userData, setUserData] = useState<UserData | null>(null);
 
-    // close on click outside
     useEffect(() => {
         const clickHandler = ({ target }: MouseEvent) => {
             if (!dropdown.current) return;
@@ -24,7 +28,6 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
         return () => document.removeEventListener('click', clickHandler);
     }, [dropdownOpen]);
 
-    // close if the esc key is pressed
     useEffect(() => {
         const keyHandler = ({ keyCode }: KeyboardEvent) => {
             if (!dropdownOpen || keyCode !== 27) return;
@@ -35,29 +38,45 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
     }, [dropdownOpen]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get<[]>('http://localhost:3001/listNoti');
-                console.log(response)
-            } catch (error) {
-                console.error('Error fetching CV data:', error);
-            }
-        };
-
-        fetchData();
+        const datalocalID = localStorage.getItem('ID');
+        const datalocalRole = localStorage.getItem('Role');
+        if (datalocalID && datalocalRole) {
+            const parsedData = {
+                ID: JSON.parse(datalocalID),
+                Role: JSON.parse(datalocalRole)
+            };
+            setUserData(parsedData);
+        }
     }, []);
 
+    useEffect(() => {
+        if (userData) {
+            console.log(userData)
+            const fetchData = async () => {
+                try {
+                    const response = await axios.post<[]>('http://localhost:3001/listNoti', { ID: userData.ID, role: userData.Role });
+                    console.log("notification", response.data);
+                } catch (error) {
+                    console.error('Error fetching notification data:', error);
+                }
+            };
+            fetchData();
+        }
+    }, []);
 
     return (
-        <div className="relative inline-flex ">
-            <button className="btn btn-ghost btn-circle "
+        <div className="relative inline-flex">
+            <button
+                className="btn btn-ghost btn-circle"
                 ref={trigger}
                 aria-haspopup="true"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 aria-expanded={dropdownOpen}
             >
                 <div className="indicator">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
                 </div>
             </button>
 
@@ -112,7 +131,7 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                 </div>
             </Transition>
         </div>
-    )
+    );
 }
 
 export default DropDownNotification;
