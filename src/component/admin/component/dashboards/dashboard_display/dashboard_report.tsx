@@ -1,34 +1,34 @@
 import React, { useRef, useState } from 'react';
 import ReactToPrint from 'react-to-print';
+import ReportUserForm from './report/report_user_form';
+import { Select, Option } from "@material-tailwind/react";
 
 const Dashboard_report: React.FC = () => {
     const [title, setTitle] = useState('');
-    const componentRef = useRef<HTMLDivElement>(null);
+    const componentRef = useRef<any>(null);
     const [showPDF, setShowPDF] = useState(false);
+    const [selectReport, setSelectReport] = useState('');
 
     const handlePrint = () => {
         setShowPDF(true);
     };
 
-
     return (
-        <div className="grid grid-cols-2">
-            <div className=' h-screen mx-16 -'>
-                <div ref={componentRef} className='bg-white h-screen py-8 px-16'>
-                    <h1 className="text-xl font-medium text-center font-notoLao ">
-                        ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ
-                        <br></br>
-                        ສັນຕິພາບ ເອກະລາດ ປະຊາທິປະໄຕ ເອກະພາບ ວັດທະນະຖາວອນ
-                    </h1>
-
-                </div>
+        <div className="grid grid-cols-2 bg-primary">
+            <div className='scale-[60%] transform origin-top border h-fit max-h-[65vh] mt-8'>
+                <ReportUserForm componentRef={componentRef} title={title} />
             </div>
 
-
-
-            <div className="p-8 bg-slate-700">
+            <div className="p-8 bg-slate-700 max-h-[90svh] h-screen">
                 <div className="p-8 space-y-4 bg-base-100 h-fit bg-opacity-100 rounded-2xl">
                     <h1 className="text-4xl font-bold text-center mb-2">Report</h1>
+                    <div className="">
+                        <select className="select select-primary w-full max-w-xs ">
+                            <option>Useraccount Report</option>
+                            <option>Vue</option>
+                            <option>React</option>
+                        </select>
+                    </div>
                     <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
                         <input
                             type="text"
@@ -38,23 +38,11 @@ const Dashboard_report: React.FC = () => {
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </label>
-                    <textarea
-                        className="textarea textarea-bordered h-36 w-full outline outline-1 outline-primary"
-                        placeholder="Body"
-                    />
-                    <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
-                        <input type="text" className="grow" placeholder="Conclusion" />
-                        <span className="badge badge-info">end</span>
-                    </label>
-                    <label className="input input-bordered flex items-center gap-2 outline outline-1 outline-primary">
-                        <input type="file" className="grow" placeholder="Chart Image" />
-                        <kbd className="kbd kbd-sm">⌘</kbd>
-                    </label>
+
                     <div className="flex justify-center pt-12">
                         <ReactToPrint
                             trigger={() => <button className="btn btn-primary btn-wide">Print this out!</button>}
-                            content={() => componentRef.current}
-                        />
+                            content={() => componentRef.current} />
                         <button className="btn btn-primary btn-wide ml-4" onClick={handlePrint}>Preview PDF</button>
                     </div>
                 </div>
