@@ -48,21 +48,29 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
             setUserData(parsedData);
         }
     }, []);
+    // const localID = localStorage.getItem('ID');
+    // const localRole = localStorage.getItem('Role');
 
     useEffect(() => {
-        if (userData) {
+        if (dropdownOpen == true) {
+            console.log(dropdownOpen)
             console.log(userData)
-            const fetchData = async () => {
-                try {
-                    const response = await axios.post<[]>('http://localhost:3001/listNoti', { ID: userData.ID, role: userData.Role });
-                    console.log("notification", response.data);
-                } catch (error) {
-                    console.error('Error fetching notification data:', error);
-                }
-            };
-            fetchData();
+            if (userData) {
+                const fetchData = async () => {
+                    try {
+                        const response = await axios.post('http://localhost:3001/listNoti', { ID: userData.ID, Role: userData.Role });
+                        console.log("notification", response.data);
+                    } catch (error) {
+                        console.error('Error fetching notification data:', error);
+                    }
+                };
+                fetchData();
+            }
         }
-    }, []);
+        if (dropdownOpen == false) {
+            console.log(dropdownOpen)
+        }
+    },);
 
     return (
         <div className="relative inline-flex">
