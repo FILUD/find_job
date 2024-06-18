@@ -91,7 +91,8 @@ function HomePage() {
   const [showPopup, setShowPopup] = useState(false);
   const { theme } = useTheme();
   const myID = localStorage.getItem('ID')
-  const [myRole, setMyRole] = useState<string | null>(null);
+  const myRole = localStorage.getItem('Role')
+  // const [myRole, setMyRole] = useState('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState("");
 
@@ -105,6 +106,13 @@ function HomePage() {
   const [selectedCV, setSelectedCV] = useState<CVData | null>();
   const [JobseekerID, setJobseekerID] = useState<any>(null);
   const [EmployerID, setEmployerID] = useState<any>(null);
+  const [role, setRole] = useState("")
+
+  // useEffect(() => {
+  //   if (myRole) {
+  //     setRole(myRole);
+  //   }
+  // }, [])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -125,13 +133,18 @@ function HomePage() {
 
   useEffect(() => {
     const UserID = localStorage.getItem('ID');
-    const role = localStorage.getItem('Role');
     if (UserID) {
       setSenderID(parseInt(UserID));
     }
     console.log("MyRole fetched from localStorage:", role);
-    setMyRole(role);
   }, [])
+
+  useEffect(() => {
+    console.log("showme", myRole)
+    if (myRole) {
+      setRole(myRole)
+    }
+  },)
 
   // job request
   const handleSetData = async (emp_img: string, emp_id: number, job_id: number, emp_name: string, job_title: string, category: string,
@@ -195,7 +208,6 @@ function HomePage() {
 
 
   useEffect(() => {
-    console.log("MyRole tex ++++++++++ :", myRole)
     const fetchData = async () => {
       try {
         const response = await axios.get<CVData[]>('http://localhost:3001/viewcvhome');
@@ -227,6 +239,9 @@ function HomePage() {
 
 
   const handleCardClickCV = (cv: CVData) => {
+    if (myRole) {
+      setRole(myRole);
+    }
     setJobseekerID(cv.JobseekerID);
     console.log("show select cv", cv);
     setSelectedCV(cv);
@@ -241,6 +256,7 @@ function HomePage() {
 
   const handleCardClickJOB = (job: any) => {
     console.log("show select job", job)
+    // console.log("show roole ", myRole)
     setEmployerID(job.EmployerID);
     setselectedJOB(job);
     setShowPopup(true);
@@ -704,13 +720,7 @@ function HomePage() {
 
                       {myID != JobseekerID && (
                         <>
-                          {myRole == "Jobseeker" && (
-                            <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>
-                              ເບິ່ງໂປຣຟາຍ
-                            </button>
-                          )}
-
-                          {myRole == "Employer" && (
+                          {myRole == `"Employer"` ? (
                             <>
                               <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
                                 <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -725,9 +735,25 @@ function HomePage() {
                               <button className="btn btn-primary" onClick={handleIsOpenJobInvite}>ສະໝັກ</button>
                               <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button>
                             </>
-                          )}
+                          ):(<button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button>)
+                          }
+                          
+                          {/* <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                            </svg>
+                          </button>
+                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                            </svg>
+                          </button>
+                          <button className="btn btn-primary" onClick={handleIsOpenJobInvite}>ສະໝັກ</button>
+                          <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button> */}
                         </>
-                      )}
+                      )
+
+                      }
                     </div>
                   </div>
                   <div className='col-span-2 w-full text-white  text-3xl py-6 rounded-b-2xl bg-purple-900'></div>
