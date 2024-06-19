@@ -36,7 +36,7 @@ const Dashboard_report: React.FC = () => {
             <div className="p-8 bg-slate-700 max-h-[90svh] h-screen">
                 <div className="p-8 space-y-4 bg-base-100 h-fit bg-opacity-100 rounded-2xl">
                     <h1 className="text-4xl font-bold text-center mb-2">Report</h1>
-                    <div className="">
+                    <div className="flex justify-center">
                         <select className="select select-primary w-full max-w-xs font-notoLao"
                             value={selectReport}
                             onChange={(e) => setSelectReport(e.target.value)}>
@@ -55,6 +55,7 @@ const Dashboard_report: React.FC = () => {
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </label>
+                   
 
                     <div className="flex justify-center pt-12 ">
                         <ReactToPrint

@@ -48,9 +48,9 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
             setUserData(parsedData);
         }
     }, []);
+
     // const localID = localStorage.getItem('ID');
     // const localRole = localStorage.getItem('Role');
-
     useEffect(() => {
         if (dropdownOpen == true) {
             console.log(dropdownOpen)

@@ -75,7 +75,7 @@ const ReportUserForm: React.FC<ReportProps> = ({ componentRef, title }) => {
                     colors: ['#000000'],
                 },
             },
-            colors: ["#FF4500", "#2482C6"],
+            colors: ["#F5D7DB", "#F1916D"],
             legend: {
                 show: false,
             },
@@ -98,7 +98,7 @@ const ReportUserForm: React.FC<ReportProps> = ({ componentRef, title }) => {
                 <h3 className='break-words text-sm'>ເນື້ອໃນບົດລາຍງານ:​  ຍິນດີຕ້ອນຮັບສູ່ບົດລາຍງານການໃຊ້ງານເວັບໄຊຂອງບໍລິສັດຂອງເຮົາ. ບົດລາຍງານນີ້ຈະເປັນການວິເຄາະຢ່າງລະອຽດກ່ຽວກັບການໃຊ້ງານຂອງຜູ້ໃຊ້ງານຢູ່ເວັບໄຊຂອງພວກເຮົາ. ບົດລາຍງານນີ້ໄດ້ລວມເອົາຂໍ້ມູນການເຂົ້າເບິ່ງແລະການໃຊ້ງານຕ່າງໆຢູ່ເວັບໄຊ. ພາຍໃນລະຍະເວລາການລາຍງານນີ້, ພວກເຮົາມີຜູ້ໃຊ້ງານລວມທັງໝົດ {jobseekerLenght + employerLenght} ຄົນທີ່ໄດ້ໃຊ້ງານເວັບໄຊຂອງພວກເຮົາ. ຈາກຈໍານວນນີ້, {jobseekerLenght} ຄົນເປັນຜູ້ທີ່ກໍາລັງຫາໂອກາດຫາວຽກໃໝ່, ໃນຂະນະທີ່ {employerLenght} ຄົນໄດ້ລົງທະບຽນສໍາເລັດແລ້ວເພື່ອຕ້ອນຮັບຜູ້ສະໝັກງານ. ບົດລາຍງານນີ້ຈະຄວາມໄດ້ຄວາມເຂົ້າໃຈໃນການໃຊ້ງານຂອງຜູ້ໃຊ້ງານ, ການດຶງຄວາມສົນໃຈ, ແລະສ່ວນທີ່ນິຍົມທີ່ໃຊ້ຫຼາຍທີ່ສຸດ. ເວັບໄຊຂອງພວກເຮົາພະຍາຍາມພັດທະນາເພື່ອໃຫ້ປະສົບການທີ່ດີທີ່ສຸດແກ່ຜູ້ໃຊ້ງານ ແລະ ສົ່ງເສີມການປະສົບຜົນສໍາເລັດຂອງພວກເຮົາ. </h3>
                 <Card className='font-notoLao text-black'>
                     <p className="font-semibold my-4 text-center">ສະຖິຕິຜູ້ສະໝັກເວັບໄຊ</p>
-                    <table className=''>
+                    <table className='m-4'>
                         <thead className="bg-slate-800  outline outline-1 outline-base-100  rounded-t-xl ">
                             <tr className="text-sm outline outline-1 rounded-t-xl hover">
                                 <th className="text-gray-400 outline outline-1 rounded-tl-xl  w-1/12"></th>
