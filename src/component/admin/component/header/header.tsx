@@ -24,8 +24,8 @@ function Header({ sidebarOpen, setSidebarOpen, changeDashBoard: changeDashBoardN
 
                     {/* Header: Right side */}
                     <div className="flex items-center space-x-3">
-                        <SearchModal />
-                        <DropdownNotifications align={'right'} />
+                        {/* <SearchModal /> */}
+                        {/* <DropdownNotifications align={'right'} /> */}
                         <ThemeToggle />
                         <Profile_admin />
                     </div>

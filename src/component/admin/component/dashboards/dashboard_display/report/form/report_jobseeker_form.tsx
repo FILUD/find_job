@@ -21,7 +21,6 @@ interface ReportData {
 
 const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => {
     const [jobseekerLenght, setJobseekerLenght] = useState(0);
-    const [employerLenght, setEmployerLenght] = useState(0);
     const [reportData, setReportData] = useState<ReportData[]>([]);
 
 
@@ -32,14 +31,11 @@ const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => 
                 console.log("report_user :", response.data);
 
                 const jobseekerCount = response.data.data.filter(e => e.Role === 'Jobseeker').length;
-                const employerCount = response.data.data.filter(e => e.Role === 'Employer').length;
-
-                setReportData(response.data.data);
+                const jobseekerList = response.data.data.filter(e => e.Role === 'Jobseeker');
+                setReportData(jobseekerList);
                 setJobseekerLenght(jobseekerCount);
-                setEmployerLenght(employerCount);
 
                 console.log(`Jobseeker count: ${jobseekerCount}`);
-                console.log(`Employer count: ${employerCount}`);
             } catch (error) {
                 console.error('Error fetching report_user data:', error);
             }
@@ -52,7 +48,7 @@ const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => 
         type: "pie" as "pie",
         width: 280,
         height: 280,
-        series: [jobseekerLenght, employerLenght],
+        series: [jobseekerLenght],
         options: {
             chart: {
                 toolbar: {
@@ -86,7 +82,7 @@ const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => 
 
     return (
         <div ref={componentRef} className='bg-white  '>
-            <div id='page1' className='h-[1000px] py-16 px-16 text-black font-notoLao'>
+            <div id='page1' className='h-[1000px] py-16 px-10 text-black font-notoLao'>
                 <h1 className="text-base font-medium text-center">
                     <p>ສາທາລະນະລັດ ປະຊາທິປະໄຕ ປະຊາຊົນລາວ</p>
                     <p>ສັນຕິພາບ ເອກະລາດ ປະຊາທິປະໄຕ ເອກະພາບ ວັດທະນະຖາວອນ</p>
@@ -95,30 +91,66 @@ const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => 
                     <p>ລາຍງານຂໍ້ມູນຜູ້ຊອກຫາວຽກ</p>
                 </h2>
                 <h3 className='break-words text-md'>ຫົວຂໍ້ລາຍງານ: {title}</h3>
-                <h3 className='break-words text-sm'>ເນື້ອໃນບົດລາຍງານ:​  ຍິນດີຕ້ອນຮັບສູ່ບົດລາຍງານການໃຊ້ງານເວັບໄຊຂອງບໍລິສັດຂອງເຮົາ. ບົດລາຍງານນີ້ຈະເປັນການວິເຄາະຢ່າງລະອຽດກ່ຽວກັບການໃຊ້ງານຂອງຜູ້ໃຊ້ງານຢູ່ເວັບໄຊຂອງພວກເຮົາ. ບົດລາຍງານນີ້ໄດ້ລວມເອົາຂໍ້ມູນການເຂົ້າເບິ່ງແລະການໃຊ້ງານຕ່າງໆຢູ່ເວັບໄຊ. ພາຍໃນລະຍະເວລາການລາຍງານນີ້, ພວກເຮົາມີຜູ້ໃຊ້ງານລວມທັງໝົດ {jobseekerLenght + employerLenght} ຄົນທີ່ໄດ້ໃຊ້ງານເວັບໄຊຂອງພວກເຮົາ. ຈາກຈໍານວນນີ້, {jobseekerLenght} ຄົນເປັນຜູ້ທີ່ກໍາລັງຫາໂອກາດຫາວຽກໃໝ່, ໃນຂະນະທີ່ {employerLenght} ຄົນໄດ້ລົງທະບຽນສໍາເລັດແລ້ວເພື່ອຕ້ອນຮັບຜູ້ສະໝັກງານ. ບົດລາຍງານນີ້ຈະຄວາມໄດ້ຄວາມເຂົ້າໃຈໃນການໃຊ້ງານຂອງຜູ້ໃຊ້ງານ, ການດຶງຄວາມສົນໃຈ, ແລະສ່ວນທີ່ນິຍົມທີ່ໃຊ້ຫຼາຍທີ່ສຸດ. ເວັບໄຊຂອງພວກເຮົາພະຍາຍາມພັດທະນາເພື່ອໃຫ້ປະສົບການທີ່ດີທີ່ສຸດແກ່ຜູ້ໃຊ້ງານ ແລະ ສົ່ງເສີມການປະສົບຜົນສໍາເລັດຂອງພວກເຮົາ. </h3>
+                <h3 className='break-words text-sm'>ເນື້ອໃນບົດລາຍງານ:​  ຍິນດີຕ້ອນຮັບສູ່ບົດລາຍງານການໃຊ້ງານເວັບໄຊຂອງບໍລິສັດຂອງເຮົາ. ບົດລາຍງານນີ້ຈະເປັນການວິເຄາະຢ່າງລະອຽດກ່ຽວກັບການໃຊ້ງານຂອງຜູ້ໃຊ້ງານຢູ່ເວັບໄຊຂອງພວກເຮົາ. ບົດລາຍງານນີ້ໄດ້ລວມເອົາຂໍ້ມູນການເຂົ້າເບິ່ງແລະການໃຊ້ງານຕ່າງໆຢູ່ເວັບໄຊ. ພາຍໃນລະຍະເວລາການລາຍງານນີ້, ພວກເຮົາມີຜູ້ຊອກຫາວຽກລວມທັງໝົດ {jobseekerLenght } ຄົນທີ່ໄດ້ໃຊ້ງານເວັບໄຊຂອງພວກເຮົາ.  {jobseekerLenght} ຄົນເປັນຜູ້ທີ່ກໍາລັງຫາໂອກາດຫາວຽກໃໝ່ ແລພ ໄດ້ລົງທະບຽນສໍາເລັດແລ້ວເພື່ອຕ້ອນຮັບຜູ້ສະໝັກງານ. ບົດລາຍງານນີ້ຈະຄວາມໄດ້ຄວາມເຂົ້າໃຈໃນການໃຊ້ງານຂອງຜູ້ໃຊ້ງານ, ການດຶງຄວາມສົນໃຈ, ແລະສ່ວນທີ່ນິຍົມທີ່ໃຊ້ຫຼາຍທີ່ສຸດ. ເວັບໄຊຂອງພວກເຮົາພະຍາຍາມພັດທະນາເພື່ອໃຫ້ປະສົບການທີ່ດີທີ່ສຸດແກ່ຜູ້ໃຊ້ງານ ແລະ ສົ່ງເສີມການປະສົບຜົນສໍາເລັດຂອງພວກເຮົາ. </h3>
                 <Card className='font-notoLao text-black'>
-                    <p className="font-semibold my-4 text-center">ສະຖິຕິຜູ້ຊອກຫາວຽກ</p>
+                    <p className="font-semibold my-4 text-center">ຂໍ້ມູນຜູ້ຊອກຫາວຽກທັງໝົດ</p>
+             
+
                     <table className=''>
-                        <thead className="bg-slate-800  outline outline-1 outline-base-100  rounded-t-xl ">
-                            <tr className="text-sm outline outline-1 rounded-t-xl hover">
-                                <th className="text-gray-400 outline outline-1 rounded-tl-xl  w-1/12"></th>
-                                <th className="text-gray-400 outline outline-1 w-2/6">ປະເພດ</th>
-                                <th className="text-gray-400 outline outline-1 w-1/6 ">ຈຳນວນ</th>
-                                <th className="text-gray-400 outline outline-1 rounded-tr-xl w-1/6">ຫົວໜ່ວຍ</th>
+                        <thead className="bg-slate-800  outline outline-1 outline-base-100  ">
+                            <tr className="text-sm outline outline-1 hover">
+                                <th className="text-gray-400 outline outline-1 w-1/12"></th>
+                                <th className="text-gray-400 outline outline-1 w-2/6">ຊຶ່</th>
+                                <th className="text-gray-400 outline outline-1 w-2/5">Email</th>
+                                <th className="text-gray-400 outline outline-1 w-2/6">ເບີໂທ</th>
                                 {/* <th className="outline outline-1 rounded-tr-xl w-1/6"></th> */}
                             </tr>
                         </thead>
                         <tbody>
                             {/* jobseeker */}
-                            <tr className='outline outline-1 hover '>
+                            {Array.isArray(reportData) && reportData.map((e, index) => (
+                                <tr className='outline outline-1 hover ' key={index}>
+                                    <th className='outline outline-1'>
+                                        <p className='font-normal text-sm'>{index + 1}</p>
+                                    </th>
+                                    <th className='outline outline-1'>
+                                        <label className="flex justify-start ml-4">
+                                            <div className="flex items-center ">
+                                                <div>
+                                                    <div className="text-sm font-normal">{e.Name}</div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </th>
+                                    <th className='outline outline-1'>
+                                        <label className="flex justify-start ml-2">
+                                            <div className="flex items-center ">
+                                                <div>
+                                                    <div className="text-sm font-normal">{e.Email}</div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </th>
+                                    <th className='outline outline-1'>
+                                        <label className="flex justify-start ml-1">
+                                            <div className="flex items-center ">
+                                                <div>
+                                                    <div className="text-sm font-normal">{e.Tel}</div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </th>
+                                </tr>
+                            ))}
+                            <tr className='outline outline-1 hover bg-slate-800'>
                                 <th className='outline outline-1'>
-                                    <p className='font-normal text-sm'>1</p>
+                                    <p className='font-normal text-sm'></p>
                                 </th>
                                 <th className='outline outline-1'>
-                                    <label className="flex justify-start ml-4">
+                                    <label className="flex justify-center">
                                         <div className="flex items-center ">
                                             <div>
-                                                <div className="text-sm font-normal">ຜູ້ຊອກຫາວຽກ</div>
+                                                <div className="text-sm font-semibold text-gray-400">ລວມ</div>
                                             </div>
                                         </div>
                                     </label>
@@ -127,7 +159,7 @@ const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => 
                                     <label className="flex justify-center">
                                         <div className="flex items-center ">
                                             <div>
-                                                <div className="text-sm font-normal">{jobseekerLenght}</div>
+                                                <div className="text-sm font-semibold text-gray-400">{jobseekerLenght}</div>
                                             </div>
                                         </div>
                                     </label>
@@ -136,82 +168,15 @@ const ReportJobseekerForm: React.FC<ReportProps> = ({ componentRef, title }) => 
                                     <label className="flex justify-center">
                                         <div className="flex items-center ">
                                             <div>
-                                                <div className="text-sm font-normal">ຄົນ</div>
+                                                <div className="text-sm font-semibold text-gray-400">ຄົນ</div>
                                             </div>
                                         </div>
                                     </label>
                                 </th>
                             </tr>
-                            {/* employer */}
-                            <tr className='outline outline-1 hover '>
-                                <th className='outline outline-1'>
-                                    <p className='font-normal text-sm'>2</p>
-                                </th>
-                                <th className='outline outline-1'>
-                                    <label className="flex justify-start ml-4">
-                                        <div className="flex items-center ">
-                                            <div>
-                                                <div className="text-sm font-normal ">ຜູ້ຮັບສະໝັກ</div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </th>
-                                <th className='outline outline-1'>
-                                    <label className="flex justify-center">
-                                        <div className="flex items-center ">
-                                            <div>
-                                                <div className="text-sm font-normal">{jobseekerLenght}</div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </th>
-                                <th className='outline outline-1'>
-                                    <label className="flex justify-center">
-                                        <div className="flex items-center ">
-                                            <div>
-                                                <div className="text-sm font-normal">ຄົນ</div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </th>
-                            </tr>
-                            {/* total */}
-                            <tr className='outline outline-1 hover'>
-                                <th className='outline outline-1 bg-slate-800'>
-                                    
-                                </th>
-                                <th className='outline outline-1 bg-slate-800'>
-                                    <label className="flex justify-center">
-                                        <div className="flex items-center ">
-                                            <div>
-                                                <div className="text-sm font-normal  text-gray-400">ລວມ</div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </th>
-                                <th className='outline outline-1 bg-slate-800'>
-                                    <label className="flex justify-center">
-                                        <div className="flex items-center ">
-                                            <div>
-                                                <div className="text-sm font-normal  text-gray-400">{jobseekerLenght + employerLenght}</div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </th>
-                                <th className='outline outline-1 bg-slate-800'>
-                                    <label className="flex justify-center">
-                                        <div className="flex items-center ">
-                                            <div>
-                                                <div className="text-sm font-normal  text-gray-400">ຄົນ</div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </th>
-                                
-                            </tr>
+
                         </tbody>
                     </table>
-
 
                     {/* <CardBody className="mt-2 grid place-items-center px-2 ">
                         <Chart

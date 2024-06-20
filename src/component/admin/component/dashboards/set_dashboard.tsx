@@ -15,7 +15,7 @@ interface SetDashboardProps {
 const SetDashboard: React.FC<SetDashboardProps> = ({ dashboardName }) => {
     return (
         <div>
-            {dashboardName === "dashboard_manager" && <Dashboard_welcome />}
+            {dashboardName === "dashboard_welcome" && <Dashboard_welcome />}
             {dashboardName === "dashboard_people" && <Dashboard_people />}
 
             {/* Address */}

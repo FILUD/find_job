@@ -75,7 +75,7 @@ const ReportUserForm: React.FC<ReportProps> = ({ componentRef, title }) => {
                     colors: ['#000000'],
                 },
             },
-            colors: ["#F5D7DB", "#F1916D"],
+            colors: ["#6495ED", "#F1916D"],
             legend: {
                 show: false,
             },
@@ -92,12 +92,12 @@ const ReportUserForm: React.FC<ReportProps> = ({ componentRef, title }) => {
                     <p>ສັນຕິພາບ ເອກະລາດ ປະຊາທິປະໄຕ ເອກະພາບ ວັດທະນະຖາວອນ</p>
                 </h1>
                 <h2 className='text-2xl font-semibold text-center my-6 '>
-                    <p>ລາຍງານສະຖິຕິຜູ້ເຂົ້າໃຊ້ເວັບໄຊ</p>
+                    <p>ລາຍງານສະຖິຕິຜູ້ສະໝັກບັນຊີ</p>
                 </h2>
                 <h3 className='break-words text-md'>ຫົວຂໍ້ລາຍງານ: {title}</h3>
                 <h3 className='break-words text-sm'>ເນື້ອໃນບົດລາຍງານ:​  ຍິນດີຕ້ອນຮັບສູ່ບົດລາຍງານການໃຊ້ງານເວັບໄຊຂອງບໍລິສັດຂອງເຮົາ. ບົດລາຍງານນີ້ຈະເປັນການວິເຄາະຢ່າງລະອຽດກ່ຽວກັບການໃຊ້ງານຂອງຜູ້ໃຊ້ງານຢູ່ເວັບໄຊຂອງພວກເຮົາ. ບົດລາຍງານນີ້ໄດ້ລວມເອົາຂໍ້ມູນການເຂົ້າເບິ່ງແລະການໃຊ້ງານຕ່າງໆຢູ່ເວັບໄຊ. ພາຍໃນລະຍະເວລາການລາຍງານນີ້, ພວກເຮົາມີຜູ້ໃຊ້ງານລວມທັງໝົດ {jobseekerLenght + employerLenght} ຄົນທີ່ໄດ້ໃຊ້ງານເວັບໄຊຂອງພວກເຮົາ. ຈາກຈໍານວນນີ້, {jobseekerLenght} ຄົນເປັນຜູ້ທີ່ກໍາລັງຫາໂອກາດຫາວຽກໃໝ່, ໃນຂະນະທີ່ {employerLenght} ຄົນໄດ້ລົງທະບຽນສໍາເລັດແລ້ວເພື່ອຕ້ອນຮັບຜູ້ສະໝັກງານ. ບົດລາຍງານນີ້ຈະຄວາມໄດ້ຄວາມເຂົ້າໃຈໃນການໃຊ້ງານຂອງຜູ້ໃຊ້ງານ, ການດຶງຄວາມສົນໃຈ, ແລະສ່ວນທີ່ນິຍົມທີ່ໃຊ້ຫຼາຍທີ່ສຸດ. ເວັບໄຊຂອງພວກເຮົາພະຍາຍາມພັດທະນາເພື່ອໃຫ້ປະສົບການທີ່ດີທີ່ສຸດແກ່ຜູ້ໃຊ້ງານ ແລະ ສົ່ງເສີມການປະສົບຜົນສໍາເລັດຂອງພວກເຮົາ. </h3>
                 <Card className='font-notoLao text-black'>
-                    <p className="font-semibold my-4 text-center">ສະຖິຕິຜູ້ສະໝັກເວັບໄຊ</p>
+                    <p className="font-semibold my-4 text-center">ສະຖິຕິຜູ້ສະໝັກບັນຊີ</p>
                     <table className='m-4'>
                         <thead className="bg-slate-800  outline outline-1 outline-base-100  rounded-t-xl ">
                             <tr className="text-sm outline outline-1 rounded-t-xl hover">
@@ -160,7 +160,7 @@ const ReportUserForm: React.FC<ReportProps> = ({ componentRef, title }) => {
                                     <label className="flex justify-center">
                                         <div className="flex items-center ">
                                             <div>
-                                                <div className="text-sm font-normal">{jobseekerLenght}</div>
+                                                <div className="text-sm font-normal">{employerLenght}</div>
                                             </div>
                                         </div>
                                     </label>

@@ -12,6 +12,16 @@ interface DropdownNotificationsProps {
     align: 'left' | 'right';
 }
 
+interface NotiDataProps {
+    type: string
+    typeID: number
+    EmployerID: number
+    JobseekerID: number
+    Status: string
+    image: string
+    UpdatedAt: string
+}
+
 const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const trigger = useRef<HTMLButtonElement>(null);

@@ -101,7 +101,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChangeDashboard }) => {
                             </div>
                             <div className="collapse-content space-y-1">
                                 <ul className="font-semibold">
-                                    <li onClick={() => handleDashboardClick("dashboard_manager")}>
+                                    <li onClick={() => handleDashboardClick("dashboard_welcome")}>
                                         <a href="#">Main </a>
                                     </li>
 

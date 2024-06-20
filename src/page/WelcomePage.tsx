@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../css/animation_WelcomePage.css'
 import { Link, useNavigate } from 'react-router-dom';
 // import NavbarWelcome from '../component/navbar/Navbar_welcome'
 import Footer from '../component/footer/Footer'
 import SetNavbar from '../component/navbar/SetNavbar';
 import { ThemeToggle, useTheme } from '../theme/theme'
+import { sendVisitData } from '../utils/api';
+
 
 
 function Welcome_Page() {
+    useEffect(() => {
+        sendVisitData(window.location.pathname);
+    }, []); 
+
     const navigate = useNavigate();
     const { theme } = useTheme();
 
