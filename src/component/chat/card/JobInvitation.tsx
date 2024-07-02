@@ -45,7 +45,7 @@ interface ToggleJobInvitation {
 
 interface DataList {
     employerID: number | undefined;
-    dataList: CVData[];
+    dataList: CVData;
 }
 
 function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & ToggleJobInvitation) {
@@ -58,6 +58,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
         setSelectedJob(null);
         isClose();
     };
+   
 
     useEffect(() => {
         const fetchData = async (Id: number) => {
@@ -95,16 +96,16 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
         console.log(selectedJob);
         setIsSendLoading(true);
         try {
-            console.log("employer", dataList[0].CvID);
+            console.log("employer", dataList.CvID);
             // console.log("jobseeker", senderId);
             // console.log("cv", selectedCV);
-            await axios.post('http://localhost:3001/sendJob', { jobseekerID: dataList[0].JobseekerID, employerID: employerID, cvID: dataList[0].CvID, jobID: selectedJob });
+            await axios.post('http://localhost:3001/sendJob', { jobseekerID: dataList.JobseekerID, employerID: employerID, cvID: dataList.CvID, jobID: selectedJob });
             // If the request is successful, display a success message with SweetAlert
 
             Swal.fire({
                 icon: 'success',
                 title: 'Sending Job Invitation',
-                text: 'JOb Invitation sent successfully!',
+                text: 'Job Invitation sent successfully!',
             });
             isCloseToggle();
 
@@ -153,7 +154,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                     {isLoading ? (
                                         <div></div>
                                     ) : (
-                                        <p className="text-sm">Sending request to {dataList[0]?.JobseekerName}</p>
+                                        <p className="text-sm">Sending request to {dataList?.JobseekerName}</p>
                                     )}
                                 </Dialog.Title>
 
@@ -177,17 +178,17 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                                 </div>
                                                 <div className="avatar">
                                                     <div className="w-16 rounded-full">
-                                                        <img src={dataList[0].Jobseeker_Profile_IMG != '' ? dataList[0].Jobseeker_Profile_IMG : '/Icon/user.png'} alt="Jobseeker" />
+                                                        <img src={dataList.Jobseeker_Profile_IMG != '' ? dataList.Jobseeker_Profile_IMG : '/Icon/user.png'} alt="Jobseeker" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="w-full max-w-full m-4">
-                                            <p className="badge badge-primary">Employer: {dataList[0]?.JobseekerName}</p>
+                                            <p className="badge badge-primary">Employer: {dataList?.JobseekerName}</p>
                                             <div className="flex flex-col w-full justify-center">
-                                                <p>Job requirement: {dataList[0].OccupationName}</p>
-                                                <p>Work category: {dataList[0].CategoryName}</p>
+                                                <p>Job requirement: {dataList.OccupationName}</p>
+                                                <p>Work category: {dataList.CategoryName}</p>
                                             </div>
                                         </div>
 
@@ -230,7 +231,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                                     <div className="grid justify-items-center space-y-4 my-4">
                                                         <div className="card-actions justify-center mt-2 w-full">
                                                             <button className="btn btn-error rounded-2xl btn-wide hover:text-white text-base"
-                                                            onClick={()=> sendJob()}>
+                                                                onClick={() => sendJob()}>
                                                                 Send
                                                             </button>
                                                         </div>

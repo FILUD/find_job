@@ -1,7 +1,8 @@
-import { Transition } from '@headlessui/react';
-import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Transition } from '@headlessui/react';
+import { format } from 'date-fns'
 
 interface UserData {
     ID: string;
@@ -13,13 +14,17 @@ interface DropdownNotificationsProps {
 }
 
 interface NotiDataProps {
-    type: string
-    typeID: number
-    EmployerID: number
-    JobseekerID: number
-    Status: string
-    image: string
-    UpdatedAt: string
+    type: string;
+    typeID: number;
+    EmployerID: number;
+    JobseekerID: number;
+    Status: string;
+    image: string;
+    UpdatedAt: string;
+    who: number;
+    Name: string;
+    Profile_IMG: string;
+    Email: string;
 }
 
 const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) => {
@@ -27,6 +32,7 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
     const trigger = useRef<HTMLButtonElement>(null);
     const dropdown = useRef<HTMLDivElement>(null);
     const [userData, setUserData] = useState<UserData | null>(null);
+    const [notiData, setNotiData] = useState<NotiDataProps[]>([]);
 
     useEffect(() => {
         const clickHandler = ({ target }: MouseEvent) => {
@@ -59,28 +65,21 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
         }
     }, []);
 
-    // const localID = localStorage.getItem('ID');
-    // const localRole = localStorage.getItem('Role');
     useEffect(() => {
-        if (dropdownOpen == true) {
-            console.log(dropdownOpen)
-            console.log(userData)
-            if (userData) {
-                const fetchData = async () => {
-                    try {
-                        const response = await axios.post('http://localhost:3001/listNoti', { ID: userData.ID, Role: userData.Role });
-                        console.log("notification", response.data);
-                    } catch (error) {
-                        console.error('Error fetching notification data:', error);
-                    }
-                };
-                fetchData();
-            }
+        if (dropdownOpen && userData) {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.post<{ data: NotiDataProps[] }>('http://localhost:3001/listNoti', { ID: userData.ID, Role: userData.Role });
+                    const result = response.data.data;
+                    const flattenedData = result.flat();
+                    setNotiData(flattenedData);
+                } catch (error) {
+                    console.error('Error fetching notification data:', error);
+                }
+            };
+            fetchData();
         }
-        if (dropdownOpen == false) {
-            console.log(dropdownOpen)
-        }
-    },);
+    }, [dropdownOpen, userData]);
 
     return (
         <div className="relative inline-flex">
@@ -105,8 +104,8 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                 enterTo="opacity-100 translate-y-0"
                 leave="transition ease-out duration-200"
                 leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-                className={`origin-top-right z-10 absolute top-full -mr-48 sm:mr-0 min-w-80 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
+                leaveTo="opacity-100"
+                className={`origin-top-right z-10 absolute top-full -mr-48 sm:mr-0 min-w-80 bg-base-200 dark:bg-base-300 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
             >
                 <div
                     ref={dropdown}
@@ -115,36 +114,38 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                 >
                     <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-4">Notifications</div>
                     <ul>
-                        <li className="border-b border-slate-200 dark:border-slate-700 last:border-0">
-                            <Link
-                                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20"
-                                to="#0"
-                                onClick={() => setDropdownOpen(!dropdownOpen)}
-                            >
-                                <span className="block text-sm mb-2">📣 <span className="font-medium text-slate-800 dark:text-slate-100">Edit your information in a swipe</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                                <span className="block text-xs font-medium text-slate-400 dark:text-slate-500">Feb 12, 2021</span>
-                            </Link>
-                        </li>
-                        <li className="border-b border-slate-200 dark:border-slate-700 last:border-0">
-                            <Link
-                                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20"
-                                to="#0"
-                                onClick={() => setDropdownOpen(!dropdownOpen)}
-                            >
-                                <span className="block text-sm mb-2">📣 <span className="font-medium text-slate-800 dark:text-slate-100">Edit your information in a swipe</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                                <span className="block text-xs font-medium text-slate-400 dark:text-slate-500">Feb 9, 2021</span>
-                            </Link>
-                        </li>
-                        <li className="border-b border-slate-200 dark:border-slate-700 last:border-0">
-                            <Link
-                                className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20"
-                                to="#0"
-                                onClick={() => setDropdownOpen(!dropdownOpen)}
-                            >
-                                <span className="block text-sm mb-2">🚀<span className="font-medium text-slate-800 dark:text-slate-100">Say goodbye to paper receipts!</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                                <span className="block text-xs font-medium text-slate-400 dark:text-slate-500">Jan 24, 2020</span>
-                            </Link>
-                        </li>
+                        {notiData.map((e, index) => (
+                            <li className="border-b border-slate-200 dark:border-slate-700 last:border-0" key={index}>
+                                <Link
+                                    className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20"
+                                    to="#0"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                >
+                                    <span className="block text-sm mb-2 mt-2">📣
+                                        <span className=" font-semibold">
+                                            {e.Name || 'ບໍ່ລະບຸ'}
+                                        </span>
+                                        {e.Status == "Accepted" ? " ໄດ້ຍອມຮັບຄຳຮ້ອງຂໍສະໝັກຂອງທ່ານແລ້ວ" : " ທ່ານຕ້ອງການຍອມຮັບຄຳຮ້ອງຂໍ ຫຼຶ ບໍ່"}
+                                        {e.type}
+                                        <div className='flex justify-center space-x-3'>
+                                            {e.Status == "Accepted" ? null : (
+                                                <>
+                                                    <button className="btn btn-primary focus-in-contract-bck btn-sm mt-2"> Accept</button>
+                                                    <button className="btn btn-outline focus-in-contract-bck btn-sm mt-2"> Cancle</button>
+                                                </>
+                                            )}
+                                        </div>
+
+                                    </span>
+                                    <span className="block text-xs font-medium text-slate-400 dark:text-slate-500">
+                                        {/* Date formatting */}
+                                        {/* {format(new Date(e.UpdatedAt), 'MMMM dd, yyyy')} */}
+                                        {format(new Date(e.UpdatedAt), 'MMMM dd, yyyy HH:mm')}
+                                        {/* {format(new Date(e.UpdatedAt), 'MMMM dd, yyyy HH:mm:ss')} */}
+                                    </span>
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </Transition>

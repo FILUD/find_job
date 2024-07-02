@@ -5,24 +5,38 @@ import React, { Fragment, useEffect, useState } from 'react'
 import HashLoader from 'react-spinners/HashLoader';
 import Swal from 'sweetalert2';
 
+
+interface JobData {
+    JobID: number;
+    EmployerID: number;
+    Post_IMG: string;
+    Title: string;
+    CompanyName: string;
+    Employer_Profile_IMG: string;
+    Description: string;
+    SalaryStart: number;
+    SalaryMax: number;
+    CategoryName: string;
+    OccupationName: string;
+    PostDate: string;
+    VillageName: string;
+    DistrictName: string;
+    ProvinceName: string;
+    WorkType: string;
+}
+
 interface ToggleJobRequest {
     isOpen: boolean;
     isClose: () => void;
 }
 
-interface DataProps {
-    senderId: number | undefined
-    receiverImg: string;
-    receiverId: number | undefined;
-    jobId: number | undefined;
-    receiverName: string;
-    jobTitle: string;
-    category: string,
-    type: string,
+interface DataList {
+    senderId: number | undefined;
+    dataList: JobData;
 }
 
-function JobRequest({ senderId, receiverId, jobId, receiverName, receiverImg, jobTitle, category,
-    type, isOpen, isClose }: ToggleJobRequest & DataProps) {
+
+function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & DataList) {
     const [listCv, setListCv] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isSendLoading, setIsSendLoading] = useState(false);
@@ -85,10 +99,10 @@ function JobRequest({ senderId, receiverId, jobId, receiverName, receiverImg, jo
         console.log(selectedCV);
         setIsSendLoading(true);
         try {
-            console.log("employer", jobId);
+            console.log("employer", dataList.JobID);
             // console.log("jobseeker", senderId);
             // console.log("cv", selectedCV);
-            await axios.post('http://localhost:3001/sendCV', { jobseekerID: senderId, employerID: receiverId, cvID: selectedCV, jobID: jobId });
+            await axios.post('http://localhost:3001/sendCV', { jobseekerID: senderId, employerID: dataList.EmployerID, cvID: selectedCV, jobID: dataList.JobID });
             // If the request is successful, display a success message with SweetAlert
 
             Swal.fire({
@@ -149,7 +163,7 @@ function JobRequest({ senderId, receiverId, jobId, receiverName, receiverImg, jo
                                     {isLoading ? (
                                         <div></div>
                                     ) : (
-                                        <p className='text-sm'> Sending request to {receiverName} </p>
+                                        <p className='text-sm'> Sending request to {dataList?.CompanyName} </p>
                                     )}
                                 </Dialog.Title>
 
@@ -175,7 +189,7 @@ function JobRequest({ senderId, receiverId, jobId, receiverName, receiverImg, jo
                                                 </div>
                                                 <div className="avatar">
                                                     <div className="w-16 rounded-full">
-                                                        <img src={receiverImg} />
+                                                        <img src={dataList.Employer_Profile_IMG != '' ? dataList.Employer_Profile_IMG : '/Icon/user.png'} alt="Jobseeker" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,10 +197,10 @@ function JobRequest({ senderId, receiverId, jobId, receiverName, receiverImg, jo
 
                                         {/* Job details */}
                                         <div className='w-full max-w-full m-4 '>
-                                            <p className=' badge badge-primary'>Employer: {receiverName}</p>
-                                            <div className='flex  flex-col w-full justify-center'>
-                                                <p className=''>Job requirement: {jobTitle}</p>
-                                                <p className=''>Work category: {category}</p>
+                                            <p className="badge badge-primary">Employer: {dataList?.CompanyName}</p>
+                                            <div className="flex flex-col w-full justify-center">
+                                                <p>Job requirement: {dataList.OccupationName}</p>
+                                                <p>Work category: {dataList.CategoryName}</p>
                                             </div>
                                         </div>
 
