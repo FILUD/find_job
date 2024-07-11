@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Transition } from '@headlessui/react';
 import { format } from 'date-fns'
+import Swal from 'sweetalert2';
 
 interface UserData {
     ID: string;
@@ -69,6 +70,7 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
         if (dropdownOpen && userData) {
             const fetchData = async () => {
                 try {
+                    console.log(userData.Role)
                     const response = await axios.post<{ data: NotiDataProps[] }>('http://localhost:3001/listNoti', { ID: userData.ID, Role: userData.Role });
                     const result = response.data.data;
                     const flattenedData = result.flat();
@@ -80,6 +82,57 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
             fetchData();
         }
     }, [dropdownOpen, userData]);
+
+    const handleAccept = async (ID: number) => {
+        if (userData && dropdownOpen) {
+            try {
+                let typeID = "";
+                let tableName = "";
+                let type = "";
+
+                switch (userData.Role) {
+                    case "Jobseeker": {
+                        typeID = "invitationID";
+                        tableName = "acceptInvitation";
+                        type = "Invitation";
+                        break;
+                    }
+                    case "Employer": {
+                        typeID = "requestID";
+                        tableName = "acceptJobRequest";
+                        type = "Request";
+                        break;
+                    }
+                    default:
+                        break;
+                }
+                if (userData.Role !== "") {
+                    //TODO:  complete the ID 
+                    await axios.post(`http://localhost:3001/${tableName}`, { [typeID]: ID });
+                    Swal.fire({
+                        icon: 'success',
+                        title: `Job ${type}`,
+                        text: `Accepted Job ${type}`,
+                    });
+                }
+            } catch (error) {
+                console.error('Error accepting job invitation:', error);
+            }
+        }
+    };
+
+    // const handleCancle = async () => {
+    //     try {
+    //         // await axios.post('http://localhost:3001/acceptInvitation', { invitationID: data.CardID });
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: 'Job Request',
+    //             text: 'Rejected the request!',
+    //         });
+    //     } catch (error) {
+    //         console.error('Error Rejected request:', error);
+    //     }
+    // };
 
     return (
         <div className="relative inline-flex">
@@ -105,7 +158,7 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                 leave="transition ease-out duration-200"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-100"
-                className={`origin-top-right z-10 absolute top-full -mr-48 sm:mr-0 min-w-80 bg-base-200 dark:bg-base-300 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
+                className={`origin-top-right z-10 absolute top-full -mr-48 sm:mr-0 min-w-80 bg-base-200 dark:bg-base-300 border border-slate-200 dark:border-slate-700 py-1.5 rounded shadow-lg overflow-y-auto h-58 overflow-hidden mt-1 ${align === 'right' ? 'right-0' : 'left-0'}`}
             >
                 <div
                     ref={dropdown}
@@ -116,9 +169,9 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                     <ul>
                         {notiData.map((e, index) => (
                             <li className="border-b border-slate-200 dark:border-slate-700 last:border-0" key={index}>
-                                <Link
+                                <div
                                     className="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20"
-                                    to="#0"
+                                    // to="#0"
                                     onClick={() => setDropdownOpen(!dropdownOpen)}
                                 >
                                     <span className="block text-sm mb-2 mt-2">📣
@@ -130,8 +183,8 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                                         <div className='flex justify-center space-x-3'>
                                             {e.Status == "Accepted" ? null : (
                                                 <>
-                                                    <button className="btn btn-primary focus-in-contract-bck btn-sm mt-2"> Accept</button>
-                                                    <button className="btn btn-outline focus-in-contract-bck btn-sm mt-2"> Cancle</button>
+                                                    <button className="btn btn-primary focus-in-contract-bck btn-sm mt-2" onClick={() => handleAccept(e.typeID)}> Accept</button>
+                                                    <button className="btn btn-outline focus-in-contract-bck btn-sm mt-2" > Cancle</button>
                                                 </>
                                             )}
                                         </div>
@@ -143,7 +196,7 @@ const DropDownNotification: React.FC<DropdownNotificationsProps> = ({ align }) =
                                         {format(new Date(e.UpdatedAt), 'MMMM dd, yyyy HH:mm')}
                                         {/* {format(new Date(e.UpdatedAt), 'MMMM dd, yyyy HH:mm:ss')} */}
                                     </span>
-                                </Link>
+                                </div>
                             </li>
                         ))}
                     </ul>
