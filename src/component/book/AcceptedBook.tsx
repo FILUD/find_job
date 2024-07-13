@@ -129,7 +129,9 @@ function AcceptedBook() {
                                 ) : (
                                     <div>
                                         {pendingJobs.length === 0 ? (
-                                            <div>There is no pending</div>
+                                            <div className={`h-[350px] flex justify-center items-center`}>
+                                               <h2 className='font-notoLao font-semibold text-xl'>ຍັງບໍ່ທັນມີລາຍການ</h2> 
+                                            </div>
                                         ) : (
                                             <Book_tab data={pendingJobs} role={role} />
                                         )}

@@ -59,7 +59,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
 
     const handleAcceptJobInvitation = async () => {
         try {
-            await axios.post('http://localhost:3001/acceptInvitation', { invitationID: data.CardID });
+            await axios.post('http://localhost:3001/acceptInvitation', { invitationID: data.CardID, Email: info.Email, MyEmail: info.Email });
             Swal.fire({
                 icon: 'success',
                 title: 'Job Invitation',
@@ -87,6 +87,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
                             <p className='self-center text-center'>Please waiting jobseeker to join </p>
                             <p> Occupation : {data.OccupationName}</p>
                             <p className='line-clamp-1'>Category: {data.CategoryName} </p>
+                              
                         </div>
                     ) : (
                         <p className='self-center'>The Invitation was accepted </p>
@@ -114,7 +115,8 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
                         <div>
                             <p className='self-center'>Do you want to accept this invitation? </p>
                             <p> Occupation : {data.OccupationName}</p>
-                            <p className='line-clamp-1'>Category: {data.CategoryName} </p>
+                            <p className='line-clamp-1'>Category: {data.CategoryName}     </p>
+                 
                         </div>
 
                     ) : (
@@ -124,7 +126,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
                         {data.Status == "Pending" ? (
                             <div className='flex space-x-4 justify-center'>
                                 <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>View Detail</button>
-                                <button className='btn hover:btn-outline' onClick={()=> handleAcceptJobInvitation()}>Accept</button>
+                                <button className='btn hover:btn-outline' onClick={() => handleAcceptJobInvitation()}>Accept</button>
                             </div>
                         ) : (
                             <div className='flex space-x-4 justify-center'>

@@ -3,6 +3,7 @@ import View_JobRequest from './view/View_JobRequest';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+const MyEmail = localStorage.getItem("Email");
 
 interface UserInfoProps {
     ID: number;
@@ -73,7 +74,7 @@ function Card_JobRequest({ data, type, info }: DataProps) {
 
     const handleAcceptJobRequest = async () => {
         try {
-            await axios.post('http://localhost:3001/acceptJobRequest', { requestID: data.CardID });
+            await axios.post('http://localhost:3001/acceptJobRequest', { requestID: data.CardID, Email: info.Email, MyEmail: MyEmail });
             Swal.fire({
                 icon: 'success',
                 title: 'Job Request',
@@ -126,7 +127,7 @@ function Card_JobRequest({ data, type, info }: DataProps) {
             ) : (
                 // TODO : Complete  for employer
                 < div className="card-body">
-                    <h2 className="card-title justify-center">Job Request</h2>
+                    <h2 className="card-title justify-center">Job Request </h2>
                     {data.Status == "Pending" ? (
                         <div>
                             <p className='self-center'>Do you want to accept this job request? </p>
@@ -157,7 +158,7 @@ function Card_JobRequest({ data, type, info }: DataProps) {
             {/* view card */}
             {
                 isOpenView && (
-                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} info={info}/>
+                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} info={info} />
                 )
             }
         </div >
