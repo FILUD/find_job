@@ -58,7 +58,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
         setSelectedJob(null);
         isClose();
     };
-   
+
 
     useEffect(() => {
         const fetchData = async (Id: number) => {

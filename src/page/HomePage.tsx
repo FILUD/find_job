@@ -176,12 +176,12 @@ function HomePage() {
     console.log("show me cv list", invData)
   }
 
-  const handleIsOpenJobRequest = () => {
-    console.log("hello wrold")
-    setIsOpenJobReq(true)
-    closePopupJOB();
-    closePopupCV();
-  }
+    const handleIsOpenJobRequest = () => {
+      console.log("hello wrold")
+      setIsOpenJobReq(true)
+      closePopupJOB();
+      closePopupCV();
+    }
   const closeToggleJobRequest = () => {
     setIsOpenJobReq(false)
   }
