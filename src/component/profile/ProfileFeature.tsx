@@ -328,7 +328,7 @@ export default function Profile_feature() {
 
                         {Role == "Employer" ? (
                             Employer.map((emp) => (
-                                <div key={emp.EmployerID}>
+                                <div key={emp.EmployerID} className='w-full h-full'>
                                     {emp.Profile_IMG ? (
                                         <><img src={emp.Profile_IMG} alt="User Profile" />
 
@@ -436,9 +436,9 @@ export default function Profile_feature() {
                                                     : <div className="avatar md:mt-4 md:ml-2 sm:mt-4 sm:ml-20 justify-self-center">
                                                         <div className="w-36 h-36 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                                             {Employer.map((emp) => (
-                                                                <div key={emp.EmployerID}> {/* Make sure each item has a unique key */}
+                                                                 <div key={emp.EmployerID} className='w-full h-full'> {/* Make sure each item has a unique key */}
                                                                     {emp.Profile_IMG ? (
-                                                                        <img src={emp.Profile_IMG} alt="User Profile" />
+                                                                        <img src={emp.Profile_IMG} alt="User Profile"  className=''/>
                                                                     ) : (
                                                                         <img src="/Icon/user.png" alt="PostJob" />
                                                                     )}
@@ -450,17 +450,17 @@ export default function Profile_feature() {
                                                 <div className=''>
                                                     <div className='text-start'>
                                                         <p className={cssProfile.titleName}>
-                                                            {isLoading ? <div className="skeleton h-5 w-48"></div> : Employer[0]?.CompanyName}
+                                                            {isLoading ? <div className="skeleton h-5 w-48 font-notoLao"></div> : Employer[0]?.CompanyName}
                                                         </p>
                                                         <p className={cssProfile.titleWork}>
-                                                            {isLoading ? <div className="skeleton h-4 w-32"></div> : Employer[0]?.ProfessionalTitle}
+                                                            {isLoading ? <div className="skeleton h-4 w-32 font-notoLao"></div> : Employer[0]?.ProfessionalTitle}
                                                         </p>
                                                         <div className='flex '>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-4 h-6 self-center">
                                                                 <path fill-rule="evenodd" d=" m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
                                                             </svg>
                                                             <p className={cssProfile.titleAddress}>
-                                                                {isLoading ? <div className="skeleton h-4 w-32"></div> : (
+                                                                {isLoading ? <div className="skeleton h-4 w-32 font-notoLao"></div> : (
                                                                     (Employer[0]?.VillageName || Employer[0]?.DistrictName || Employer[0]?.ProvinceName) ?
                                                                         `${Employer[0]?.VillageName}, ${Employer[0]?.DistrictName}, ${Employer[0]?.ProvinceName}` :
                                                                         'ບໍ່ລະບຸ'
@@ -564,17 +564,17 @@ export default function Profile_feature() {
                                                                     <img src={job.Job_Post_IMG} alt="Job" className="w-full h-48 object-cover rounded-md" />
                                                                 </figure>
                                                                 <div className="card-body flex-grow">
-                                                                    <h2 className="card-title">{job.Title}</h2>
+                                                                    <h2 className="card-title font-notoLao">{job.Title}</h2>
                                                                     <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
                                                                         <p className="self-start">Salary : {job.SalaryStart} - {job.SalaryMax} LAK</p>
-                                                                        <p className="line-clamp-4">Description : {job.Description}</p>
+                                                                        <p className="line-clamp-4 font-notoLao">Description : {job.Description}</p>
                                                                         <p className="self-start text-clip">Posted : {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
                                                                     </article>
                                                                     <div className="card-actions text-xs bottom-0 absolute">
 
 
-                                                                        <p className="self-start text-clip">Work Type : {job.WorkType}</p>
-                                                                        <p className="self-start">Work Category : {job.CategoryName} / {job.OccupationName}</p>
+                                                                        <p className="self-start text-clip font-notoLao">Work Type : {job.WorkType}</p>
+                                                                        <p className="self-start font-notoLao">Work Category : {job.CategoryName} / {job.OccupationName}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -766,14 +766,14 @@ export default function Profile_feature() {
                                                                 )}
 
                                                                 <figure className="flex-none w-1/3 mr-0">
-                                                                    <img src={cv.IMG_CV} alt="CV" className="w-full h-48 object-cover rounded-md" />
+                                                                    <img src={cv.IMG_CV} alt="CV" className="w-full h-48 rounded-md object-scale-down" />
                                                                 </figure>
                                                                 <div className="card-body flex-grow">
-                                                                    <h2 className="card-title">{cv.Title}</h2>
+                                                                    <h2 className="card-title font-notoLao">{cv.Title}</h2>
                                                                     <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
 
-                                                                        <p className="line-clamp-4">Work Category : {cv.CategoryName} / {cv.OccupationName}</p>
-                                                                        <p className="self-start">Upload Date : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                                                                        <p className="line-clamp-4 font-notoLao">Work Category : {cv.CategoryName} / {cv.OccupationName}</p>
+                                                                        <p className="self-start font-notoLao">Upload Date : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                                                                     </article>
                                                                 </div>
                                                             </div>
