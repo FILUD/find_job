@@ -549,7 +549,7 @@ function FindjobPage() {
                     }}
                   >
                     <figure className='h-52'>
-                      {job.Post_IMG && <img className='bg-cover h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
+                      {job.Post_IMG && <img className='object-cover w-full h-full max-h-min' src={job.Post_IMG} alt="IMG_JOB" />}
                     </figure>
                     <div className="card-body w-full">
                       <div>

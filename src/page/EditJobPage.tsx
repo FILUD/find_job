@@ -67,24 +67,25 @@ const EditJobPage: React.FC = () => {
         if (!file || !title || !occupation || !salaryMaximum || !salaryMinimum || !workType === null) {
             Swal.fire({
                 icon: "error",
-                title: "Oops...",
-                text: "Enter complete information.",
+                title: "ຜິດພາດ...",
+                text: "ກະລຸນາໃສ່ຂໍ້ມູນໃຫ້ຄົບຖ້ວນ.",
             });
             return;
-        } else if (salaryMinimum > salaryMaximum) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "The starting salary should be less than the maximum salary.",
-            });
-            return;
-        } else if (salaryMaximum >= "100000000") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "The salary is over Maxinum",
-            });
-            return;
+        // } else if (salaryMinimum > salaryMaximum) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Oops...",
+        //         text: "The starting salary should be less than the maximum salary.",
+        //     });
+        //     return;
+        // } else if (salaryMaximum >= "100000000") {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Oops...",
+        //         text: "The salary is over Maxinum",
+        //     });
+        //     return;
+        // }
         }
 
         const formDataToSend = new FormData();
