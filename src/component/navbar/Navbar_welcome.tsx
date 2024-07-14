@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
 import AuthFeat from '../authentication/AuthFeature';
 import Profile_feature from '../profile/ProfileFeature';
@@ -49,20 +48,20 @@ function NavbarWelcome() {
 
         <div className="navbar bg-base-500">
           <div className="flex-1">
-            <a onClick={() => navigate('/')} className="btn btn-ghost text-xl ">FiveJOB</a>
+            <a onClick={() => navigate('/')} className="btn btn-ghost text-xl ">GEOJOB</a>
           </div>
           <div className="flex-none">
 
             <div className="dropdown dropdown-end px-5 hover:text-orange-300 duration-1000 cursor-pointer">
-              <p onClick={() => navigate('/About')}>About</p>
+              <p onClick={() => navigate('/About')}>ກ່ຽວກັບເວັບໄຊ້</p>
             </div>
 
             <div className="dropdown dropdown-end px-5 hover:text-orange-300 duration-1000 cursor-pointer">
-              <p onClick={() => navigate('/Contact')}>Contact</p>
+              <p onClick={() => navigate('/Contact')}>ຕິດຕໍ່ພວກເຮົາ</p>
             </div>
 
             {/* Search icon */}
-            <div className="dropdown dropdown-end">
+            {/* <div className="dropdown dropdown-end">
               <button className="btn btn-ghost btn-circle w-80">
                 <label className="input input-bordered flex items-center gap-2 ">
                   <input type="text" className="grow" placeholder="Search" />
@@ -70,10 +69,10 @@ function NavbarWelcome() {
                 </label>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
               </button>
-            </div>
+            </div> */}
 
             {/* theme */}
-            <div className="btn btn-ghost btn-circle avatar">
+            <div className="btn btn-ghost btn-circle avatar mr-3">
               <ThemeToggle />
             </div>
 
@@ -85,7 +84,7 @@ function NavbarWelcome() {
             )} */}
 
             {/* Change Language */}
-            <div className="dropdown dropdown-end ">
+            {/* <div className="dropdown dropdown-end ">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-5 ">
                 <div className="w-10 rounded-full ">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-full h-full">
@@ -97,9 +96,7 @@ function NavbarWelcome() {
                 <li ><a>ລາວ</a></li>
                 <li className=''><a>English</a></li>
               </ul>
-            </div>
-
-
+            </div> */}
 
 
           </div>

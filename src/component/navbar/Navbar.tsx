@@ -40,7 +40,7 @@ function Navbar() {
             <div className='container-nav'>
                 <div className="navbar bg-base-500">
                     <div className="flex-1">
-                        <a onClick={() => navigate('/Home')} className="btn btn-ghost text-xl">FiveJOB</a>
+                        <a onClick={() => navigate('/Home')} className="btn btn-ghost text-xl">GEOJOB</a>
                     </div>
                     <div className="flex-none">
 

@@ -217,7 +217,7 @@ const EditJobPage: React.FC = () => {
     };
 
     return (
-        <html data-theme={theme}>
+        <html className='font-notoLao' data-theme={theme}>
             <div>
                 <SetNavbar />
                 {isLoading ? (
@@ -231,7 +231,7 @@ const EditJobPage: React.FC = () => {
                         {jobData && (
                             <>
                                 <div className='card bg-purple-900 bg-opacity-90 rounded-2xl mx-20 mt-3 '>
-                                    <div className='py-5 self-center font-bold text-3xl text-white'>Edit Job</div>
+                                    <div className='py-5 self-center font-bold text-3xl text-white'>ແກ້ໄຂວຽກ</div>
                                 </div>
                                 <div className='card h-fit bg-black bg-opacity-15 rounded-2xl mx-20 mt-4 shadow-xl mb-10 pb-10 '>
                                     <form onSubmit={handleSubmit}>
@@ -239,7 +239,7 @@ const EditJobPage: React.FC = () => {
                                             <div className='space-y-3'>
                                                 <div className='grid grid-cols-3'>
                                                     <div id="col1">
-                                                        <p className='ml-2 horizontal text-sm font-semibold'>Title</p>
+                                                        <p className='ml-2 horizontal text-sm font-semibold'>ຫົວຂໍ້ວຽກ :</p>
                                                         <input
                                                             type="text"
                                                             placeholder={jobData[0].Title}
@@ -249,7 +249,7 @@ const EditJobPage: React.FC = () => {
                                                         />
                                                     </div>
                                                     <div id="col1">
-                                                        <p className='ml-2 horizontal text-sm font-semibold'>Salary minimum</p>
+                                                        <p className='ml-2 horizontal text-sm font-semibold'>ເງິນເດືອນເລີ່ມຕົ້ນ :</p>
                                                         <CurrencyInput
                                                             placeholder={jobData[0].SalaryStart || ''}
                                                             className="input input-bordered w-5/6 text-end"
@@ -269,7 +269,7 @@ const EditJobPage: React.FC = () => {
                                                     </div>
 
                                                     <div id="col1">
-                                                        <p className='ml-2 horizontal text-sm font-semibold'>Salary maximum</p>
+                                                        <p className='ml-2 horizontal text-sm font-semibold'>ເງິນເດືອນສູງສຸດ :</p>
 
                                                         <CurrencyInput
                                                             placeholder={jobData[0].SalaryMax || ''}
@@ -290,13 +290,13 @@ const EditJobPage: React.FC = () => {
                                                 </div>
                                                 <div className='grid grid-cols-3'>
                                                     <div id="col1">
-                                                        <p className='ml-2 horizontal text-sm font-semibold'>Old Category : {jobData[0].CategoryName}</p>
+                                                        <p className='ml-2 horizontal text-sm font-semibold'>ປະເພດວຽກເກົ່າ : {jobData[0].CategoryName}</p>
                                                         <select
                                                             className="select  w-5/6 select-bordered"
                                                             value={selectedCategory || ''}
                                                             onChange={handleCategoryChange}
                                                         >
-                                                            <option disabled value="">Please Select Category</option>
+                                                            <option disabled value="">ເລືອກໝວກໝູ່ອາຊີບ</option>
                                                             {categories.map(category => (
                                                                 <option key={category.CategoryID} value={category.CategoryID}>
                                                                     {category.CategoryName}
@@ -305,13 +305,13 @@ const EditJobPage: React.FC = () => {
                                                         </select>
                                                     </div>
                                                     <div id="col2">
-                                                        <p className='ml-2 horizontal text-sm font-semibold '>Old Occupation : {jobData[0].OccupationName}</p>
+                                                        <p className='ml-2 horizontal text-sm font-semibold '>ອາຊີບ : {jobData[0].OccupationName}</p>
                                                         <select
                                                             className="select  w-5/6 select-bordered"
                                                             value={occupation}
                                                             onChange={handleOccupationChange}
                                                         >
-                                                            <option disabled value="">Please Select Occupation</option>
+                                                            <option disabled value="">ເລືອກໝວກໝູ່ອາຊີບກ່ອນ</option>
                                                             {occupations.map(occupation => (
                                                                 <option key={occupation.OccupationID} value={occupation.OccupationID}>
                                                                     {occupation.OccupationName}
@@ -320,13 +320,12 @@ const EditJobPage: React.FC = () => {
                                                         </select>
                                                     </div>
                                                     <div id="col3">
-                                                        <p className='ml-2 horizontal text-sm font-semibold'>Work type</p>
+                                                        <p className='ml-2 horizontal text-sm font-semibold'>ປະເພດຂອງວຽກ :</p>
                                                         <select
                                                             className="select select-bordered w-5/6"
                                                             value={workType}
                                                             onChange={(e) => setWorkType(e.target.value)}
                                                         >
-                                                            <option disabled value="">Please Select Worktype</option>
                                                             <option value="Full-time">Full-time</option>
                                                             <option value="Part-time">Part-time</option>
                                                         </select>
@@ -353,15 +352,15 @@ const EditJobPage: React.FC = () => {
                                                                 )}
                                                             </div>
                                                             <div className='space-y-6 p-2 pt-8'>
-                                                                <p className='text-2xl font-semibold'>Input Your Image</p>
+                                                                <p className='text-2xl font-semibold'>ໃສ່ຮຼບພາບປະກອບວຽກ</p>
                                                                 <input
                                                                     type="file"
                                                                     accept="image/jpeg, image/png"
-                                                                    className="file-input file-input-bordered file w-full max-w-xs"
+                                                                    className="file-input file-input-bordered file w-4/6 max-w-xs"
                                                                     onChange={handleFileChange}
                                                                 />
                                                                 <div className='w-5/6 '>
-                                                                    <button type="submit" onClick={handleSubmit} className="btn btn-primary btn-wide " >Edit Job</button>
+                                                                    <button type="submit" onClick={handleSubmit} className="btn btn-primary w-4/5" >ແກ້ໄຂວຽກ</button>
                                                                 </div>
                                                             </div>
 

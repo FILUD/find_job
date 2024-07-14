@@ -348,13 +348,13 @@ export default function AuthFeat() {
     };
 
     return (
-        <>
+        <div className='font-notoLao'>
             <div className='flex-none'>
                 <button
                     type="button"
-                    className="btn btn-outline btn-accent rounded-2xl w-28"
+                    className="btn font-notoLao btn-outline bg-purple-900 btn-accent rounded-2xl w-28"
                     onClick={() => setIsOpenLogIn(true)}>
-                    Sign In
+                    ເຂົ້າສູ່ລະບົບ
                 </button>
             </div>
 
@@ -388,8 +388,8 @@ export default function AuthFeat() {
                                         <button className="btn btn-square btn-sm absolute top-0 right-0 m-3 hover:scale-125" onClick={closeLogin}>
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                         </button>
-                                        <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl">
-                                            <h2 className='text-white'>Sign in</h2>
+                                        <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl font-notoLao">
+                                            <h2 className='text-white'>ເຂົ້າສູ່ລະບົບ</h2>
                                         </Dialog.Title>
                                         {isLoading ? (
                                             <div className="flex justify-center items-center mt-8 mb-8">
@@ -422,17 +422,17 @@ export default function AuthFeat() {
 
                                                 {/* Login button */}
                                                 {!isLoading && (
-                                                    <div className="mt-2 grid justify-items-center space-y-4">
+                                                    <div className="mt-2 grid justify-items-center space-y-4 font-notoLao">
                                                         <div className="card-actions justify-center mt-2 w-full ">
                                                             <button
                                                                 className="btn btn-primary rounded-2xl btn-wide btn-info hover:text-white text-base "
-                                                                onClick={() => handleLogin(emailLogin, passwordLogin)}>Sign In</button>
+                                                                onClick={() => handleLogin(emailLogin, passwordLogin)}>ເຂົ້າສູ່ລະບົບ</button>
                                                         </div>
                                                         <div className='w-80 border-t-2 border-stone-400'></div>
                                                         <div className='card-actions justify-center mt-2 w-full '>
                                                             <button
                                                                 className="btn btn-primary rounded-2xl btn-wide btn-error hover:text-white  text-base "
-                                                                onClick={goToSignUp}>Register</button>
+                                                                onClick={goToSignUp}>ລົງທະບຽນ</button>
                                                         </div>
                                                     </div>
                                                 )}
@@ -460,7 +460,7 @@ export default function AuthFeat() {
                             <div className="fixed inset-0 bg-black/75" />
                         </Transition.Child>
 
-                        <div className="fixed inset-0 overflow-y-auto">
+                        <div className="fixed inset-0 overflow-y-auto font-notoLao">
                             <div className="flex min-h-full items-center justify-center p-4 text-center">
                                 <Transition.Child
                                     as={Fragment}
@@ -480,8 +480,8 @@ export default function AuthFeat() {
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                         </button>
-                                        <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl">
-                                            <h2 className='text-white'>Register</h2>
+                                        <Dialog.Title as="h3" className="card-title font-notoLao self-center mt-5 text-2xl">
+                                            <h2 className='text-white'>ລົງທະບຽນ</h2>
                                         </Dialog.Title>
                                         {isLoading ? (
                                             <div className="flex justify-center items-center mt-8 mb-8">
@@ -493,19 +493,19 @@ export default function AuthFeat() {
                                                 <ul className="menu menu-horizontal bg-base-300 w-fit rounded-box self-center">
                                                     <li className={role === 'Jobseeker' ? 'active' : ''}>
                                                         <button onClick={() => handleItemClick('Jobseeker')} className="toggle-button ">
-                                                            <span>Jobseeker</span>
+                                                            <span>ຜູ້ຊອກວຽກ</span>
                                                             {role === 'Jobseeker' && <span className="toggle-indicator">&#x2714;</span>}
                                                         </button>
                                                     </li>
                                                     <li className={role === 'Employer' ? 'active' : ''}>
                                                         <button onClick={() => handleItemClick('Employer')} className="toggle-button">
-                                                            <span>Employer</span>
+                                                            <span>ຜູ້ຮັບສະໝັກວຽກ</span>
                                                             {role === 'Employer' && <span className="toggle-indicator">&#x2714;</span>}
                                                         </button>
                                                     </li>
                                                 </ul>
 
-                                                <p className='self-start mx-5'>Name</p>
+                                                <p className='self-start mx-5'>ຊື່</p>
                                                 {role !== 'Employer' ? (
                                                     <div className="px-1 font-sans font-semibold grid grid-cols-2 space-x-2 mx-5">
                                                         <label className="input input-bordered rounded-2xl flex items-center gap-2 input-info">
@@ -527,14 +527,14 @@ export default function AuthFeat() {
                                                     </div>
                                                 )}
 
-                                                <p className='self-start mx-5'>Email</p>
+                                                <p className='self-start mx-5'>ອີເມວ</p>
                                                 <label className="input input-bordered  rounded-2xl flex items-center gap-2 mx-5 mr-5  input-info">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" /><path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" /></svg>
                                                     <input type="text" className="grow" placeholder="Example@email.com" value={emailSignup} onChange={(e) => setEmailSignup(e.target.value)} />
                                                 </label>
 
 
-                                                <p className='self-start mx-5'>Password { }</p>
+                                                <p className='self-start mx-5'>ລະຫັດຜ່ານ { }</p>
                                                 <label className={Authcss.labelInput}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70">
                                                         <path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" />
@@ -589,7 +589,7 @@ export default function AuthFeat() {
                                                     </kbd>
                                                 </label>
                                                 {/* Display password match status */}
-                                                {!passwordsMatch && <p className='text-red-500'>Passwords do not match!</p>}
+                                                {!passwordsMatch && <p className='text-red-500'>ລະຫັດຜ່ານບໍ່ຕົງກັນ !</p>}
 
 
                                                 {!isLoading && (
@@ -598,7 +598,7 @@ export default function AuthFeat() {
                                                         <div className='card-actions justify-center mt-2 w-full '>
                                                             <button className="btn btn-primary rounded-2xl btn-wide btn-error hover:text-white text-base disabled:btn-outline"
                                                                 onClick={() => handleSignup(emailSignup)}
-                                                                disabled={!passwordsMatch || !emailSignup || !passwordSignup || !firstName}>Register</button>
+                                                                disabled={!passwordsMatch || !emailSignup || !passwordSignup || !firstName}>ລົງທະບຽນ</button>
                                                         </div>
                                                     </div>
                                                 )}
@@ -676,6 +676,6 @@ export default function AuthFeat() {
                     </Dialog>
                 </Transition >
             )}
-        </>
+        </div>
     );
 }

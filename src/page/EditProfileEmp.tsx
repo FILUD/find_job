@@ -391,7 +391,7 @@ function EditProfileEmp() {
 
 
     return (
-        <html data-theme={theme}>
+        <html className='font-notoLao' data-theme={theme}>
             <div className=' h-screen max-h-screen bg-base-100'>
                 <SetNavbar />
                 <div className='max-h-screen h-3/4 mt-2 bg-base-100'>
@@ -399,16 +399,16 @@ function EditProfileEmp() {
                     <center className='grid bg-base-100 h-full '>
                         <div className='container justify-self-center bg-base-100 mt-8'>
                             <div className='mb-20 bg-purple-900 p-4 rounded-xl shadow-lg '>
-                                <p className="text-2xl font-bold text-white"> My Profile</p>
+                                <p className="text-2xl font-bold text-white">ໂປຟາຍຂອງຂ້ອຍ</p>
                             </div>
                         </div>
                         <div className='self-center h-full'>
                             {EmpData.map(emp => (
                                 <div className='container -mt-14 grid grid-cols-3 justify-center center bg-base-100  gap-1' key={emp.UserID}>
-                                    <div className='col-span-1 grid justify-center bg-base-300 rounded-xl  ml-4 '>
+                                    <div className='col-span-1 grid justify-center bg-purple-900 rounded-xl text-white ml-4 p-3'>
                                         <div className='w-36 h-36 mt-2 justify-self-center static rounded-full'>
                                             <button className="btn btn-ghost btn-circle absolute -mt-2 ml-5 bg-base-100  rounded-full bg-opacity-75">
-                                                <label className="flex items-center gap-2 ">
+                                                <label className="flex items-center text-black gap-2 ">
                                                     <input
                                                         type="file"
                                                         accept="image/jpeg, image/png"
@@ -462,7 +462,7 @@ function EditProfileEmp() {
                                                         {emp.VillageName ? (
                                                             <p className='text-left'>ບ້ານ{emp.VillageName} / ເມືອງ{emp.DistrictName} / ແຂວງ{emp.ProvinceName}</p>
                                                         ) : (
-                                                            <p className='text-left'>Address : ຍັງບໍ່ມີຂໍ້ມູນ</p>
+                                                            <p className='text-left'>ທີ່ຢູ່ : ຍັງບໍ່ມີຂໍ້ມູນ</p>
                                                         )}
                                                     </div>
                                                 </div>
@@ -474,15 +474,15 @@ function EditProfileEmp() {
                                                         {emp.ProfessionalTitle ? (
                                                             <div className='text-left'>{emp.ProfessionalTitle}</div>
                                                         ) : (
-                                                            <p className='text-left'>Professional Title : ຍັງບໍ່ມີຂໍ້ມູນ</p>
+                                                            <p className='text-left'>ລາຍລະອຽດ : ຍັງບໍ່ມີຂໍ້ມູນ</p>
                                                         )}
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-2 ' onClick={handleToggleEditMode}> Edit Information</button>
-                                                <button className='btn btn-square btn-wide btn-ghost btn-outline  mt-2' onClick={() => navigate("/PostJob")}> Post Job</button >
+                                                <button className='btn btn-square btn-wide btn-ghost text-white btn-outline md:mt-6 mt-2 ' onClick={handleToggleEditMode}>ແກ້ໄຂຂໍ້ມູນສ່ວນໂຕ</button>
+                                                <button className='btn btn-square btn-wide btn-ghost text-white btn-outline  mt-2' onClick={() => navigate("/PostJob")}>ປະກາດວຽກໃໝ່</button >
                                             </div>
                                         </div>
                                     </div>
@@ -492,7 +492,7 @@ function EditProfileEmp() {
                                         {isEditMode ? (
                                             <div className='pt-4'>
                                                 <div className='grid grid-cols-5'>
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Email :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ອີເມວ :</p>
                                                     <input
                                                         disabled
                                                         type="text"
@@ -504,7 +504,7 @@ function EditProfileEmp() {
                                                 </div>
 
                                                 <div className='grid grid-cols-5'>
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Company name :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ຊື່ບໍລິສັດ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={emp.CompanyName}
@@ -514,7 +514,7 @@ function EditProfileEmp() {
                                                     />
                                                 </div>
                                                 <div className='grid grid-cols-5'>
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Telephone :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ເບີໂທ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={emp.Tel}
@@ -526,7 +526,7 @@ function EditProfileEmp() {
 
                                                 <div className='grid grid-cols-5 my-5'>
 
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Province :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ແຂວງ :</p>
                                                     <select
                                                         className="select select-primary w-4/5 max-w-xs col-span-4"
                                                         value={selectedprovice || ''}
@@ -540,7 +540,7 @@ function EditProfileEmp() {
                                                         ))}
                                                     </select>
 
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>District :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ເມືອງ :</p>
                                                     <select
                                                         className="select select-primary w-4/5 max-w-xs col-span-4"
                                                         value={district}
@@ -554,7 +554,7 @@ function EditProfileEmp() {
                                                         ))}
                                                     </select>
 
-                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>Vilage :</p>
+                                                    <p className='ml-2 horizontal col-span-1 pr-5 self-center'>ບ້ານ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={emp.VillageName}
@@ -564,7 +564,7 @@ function EditProfileEmp() {
                                                     />
                                                 </div>
                                                 <div className='grid grid-cols-5 my-5'>
-                                                    <p className='ml-2 horizontal col-span-2 pr-5 self-center'>Professional title :</p>
+                                                    <p className='ml-2 horizontal col-span-2 pr-5 self-center'>ລາຍລະອຽດເພີ່ມເຕີມ :</p>
                                                     <input
                                                         type="text"
                                                         placeholder={emp.ProfessionalTitle}
@@ -574,18 +574,18 @@ function EditProfileEmp() {
                                                     /></div>
 
                                                 <div className='grid grid-cols-8 my-5 gap-5'>
-                                                    <button className='btn btn-square  btn-primary w-full md:mt-6 mt-2 justify-center col-start-3 col-end-5' onClick={handleSubmit}>Save</button>
-                                                    <button className='btn btn-square  btn-ghost btn-outline w-full md:mt-6 mt-2 justify-center col-start-5 col-end-7' onClick={handleCloseEditMode}>Cancel</button>
+                                                    <button className='btn btn-square  btn-primary w-full md:mt-6 mt-2 justify-center col-start-3 col-end-5' onClick={handleSubmit}>ບັນທຶກ</button>
+                                                    <button className='btn btn-square  btn-ghost btn-outline w-full md:mt-6 mt-2 justify-center col-start-5 col-end-7' onClick={handleCloseEditMode}>ຍົກເລີກ</button>
                                                 </div>
                                             </div>
                                         ) : (
                                             <div className='m-4'>
-                                                <div className='navbar bg-neutral-900 text-neutral-content rounded-t-2xl'>
+                                                <div className='navbar bg-purple-900 rounded-t-2xl'>
                                                     <div className="flex-1">
-                                                        <a className="btn btn-ghost text-xl">Job Posting</a>
+                                                        <a className="btn btn-ghost text-xl text-white">ວຽກທີ່ກຳລັງປະກາດ</a>
                                                     </div>
                                                 </div>
-                                                <div className='w-full h-full max-h-96 bg-purple-900 rounded-b-2xl p-3 space-y-4 snap-y overflow-y-auto shadow-md mb-2'>
+                                                <div className='w-full h-full max-h-96 bg-base-300 rounded-b-2xl p-3 space-y-4 snap-y overflow-y-auto shadow-md mb-2'>
                                                     {jobDetail.length > 0 ? (
                                                         jobDetail.map((job: any) => (
                                                             <div key={job.JobID} className="card card-side bg-base-100 shadow-xl flex w-full h-52 ">
@@ -604,14 +604,14 @@ function EditProfileEmp() {
                                                                 </figure>
                                                                 <div className="card-body flex-grow">
                                                                     <h2 className="card-title">{job.Title}</h2>
-                                                                    <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
-                                                                        <p className="self-start">Salary : {job.SalaryStart} - {job.SalaryMax} LAK</p>
-                                                                        <p className="line-clamp-4">Description : {job.Description}</p>
-                                                                        <p className="self-start text-clip">Posted : {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
+                                                                    <article className="text-xs ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
+                                                                        <p className="self-start">ເງິນເດືອນ : {job.SalaryStart} - {job.SalaryMax} LAK</p>
+                                                                        <p className="line-clamp-4">ລາຍລະອຽດວຽກ : {job.Description}</p>
+                                                                        <p className="self-start text-clip">ວັນທີ່ປະກາດ : {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
                                                                     </article>
                                                                     <div className="card-actions text-xs bottom-0 absolute">
-                                                                        <p className="self-start text-clip">Work Type : {job.WorkType}</p>
-                                                                        <p className="self-start">Work Category : {job.CategoryName} / {job.OccupationName}</p>
+                                                                        <p className="self-start text-clip">ປະເພດວຽກ : {job.WorkType}</p>
+                                                                        <p className="self-start">ໝວດໝູ່ສາຍວຽກ : {job.CategoryName} / {job.OccupationName}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -624,8 +624,8 @@ function EditProfileEmp() {
                                                             <svg className="w-20 h-20 mt-20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
                                                             </svg>
-                                                            <p className='p-3'>You don't have any job postings.</p>
-                                                            <button className='btn btn-square btn-wide btn-primary' onClick={() => navigate("/PostJob")}> Post Job</button >
+                                                            <p className='p-3'>ຍັງບໍ່ມີຂໍ້ມູນການປະກາດວຽກ.</p>
+                                                            <button className='btn btn-square btn-wide btn-primary' onClick={() => navigate("/PostJob")}>ປະກາດວຽກໃໝ່</button >
 
                                                         </div>
                                                     )}
