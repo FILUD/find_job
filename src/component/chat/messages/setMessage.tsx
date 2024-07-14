@@ -34,7 +34,7 @@ function SetMessage({ senderId, receiverId}: ListChat) {
                 ) : (
                     <div className="flex w-full h-full max-h-screen justify-center items-center flex-col bg-base-300">
                         <HashLoader color="#36d7b7" loading={!messagesLoaded} size={50} />
-                        <p className="text-xl font-semibold">Loading</p>
+                        <p className="text-xl font-semibold">ກຳລັງປະມວນຜົນ...</p>
                     </div>
                 )}
             </>

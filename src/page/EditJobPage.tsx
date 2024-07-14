@@ -67,24 +67,25 @@ const EditJobPage: React.FC = () => {
         if (!file || !title || !occupation || !salaryMaximum || !salaryMinimum || !workType === null) {
             Swal.fire({
                 icon: "error",
-                title: "Oops...",
-                text: "Enter complete information.",
+                title: "ຜິດພາດ...",
+                text: "ກະລຸນາໃສ່ຂໍ້ມູນໃຫ້ຄົບຖ້ວນ.",
             });
             return;
-        } else if (salaryMinimum > salaryMaximum) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "The starting salary should be less than the maximum salary.",
-            });
-            return;
-        } else if (salaryMaximum >= "100000000") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "The salary is over Maxinum",
-            });
-            return;
+        // } else if (salaryMinimum > salaryMaximum) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Oops...",
+        //         text: "The starting salary should be less than the maximum salary.",
+        //     });
+        //     return;
+        // } else if (salaryMaximum >= "100000000") {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Oops...",
+        //         text: "The salary is over Maxinum",
+        //     });
+        //     return;
+        // }
         }
 
         const formDataToSend = new FormData();
@@ -121,7 +122,7 @@ const EditJobPage: React.FC = () => {
             Swal.fire({
                 position: "top",
                 icon: "success",
-                title: "Edit Post success",
+                title: "ແກ້ໄຂວຽກລຳເລັດແລ້ວ",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -130,7 +131,7 @@ const EditJobPage: React.FC = () => {
             Swal.fire({
                 position: "top",
                 icon: "error",
-                title: "Something when wrong Tryagin Later",
+                title: "ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໃໝ່ພາຍຫລັງ",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -223,7 +224,7 @@ const EditJobPage: React.FC = () => {
                 {isLoading ? (
                     <div className='flex flex-col w-full h-screen max-h-screen text-center justify-center items-center bg-base-300 bg-opacity-75 '>
                         <HashLoader color="#36d7b7" />
-                        <p className='font-semibold'>Loading....</p>
+                        <p className='font-semibold'>ກຳລັງໂຫລດ...</p>
                     </div>
                 ) : (
                     <>
@@ -352,7 +353,7 @@ const EditJobPage: React.FC = () => {
                                                                 )}
                                                             </div>
                                                             <div className='space-y-6 p-2 pt-8'>
-                                                                <p className='text-2xl font-semibold'>ໃສ່ຮຼບພາບປະກອບວຽກ</p>
+                                                                <p className='text-2xl font-semibold'>ໃສ່ຮູບພາບປະກອບວຽກ</p>
                                                                 <input
                                                                     type="file"
                                                                     accept="image/jpeg, image/png"

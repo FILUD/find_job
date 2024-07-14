@@ -110,7 +110,7 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                     <div className="fixed inset-0 bg-black/75" />
                 </Transition.Child>
 
-                <div className="fixed inset-0 overflow-y-auto">
+                <div className="fixed inset-0 overflow-y-auto font-notoLao">
                     <div className="flex min-h-full items-center justify-center p-4 text-center">
                         <Transition.Child
                             as={Fragment}
@@ -154,15 +154,15 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                 <table className="table-auto w-full">
                                                     <tbody>
                                                         <tr>
-                                                            <td className="border px-4 py-2 font-bold">Name</td>
+                                                            <td className="border px-4 py-2 font-bold">ຊື່ຜູ້ຊອກວຽກ</td>
                                                             <td className="border px-4 py-2">{info.Name}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td className="border px-4 py-2 font-bold">Occupation</td>
+                                                            <td className="border px-4 py-2 font-bold">ອາຊີບ</td>
                                                             <td className="border px-4 py-2">{data.OccupationName}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td className="border px-4 py-2 font-bold">Category</td>
+                                                            <td className="border px-4 py-2 font-bold">ໝວດໝູ່ອາຊີບ</td>
                                                             <td className="border px-4 py-2">{data.CategoryName}</td>
                                                         </tr>
                                                         {/* <tr>
@@ -210,11 +210,11 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                     onClick={handleFullScreen}
                                                     data-original-url={data.IMG_Card}
                                                 >
-                                                    Full Screen
+                                                    ເຕັມໜ້າຈໍ
                                                 </a>
                                             </div>
                                             <div className="flex justify-end flex-1 space-x-4">
-                                                <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                             </div>
                                         </div>
                                     ) : (
@@ -227,12 +227,12 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                             onClick={handleFullScreen}
                                                             data-original-url={data.IMG_Card}
                                                         >
-                                                            Full Screen
+                                                            ເຕັມໜ້າຈໍ
                                                         </a>
                                                     </div>
                                                     <div className="flex justify-end flex-1 space-x-4">
-                                                        <button className="btn btn-primary" onClick={handleAccept}>Accept</button>
-                                                        <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                        <button className="btn btn-primary" onClick={handleAccept}>ຍອມຮັບ</button>
+                                                        <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                     </div>
                                                 </div>
 
@@ -244,11 +244,11 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                         onClick={handleFullScreen}
                                                         data-original-url={data.IMG_Card}
                                                     >
-                                                        Full Screen
+                                                        ເຕັມໜ້າຈໍ
                                                     </a>
                                                     <div className="flex justify-end flex-1 space-x-4">
-                                                        <button className="btn btn-success disabled:btn-success">Accepted</button>
-                                                        <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                        <button className="btn btn-success disabled:btn-success">ຍອມຮັບຄຳຂໍແລ້ວ</button>
+                                                        <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                     </div>
                                                 </div>
 

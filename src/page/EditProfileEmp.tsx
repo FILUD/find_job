@@ -74,13 +74,13 @@ function EditProfileEmp() {
 
     const handleDeleteJOB = (jobID: number) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "ຢືນຢັນການລົບ ?",
+            text: "ທ່ານຕ້ອງການລົບຮູບພາບບໍ່ !",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "ຢືນຢັນ !"
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete('http://localhost:3001/deletejob', { data: { JobID: jobID } })
@@ -88,8 +88,8 @@ function EditProfileEmp() {
                         console.log('CV deleted successfully');
                         setJobDetail(prevJobDetail => prevJobDetail.filter(job => job.JobID !== jobID));
                         Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
+                            title: "ລົບສຳເລັດ !",
+                            text: "ວຽກຂອງທ່ານຖືກລົບແລ້ວ.",
                             icon: "success"
                         });
                     })
@@ -97,8 +97,8 @@ function EditProfileEmp() {
                         console.error('Error deleting Job:', error);
                         console.log('JobID:', jobID);
                         Swal.fire({
-                            title: "Error!",
-                            text: "Failed to delete the Job.",
+                            title: "ຜິດພາດ !",
+                            text: "ເກີດຂໍ້ຜິດພາດ ກະລຸນາລອງໃຫມ່ພາຍຫຼັງ.",
                             icon: "error"
                         });
                     });
@@ -140,12 +140,12 @@ function EditProfileEmp() {
         const selectedFile = e.target.files ? e.target.files[0] : null;
         if (selectedFile) {
             Swal.fire({
-                title: 'Save Image?',
-                text: 'Do you want to save the selected image?',
+                title: 'ຢືນຢັນ ?',
+                text: 'ທ່ານຕ້ອງການປ່ຽນຮູບໂປຣຟາຍບໍ່ ?',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, save it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: 'ຢືນຢັນ !',
+                cancelButtonText: 'ຍົກເລີກ',
             }).then((result) => {
                 if (result.isConfirmed) {
                     saveImage(selectedFile);
@@ -176,7 +176,7 @@ function EditProfileEmp() {
             Swal.fire({
                 position: "top",
                 icon: "success",
-                title: "Edit Profile success",
+                title: "ແກ້ໄຂຮູບພາບສຳເລັດ",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -185,7 +185,7 @@ function EditProfileEmp() {
             Swal.fire({
                 position: "top",
                 icon: "error",
-                title: "Something went wrong. Please try again later.",
+                title: "ບໍ່ສາມາດແກ້ໄຂໄດ້ ກະລຸນາລອງໃໝ່ພາຍຫຼັງ.",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -271,14 +271,14 @@ function EditProfileEmp() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+    
         try {
             if (addressID === null && district) {
                 const data = {
                     VillageName: village,
                     DistrictID: district
                 };
-
+    
                 const response = await fetch('http://localhost:3001/postaddress', {
                     method: 'POST',
                     headers: {
@@ -286,59 +286,60 @@ function EditProfileEmp() {
                     },
                     body: JSON.stringify(data)
                 });
-
+    
                 if (response.ok) {
                     const responseData = await response.json();
                     console.log('Data inserted successfully.');
-
+    
                     setAddressId(responseData.addressId);
+                    console.log("Data for uploaded address:", responseData.addressId);
                     setVillage('');
                     setDistrict('');
-
+    
                     try {
                         const editData = {
                             AddressID: responseData.addressId,
-                            //   VillageName: village,
-                            //   DistrictID: district
+                            VillageName: village,
+                            DistrictID: district
                         };
                         console.log('Edit Data:', editData);
-
+    
                         const editResponse = await fetch(`http://localhost:3001/editaddressemp/${employerID}`, {
-                            method: 'PUT',
+                            method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(editData)
                         });
-
+    
                         if (editResponse.ok) {
-                            console.log('Edit Address successfully.');
+                            console.log('Edit Address successfully uploaded new data.');
                         } else {
-                            console.error('Failed to Address.');
+                            console.error('Failed to edit address.');
                         }
-
+    
                         const response2 = await fetch(`http://localhost:3001/editprofiledata/${employerID}`, {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
                             },
-                            body: JSON.stringify({ companyName: companyName, proTitle: proTitle, tel: tel, addressID: addressID, }), // Changed distirctID to district
+                            body: JSON.stringify({ companyName, proTitle, tel, addressID: responseData.addressId }),
                         });
-
+    
                         if (response2.ok) {
-                            console.log("District Inserted successfully");
+                            console.log("Profile data edited successfully");
                             Swal.fire({
                                 position: "top",
                                 icon: "success",
-                                title: "Edit profile success",
+                                title: "ແກ້ໄຂຂໍ້ມູນໂປຣຟາຍສຳເລັດ",
                                 showConfirmButton: false,
                                 timer: 1500
                             });
                             window.location.reload();
                         } else {
-                            console.error("Failed Edit Profile data");
+                            console.error("Failed to edit profile data");
                         }
-
+    
                     } catch (error) {
                         console.error('Error editing data:', error);
                     }
@@ -346,46 +347,45 @@ function EditProfileEmp() {
                     console.error('Failed to insert data.');
                 }
             } else if (addressID !== null) {
-
                 const response = await fetch(`http://localhost:3001/editaddress/${addressID}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ VillageName: village, DistrictID: district }), // Changed distirctID to district
+                    body: JSON.stringify({ VillageName: village, DistrictID: district }),
                 });
-
+    
                 if (response.ok) {
-                    console.log("District Inserted successfully");
+                    console.log("Address edited successfully");
                 } else {
-                    console.error("Failed Edit Address");
+                    console.error("Failed to edit address");
                 }
-
+    
                 const response2 = await fetch(`http://localhost:3001/editprofiledata/${employerID}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ companyName: companyName, proTitle: proTitle, tel: tel, addressID: addressID, }), // Changed distirctID to district
+                    body: JSON.stringify({ companyName, proTitle, tel, addressID }),
                 });
-
+    
                 if (response2.ok) {
-                    console.log("District Inserted successfully");
+                    console.log("Profile data edited successfully");
                     Swal.fire({
                         position: "top",
                         icon: "success",
-                        title: "Edit profile success",
+                        title: "ແກ້ໄຂຂໍ້ມູນໂປຣຟາຍສຳເລັດ",
                         showConfirmButton: false,
                         timer: 1500
                     });
                     window.location.reload();
                 } else {
-                    console.error("Failed Edit Profile data");
+                    console.error("Failed to edit profile data");
                 }
             }
-
+    
         } catch (error) {
-            console.error('Error inserting data:', error);
+            console.error('Error:', error);
         }
     };
 

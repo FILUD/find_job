@@ -130,7 +130,7 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                 </button>
                                 {/* Dialog title */}
                                 <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl flex-col">
-                                    <h2 className="font-bold">View</h2>
+                                    <h2 className="font-bold">ລາຍລະອຽດ</h2>
                                 </Dialog.Title>
                                 <div>
                                     <div className="card card-side bg-base-300 shadow-xl m-4 w-fit">
@@ -149,20 +149,20 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                             </a>
                                         </div>
                                         <div className="card-body">
-                                            <h2 className="card-title self-center">Details</h2>
+                                            <h2 className="card-title self-center">ລາຍລະອຽດ</h2>
                                             <div className="text-sm text-start ">
                                                 <table className="table-auto w-full">
                                                     <tbody>
                                                         <tr>
-                                                            <td className="border px-4 py-2 font-bold">Name</td>
+                                                            <td className="border px-4 py-2 font-bold">ຊື່ຜູ້ຊອກວຽກ :</td>
                                                             <td className="border px-4 py-2">{info.Name}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td className="border px-4 py-2 font-bold">Occupation</td>
+                                                            <td className="border px-4 py-2 font-bold">ອາຊີບ :</td>
                                                             <td className="border px-4 py-2">{data.OccupationName}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td className="border px-4 py-2 font-bold">Category</td>
+                                                            <td className="border px-4 py-2 font-bold">ໝວດຫມູ່ອາຊີບ :</td>
                                                             <td className="border px-4 py-2">{data.CategoryName}</td>
                                                         </tr>
                                                         {/* <tr>
@@ -210,11 +210,11 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                     onClick={handleFullScreen}
                                                     data-original-url={data.IMG_Card}
                                                 >
-                                                    Full Screen
+                                                    ເບິ່ງຮູບ
                                                 </a>
                                             </div>
                                             <div className="flex justify-end flex-1 space-x-4">
-                                                <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                             </div>
                                         </div>
                                     ) : (
@@ -227,12 +227,12 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                             onClick={handleFullScreen}
                                                             data-original-url={data.IMG_Card}
                                                         >
-                                                            Full Screen
+                                                            ເບິ່ງຮູບ
                                                         </a>
                                                     </div>
                                                     <div className="flex justify-end flex-1 space-x-4">
-                                                        <button className="btn btn-primary" onClick={handleAccept}>Accept</button>
-                                                        <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                        <button className="btn btn-primary" onClick={handleAccept}>ຍອມຮັບຄຳຂໍ</button>
+                                                        <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                     </div>
                                                 </div>
 
@@ -244,11 +244,11 @@ function View_JobRequest({ isOpen, isClose, data, type, info, handleAccept }: To
                                                         onClick={handleFullScreen}
                                                         data-original-url={data.IMG_Card}
                                                     >
-                                                        Full Screen
+                                                        ເບິ່ງຮູບ
                                                     </a>
                                                     <div className="flex justify-end flex-1 space-x-4">
-                                                        <button className="btn btn-success disabled:btn-success">Accepted</button>
-                                                        <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                        <button className="btn btn-success disabled:btn-success">ຍອມຮັບຄຳຂໍແລ້ວ</button>
+                                                        <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                     </div>
                                                 </div>
 

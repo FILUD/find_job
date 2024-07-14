@@ -139,20 +139,20 @@ function PostJobPage() {
                 text: "ກະລຸນາໃສ່ຂໍ້ມູນໃຫ້ຄົບຖ້ວນ.",
             });
             return;
-        } else if (salaryMinNumber > salaryMaxNumber) {
-            Swal.fire({
-                icon: "error",
-                title: "ຜິດພາດ",
-                text: "ເງິນເດືອນ ເລີ່ມຕົ້ນ ຄວນຕ່ຳກວ່າ ເງິນເດືອນສູງສຸດ.",
-            });
-            return;
-        } else if (salaryMaxNumber > 99999999) {
-            Swal.fire({
-                icon: "error",
-                title: "ຜິດພາດ",
-                text: "ຈຳນວນເງິນເດືອນສູງເກີນໄປ.",
-            });
-            return;
+        // } else if (salaryMinNumber > salaryMaxNumber) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "ຜິດພາດ",
+        //         text: "ເງິນເດືອນ ເລີ່ມຕົ້ນ ຄວນຕ່ຳກວ່າ ເງິນເດືອນສູງສຸດ.",
+        //     });
+        //     return;
+        // } else if (salaryMaxNumber > 99999999) {
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "ຜິດພາດ",
+        //         text: "ຈຳນວນເງິນເດືອນສູງເກີນໄປ.",
+        //     });
+        //     return;
         }
 
         // Remove existing form data
@@ -256,7 +256,7 @@ function PostJobPage() {
                                                     <p className='ml-2 horizontal text-sm font-semibold'>ເງິນເດືອນເລີ່ມຕົ້ນ :</p>
                                                     <input
                                                         type="number"
-                                                        placeholder="ຕົວຢ່າງ 1,000 ກີບ"
+                                                        placeholder="ຕົວຢ່າງ 1000000 ກີບ"
                                                         className="input input-bordered w-5/6 text-end"
                                                         value={salaryMinimum}
                                                         onChange={(e) => setSalaryMinimum(e.target.value)}
@@ -267,7 +267,7 @@ function PostJobPage() {
                                                     <p className='ml-2 horizontal text-sm font-semibold'>ເງິນເດືອນສູງສຸດ :</p>
                                                     <input
                                                         type="number"
-                                                        placeholder="ຕົວຢ່າງ 3,000,000 ກີບ"
+                                                        placeholder="ຕົວຢ່າງ 3000000 ກີບ"
                                                         className="input input-bordered w-5/6 text-end"
                                                         value={salaryMaximum}
                                                         onChange={(e) => setSalaryMaximum(e.target.value)}

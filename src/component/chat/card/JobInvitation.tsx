@@ -88,8 +88,8 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
         if (!selectedJob) {
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'Please select a Job.',
+                title: 'ຜິດພາດ...',
+                text: 'ກະລຸນາເລືອກວຽກ.',
             });
             return;
         }
@@ -104,8 +104,8 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
 
             Swal.fire({
                 icon: 'success',
-                title: 'Sending Job Invitation',
-                text: 'Job Invitation sent successfully!',
+                title: 'ສົ່ງຄຳເຊີນເຂົ້າວຽກ',
+                text: 'ສົ່ງຄຳເຊີນເຂົ້າຮ່ວມງານສຳເລັດ !',
             });
             isCloseToggle();
 
@@ -132,7 +132,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                     <div className="fixed inset-0 bg-black/75" />
                 </Transition.Child>
 
-                <div className="fixed inset-0 overflow-y-auto">
+                <div className="fixed inset-0 overflow-y-auto font-notoLao">
                     <div className="flex min-h-full items-center justify-center p-4 text-center">
                         <Transition.Child
                             as={Fragment}
@@ -150,11 +150,11 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                     </svg>
                                 </button>
                                 <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl flex-col">
-                                    <h2 className="text-white">Send Job Request</h2>
+                                    <h2 className="text-white">ສົ່ງຄຳເຊີນ</h2>
                                     {isLoading ? (
                                         <div></div>
                                     ) : (
-                                        <p className="text-sm">Sending request to {dataList?.JobseekerName}</p>
+                                        <p className="text-sm">ສົ່ງຄຳເຊີນໃຫ້ : {dataList?.JobseekerName}</p>
                                     )}
                                 </Dialog.Title>
 
@@ -163,7 +163,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                         <HashLoader color="#36d7b7" loading={isLoading} size={50} />
                                     </div>
                                 ) : (
-                                    <div className="flex flex-col w-full justify-center items-center mt-5 font-sans font-semibold p-2">
+                                    <div className="flex flex-col w-full justify-center items-center mt-5 font-notoLao font-semibold p-2">
                                         <div className="mb-2">
                                             <div className="flex flex-row items-center space-x-4">
                                                 <div className="avatar">
@@ -185,15 +185,15 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                         </div>
 
                                         <div className="w-full max-w-full m-4">
-                                            <p className="badge badge-primary">Employer: {dataList?.JobseekerName}</p>
+                                            <p className="badge badge-primary">ຊື່ຜູ້ຊອກວຽກ : {dataList?.JobseekerName}</p>
                                             <div className="flex flex-col w-full justify-center">
-                                                <p>Job requirement: {dataList.OccupationName}</p>
-                                                <p>Work category: {dataList.CategoryName}</p>
+                                                <p>ອາຊີບ : {dataList.OccupationName}</p>
+                                                <p>ໝວດຫມູ່ອາຊີບ : {dataList.CategoryName}</p>
                                             </div>
                                         </div>
 
                                         <div className="w-full bg-base-300 rounded-xl">
-                                            <p className="py-4 w-full bg-black bg-opacity-45 rounded-t-xl">Select your Job Invite</p>
+                                            <p className="py-4 w-full bg-black bg-opacity-45 rounded-t-xl">ເລືອກວຽກຂອງທ່ານທີ່ຈະສົ່ງຄຳເຊີນ</p>
                                             <div className="w-full justify-start px-5 flex flex-col overflow-auto pt-1" style={{ maxHeight: "160px" }}>
                                                 {listJob.slice(0, 10).map((job: JobData) => (
                                                     <div key={job.JobID}>
@@ -223,7 +223,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                                     <div className="grid justify-items-center space-y-4 my-4">
                                                         <div className="card-actions justify-center mt-2 w-full">
                                                             <button className="btn btn-error rounded-2xl btn-wide hover:text-white text-base" disabled>
-                                                                Sending
+                                                                ກຳລັງສົ່ງ
                                                             </button>
                                                         </div>
                                                     </div>
@@ -232,7 +232,7 @@ function JobInvitation({ isOpen, isClose, employerID, dataList }: DataList & Tog
                                                         <div className="card-actions justify-center mt-2 w-full">
                                                             <button className="btn btn-error rounded-2xl btn-wide hover:text-white text-base"
                                                                 onClick={() => sendJob()}>
-                                                                Send
+                                                                ສົ່ງຄຳເຊີນ
                                                             </button>
                                                         </div>
                                                     </div>

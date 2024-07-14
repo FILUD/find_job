@@ -216,13 +216,13 @@ export default function Profile_feature() {
     const handleDeleteCV = (cvId: number) => {
         // Show Swal confirmation dialog
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "ຢືນຢັນ ?",
+            text: "ທ່ານຕ້ອງການລົບບໍ່ !",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "ຢືນຢັນ !"
         }).then((result) => {
             if (result.isConfirmed) {
                 // If confirmed, send DELETE request
@@ -233,8 +233,8 @@ export default function Profile_feature() {
                         setCvDetail(prevCvDetail => prevCvDetail.filter(cv => cv.CvID !== cvId));
                         // Show success message
                         Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
+                            title: "ສຳເລັດ !",
+                            text: "ລົບ CV ທີ່ທ່ານປະກາດສຳເລັດ.",
                             icon: "success"
                         });
                     })
@@ -254,13 +254,13 @@ export default function Profile_feature() {
 
     const handleDeleteJOB = (jobID: number) => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "ທ່ານແນ່ໃຈບໍ່ ?",
+            text: "ວຽກກຂອງທ່ານຈະຖືກລົບ!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "ຢືນຢັນການລົບ !"
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete('http://localhost:3001/deletejob', { data: { JobID: jobID } })
@@ -268,8 +268,8 @@ export default function Profile_feature() {
                         console.log('CV deleted successfully');
                         setJobDetail(prevJobDetail => prevJobDetail.filter(job => job.JobID !== jobID));
                         Swal.fire({
-                            title: "Deleted!",
-                            text: "Your file has been deleted.",
+                            title: "ລົບສຳເລັດ !",
+                            text: "ວຽກຂອງທ່ານຖືກລົບແລ້ວ.",
                             icon: "success"
                         });
                     })
@@ -278,7 +278,7 @@ export default function Profile_feature() {
                         console.log('JobID:', jobID);
                         Swal.fire({
                             title: "Error!",
-                            text: "Failed to delete the Job.",
+                            text: "ບໍ່ສາມາດລົບວຽກຂອງທ່ານໄດ້ ລອງໃຫມ່ພາຍຫລັງ.",
                             icon: "error"
                         });
                     });
@@ -407,7 +407,7 @@ export default function Profile_feature() {
                             <div className="fixed inset-0 bg-black/75" />
                         </Transition.Child>
 
-                        <div className="fixed inset-0 overflow-y-auto">
+                        <div className="fixed inset-0 overflow-y-auto font-notoLao">
                             <div className="flex min-h-full items-center justify-center p-4 text-center">
                                 <Transition.Child
                                     as={Fragment}
@@ -447,7 +447,7 @@ export default function Profile_feature() {
                                                         </div>
                                                     </div>}
 
-                                                <div className=''>
+                                                <div className='font-notoLao'>
                                                     <div className='text-start'>
                                                         <p className={cssProfile.titleName}>
                                                             {isLoading ? <div className="skeleton h-5 w-48 font-notoLao"></div> : Employer[0]?.CompanyName}
@@ -455,7 +455,7 @@ export default function Profile_feature() {
                                                         <p className={cssProfile.titleWork}>
                                                             {isLoading ? <div className="skeleton h-4 w-32 font-notoLao"></div> : Employer[0]?.ProfessionalTitle}
                                                         </p>
-                                                        <div className='flex '>
+                                                        <div className='flex font-notoLao'>
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-4 h-6 self-center">
                                                                 <path fill-rule="evenodd" d=" m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd" />
                                                             </svg>
@@ -478,7 +478,7 @@ export default function Profile_feature() {
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                                                                 </svg>
                                                             </div>
-                                                            <div className='font-sans'>
+                                                            <div className=''>
                                                                 {isLoading ? (
                                                                     <BarLoader color={"#5a5e5d"} loading={isLoading} width={140} height={5} className='mt-2' />
                                                                 ) : (
@@ -498,7 +498,7 @@ export default function Profile_feature() {
                                                                 className="w-5 h-5">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                                                             </svg></div>
-                                                        <div className='font-sans'>
+                                                        <div className=''>
                                                             {isLoading ? (
                                                                 <BarLoader color={"#5a5e5d"} loading={isLoading} width={140} height={5} className='mt-2' />
                                                             ) : (
@@ -513,8 +513,8 @@ export default function Profile_feature() {
                                                         </div>
 
                                                     </div>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => handleEditEmpProfile()}> Edit Profile</button>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline  mt-2' onClick={() => navigate("/PostJob")}> Post Job</button >
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => handleEditEmpProfile()}>ແກ້ໄຂຂໍ້ມູນສ່ວນໂຕ</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline  mt-2' onClick={() => navigate("/PostJob")}>ປະກາດວຽກໃຫມ່</button >
                                                 </div>
                                             </div>
 
@@ -524,12 +524,14 @@ export default function Profile_feature() {
                                                     {/* navbar */}
                                                     <div className='navbar bg-neutral-900 text-neutral-content rounded-t-2xl'>
                                                         <div className="flex-1">
-                                                            <a className="btn btn-ghost text-xl">Job Posting</a>
+                                                            <a className="btn btn-ghost text-xl">ວຽກທີ່ກຳລັງປະກາດ</a>
                                                         </div>
                                                         <div className="flex-none space-x-2">
-                                                            <div className="form-control">
+
+                                                            {/* <div className="form-control">
                                                                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
-                                                            </div>
+                                                            </div> */}
+
                                                             <button className="btn btn-ghost btn-circle" onClick={toggleActionsEdit}>
                                                                 <label className="flex items-center gap-2 ">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 ">
@@ -545,39 +547,44 @@ export default function Profile_feature() {
 
 
                                                         {jobDetail.map((job: any) => (
-                                                            <div key={job.JobID} className="card card-side bg-base-100 shadow-xl flex w-full h-48">
 
-                                                                {showActionsEdit && (
-                                                                    //edit
-                                                                    <div className="card-actions text-xs top-0 right-0 absolute ">
-                                                                        <div onClick={() => handleEditJob(job.JobID)} className='btn btn-ghost btn-circle'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                                        </svg></div>
-                                                                        {/* Delete */}
-                                                                        <div className='btn btn-ghost btn-circle' onClick={() => handleDeleteJOB(job.JobID)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style={{ stroke: 'red' }} className="w-6 h-6">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                        </svg></div>
+                                                            <>
+                                                                {job.JobID ? <>
+                                                                    <div key={job.JobID} className="card card-side bg-base-100 shadow-xl flex w-full h-48">
+
+                                                                        {showActionsEdit && (
+                                                                            //edit
+                                                                            <div className="card-actions text-xs top-0 right-0 absolute ">
+                                                                                <div onClick={() => handleEditJob(job.JobID)} className='btn btn-ghost btn-circle'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                                </svg></div>
+                                                                                {/* Delete */}
+                                                                                <div className='btn btn-ghost btn-circle' onClick={() => handleDeleteJOB(job.JobID)}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style={{ stroke: 'red' }} className="w-6 h-6">
+                                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                                </svg></div>
+                                                                            </div>
+                                                                        )}
+
+                                                                        <figure className="flex-none w-1/3 mr-0">
+                                                                            <img src={job.Job_Post_IMG} alt="Job" className="w-full h-48 object-cover rounded-md" />
+                                                                        </figure>
+                                                                        <div className="card-body flex-grow">
+                                                                            <h2 className="card-title">{job.Title}</h2>
+                                                                            <article className="text-xs font-notoLao ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
+                                                                                <p className="self-start">ເງິນເດືອນ : {job.SalaryStart} - {job.SalaryMax} ກີບ</p>
+                                                                                <p className="line-clamp-4">ລາຍລະອຽດ : {job.Description}</p>
+                                                                                <p className="self-start text-clip">ວັນທີ່ປະກາດ : {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
+                                                                            </article>
+                                                                            <div className="card-actions text-xs bottom-0 absolute">
+
+
+                                                                                <p className="self-start text-clip">ປະເພດວຽກ : {job.WorkType}</p>
+                                                                                <p className="self-start">ໝວດໝູ່ອາຊີບ : {job.CategoryName} / {job.OccupationName}</p>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                )}
-
-                                                                <figure className="flex-none w-1/3 mr-0">
-                                                                    <img src={job.Job_Post_IMG} alt="Job" className="w-full h-48 object-cover rounded-md" />
-                                                                </figure>
-                                                                <div className="card-body flex-grow">
-                                                                    <h2 className="card-title font-notoLao">{job.Title}</h2>
-                                                                    <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
-                                                                        <p className="self-start">Salary : {job.SalaryStart} - {job.SalaryMax} LAK</p>
-                                                                        <p className="line-clamp-4 font-notoLao">Description : {job.Description}</p>
-                                                                        <p className="self-start text-clip">Posted : {job.PostDate ? formatDate(job.PostDate) : 'N/A'}</p>
-                                                                    </article>
-                                                                    <div className="card-actions text-xs bottom-0 absolute">
-
-
-                                                                        <p className="self-start text-clip font-notoLao">Work Type : {job.WorkType}</p>
-                                                                        <p className="self-start font-notoLao">Work Category : {job.CategoryName} / {job.OccupationName}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                                </> : <div className='text-black text-2xl text-center'>ທ່ານບໍ່ມີວຽກທີ່ກຳລັງປະກາດ</div>}
+                                                            </>
                                                         ))}
 
 
@@ -612,7 +619,7 @@ export default function Profile_feature() {
                             <div className="fixed inset-0 bg-black/75" />
                         </Transition.Child>
 
-                        <div className="fixed inset-0 overflow-y-auto">
+                        <div className="fixed inset-0 overflow-y-auto font-notoLao">
                             <div className="flex min-h-full items-center justify-center p-4 text-center">
                                 <Transition.Child
                                     as={Fragment}
@@ -652,7 +659,7 @@ export default function Profile_feature() {
                                                         </div>
                                                     </div>}
 
-                                                <div className=''>
+                                                <div className='font-notoLao'>
                                                     <div className='text-start'>
                                                         <p className={cssProfile.titleName}>
                                                             {isLoading ? <div className="skeleton h-5 w-48"></div> : Jobseeker[0]?.JobseekerName}
@@ -683,7 +690,7 @@ export default function Profile_feature() {
                                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                                                                 </svg>
                                                             </div>
-                                                            <div className='font-sans'>
+                                                            <div className='font-notoLao'>
                                                                 {isLoading ? <div className="skeleton h-4 w-32"></div> :
                                                                     Jobseeker.map((e) => (
                                                                         <p>{e.Email}</p>))
@@ -700,7 +707,7 @@ export default function Profile_feature() {
                                                                 className="w-5 h-5">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                                                             </svg></div>
-                                                        <div className='font-sans '>
+                                                        <div className='font-notoLao '>
                                                             {/* {isLoading ? <div className="skeleton h-4 w-32"></div> :
                                                                 Jobseeker.map((e) => (
                                                                     <p>{e.Tel !== null ? e.Tel : 'ບໍ່ລະບຸ'}</p>))
@@ -719,8 +726,8 @@ export default function Profile_feature() {
                                                         </div>
 
                                                     </div>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => handleEditJokProfile()}> Edit Profile</button>
-                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline mt-2' onClick={() => navigate("/PostCV")}> Post CV</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline md:mt-6 mt-8' onClick={() => handleEditJokProfile()}> ແກ້ໄຂຂໍ້ມູນສ່ວນໂຕ</button>
+                                                    <button className='btn btn-square btn-wide btn-ghost btn-outline mt-2' onClick={() => navigate("/PostCV")}> ປະກາດ CV</button>
                                                 </div>
 
                                             </div>
@@ -731,12 +738,12 @@ export default function Profile_feature() {
                                                     {/* navbar */}
                                                     <div className='navbar bg-neutral-900 text-neutral-content rounded-t-2xl'>
                                                         <div className="flex-1">
-                                                            <a className="btn btn-ghost text-xl">Cv Posting</a>
+                                                            <a className="btn btn-ghost text-xl">Cv ທີ່ກຳລັງປະກາດ</a>
                                                         </div>
                                                         <div className="flex-none space-x-4 pr-2 ">
-                                                            <div className="form-control">
+                                                            {/* <div className="form-control">
                                                                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
-                                                            </div>
+                                                            </div> */}
                                                             <button className="btn btn-ghost btn-circle" onClick={toggleActionsEdit}>
                                                                 <label className="flex items-center gap-2 ">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 ">
@@ -769,11 +776,11 @@ export default function Profile_feature() {
                                                                     <img src={cv.IMG_CV} alt="CV" className="w-full h-48 rounded-md object-scale-down" />
                                                                 </figure>
                                                                 <div className="card-body flex-grow">
-                                                                    <h2 className="card-title font-notoLao">{cv.Title}</h2>
-                                                                    <article className="text-xs font-sans ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
+                                                                    <h2 className="card-title">{cv.Title}</h2>
+                                                                    <article className="text-xs font-notoLao ml-0 text-wrap" style={{ textAlign: 'start', wordWrap: 'break-word' }}>
 
-                                                                        <p className="line-clamp-4 font-notoLao">Work Category : {cv.CategoryName} / {cv.OccupationName}</p>
-                                                                        <p className="self-start font-notoLao">Upload Date : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
+                                                                        <p className="line-clamp-4">ໝວດຫມູ່ອາຊີບ : {cv.CategoryName} / {cv.OccupationName}</p>
+                                                                        <p className="self-start">ວັນທີ່ປະກາດ : {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                                                                     </article>
                                                                 </div>
                                                             </div>
