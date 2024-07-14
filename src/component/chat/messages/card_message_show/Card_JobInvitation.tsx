@@ -3,6 +3,7 @@ import View_JobInvitation from './view/View_JobInvitation';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+const MyEmail = localStorage.getItem("Email");
 
 
 interface InfoProps {
@@ -59,7 +60,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
 
     const handleAcceptJobInvitation = async () => {
         try {
-            await axios.post('http://localhost:3001/acceptInvitation', { invitationID: data.CardID });
+            await axios.post('http://localhost:3001/acceptInvitation', { invitationID: data.CardID, Email: info.Email, MyEmail:MyEmail });
             Swal.fire({
                 icon: 'success',
                 title: 'Job Invitation',
@@ -124,7 +125,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
                         {data.Status == "Pending" ? (
                             <div className='flex space-x-4 justify-center'>
                                 <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>View Detail</button>
-                                <button className='btn hover:btn-outline' onClick={()=> handleAcceptJobInvitation()}>Accept</button>
+                                <button className='btn hover:btn-outline' onClick={() => handleAcceptJobInvitation()}>Accept</button>
                             </div>
                         ) : (
                             <div className='flex space-x-4 justify-center'>

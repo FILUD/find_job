@@ -164,7 +164,7 @@ function NewChat_Page() {
                                                                 </div>
                                                                 <div>
                                                                     <div className="font-bold text-md"> {receiverName} (userID: {receiverID}) </div>
-                                                                    <div className="text-sm opacity-50 break-words line-clamp-1">{msg.senderId === userIDLogin ? "You" : "Your friend"}:  {!msg.message ? "sent " + msg.type + " card" : msg.message}</div>
+                                                                    <div className="text-sm opacity-50 break-words line-clamp-1 font-notoLao">{msg.senderId == userIDLogin ? "ທ່ານ" : "ໝູ່ຂອງທ່ານ"}:  {!msg.message ? "sent " + msg.type + " card" : msg.message}</div>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -200,7 +200,7 @@ function NewChat_Page() {
                                             <button className='btn btn-outline btn-info m-4 w-32 self-center rounded-2xl' onClick={() => ToggleNewChat} >Send Message</button>
                                             {isOpenSearch && (
                                                 // <Search_Chat isClose={isCloseNewChat} isOpen={isOpenSearch} senderID={userIDLogin} />
-                                                <Search_Chat />
+                                                <Search_Chat isClose={isCloseNewChat} isOpen={isOpenSearch} />
                                             )}
                                         </div>
                                     </div>

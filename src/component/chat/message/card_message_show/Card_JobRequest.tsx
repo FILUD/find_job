@@ -73,7 +73,7 @@ function Card_JobRequest({ data, type, info }: DataProps) {
 
     const handleAcceptJobRequest = async () => {
         try {
-            await axios.post('http://localhost:3001/acceptJobRequest', { requestID: data.CardID });
+            await axios.post('http://localhost:3001/acceptJobRequest', { requestID: data.CardID, Email: info.Email, MyEmail: info.Email });
             Swal.fire({
                 icon: 'success',
                 title: 'Job Request',
@@ -101,7 +101,8 @@ function Card_JobRequest({ data, type, info }: DataProps) {
                         <div>
                             <p className='self-center'>Please waiting employer to accept...  </p>
                             <p>Occuaption : {data.OccupationName}</p>
-                            <p className='line-clamp-1'>Category : {data.CategoryName}</p>
+                            <p className='line-clamp-1'>Category : {data.CategoryName}   </p>
+
                         </div>
 
 
@@ -132,6 +133,7 @@ function Card_JobRequest({ data, type, info }: DataProps) {
                             <p className='self-center'>Do you want to accept this job request? </p>
                             <p>Occuaption : {data.OccupationName}</p>
                             <p className='line-clamp-1'>Category : {data.CategoryName}</p>
+
                         </div>
                     ) : (
                         <p className='self-center'>You are already accepted </p>
@@ -157,7 +159,7 @@ function Card_JobRequest({ data, type, info }: DataProps) {
             {/* view card */}
             {
                 isOpenView && (
-                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} info={info}/>
+                    <View_JobRequest isOpen={isOpenView} isClose={closeToggleView} data={data} type={type} handleAccept={handleAcceptJobRequest} info={info} />
                 )
             }
         </div >

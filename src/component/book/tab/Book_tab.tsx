@@ -102,9 +102,9 @@ function Book_tab({ data, role }: BookProps) {
                                     <span className="">{e.CategoryName}</span>
                                 </td>
                                 <td>{e.Status}</td>
-                                <th>
+                                {/* <th>
                                     <button className="btn btn-ghost btn-md">details</button>
-                                </th>
+                                </th> */}
                             </tr>
                         )
                     })}

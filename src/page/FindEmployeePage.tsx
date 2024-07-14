@@ -6,6 +6,8 @@ import Footer from '../component/footer/Footer';
 import SetNavbar from '../component/navbar/SetNavbar';
 import { ThemeToggle, useTheme } from '../theme/theme'
 import Swal from 'sweetalert2';
+import JobInvitation from '../component/chat/card/JobInvitation';
+const myRole = localStorage.getItem("Role")
 
 interface CVData {
   CvID: number;
@@ -25,6 +27,8 @@ interface CVData {
   ProvinceName: string;
 }
 
+
+
 function FindEmployeePage() {
   const navigate = useNavigate();
   const { theme } = useTheme();
@@ -32,7 +36,7 @@ function FindEmployeePage() {
   const myID = localStorage.getItem('ID');
   const [showPopup, setShowPopup] = useState(false);
   const [selectedCV, setSelectedCV] = useState<CVData | null>(null);
-
+  const [isOpenJobInvite, setIsOpenJobInvite] = useState(false);
   const [cvData, setCvData] = useState<CVData[]>([]);
   const [categories, setCategories] = useState<{ CategoryID: number; CategoryName: string }[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -80,9 +84,9 @@ function FindEmployeePage() {
         setSelectedCV(null);
       }
     };
-  
+
     document.addEventListener("keydown", handleKeyDown);
-  
+
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -309,6 +313,29 @@ function FindEmployeePage() {
     }
   };
 
+  const handleIsOpenJobInvite = () => {
+    setIsOpenJobInvite(true)
+    closePopup()
+  }
+  const closeToggleJobInvite = () => {
+    setIsOpenJobInvite(false)
+  }
+
+
+  const [invitationList, setInvitationList] = useState<any>();
+  //job invitation
+  const handleSetDataInvitation = async (cvData: CVData) => {
+    console.log("show me cv list", cvData)
+    setInvitationList({
+      senderId: myID,
+      cvData: cvData
+    })
+
+    console.log(myID)
+    console.log("cvData",cvData)
+  }
+
+
   return (
     <html data-theme={theme}>
       <div className='mx-10 font-notoLao'>
@@ -406,7 +433,11 @@ function FindEmployeePage() {
             <div className='grid grid-cols-4 justify-items-center gap-2 items-center mt-2 box-border center'>
               {currentCvs.map((cv: any) => (
                 <div className='bg-black bg-opacity-10 rounded-2xl p-0.5 shadow-xl w-full max-w-full h-full max-h-min '>
-                  <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID} onClick={() => handleCardClick(cv)}>
+                  <div className="card w-full max-w-full h-full max-h-min  bg-base-300 shadow-lg  hover:shadow-purple-400 duration-500 cursor-pointer" key={cv.CvID}
+                    onClick={() => {
+                      handleCardClick(cv);
+                      handleSetDataInvitation(cv)
+                    }}>
                     <figure className='h-52'>
                       {cv.IMG_CV && <img className='object-cover w-full h-full max-h-min' src={cv.IMG_CV} alt="IMG_CV" />}
                     </figure>
@@ -428,7 +459,7 @@ function FindEmployeePage() {
                         <p className='text-left'><b>ວັນທີ່ອັບໂຫຼດ :</b> {cv.UploadDate ? formatDate(cv.UploadDate) : 'N/A'}</p>
                       </div>
                       <div className="w-full card-actions max-h-full h-full flex items-end">
-                        <button className="w-full btn btn-primary bg-purple-600">ສົ່ງສະໝັກ</button>
+                        <button className="w-full btn btn-primary bg-purple-600" onClick={() => handleSetDataInvitation(cv)}>ສົ່ງສະໝັກ</button>
                       </div>
                     </div>
                   </div>
@@ -440,6 +471,12 @@ function FindEmployeePage() {
                 <button onClick={handlePrevPage} disabled={currentPage === 1} className="btn btn-secondary mr-2">Previous</button>
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className="btn btn-secondary">Next</button>
               </div>
+
+              {isOpenJobInvite && (
+                <div className='absolute'>
+                  <JobInvitation isOpen={isOpenJobInvite} isClose={closeToggleJobInvite} employerID={invitationList.senderId} dataList={invitationList.cvData} />
+                </div>
+              )}
 
               {selectedCV && (
                 <dialog id="my_modal_3" className="modal" open>
@@ -481,11 +518,10 @@ function FindEmployeePage() {
                         </div>
 
                         <div className="card-actions flex justify-end h-full items-end">
-                          {myID == JobseekerID && (
-                            <button className='btn btn-primary' onClick={() => handleEditCv(selectedCV.CvID)}>ແກ້ໄຂລາຍລະອຽດ</button>
+                          {myID == JobseekerID && myRole == `"Jobseeker"` && (
+                            <button className="btn btn-primary" onClick={() => handleEditCv(selectedCV.CvID)}>ແກ້ໄຂ</button>
                           )}
-
-                          {myID != JobseekerID && (
+                          {myID == JobseekerID && myRole != `"Jobseeker"` && (
                             <>
                               <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
                                 <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
@@ -497,7 +533,25 @@ function FindEmployeePage() {
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
                                 </svg>
                               </button>
-                              <button className="btn btn-primary">ຮັບສະໝັກພະນັກງານ</button>
+                              {/* <button className="btn btn-primary" onClick={() => handleIsOpenJobInvite()}>ສະໝັກ</button> */}
+                              <button className="btn btn-primary" onClick={() => handleIsOpenJobInvite()}>ຮັບສະໝັກພະນັກງານ</button>
+                              <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button>
+                            </>
+                          )}
+
+                          {myID != JobseekerID && myRole != `"Jobseeker"` && (
+                            <>
+                              <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
+                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z" />
+                                </svg>
+                              </button>
+                              <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                                </svg>
+                              </button>
+                              <button className="btn btn-primary" onClick={() => handleIsOpenJobInvite()}>ຮັບສະໝັກພະນັກງານ</button>
                               <button className="btn btn-primary" onClick={() => openProfileCV(selectedCV.JobseekerID)}>ເບິ່ງໂປຣຟາຍ</button>
                             </>
                           )}
@@ -516,7 +570,7 @@ function FindEmployeePage() {
         </center>
         <Footer />
       </div>
-    </html>
+    </html >
   );
 }
 
