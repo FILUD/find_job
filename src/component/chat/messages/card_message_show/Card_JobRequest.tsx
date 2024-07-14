@@ -97,28 +97,28 @@ function Card_JobRequest({ data, type, info }: DataProps) {
             <figure><img src="/Logo/resume logo.jpg" alt="cv or resume" className='' /></figure>
             {type == "jobseeker" ? (
                 < div className="card-body">
-                    <h2 className="card-title justify-center">Job Request</h2>
+                    <h2 className="card-title justify-center">ຄຳຂໍເຂົ້າຮ່ວມວຽກ</h2>
                     {data.Status == "Pending" ? (
                         <div>
-                            <p className='self-center'>Please waiting employer to accept...  </p>
-                            <p>Occuaption : {data.OccupationName}</p>
-                            <p className='line-clamp-1'>Category : {data.CategoryName}</p>
+                            <p className='self-center'>ກຳລັງລໍຖ້າການຕອບຮັບ...  </p>
+                            <p>ອາຊີບ : {data.OccupationName}</p>
+                            <p className='line-clamp-1'>ໝວດຫມູ່ອາຊີບ : {data.CategoryName}</p>
                         </div>
 
 
                     ) : (
-                        <p className='self-center'>the resume or cv was accepted </p>
+                        <p className='self-center'>ຄຳຂໍຂອງທ່ານຖືກຕອບຮັບແລ້ວ </p>
                     )}
                     <div >
                         {data.Status == "Pending" ? (
                             <div className='flex space-x-4 justify-center'>
-                                <button className='btn hover:btn-outline ' onClick={() => toggleView()}>View CV</button>
-                                <button className='btn '>{data.Status}...</button>
+                                <button className='btn hover:btn-outline ' onClick={() => toggleView()}>ເບິ່ງລາຍລະອຽດ</button>
+                                <button className='btn '>ກຳລັງລໍຖ້າການຕອບຮັບ {data.Status}...</button>
                             </div>
                         ) : (
                             <div className='flex space-x-4 justify-center'>
-                                <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>View CV</button>
-                                <button className='btn hover:btn-success btn-success'>Accepted</button>
+                                <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>ເບິ່ງລາຍລະອຽດ</button>
+                                <button className='btn hover:btn-success btn-success'>ຍອມຮັບແລ້ວ</button>
                             </div>
                         )}
                     </div>
@@ -127,26 +127,26 @@ function Card_JobRequest({ data, type, info }: DataProps) {
             ) : (
                 // TODO : Complete  for employer
                 < div className="card-body">
-                    <h2 className="card-title justify-center">Job Request </h2>
+                    <h2 className="card-title justify-center">ຄຳຂໍເຂົ້າຮ່ວມວຽກ </h2>
                     {data.Status == "Pending" ? (
                         <div>
-                            <p className='self-center'>Do you want to accept this job request? </p>
-                            <p>Occuaption : {data.OccupationName}</p>
-                            <p className='line-clamp-1'>Category : {data.CategoryName}</p>
+                            <p className='self-center'>ທ່ານຕ້ອງການຍອມຮັບຄຳຂໍເຂົ້າຮ່ວມວຽກບໍ່ ? </p>
+                            <p>ອາຊີບ : {data.OccupationName}</p>
+                            <p className='line-clamp-1'>ໝວດຫມູ່ອາຊີບ : {data.CategoryName}</p>
                         </div>
                     ) : (
-                        <p className='self-center'>You are already accepted </p>
+                        <p className='self-center'>ທ່ານຍອມຮັບຄຳຂໍນີ້ແລ້ວ </p>
                     )}
                     <div >
                         {data.Status == "Pending" ? (
                             <div className='flex space-x-4 justify-center'>
-                                <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>View CV</button>
-                                <button className='btn hover:btn-outline' onClick={() => handleAcceptJobRequest()}>Accept</button>
+                                <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>ເບິ່ງລາຍລະອຽດ</button>
+                                <button className='btn hover:btn-outline' onClick={() => handleAcceptJobRequest()}>ຍອມຮັບຄຳຂໍ</button>
                             </div>
                         ) : (
                             <div className='flex space-x-4 justify-center'>
-                                <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>View CV</button>
-                                <button className='btn hover:btn-success btn-success'>Accepted</button>
+                                <button className='btn hover:btn-outline  ' onClick={() => toggleView()}>ເບິ່ງລາຍລະອຽດ</button>
+                                <button className='btn hover:btn-success btn-success'>ຍອມຮັບຄຳຂໍແລ້ວ</button>
                             </div>
                         )}
                     </div>

@@ -263,7 +263,7 @@ function Message({ getSenderID, getReceiverID, listMessage, userIDLogin, receiev
                     type="submit"
                     className=" btn w-36 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                 >
-                    Send
+                    ສົ່ງ
                 </button>
             </form >
 

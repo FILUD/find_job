@@ -91,8 +91,8 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
         if (!selectedCV) {
             Swal.fire({
                 icon: 'error',
-                title: 'Oops...',
-                text: 'Please select a CV.',
+                title: 'ຜິດພາດ',
+                text: 'ກະລຸນາເລືອກ CV ຂອງທ່ານ.',
             });
             return;
         }
@@ -107,8 +107,8 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
 
             Swal.fire({
                 icon: 'success',
-                title: 'Sending Job Request',
-                text: 'CV sent successfully!',
+                title: 'ສຳເລັດ',
+                text: 'ສົ່ງຄຳຂໍສະໝັກວຽກສຳເລັດ !',
             });
             isCloseToggle();
 
@@ -141,7 +141,7 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
                     <div className="fixed inset-0 bg-black/75" />
                 </Transition.Child>
 
-                <div className="fixed inset-0 overflow-y-auto">
+                <div className="fixed inset-0 overflow-y-auto font-notoLao">
                     <div className="flex min-h-full items-center justify-center p-4 text-center">
                         <Transition.Child
                             as={Fragment}
@@ -159,11 +159,11 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
                                 </button>
                                 {/* Dialog title */}
                                 <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl flex-col">
-                                    <h2 className='text-white'>Send Job Request</h2>
+                                    <h2 className='text-white'>ສົ່ງຄຳຂໍສະໝັກວຽກ</h2>
                                     {isLoading ? (
                                         <div></div>
                                     ) : (
-                                        <p className='text-sm'> Sending request to {dataList?.CompanyName} </p>
+                                        <p className='text-sm'>ກຳລັງສົ່ງຄຳຂໍສະໝັກວຽກຫາ : {dataList?.CompanyName} </p>
                                     )}
                                 </Dialog.Title>
 
@@ -197,16 +197,16 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
 
                                         {/* Job details */}
                                         <div className='w-full max-w-full m-4 '>
-                                            <p className="badge badge-primary">Employer: {dataList?.CompanyName}</p>
+                                            <p className="badge badge-primary">ສົ່ງຫາ : {dataList?.CompanyName}</p>
                                             <div className="flex flex-col w-full justify-center">
-                                                <p>Job requirement: {dataList.OccupationName}</p>
-                                                <p>Work category: {dataList.CategoryName}</p>
+                                                <p>ວຽກທີ່ກຳລັງຈະສະໝັກ : {dataList.OccupationName}</p>
+                                                <p>ໝວດຫມູ່ອາຊີບ : {dataList.CategoryName}</p>
                                             </div>
                                         </div>
 
                                         {/* Select CV section */}
                                         <div className='w-full bg-base-300 rounded-xl'>
-                                            <p className='py-4 w-full bg-black bg-opacity-45 rounded-t-xl'> Select your CV</p>
+                                            <p className='py-4 w-full bg-black bg-opacity-45 rounded-t-xl'> ເລືອກ CV ຂອງທ່ານ</p>
                                             <div className="w-full justify-start px-5 flex flex-col overflow-auto pt-1 " style={{ maxHeight: "160px" }}>
                                                 {listCv.slice(0, 10).map((cv: any) => (
                                                     <div key={cv.CvID}>
@@ -239,7 +239,7 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
                                                     <div className=" grid justify-items-center space-y-4 my-4">
                                                         <div className='card-actions justify-center mt-2 w-full '>
                                                             <button className="btn  btn-error rounded-2xl btn-wide  hover:text-white  text-base " disabled>
-                                                                Sending
+                                                                ກຳລັງສົ່ງ
                                                             </button>
                                                         </div>
                                                     </div>
@@ -247,7 +247,7 @@ function JobRequest({ isOpen, isClose, dataList, senderId }: ToggleJobRequest & 
                                                     <div className=" grid justify-items-center space-y-4 my-4">
                                                         <div className='card-actions justify-center mt-2 w-full '>
                                                             <button className="btn  btn-error rounded-2xl btn-wide  hover:text-white  text-base " onClick={sendCV}>
-                                                                Send
+                                                                ສົ່ງຄຳຂໍ
                                                             </button>
                                                         </div>
                                                     </div>

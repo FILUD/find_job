@@ -168,7 +168,7 @@ function Message({ getSenderID, getReceiverID }: UserParam) {
                 <p className='text-md'>Loading</p>
             </div>
         ) : (
-            < div className='flex flex-col w-full h-full  max-h-full bg-base-100 ' >
+            < div className='flex flex-col w-full h-full  max-h-full bg-base-100 font-notoLao' >
                 {/* profile */}
                 < div className='h-16 bg-primary rounded-t-xl  pl-8 shadow-2xl ' >
                     <div className="flex  items-center gap-3 cursor-pointer hover:opacity-60 pt-2">
@@ -303,7 +303,7 @@ function Message({ getSenderID, getReceiverID }: UserParam) {
                         type="submit"
                         className=" btn w-36 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                     >
-                        Send
+                        ສົ່ງຂໍ້ຄວາມ
                     </button>
                 </form >
 

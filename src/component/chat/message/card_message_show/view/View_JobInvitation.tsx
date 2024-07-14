@@ -99,7 +99,7 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept, info }:
     };
 
     return (
-        <html>
+        <html className='font-notoLao'>
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={isClose}>
                     {/* Dialog background */}
@@ -133,7 +133,7 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept, info }:
                                     </button>
                                     {/* Dialog title */}
                                     <Dialog.Title as="h3" className="card-title self-center mt-5 text-2xl flex-col">
-                                        <h2 className='font-bold'>View </h2>
+                                        <h2 className='font-bold'>ເບິ່ງລາຍລະອຽດ </h2>
                                     </Dialog.Title>
                                     <div className=''>
                                         <div className='card card-side bg-base-300 shadow-xl m-4  w-fit' >
@@ -152,23 +152,23 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept, info }:
                                                 </a>
                                             </div>
                                             <div className="card-body">
-                                                <h2 className="card-title self-center">Job Details</h2>
+                                                <h2 className="card-title self-center">ລາຍລະອຽດວຽກ</h2>
                                                 <div className='text-sm text-start'>
-                                                    <p>Company Name: {info.Name} </p>
+                                                    <p>ຊື່ບໍລິສັດ : {info.Name} </p>
                                                     <div className='flex flex-row'>
-                                                        <p >Occupation : {data.OccupationName}</p>
+                                                        <p >ອາຊີບ : {data.OccupationName}</p>
                                                         <div className="badge badge-primary">{data.WorkType}</div>
                                                     </div>
-                                                    <p>Category : {data.CategoryName}</p>
+                                                    <p>ໝວດໝູ່ອາຊີບ : {data.CategoryName}</p>
                                                 </div>
                                                 <div className="stats bg-primary text-primary-content">
                                                     <div className="stat">
-                                                        <div className="stat-title text-black">Salary Minimum</div>
+                                                        <div className="stat-title text-black">ເງິນເດືອນເລີ່ມຕົ້ນ</div>
                                                         <div className="stat-value">{data.SalaryStart}</div>
                                                     </div>
 
                                                     <div className="stat">
-                                                        <div className="stat-title text-black">Salary Maximum</div>
+                                                        <div className="stat-title text-black">ເງິນເດືອນສູງສຸດ</div>
                                                         <div className="stat-value">{data.SalaryMax}</div>
                                                     </div>
                                                 </div>
@@ -182,11 +182,11 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept, info }:
                                                         onClick={handleFullScreen}
                                                         data-original-url={data.IMG_Card}
                                                     >
-                                                        Full Screen
+                                                        ເຕັມໜ້າຈໍ
                                                     </a>
                                                 </div>
                                                 <div className="flex justify-end flex-1 space-x-4">
-                                                    <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                    <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                 </div>
                                             </div>
                                         ) : (
@@ -199,11 +199,11 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept, info }:
                                                             onClick={handleFullScreen}
                                                             data-original-url={data.IMG_Card}
                                                         >
-                                                            Full Screen
+                                                            ເຕັມໜ້າຈໍ
                                                         </a>
                                                         <div className="flex justify-end flex-1 space-x-4">
-                                                            <button className="btn btn-primary" onClick={handleAccept}>Accept</button>
-                                                            <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                            <button className="btn btn-primary" onClick={handleAccept}>ຍອມຮັບຄຳເຊີນ</button>
+                                                            <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                         </div>
                                                     </div>
                                                 ) : (
@@ -214,11 +214,11 @@ function View_JobInvitation({ isOpen, isClose, data, type, handleAccept, info }:
                                                             onClick={handleFullScreen}
                                                             data-original-url={data.IMG_Card}
                                                         >
-                                                            Full Screen
+                                                            ເຕັມໜ້າຈໍ
                                                         </a>
                                                         <div className="flex justify-end flex-1 space-x-4">
-                                                            <button className="btn btn-success disabled:btn-success">Accepted</button>
-                                                            <button className="btn btn-outline" onClick={isClose}>Close</button>
+                                                            <button className="btn btn-success disabled:btn-success">ຍອມຮັບແລ້ວ</button>
+                                                            <button className="btn btn-outline" onClick={isClose}>ປິດ</button>
                                                         </div>
                                                     </div>
                                                 )}
