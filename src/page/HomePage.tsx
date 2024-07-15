@@ -176,12 +176,12 @@ function HomePage() {
     console.log("show me cv list", invData)
   }
 
-    const handleIsOpenJobRequest = () => {
-      console.log("hello wrold")
-      setIsOpenJobReq(true)
-      closePopupJOB();
-      closePopupCV();
-    }
+  const handleIsOpenJobRequest = () => {
+    console.log("hello wrold")
+    setIsOpenJobReq(true)
+    closePopupJOB();
+    closePopupCV();
+  }
   const closeToggleJobRequest = () => {
     setIsOpenJobReq(false)
   }
@@ -301,6 +301,67 @@ function HomePage() {
       });
     }
   };
+
+
+
+  const openLinkInNewPage = (imageUrl: string) => {
+    const linkElement = document.getElementById('linkElement');
+    if (linkElement) {
+      linkElement.addEventListener('click', () => {
+        const newWindow = window.open(imageUrl, '_blank');
+        if (newWindow) {
+          newWindow.focus();
+        } else {
+          console.error('Failed to open new window');
+        }
+      });
+    }
+  };
+
+
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+
+  const handleFullScreen = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const originalUrl = event.currentTarget.getAttribute('data-original-url');
+    const img = document.createElement('img');
+    img.src = originalUrl || '';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+    const fullscreenDiv = document.createElement('div');
+    fullscreenDiv.id = 'fullscreenImageContainer'; // Set an ID for easy reference
+    fullscreenDiv.style.position = 'fixed';
+    fullscreenDiv.style.top = '0';
+    fullscreenDiv.style.left = '0';
+    fullscreenDiv.style.width = '100%';
+    fullscreenDiv.style.height = '100%';
+    fullscreenDiv.style.backgroundColor = 'black';
+    fullscreenDiv.style.display = 'flex';
+    fullscreenDiv.style.alignItems = 'center';
+    fullscreenDiv.style.justifyContent = 'center';
+    fullscreenDiv.style.zIndex = '9999';
+    fullscreenDiv.appendChild(img);
+    document.body.appendChild(fullscreenDiv);
+    setFullscreenOpen(true);
+
+    const closeFullscreen = () => {
+      document.body.removeChild(fullscreenDiv);
+      document.removeEventListener('keydown', handleKeyDown);
+      setFullscreenOpen(false);
+    };
+
+    fullscreenDiv.addEventListener('click', closeFullscreen);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeFullscreen();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+  };
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -560,10 +621,10 @@ function HomePage() {
 
 
             </div>
-            {myID ? <><button onClick={() => navigate('/Findjob')} 
-            className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງວຽກທັງຫມົດ<img 
-            className='w-5' src="Icon/arrowhead.png" alt="" /></button></> : <></>}
-            
+            {myID ? <><button onClick={() => navigate('/Findjob')}
+              className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງວຽກທັງຫມົດ<img
+                className='w-5' src="Icon/arrowhead.png" alt="" /></button></> : <></>}
+
 
 
             <div className='w-full  text-white bg-purple-900 mt-10 rounded-md mb-1 text-4xl'>
@@ -608,11 +669,11 @@ function HomePage() {
 
             </div>
 
-            {myID ? <> <button onClick={() => navigate('/FindEmployee')} 
-            className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5' 
-            src="Icon/arrowhead.png" alt="" /></button></> : <></>}
-            
-          
+            {myID ? <> <button onClick={() => navigate('/FindEmployee')}
+              className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5'
+                src="Icon/arrowhead.png" alt="" /></button></> : <></>}
+
+
           </main>
 
 
@@ -631,7 +692,7 @@ function HomePage() {
                   <div className=' rounded-2xl '>
                     <figure className='w-full'>
                       <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>
-                        <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
+                        <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openLinkInNewPage(selectedJOB.Post_IMG)} />
                       </div>
                     </figure>
                   </div>
@@ -750,7 +811,15 @@ function HomePage() {
                   <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-purple-900 text-white'>ລາຍລະອຽດວຽກ</div>
                   <figure className='w-full'>
                     <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClickCV(selectedCV)}>
-                      <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                      <a
+                        data-original-url={selectedCV.IMG_CV}
+                        onClick={handleFullScreen}>
+                        <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex'
+                          src={selectedCV.IMG_CV} alt="IMG_CV"
+                        // onClick={() => openFullScreen(selectedCV.IMG_CV)}
+                        // onClick={ handleFullScreen}
+                        />
+                      </a>
                     </div>
                   </figure>
 
@@ -833,14 +902,15 @@ function HomePage() {
                 </div>
               </div>
             </dialog>
-          )}
+          )
+          }
 
 
 
 
-        </center>
+        </center >
         <Footer />
-      </div>
+      </div >
     </html >
 
   )
