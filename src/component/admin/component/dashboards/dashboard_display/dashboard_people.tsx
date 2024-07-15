@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DeleteAccountCard from "./card/account_delete_card";
 import PacmanLoader from "react-spinners/PacmanLoader";
+import VerifyAccountCard from "./card/account_verify_card";
 
 function DashboardPeople() {
     interface UserData {
@@ -10,6 +11,7 @@ function DashboardPeople() {
         Email: string,
         Role: string,
         Tel: string,
+        // Verify:string
     }
     const [userData, setUserData] = useState<UserData[]>([]);
     const [isLoading, setLoading] = useState(true);
@@ -18,6 +20,7 @@ function DashboardPeople() {
     const [userName, setUserName] = useState<string>("")
     const [userRole, setUserRole] = useState<string>("")
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // Add state for delete dialog
+    const [isVerifyDialogOpen, setIsVerifyDialogOpen] = useState(false); // Add state for delete dialog
 
     const api = 'http://localhost:3001';
     useEffect(() => {
@@ -41,9 +44,19 @@ function DashboardPeople() {
         setUserRole(role);
         setIsDeleteDialogOpen(true); // Open delete dialog when clicked
     }
+    const toggleVerifyDialog = (userID: number, name: string) => {
+        setUserID(userID);
+        setUserName(name);
+        // setUserRole(role);
+        setIsVerifyDialogOpen(true); // Open delete dialog when clicked
+    }
 
     const handleCloseDeleteDialog = () => {
         setIsDeleteDialogOpen(false);
+    }
+
+    const handleCloseVerifyDialog = () => {
+        setIsVerifyDialogOpen(false);
     }
 
     return (
@@ -60,7 +73,7 @@ function DashboardPeople() {
                         <div>
                             <div> </div>
                             <div className="space-x-5 flex justify-end m-2">
-                                <button className="btn btn-primary">Edit</button>
+                                {/* <button className="btn btn-primary">Edit</button>  */}
                                 <button className="btn btn-error">Delete all selected</button>
                             </div>
                         </div>
@@ -110,16 +123,23 @@ function DashboardPeople() {
                                         <td>
                                             <span className="badge badge-info badge-lg font-semibold">{user.Role}</span>
                                         </td>
-                                        <th className="space-x-2 w-72">
-                                            <button className="btn btn-accent  btn-md">View</button>
-                                            <button className="btn btn-primary btn-outline btn-md">Edit</button>
+                                        <th className="space-x-2 w-72 flex justify-end">
+                                            {/* <button className="btn btn-accent  btn-md">View</button>
+                                            <button className="btn btn-primary btn-outline btn-md">Edit</button> */}
+
+                                            {user.Role == "Employer" ?
+                                                <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(user.UserID, user.Name, user.Role)}>Verify</button>
+                                                :
+                                                null
+                                            }
                                             <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(user.UserID, user.Name, user.Role)}>Delete</button>
                                         </th>
                                     </tr>
                                 ))
                                 }
-
                                 <DeleteAccountCard name={userName} userID={userID || 0} isOpen={isDeleteDialogOpen} onClose={handleCloseDeleteDialog} role={userRole} />
+
+                                <VerifyAccountCard name={userName} userID={userID || 0} isOpen={isVerifyDialogOpen} onClose={handleCloseVerifyDialog} />
 
 
                             </tbody>

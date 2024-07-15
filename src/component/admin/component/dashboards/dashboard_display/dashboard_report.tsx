@@ -64,9 +64,9 @@ const Dashboard_report: React.FC = () => {
 
                     <div className="flex justify-center pt-12 ">
                         <ReactToPrint
-                            trigger={() => <button className="btn btn-primary btn-wide">Print this out!</button>}
+                            trigger={() => <button className="btn btn-primary btn-wide">Print this out</button>}
                             content={() => componentRef.current} />
-                        <button className="btn btn-primary btn-wide ml-4" onClick={handlePrint}>Preview PDF</button>
+                        {/* <button className="btn btn-primary btn-wide ml-4" onClick={handlePrint}>Preview PDF</button> */}
                     </div>
                 </div>
             </div>
