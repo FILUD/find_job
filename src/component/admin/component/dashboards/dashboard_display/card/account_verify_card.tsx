@@ -23,7 +23,7 @@ const handleVerifyClient = async (userID: number) => {
 
         if (response.ok) {
             console.log("Client Verifyd successfully");
-            alert(`the user account:${userID} Verifyd `)
+            alert(`the user account:${userID} Verify `)
         } else {
             console.error("Failed to Verify client");
             // You can update UI or show an error message here

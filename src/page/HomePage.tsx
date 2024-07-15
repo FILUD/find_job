@@ -29,7 +29,8 @@ interface jobData {
   VillageName: string;
   DistrictName: string;
   ProvinceName: string;
-  WorkType: string
+  WorkType: string;
+  Verify: string
 }
 
 interface CVData {
@@ -593,7 +594,15 @@ function HomePage() {
                         }
                       </div>
                       <div className=''>
-                        <h2 className="card-title"><b>{job.CompanyName}</b></h2>
+                        <h2 className="card-title"><b>{job.CompanyName} </b>
+                          {job.Verify == "verified" ?
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2 self-center text-green-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                            </svg>
+                            :
+                            null
+                          }
+                        </h2>
                         <p className='text-left'><b>{job.Title}</b></p>
                         <p className='text-left'>
                           <b>ເງິນເດືອນ :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} ກີບ
@@ -708,6 +717,13 @@ function HomePage() {
                         }
                       </div>
                       <h2 className="card-title text-justify col-span-4 pl-3"><b>{selectedJOB.CompanyName}</b></h2>
+                      {selectedJOB.Verify == "verified" ?
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-4 self-center text-green-700">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                        :
+                        null
+                      }
                     </div>
                     <p className='text-left'><b>ຫົວຂໍ້ວຽກ : {selectedJOB.Title}</b></p>
                     <p className='text-left'><b><u>ລາຍລະອຽດ</u></b> : {selectedJOB.Description}</p>
@@ -725,9 +741,18 @@ function HomePage() {
                     <p className='text-left'><u><b>ວັນທີ່ປະກາດ</b></u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                     <div className="card-actions justify-end">
 
-                      {myID ? <> {myID == EmployerID && myRole == `"Employer"` && (
+                      {myID ? <> {myID == EmployerID && myRole == `"Employer"` ? (
                         <button className='btn btn-primary' onClick={() => handleEditJob(selectedJOB.JobID)}>ແກ້ໄຂວຽກ</button>
-                      )}
+                      ) : (<>
+                        {myID != EmployerID && myRole == `"Employer"` && (
+                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedJOB.UserID}`)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                            </svg>
+                          </button>
+                        )}
+                      </>)}
+
                         {myID == EmployerID && myRole != `"Employer"` && (
                           <>
                             <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
@@ -845,9 +870,18 @@ function HomePage() {
                     </div>
 
                     <div className="card-actions flex justify-end h-full items-end">
-                      {myID == JobseekerID && myRole == `"Jobseeker"` && (
+                      {myID == JobseekerID && myRole == `"Jobseeker"` ? (
                         <button className="btn btn-primary" onClick={() => handleEditCv(selectedCV.CvID)}>ແກ້ໄຂ</button>
-                      )}
+                      ) : (<>
+                        {myID != JobseekerID && myRole == `"Jobseeker"` && (
+                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                            </svg>
+                          </button>
+                        )}
+                      </>)
+                      }
                       {myID == JobseekerID && myRole != `"Jobseeker"` && (
                         <>
                           <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>

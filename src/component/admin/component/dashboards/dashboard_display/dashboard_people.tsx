@@ -11,7 +11,7 @@ function DashboardPeople() {
         Email: string,
         Role: string,
         Tel: string,
-        // Verify:string
+        Verify: string
     }
     const [userData, setUserData] = useState<UserData[]>([]);
     const [isLoading, setLoading] = useState(true);
@@ -112,7 +112,13 @@ function DashboardPeople() {
                                                 <div>
                                                     <div className="font-bold">{user.Name}</div>
                                                     <div className="text-sm opacity-50">UserID: {user.UserID}</div>
+
                                                 </div>
+                                                {user.Verify == "verified" ?
+                                                    <span className="badge badge-info badge-lg font-semibold">{user.Verify}</span>
+                                                    :
+                                                    null
+                                                }
                                             </div>
                                         </td>
                                         <td>
@@ -120,15 +126,16 @@ function DashboardPeople() {
                                             {/* <br />
                                         <span className="text-sm opacity-50 ml-2">{user.Tel}</span> */}
                                         </td>
-                                        <td>
+                                        <td className="space-x-2">
                                             <span className="badge badge-info badge-lg font-semibold">{user.Role}</span>
+
                                         </td>
                                         <th className="space-x-2 w-72 flex justify-end">
                                             {/* <button className="btn btn-accent  btn-md">View</button>
                                             <button className="btn btn-primary btn-outline btn-md">Edit</button> */}
 
-                                            {user.Role == "Employer" ?
-                                                <button className="btn btn-error btn-outline btn-md" onClick={() => toggleDeleteDialog(user.UserID, user.Name, user.Role)}>Verify</button>
+                                            {user.Role == "Employer" && user.Verify != "verified" ?
+                                                <button className="btn btn-info btn-outline  btn-md" onClick={() => toggleVerifyDialog(user.UserID, user.Name)}>Verify</button>
                                                 :
                                                 null
                                             }

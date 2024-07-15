@@ -271,14 +271,14 @@ function EditProfileEmp() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
+
         try {
             if (addressID === null && district) {
                 const data = {
                     VillageName: village,
                     DistrictID: district
                 };
-    
+
                 const response = await fetch('http://localhost:3001/postaddress', {
                     method: 'POST',
                     headers: {
@@ -286,16 +286,16 @@ function EditProfileEmp() {
                     },
                     body: JSON.stringify(data)
                 });
-    
+
                 if (response.ok) {
                     const responseData = await response.json();
                     console.log('Data inserted successfully.');
-    
+
                     setAddressId(responseData.addressId);
                     console.log("Data for uploaded address:", responseData.addressId);
                     setVillage('');
                     setDistrict('');
-    
+
                     try {
                         const editData = {
                             AddressID: responseData.addressId,
@@ -303,7 +303,7 @@ function EditProfileEmp() {
                             DistrictID: district
                         };
                         console.log('Edit Data:', editData);
-    
+
                         const editResponse = await fetch(`http://localhost:3001/editaddressemp/${employerID}`, {
                             method: 'POST',
                             headers: {
@@ -311,13 +311,13 @@ function EditProfileEmp() {
                             },
                             body: JSON.stringify(editData)
                         });
-    
+
                         if (editResponse.ok) {
                             console.log('Edit Address successfully uploaded new data.');
                         } else {
                             console.error('Failed to edit address.');
                         }
-    
+
                         const response2 = await fetch(`http://localhost:3001/editprofiledata/${employerID}`, {
                             method: "POST",
                             headers: {
@@ -325,7 +325,7 @@ function EditProfileEmp() {
                             },
                             body: JSON.stringify({ companyName, proTitle, tel, addressID: responseData.addressId }),
                         });
-    
+
                         if (response2.ok) {
                             console.log("Profile data edited successfully");
                             Swal.fire({
@@ -339,7 +339,7 @@ function EditProfileEmp() {
                         } else {
                             console.error("Failed to edit profile data");
                         }
-    
+
                     } catch (error) {
                         console.error('Error editing data:', error);
                     }
@@ -354,13 +354,13 @@ function EditProfileEmp() {
                     },
                     body: JSON.stringify({ VillageName: village, DistrictID: district }),
                 });
-    
+
                 if (response.ok) {
                     console.log("Address edited successfully");
                 } else {
                     console.error("Failed to edit address");
                 }
-    
+
                 const response2 = await fetch(`http://localhost:3001/editprofiledata/${employerID}`, {
                     method: "POST",
                     headers: {
@@ -368,7 +368,7 @@ function EditProfileEmp() {
                     },
                     body: JSON.stringify({ companyName, proTitle, tel, addressID }),
                 });
-    
+
                 if (response2.ok) {
                     console.log("Profile data edited successfully");
                     Swal.fire({
@@ -383,7 +383,7 @@ function EditProfileEmp() {
                     console.error("Failed to edit profile data");
                 }
             }
-    
+
         } catch (error) {
             console.error('Error:', error);
         }
@@ -432,7 +432,18 @@ function EditProfileEmp() {
                                             )}
 
                                         </div>
-                                        <p className='pb-7 text-2xl'>{emp.CompanyName}</p>
+                                        <div className='flex justify-center'>
+                                            <p className='pb-7 text-2xl'>{emp.CompanyName} </p>
+                                            {emp.Verify == "verified" ?
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2 mt-1 text-green-700">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                                </svg>
+                                                :
+                                                null
+                                            }
+                                        </div>
+
+
                                         <div className='pb-5'>
                                             <div>
                                                 <div className='pb-2 grid grid-cols-3'>
