@@ -487,7 +487,7 @@ function EditProfileJok() {
 
                                             <div className='grid grid-cols-2 mt-4'>
                                                 <button className='btn btn-square btn-ghost w-5/6 btn-outline mr-2 justify-self-end' onClick={handleToggleEditMode}>ແກ້ໄຂຂໍ້ມູນ</button>
-                                                <button className='btn btn-square w-5/6 btn-ghost btn-outline ml-2' onClick={() => navigate("/PostCV")}>ປະກາດວຽກໃຫມ່</button >
+                                                <button className='btn btn-square w-5/6 btn-ghost btn-outline ml-2' onClick={() => navigate("/PostCV")}>ປະກາດ CV ໃຫມ່</button >
                                             </div>
                                         </div>
                                     </div>

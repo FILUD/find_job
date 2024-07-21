@@ -49,6 +49,7 @@ interface Employer {
     VillageName: string;
     DistrictName: string;
     ProvinceName: string;
+    Verify: string;
 }
 interface Jobseeker {
     JobseekerID: number;
@@ -375,7 +376,7 @@ export default function Profile_feature() {
                         </svg></a></li>
 
 
-                    <li onClick={() => navigate('/PostJob')}><a className='justify-between'>ສ້າງວຽກໃຫມ່
+                    <li onClick={() => navigate('/PostJob')}><a className='justify-between'>ປະກາດ
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
                         </svg></a></li>
@@ -459,6 +460,13 @@ export default function Profile_feature() {
                                                     <div className='text-start'>
                                                         <p className={cssProfile.titleName}>
                                                             {isLoading ? <div className="skeleton h-5 w-48 font-notoLao"></div> : Employer[0]?.CompanyName}
+                                                            {Employer[0]?.Verify == "verified" ?
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-4 self-center text-green-700">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                                                </svg>
+                                                                :
+                                                                null
+                                                            }
                                                         </p>
                                                         <p className={cssProfile.titleWork}>
                                                             {isLoading ? <div className="skeleton h-4 w-32 font-notoLao"></div> : Employer[0]?.ProfessionalTitle}

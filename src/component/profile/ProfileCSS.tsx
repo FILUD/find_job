@@ -1,5 +1,5 @@
 const cssProfile = {
-    titleName: 'font-notoLao 2xl:text-3xl xl:text-3xl lg:text-3xl md:text-2xl sm:text-2xl text-xl font-bold mt-2.5',
+    titleName: 'font-notoLao 2xl:text-3xl xl:text-3xl lg:text-3xl md:text-2xl sm:text-2xl text-xl font-bold mt-2.5 flex space-x-4',
     titleWork: 'font-notoLao 2xl:text-lg xl:text-lg lg:text-lg md:text-lg sm:text-base text-sm font-normal mb-2 mt-2',
     titleAddress: 'ml-2 font-notoLao 2xl:text-sm xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs',
     profileImg: '2xl:ml-28 xl:ml-28 lg:ml-24 md:ml-24 sm:ml-16 ml-12  top-0 left-0 2xl:scale-125 xl:scale-125 lg:scale-125 md:scale-150 sm:scale-150 scale-150 2xl:mt-0 xl:mt-0 lg:mt-0 md:mt-3 sm:mt-4 mt-4',

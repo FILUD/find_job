@@ -29,7 +29,8 @@ interface jobData {
   VillageName: string;
   DistrictName: string;
   ProvinceName: string;
-  WorkType: string
+  WorkType: string;
+  Verify: string
 }
 
 interface CVData {
@@ -176,12 +177,12 @@ function HomePage() {
     console.log("show me cv list", invData)
   }
 
-    const handleIsOpenJobRequest = () => {
-      console.log("hello wrold")
-      setIsOpenJobReq(true)
-      closePopupJOB();
-      closePopupCV();
-    }
+  const handleIsOpenJobRequest = () => {
+    console.log("hello wrold")
+    setIsOpenJobReq(true)
+    closePopupJOB();
+    closePopupCV();
+  }
   const closeToggleJobRequest = () => {
     setIsOpenJobReq(false)
   }
@@ -301,6 +302,67 @@ function HomePage() {
       });
     }
   };
+
+
+
+  const openLinkInNewPage = (imageUrl: string) => {
+    const linkElement = document.getElementById('linkElement');
+    if (linkElement) {
+      linkElement.addEventListener('click', () => {
+        const newWindow = window.open(imageUrl, '_blank');
+        if (newWindow) {
+          newWindow.focus();
+        } else {
+          console.error('Failed to open new window');
+        }
+      });
+    }
+  };
+
+
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+
+  const handleFullScreen = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const originalUrl = event.currentTarget.getAttribute('data-original-url');
+    const img = document.createElement('img');
+    img.src = originalUrl || '';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+    const fullscreenDiv = document.createElement('div');
+    fullscreenDiv.id = 'fullscreenImageContainer'; // Set an ID for easy reference
+    fullscreenDiv.style.position = 'fixed';
+    fullscreenDiv.style.top = '0';
+    fullscreenDiv.style.left = '0';
+    fullscreenDiv.style.width = '100%';
+    fullscreenDiv.style.height = '100%';
+    fullscreenDiv.style.backgroundColor = 'black';
+    fullscreenDiv.style.display = 'flex';
+    fullscreenDiv.style.alignItems = 'center';
+    fullscreenDiv.style.justifyContent = 'center';
+    fullscreenDiv.style.zIndex = '9999';
+    fullscreenDiv.appendChild(img);
+    document.body.appendChild(fullscreenDiv);
+    setFullscreenOpen(true);
+
+    const closeFullscreen = () => {
+      document.body.removeChild(fullscreenDiv);
+      document.removeEventListener('keydown', handleKeyDown);
+      setFullscreenOpen(false);
+    };
+
+    fullscreenDiv.addEventListener('click', closeFullscreen);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeFullscreen();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+  };
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -532,7 +594,15 @@ function HomePage() {
                         }
                       </div>
                       <div className=''>
-                        <h2 className="card-title"><b>{job.CompanyName}</b></h2>
+                        <h2 className="card-title"><b>{job.CompanyName} </b>
+                          {job.Verify == "verified" ?
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-2 self-center text-green-700">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                            </svg>
+                            :
+                            null
+                          }
+                        </h2>
                         <p className='text-left'><b>{job.Title}</b></p>
                         <p className='text-left'>
                           <b>ເງິນເດືອນ :</b> {job.SalaryStart.toLocaleString()} - {job.SalaryMax.toLocaleString()} ກີບ
@@ -560,10 +630,10 @@ function HomePage() {
 
 
             </div>
-            {myID ? <><button onClick={() => navigate('/Findjob')} 
-            className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງວຽກທັງຫມົດ<img 
-            className='w-5' src="Icon/arrowhead.png" alt="" /></button></> : <></>}
-            
+            {myID ? <><button onClick={() => navigate('/Findjob')}
+              className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງວຽກທັງຫມົດ<img
+                className='w-5' src="Icon/arrowhead.png" alt="" /></button></> : <></>}
+
 
 
             <div className='w-full  text-white bg-purple-900 mt-10 rounded-md mb-1 text-4xl'>
@@ -608,11 +678,11 @@ function HomePage() {
 
             </div>
 
-            {myID ? <> <button onClick={() => navigate('/FindEmployee')} 
-            className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5' 
-            src="Icon/arrowhead.png" alt="" /></button></> : <></>}
-            
-          
+            {myID ? <> <button onClick={() => navigate('/FindEmployee')}
+              className="btn btn-block mt-1 bg-base-300 shadow-xl hover:bg-purple-700 hover:text-white">ສະແດງພະນັກງານທັງໝົດ<img className='w-5'
+                src="Icon/arrowhead.png" alt="" /></button></> : <></>}
+
+
           </main>
 
 
@@ -631,7 +701,7 @@ function HomePage() {
                   <div className=' rounded-2xl '>
                     <figure className='w-full'>
                       <div className="card w-75 bg-base-100 shadow-xl" key={selectedJOB.JobID} onClick={() => handleCardClickJOB(selectedJOB)}>
-                        <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openFullScreen(selectedJOB.Post_IMG)} />
+                        <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedJOB.Post_IMG} alt="IMG_CV" onClick={() => openLinkInNewPage(selectedJOB.Post_IMG)} />
                       </div>
                     </figure>
                   </div>
@@ -647,6 +717,13 @@ function HomePage() {
                         }
                       </div>
                       <h2 className="card-title text-justify col-span-4 pl-3"><b>{selectedJOB.CompanyName}</b></h2>
+                      {selectedJOB.Verify == "verified" ?
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6 ml-4 self-center text-green-700">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                        :
+                        null
+                      }
                     </div>
                     <p className='text-left'><b>ຫົວຂໍ້ວຽກ : {selectedJOB.Title}</b></p>
                     <p className='text-left'><b><u>ລາຍລະອຽດ</u></b> : {selectedJOB.Description}</p>
@@ -664,9 +741,18 @@ function HomePage() {
                     <p className='text-left'><u><b>ວັນທີ່ປະກາດ</b></u> : {selectedJOB.PostDate ? formatDate(selectedJOB.PostDate) : 'N/A'}</p>
                     <div className="card-actions justify-end">
 
-                      {myID ? <> {myID == EmployerID && myRole == `"Employer"` && (
+                      {myID ? <> {myID == EmployerID && myRole == `"Employer"` ? (
                         <button className='btn btn-primary' onClick={() => handleEditJob(selectedJOB.JobID)}>ແກ້ໄຂວຽກ</button>
-                      )}
+                      ) : (<>
+                        {myID != EmployerID && myRole == `"Employer"` && (
+                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedJOB.UserID}`)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                            </svg>
+                          </button>
+                        )}
+                      </>)}
+
                         {myID == EmployerID && myRole != `"Employer"` && (
                           <>
                             <button className="btn btn-primary" onClick={() => handleJobBookmark(selectedJOB.JobID)}>
@@ -750,7 +836,15 @@ function HomePage() {
                   <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl bg-purple-900 text-white'>ລາຍລະອຽດວຽກ</div>
                   <figure className='w-full'>
                     <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClickCV(selectedCV)}>
-                      <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                      <a
+                        data-original-url={selectedCV.IMG_CV}
+                        onClick={handleFullScreen}>
+                        <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex'
+                          src={selectedCV.IMG_CV} alt="IMG_CV"
+                        // onClick={() => openFullScreen(selectedCV.IMG_CV)}
+                        // onClick={ handleFullScreen}
+                        />
+                      </a>
                     </div>
                   </figure>
 
@@ -776,9 +870,18 @@ function HomePage() {
                     </div>
 
                     <div className="card-actions flex justify-end h-full items-end">
-                      {myID == JobseekerID && myRole == `"Jobseeker"` && (
+                      {myID == JobseekerID && myRole == `"Jobseeker"` ? (
                         <button className="btn btn-primary" onClick={() => handleEditCv(selectedCV.CvID)}>ແກ້ໄຂ</button>
-                      )}
+                      ) : (<>
+                        {myID != JobseekerID && myRole == `"Jobseeker"` && (
+                          <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                            <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                            </svg>
+                          </button>
+                        )}
+                      </>)
+                      }
                       {myID == JobseekerID && myRole != `"Jobseeker"` && (
                         <>
                           <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
@@ -833,14 +936,15 @@ function HomePage() {
                 </div>
               </div>
             </dialog>
-          )}
+          )
+          }
 
 
 
 
-        </center>
+        </center >
         <Footer />
-      </div>
+      </div >
     </html >
 
   )

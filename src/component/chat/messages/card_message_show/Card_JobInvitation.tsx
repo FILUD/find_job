@@ -96,7 +96,7 @@ function Card_JobInvitation({ data, type, info }: DataProps) {
                         {data.Status == "Pending" ? (
                             <div className='flex space-x-4 justify-center'>
                                 <button className='btn hover:btn-outline ' onClick={() => toggleView()}>ເບິ່ງລາຍລະອຽດ</button>
-                                <button className='btn '>ກຳລັງລໍຖ້າການຕອບຮັບ {data.Status}...</button>
+                                <button className='btn '>ກຳລັງລໍຖ້າການຕອບຮັບ...</button>
                             </div>
                         ) : (
                             <div className='flex space-x-4 justify-center'>

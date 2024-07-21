@@ -148,7 +148,7 @@ function PostCvPage() {
             Swal.fire({
                 position: "top",
                 icon: "success",
-                title: "Upload Cv success",
+                title: "ປະກາດ Cv ສຳເລັດແລ້ວ",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -157,7 +157,7 @@ function PostCvPage() {
             Swal.fire({
                 position: "top",
                 icon: "error",
-                title: "Something when wrong Tryagin Later",
+                title: "ປະກາດຜິດພາດ ກະລຸນາລອງໃຫມ່ພາຍຫລັງ",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -167,16 +167,16 @@ function PostCvPage() {
 
 
     return (
-        <html data-theme={theme}>
+        <html className='font-notoLao' data-theme={theme}>
             <div>
                 <SetNavbar />
                 <center>
                     <div className='card bg-purple-900 bg-opacity-90 rounded-2xl mx-20 mt-3'>
-                        <div className='py-5 self-center font-bold text-3xl text-white'>Post CV</div>
+                        <div className='py-5 self-center font-bold text-3xl text-white'>ປະກາດ CV</div>
                     </div>
-                    <div className="card h-fit bg-black bg-opacity-15 rounded-2xl mx-20 mt-4 shadow-xl mb-10 pb-10">
+                    <div className="card h-fit bg-black bg-opacity-15 rounded-2xl mx-20 mt-1 shadow-xl mb-10 pb-10">
                         <form onSubmit={handleSubmit}>
-                            <main className='grid grid-cols-2 gap-4 justify-items-center pt-20 mt-5 pb-20'>
+                            <main className='grid grid-cols-2 gap-4 justify-items-center py-3 mt-5'>
                                 <div className='bg-base-100 p-12 justify-self-end rounded-2xl'>
                                     <div className='box-content h-60 w-60 border-2  bg-black bg-opacity-15 rounded-2xl mb-10 overflow-hidden items-center grid justify-items-center'>
                                         {imageUrl ? (
@@ -199,7 +199,7 @@ function PostCvPage() {
                                 <div className='justify-self-start grid grid-cols-1 bg-base-100 p-12 rounded-2xl'>
                                     <input
                                         type="text"
-                                        placeholder="Title"
+                                        placeholder="ຫົວຂໍ້ cv"
                                         className="input input-bordered input-primary w-80"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
@@ -210,7 +210,7 @@ function PostCvPage() {
                                         value={selectedCategory || ''}
                                         onChange={handleCategoryChange}
                                     >
-                                        <option disabled value="">Work Category</option>
+                                        <option disabled value="">ໝວດຫມູ່ອາຊີບ</option>
                                         {categories.map(category => (
                                             <option key={category.CategoryID} value={category.CategoryID}>
                                                 {category.CategoryName}
@@ -223,7 +223,7 @@ function PostCvPage() {
                                         value={occupation}
                                         onChange={(e) => setOccupation(e.target.value)}
                                     >
-                                        <option disabled value="">Occupation</option>
+                                        <option disabled value="">ອາຊີບ</option>
                                         {occupations.map(occupation => (
                                             <option key={occupation.OccupationID} value={occupation.OccupationID}>
                                                 {occupation.OccupationName}
@@ -231,7 +231,7 @@ function PostCvPage() {
                                         ))}
                                     </select>
 
-                                    <button type="submit" className="btn btn-primary self-end">Post My CV</button>
+                                    <button type="submit" className="btn btn-primary self-end">ປະກາດ CV</button>
                                 </div>
                             </main>
                         </form>

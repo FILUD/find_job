@@ -332,8 +332,52 @@ function FindEmployeePage() {
     })
 
     console.log(myID)
-    console.log("cvData",cvData)
+    console.log("cvData", cvData)
   }
+
+
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+
+  const handleFullScreen = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const originalUrl = event.currentTarget.getAttribute('data-original-url');
+    const img = document.createElement('img');
+    img.src = originalUrl || '';
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+    const fullscreenDiv = document.createElement('div');
+    fullscreenDiv.id = 'fullscreenImageContainer'; // Set an ID for easy reference
+    fullscreenDiv.style.position = 'fixed';
+    fullscreenDiv.style.top = '0';
+    fullscreenDiv.style.left = '0';
+    fullscreenDiv.style.width = '100%';
+    fullscreenDiv.style.height = '100%';
+    fullscreenDiv.style.backgroundColor = 'black';
+    fullscreenDiv.style.display = 'flex';
+    fullscreenDiv.style.alignItems = 'center';
+    fullscreenDiv.style.justifyContent = 'center';
+    fullscreenDiv.style.zIndex = '9999';
+    fullscreenDiv.appendChild(img);
+    document.body.appendChild(fullscreenDiv);
+    setFullscreenOpen(true);
+
+    const closeFullscreen = () => {
+      document.body.removeChild(fullscreenDiv);
+      document.removeEventListener('keydown', handleKeyDown);
+      setFullscreenOpen(false);
+    };
+
+    fullscreenDiv.addEventListener('click', closeFullscreen);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeFullscreen();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+  };
 
 
   return (
@@ -487,12 +531,21 @@ function FindEmployeePage() {
                         <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                       </svg>
                     </button>
-
                     <div className='grid grid-cols-2 -m-5'>
                       <div className='col-span-2 w-full text-3xl py-2 rounded-t-2xl text-white bg-purple-900'>ລາຍລະອຽດ cv</div>
-                      <figure className='w-full'>
+                      <figure className={`w-full`}>
                         <div className="card w-75 bg-base-100 shadow-xl" key={selectedCV.CvID} onClick={() => handleCardClick(selectedCV)}>
-                          <img id="fullScreenImage" className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex' src={selectedCV.IMG_CV} alt="IMG_CV" onClick={() => openFullScreen(selectedCV.IMG_CV)} />
+                          <a
+                            data-original-url={selectedCV.IMG_CV}
+                            onClick={handleFullScreen}
+                          >
+                            <img id="fullScreenImage"
+                              className='object-cover w-full max-h-96 transition duration-300 hover:scale-105 cursor-zoom-in justify-self-center self-center flex'
+                              src={selectedCV.IMG_CV}
+                              alt="IMG_CV"
+                            // onClick={() => openFullScreen(selectedCV.IMG_CV)}
+                            />
+                          </a>
                         </div>
                       </figure>
 
@@ -518,9 +571,18 @@ function FindEmployeePage() {
                         </div>
 
                         <div className="card-actions flex justify-end h-full items-end">
-                          {myID == JobseekerID && myRole == `"Jobseeker"` && (
+                          {myID == JobseekerID && myRole == `"Jobseeker"` ? (
                             <button className="btn btn-primary" onClick={() => handleEditCv(selectedCV.CvID)}>ແກ້ໄຂ</button>
-                          )}
+                          ) : (<>
+                            {myID != JobseekerID && myRole == `"Jobseeker"` && (
+                              <button className="btn btn-primary" onClick={() => navigate(`/NewChat_Page/${selectedCV.UserID}`)}>
+                                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                                </svg>
+                              </button>
+                            )}
+                          </>)
+                          }
                           {myID == JobseekerID && myRole != `"Jobseeker"` && (
                             <>
                               <button className="btn btn-primary" onClick={() => handleCvBookmark(selectedCV.CvID)}>
