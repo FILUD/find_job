@@ -90,13 +90,13 @@ function Book_tab({ data, role }: BookProps) {
                                                 )}
                                             </div>
                                         </div>
-                                        <div>
+                                        <div className='font-notoLao'>
                                             <div className="font-bold">{e.UserInfo.Name}</div>
                                             <div className="text-sm opacity-50">{text}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td className='font-notoLao'>
                                     {e.OccupationName}
                                     <br />
                                     <span className="">{e.CategoryName}</span>

@@ -24,7 +24,7 @@ import EditProfileJok from './page/EditProfileJok';
 import MyBookmark from './page/MyBookmark';
 import AcceptedBook from './component/book/AcceptedBook';
 import NewChat_Page from './component/chat/NewChat_Page';
-
+import ReportJob from './component/report/report'
 
 
 function App() {
@@ -63,8 +63,9 @@ function App() {
 
             {/* chat */}
             <Route path="/Chat_page" element={<Chat_Page />} />
-            <Route path="/NewChat_Page/:ID?" element={<NewChat_Page/>} />
-
+            <Route path="/NewChat_Page/:ID?" element={<NewChat_Page />} />
+            {/* report */}
+            <Route path="/ReportJob" element={<ReportJob />} />
           </Routes>
 
         </div>
